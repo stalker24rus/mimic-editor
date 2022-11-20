@@ -177,10 +177,13 @@ export type CanvasSettings = {
   background: string;
 };
 
-export type EDIT = "EDIT";
-export type CREATE = "CREATE";
-export type OPERATION = "OPERATION";
-export type CanvasMode = CREATE | EDIT | OPERATION;
+// export type EDIT = EDITOR_MODE_EDIT; //"EDIT";
+// export type CREATE = "CREATE";
+// export type OPERATION = "OPERATION";
+export type CanvasMode =
+  | "EDITOR_MODE_EDIT"
+  | "EDITOR_MODE_CREATE"
+  | "EDITOR_MODE_OPERATION";
 
 export type MimicCanvasStorage = {
   mode: CanvasMode;
