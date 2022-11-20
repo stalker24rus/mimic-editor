@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
-import { Component } from "../../models/mimic";
+import { Component } from "../../models/Editor";
+
 import useDrawElement from "../CustomHooks/useDrawElement";
 import MimicCanvas from "./MimicCanvas";
 
 function mapStateToProps(store) {
   return {
-    elements: store.mimic.frame.children,
+    elements: store.editorHistory.elements,
   };
 }
 

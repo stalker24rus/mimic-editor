@@ -1,22 +1,14 @@
-import React from "react";
-import { connect } from "react-redux";
+import EditorInstrumentPanel from "../../Editor/EditorInstrumentPanel";
+import Mimic from "../../Mimic";
 import "./index.css";
 
-function mapStateToProps(store) {
-  return {};
-}
-
-function mapDispatchToProps() {
-  return {};
-}
-
-function Editor(props) {
+function Editor() {
   return (
     <div>
-      TEST
-      {/* <MimicCanvas /> */}
+      <EditorInstrumentPanel />
+      <Mimic />
     </div>
   );
 }
 
-export default connect(mapStateToProps, mapDispatchToProps())(Editor);
+export default Editor;
