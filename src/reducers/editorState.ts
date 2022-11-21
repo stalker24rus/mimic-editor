@@ -28,6 +28,7 @@ const defaultState = (): Props => {
     newElement: { type: undefined, attributes: undefined, service: undefined },
     drawId: undefined,
     lastTakenId: 0,
+    viewPosition: { x: 0, y: 0 },
     currentMimic: {
       type: "Frame",
       layer: 0,
@@ -58,7 +59,6 @@ const defaultState = (): Props => {
       },
       children: [],
     },
-    viewPosition: { x: 0, y: 0 },
   };
 };
 
