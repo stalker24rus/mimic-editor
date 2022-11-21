@@ -1,38 +1,54 @@
 import { connect } from "react-redux";
-
-import { setCreateMode } from "../../store/modules/mimic";
 import {
-  ButtonComponent,
-  LineComponent,
-  PolygonElement,
-  PolyLineElement,
-} from "../BaseMimicComponents";
+  editorAddButton,
+  editorAddLine,
+  editorAddPolygon,
+  editorAddPolyline,
+} from "../../../store/actionCreators/editorState";
 
-type InstrumentPanelProps = {
-  setCreateMode: Function;
-};
+interface StateProps {}
 
-function InstrumentPanel(props: any) {
-  const { setCreateMode }: InstrumentPanelProps = props;
+interface DispatchProps {
+  onAddButton: Function;
+  onAddLine: Function;
+  onAddPolyline: Function;
+  onAddPolygon: Function;
+}
 
+interface OwnProps {
+  children?: JSX.Element | JSX.Element[];
+}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
+function mapStateToProps() {
+  return {};
+}
+
+function mapDispatchToProps() {
+  return {
+    onAddButton: editorAddButton,
+    onAddLine: editorAddLine,
+    onAddPolyline: editorAddPolyline,
+    onAddPolygon: editorAddPolygon,
+  };
+}
+
+const InstrumentPanel = (props: Props): JSX.Element => {
   const handleAddButton = () => {
-    const { attributes, service } = getBaseParamOfButton();
-    setCreateMode(ButtonComponent, attributes, service);
+    props.onAddButton();
   };
 
   const handleAddLine = () => {
-    const { attributes, service } = getBaseParamOfLine();
-    setCreateMode(LineComponent, attributes, service);
+    props.onAddLine();
   };
 
   const handleAddPolyline = () => {
-    const { attributes, service } = getBaseParamOfPolyLine();
-    setCreateMode(PolyLineElement, attributes, service);
+    props.onAddPolyline();
   };
 
   const handleAddPolygone = () => {
-    const { attributes, service } = getBaseParamOfPolygon();
-    setCreateMode(PolygonElement, attributes, service);
+    props.onAddPolygon();
   };
 
   return (
@@ -71,137 +87,9 @@ function InstrumentPanel(props: any) {
       </div>
     </div>
   );
-}
-
-InstrumentPanel.defaultProps = {
-  onAddComponent: () => {},
 };
 
-function mapStateToProps() {
-  return {};
-}
-
-function mapDispatchToProps() {
-  return {
-    setCreateMode: setCreateMode,
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps())(InstrumentPanel);
-
-/**
- * It return basic states for a Button element.
- * @returns BaseElementOutput
- */
-function getBaseParamOfButton(): BaseElementOutput {
-  return {
-    attributes: {
-      appearance: {
-        fill: "#B8A5A1",
-        opacity: 1,
-        visability: true,
-      },
-
-      properties: {
-        text: "Кнопка",
-      },
-
-      position: {
-        points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
-      },
-
-      font: {
-        fontFamily: "Arial",
-        fontSize: 12,
-        fontStyle: "normal",
-        fontWeight: "normal",
-        horizonAlign: "middle",
-      },
-
-      action: {
-        operation: "none",
-        handler: undefined,
-      },
-    },
-    service: { pointsAmount: 1 },
-  };
-}
-
-/**
- * It return basic states for a Line element.
- * @returns BaseElementOutput
- */
-function getBaseParamOfLine(): BaseElementOutput {
-  return {
-    attributes: {
-      appearance: {
-        stroke: "rgb(255, 0, 0)",
-        strokeWidth: 5,
-        opacity: 1,
-      },
-      properties: {},
-      position: {
-        points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
-      },
-      animation: [],
-    },
-    service: { pointsAmount: 2 },
-  };
-}
-
-/**
- * It return basic states for a Poly line element.
- * @returns BaseElementOutput
- */
-function getBaseParamOfPolyLine(): BaseElementOutput {
-  return {
-    attributes: {
-      appearance: {
-        stroke: "rgb(255, 0, 0)",
-        strokeWidth: 5,
-        opacity: 1,
-      },
-      properties: {},
-      position: {
-        points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
-      },
-      animation: [],
-    },
-    service: { pointsAmount: 999 },
-  };
-}
-
-/**
- * It return basic states for a Polygon element.
- * @returns BaseElementOutput
- */
-function getBaseParamOfPolygon(): BaseElementOutput {
-  return {
-    attributes: {
-      appearance: {
-        stroke: "rgb(255, 0, 0)",
-        strokeWidth: 5,
-        fill: "#B8A5A1",
-        opacity: 1,
-      },
-      properties: {},
-      position: {
-        points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
-      },
-      animation: [],
-    },
-    service: { pointsAmount: 999 },
-  };
-}
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps()
+)(InstrumentPanel);

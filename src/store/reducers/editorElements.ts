@@ -65,7 +65,7 @@ export default (state = defaultState, action: any) => {
         newElements,
         (element: MimicElementProps) => element.attributes.general.id === id
       );
-      return newElements; //!!!!
+      return newElements;
     }
 
     case APPEND_POINT_TO_ELEMENT: {
