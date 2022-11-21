@@ -8,8 +8,8 @@ import {
   MOVE_ELEMENT_TOP,
   UPDATE_ELEMENT,
   UPDATE_LAST_POINT_OF_ELEMENT,
-} from "../constants/actionTypes/editorElements";
-import { Component } from "../models/Editor";
+} from "../../constants/actionTypes/editorElements";
+import { Component } from "../../models/Editor";
 
 const defaultState: Component[] = [];
 

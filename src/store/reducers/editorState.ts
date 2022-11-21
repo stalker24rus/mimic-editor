@@ -3,8 +3,8 @@ import {
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE,
-} from "../constants/actionTypes/editorState";
-import { EDITOR_MODE_EDIT, MIMIC_FRAME_ID } from "../constants/literals";
+} from "../../constants/actionTypes/editorState";
+import { EDITOR_MODE_EDIT, MIMIC_FRAME_ID } from "../../constants/literals";
 
 interface Props {
   mode: string;
