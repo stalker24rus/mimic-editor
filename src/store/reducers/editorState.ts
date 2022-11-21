@@ -11,20 +11,23 @@ import {
   EDITOR_MODE_CREATE,
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
+  ELEMENT_TYPE_FRAME,
   MIMIC_FRAME_ID,
 } from "../../constants/literals";
-import { EditorModeProps } from "../../models/Editor";
+import {
+  CanvasNewElement,
+  EditorModeProps,
+  MimicElementProps,
+  PointFromat,
+} from "../../models/Editor";
 
 interface Props {
   mode: EditorModeProps;
-  newElement: {};
+  newElement: CanvasNewElement;
   drawId: number | undefined;
   lastTakenId: number;
-  viewPosition: {
-    x: number;
-    y: number;
-  };
-  currentMimic: {};
+  viewPosition: PointFromat;
+  currentMimic: MimicElementProps;
 }
 
 const defaultState = (): Props => {
@@ -39,7 +42,7 @@ const defaultState = (): Props => {
     lastTakenId: 0,
     viewPosition: { x: 0, y: 0 },
     currentMimic: {
-      type: "Frame",
+      type: ELEMENT_TYPE_FRAME,
       layer: 0,
       service: undefined,
       attributes: {
@@ -78,9 +81,13 @@ export default (state = defaultState, action: any) => {
     }
 
     case SET_MODE_CREATE: {
-      const { mode, element } = action?.payload;
-      if (mode && element) {
-        return { ...state, mode, newElement: { ...element } };
+      const { element } = action?.payload;
+      if (element) {
+        return {
+          ...state,
+          mode: EDITOR_MODE_CREATE,
+          newElement: { ...element },
+        };
       } else {
         throw "Invalid playload format.";
       }

@@ -1,22 +1,17 @@
-import lodash from "lodash";
-import { useReducer } from "react";
-const module = "HISTORY_REDUCER";
+import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
 
-export const UNDO = `${module}/UNDO`;
-export const REDO = `${module}/REDO`;
-
-export default function undoRedo(reducer) {
+export default function undoRedo(reducer: Function) {
   const initialState = {
     past: [],
     present: reducer(undefined, {}),
     future: [],
   };
 
-  return function (state = initialState, action) {
+  return function (state = initialState, action: any) {
     const { past, present, future } = state;
 
     switch (action.type) {
-      case "UNDO":
+      case UNDO:
         const previous = past[past.length - 1];
         const newPast = past.slice(0, past.length - 1);
         return {
@@ -24,7 +19,7 @@ export default function undoRedo(reducer) {
           present: previous,
           future: [present, ...future],
         };
-      case "REDO":
+      case REDO:
         const next = future[0];
         const newFuture = future.slice(1);
         return {

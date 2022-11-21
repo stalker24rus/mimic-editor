@@ -9,11 +9,11 @@ import {
   UPDATE_ELEMENT,
   UPDATE_LAST_POINT_OF_ELEMENT,
 } from "../../constants/actionTypes/editorElements";
-import { Component } from "../../models/Editor";
+import { MimicElementProps } from "../../models/Editor";
 
-const defaultState: Component[] = [];
+const defaultState: MimicElementProps[] = [];
 
-export default (state = defaultState, action) => {
+export default (state = defaultState, action: any) => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { id, newElement, point } = action.payload;
@@ -43,7 +43,7 @@ export default (state = defaultState, action) => {
       const { id, attributes } = action.payload;
 
       const index = elements?.findIndex(
-        (element: Component) => element.attributes.general.id === id
+        (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
@@ -63,7 +63,7 @@ export default (state = defaultState, action) => {
       const newElements = [...elements];
       lodash.remove(
         newElements,
-        (element: Component) => element.attributes.general.id === id
+        (element: MimicElementProps) => element.attributes.general.id === id
       );
       return newElements; //!!!!
     }
@@ -73,7 +73,7 @@ export default (state = defaultState, action) => {
       const { id, point } = action.payload;
 
       const index = elements.findIndex(
-        (element: Component) => element.attributes.general.id === id
+        (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
@@ -92,7 +92,7 @@ export default (state = defaultState, action) => {
       const { id } = action.payload;
 
       const index = elements.findIndex(
-        (element: Component) => element.attributes.general.id === id
+        (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {

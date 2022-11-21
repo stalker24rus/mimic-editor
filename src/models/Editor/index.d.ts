@@ -19,12 +19,14 @@ export type Properties = {
   tag?: string;
 };
 
-export type Component = {
-  type: string;
+type ElementType = "FRAME" | "BUTTON" | "LINE" | "POLYGON" | "POLYLINE";
+
+export type MimicElementProps = {
+  type: ElementType;
   layer: number;
   attributes: Attributes;
   service: Service | undefined;
-  children?: Array<Component>;
+  children?: Array<MimicElementProps>;
 };
 
 export interface InitAttributes {
@@ -126,8 +128,8 @@ export type PlaceOperation = "root" | "inner";
 
 export type StackHistoryRecord = {
   action: string;
-  prevState?: Component | undefined;
-  nextState?: Component;
+  prevState?: MimicElementProps | undefined;
+  nextState?: MimicElementProps;
   place: PlaceOperation;
 };
 
@@ -145,13 +147,13 @@ export type BaseHandlers = {
 };
 
 export interface ComponentProps extends BaseHandlers {
-  component: Component;
+  component: MimicElementProps;
   onClick?: Function;
   newElement?: boolean;
 }
 
 export interface BoxProps extends BaseHandlers {
-  component: Component;
+  component: MimicElementProps;
   isSelected: boolean;
   isCreating?: boolean;
   children: (props: ComponentProps) => JSX.Element;
@@ -198,7 +200,7 @@ export type MimicCanvasStorage = {
 export type ElHistory = {
   index: Number;
   actions: [any];
-  history: [Component[]];
+  history: [MimicElementProps[]];
   past: [];
   present: [];
   future: [];
@@ -206,7 +208,7 @@ export type ElHistory = {
 
 export type MimicStorage = {
   canvas: MimicCanvasStorage;
-  frame: Component;
+  frame: MimicElementProps;
   //history: ElHistory;
 };
 
@@ -220,6 +222,6 @@ export type BaseElementOutput = {
   service: Service | undefined;
 };
 
-export interface CanvasCreatedElement extends BaseElementOutput {
+export interface CanvasNewElement extends BaseElementOutput {
   type: string | undefined;
 }

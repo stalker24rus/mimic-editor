@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { Component } from "../../models/Editor";
+import { MimicElementProps } from "../../models/Editor";
 
 import useDrawElement from "../CustomHooks/useDrawElement";
 import MimicCanvas from "./MimicCanvas";
@@ -23,7 +23,7 @@ const Mimic = (props) => {
     <MimicCanvas>
       {elements.length > 0 && (
         <span>
-          {elements?.map((element: Component) => {
+          {elements?.map((element: MimicElementProps) => {
             return DrawFabric(element);
           })}
         </span>
