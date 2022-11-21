@@ -180,7 +180,12 @@ export type CanvasSettings = {
 // export type EDIT = EDITOR_MODE_EDIT; //"EDIT";
 // export type CREATE = "CREATE";
 // export type OPERATION = "OPERATION";
-export type CanvasMode =
+// export type CanvasMode =
+//   | "EDITOR_MODE_EDIT"
+//   | "EDITOR_MODE_CREATE"
+//   | "EDITOR_MODE_OPERATION";
+
+type EditorModeProps =
   | "EDITOR_MODE_EDIT"
   | "EDITOR_MODE_CREATE"
   | "EDITOR_MODE_OPERATION";
