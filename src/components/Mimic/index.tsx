@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { MimicElementProps } from "../../models/Editor";
+import useDrawElement from "./Hooks/useDrawElement";
 
-import useDrawElement from "../CustomHooks/useDrawElement";
 import MimicCanvas from "./MimicCanvas";
 
 function mapStateToProps(store) {

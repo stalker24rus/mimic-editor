@@ -6,7 +6,7 @@ function Editor() {
   return (
     <div>
       <EditorInstrumentPanel />
-      {/* <Mimic /> */}
+      <Mimic />
     </div>
   );
 }
