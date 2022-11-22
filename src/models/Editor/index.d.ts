@@ -155,10 +155,7 @@ export interface ComponentProps extends BaseHandlers {
 export interface BoxProps extends BaseHandlers {
   component: MimicElementProps;
   isSelected: boolean;
-  isCreating?: boolean;
   children: (props: ComponentProps) => JSX.Element;
-  onSetAttributes: Function;
-  onSelect?: Function;
 }
 
 /**

@@ -1,9 +1,9 @@
 import { ELEMENT_TYPE_BUTTON } from "../../../../constants/literals";
 import { MimicElementProps } from "../../../../models/Editor";
-
+import Button from "../../MimicBaseElements/Button";
 
 export default function useDrawElement(): [Function] {
-  function draw(component: MimicElementProps): JSX.Element{
+  function draw(component: MimicElementProps): JSX.Element {
     const { type } = component;
 
     const drawProps = {
@@ -12,9 +12,8 @@ export default function useDrawElement(): [Function] {
     };
 
     switch (type) {
-
       case ELEMENT_TYPE_BUTTON: {
-        return (<Button {...drawProps} >);
+        return <Button {...drawProps} />;
       }
 
       default: {

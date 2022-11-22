@@ -1,16 +1,12 @@
-import { BoxProps } from "../../../../models/mimic";
-import MovingCell from "../../MovingCell";
-import ResizePoints from "../../ResizePoints";
-import RotationPoint from "../../RotationPoint";
+import { BoxProps } from "../../../../models/Editor";
+import MovingCell from "../Primitives/MovingCell";
+import ResizePoints from "../Primitives/ResizePoints";
+import RotationPoint from "../Primitives/RotationPoint";
 
 function RectangleBox({
   component,
   isSelected,
   children,
-  onPointerDown,
-  onPointerUp,
-  onPointerMove,
-  onSetAttributes,
 }: BoxProps): JSX.Element {
   const { attributes } = component;
   const { general, position, appearance } = attributes;
@@ -19,32 +15,6 @@ function RectangleBox({
   const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
-
-  const handlePointerDown = (e) => {
-    onPointerDown(e);
-  };
-
-  const handlePointerUp = (e) => {
-    onPointerUp(e);
-  };
-
-  const handlePointerMove = (e) => {
-    onPointerMove(e);
-  };
-
-  const handleDragMove = (e) => {
-    onPointerMove(e);
-  };
-
-  const handleSetAttributes = (e) => {
-    onSetAttributes(id, e);
-  };
-
-  const baseHandlers = {
-    onPointerDown: handlePointerDown,
-    onPointerMove: handlePointerMove,
-    onPointerUp: handlePointerUp,
-  };
 
   return (
     <div
@@ -61,21 +31,9 @@ function RectangleBox({
         pointerEvents: "all",
       }}
     >
-      {isSelected && (
-        <RotationPoint
-          component={component}
-          {...baseHandlers}
-          onSetAttributes={handleSetAttributes}
-        />
-      )}
+      {isSelected && <RotationPoint component={component} />}
 
-      {isSelected && (
-        <ResizePoints
-          component={component}
-          {...baseHandlers}
-          onSetAttributes={handleSetAttributes}
-        />
-      )}
+      {isSelected && <ResizePoints component={component} />}
 
       <div
         style={{
@@ -89,11 +47,7 @@ function RectangleBox({
         {children({ component })}
       </div>
 
-      <MovingCell
-        component={component}
-        {...baseHandlers}
-        onSetAttributes={handleSetAttributes}
-      />
+      <MovingCell component />
     </div>
   );
 }
