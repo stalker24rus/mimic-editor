@@ -21,10 +21,12 @@ import {
   PointFromat,
 } from "../../models/Editor";
 
+type DrawType = number | undefined;
+
 interface Props {
   mode: EditorModeProps;
-  newElement: CanvasNewElement;
-  drawId: number | undefined;
+  newElement: CanvasNewElement | {};
+  drawId: DrawType;
   lastTakenId: number;
   viewPosition: PointFromat;
   currentMimic: MimicElementProps;
@@ -39,7 +41,7 @@ const defaultState = (): Props => {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined, service: undefined },
     drawId: undefined,
-    lastTakenId: 0,
+    lastTakenId: 1,
     viewPosition: { x: 0, y: 0 },
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
@@ -74,19 +76,28 @@ const defaultState = (): Props => {
   };
 };
 
-export default (state = defaultState, action: any) => {
+export default (state = defaultState(), action: any): Props => {
   switch (action.type) {
     case SET_MODE_EDIT: {
-      return { ...state, mode: EDITOR_MODE_EDIT, newElement: {} };
+      return {
+        ...state,
+        mode: EDITOR_MODE_EDIT,
+        newElement: {},
+        drawId: undefined,
+      };
     }
 
     case SET_MODE_CREATE: {
       const { element } = action?.payload;
-      if (element) {
+      const newTakenId = state.lastTakenId + 1;
+
+      if (element && newTakenId) {
         return {
           ...state,
           mode: EDITOR_MODE_CREATE,
           newElement: { ...element },
+          lastTakenId: newTakenId,
+          drawId: newTakenId,
         };
       } else {
         throw "Invalid playload format.";
@@ -94,7 +105,12 @@ export default (state = defaultState, action: any) => {
     }
 
     case SET_MODE_OPERATE: {
-      return { ...state, mode: EDITOR_MODE_OPERATE, newElement: {} };
+      return {
+        ...state,
+        mode: EDITOR_MODE_OPERATE,
+        newElement: {},
+        drawId: undefined,
+      };
     }
 
     case SET_DRAWING_ID: {

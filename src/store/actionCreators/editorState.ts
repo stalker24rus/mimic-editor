@@ -1,4 +1,9 @@
-import { SET_MODE_CREATE } from "../../constants/actionTypes/editorState";
+import {
+  SET_DRAWING_ID,
+  SET_LAST_TAKEN_ID,
+  SET_MODE_CREATE,
+  SET_VIEW_POSITION,
+} from "../../constants/actionTypes/editorState";
 import {
   ELEMENT_TYPE_BUTTON,
   ELEMENT_TYPE_LINE,
@@ -44,3 +49,17 @@ export const editorAddPolygon = () => (dispatch: Function) => {
   };
   dispatch({ type: SET_MODE_CREATE, payload: { element } });
 };
+
+export const editorSetDrawId = (id: number) => (dispatch: Function) => {
+  dispatch({ type: SET_DRAWING_ID, payload: { id } });
+};
+
+export const editorSetLastTakenId = (id: number) => (dispatch: Function) => {
+  dispatch({ type: SET_LAST_TAKEN_ID, payload: { id } });
+};
+
+export const editorSetViewPosition =
+  (point: number) => (dispatch: Function) => {
+    const point = undefined;
+    dispatch({ type: SET_VIEW_POSITION, payload: { point } });
+  };
