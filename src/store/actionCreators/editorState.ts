@@ -18,7 +18,6 @@ import {
 } from "../../constants/mimicBaseElements";
 
 export const editorAddButton = () => (dispatch: Function) => {
-  console.log(dispatch);
   const element = {
     type: ELEMENT_TYPE_BUTTON,
     ...getBaseParamOfButton(),

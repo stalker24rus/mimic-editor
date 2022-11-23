@@ -1,13 +1,45 @@
-import { BoxProps } from "../../../../models/Editor";
+import { FC } from "react";
+import { connect } from "react-redux";
+import { MimicElementProps } from "../../../../models/Editor";
+import {
+  changeElementAngle,
+  moveElement,
+  resizeElement,
+} from "../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 import ResizePoints from "../Primitives/ResizePoints";
 import RotationPoint from "../Primitives/RotationPoint";
 
-function RectangleBox({
-  component,
-  isSelected,
-  children,
-}: BoxProps): JSX.Element {
+interface StateProps {}
+
+interface DispatchProps {
+  onChangeAngle: Function;
+  onMove: Function;
+  onResize: Function;
+}
+
+interface OwnProps {
+  component: MimicElementProps;
+  children: JSX.Element | JSX.Element[];
+  isSelected: boolean;
+}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
+function mapStateToProps(store) {
+  return {};
+}
+
+function mapDispatchToProps() {
+  return {
+    onChangeAngle: changeElementAngle,
+    onMove: moveElement,
+    onResize: resizeElement,
+  };
+}
+
+function RectangleBox(props: Props): JSX.Element {
+  const { component, children, isSelected } = props;
   const { attributes } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
@@ -15,6 +47,18 @@ function RectangleBox({
   const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
+
+  const handleChangeAngle = (ev) => {
+    props.onChangeAngle(ev);
+  };
+
+  const handleMove = (ev) => {
+    props.onMove(ev);
+  };
+
+  const handleResize = (ev) => {
+    props.onResize(ev);
+  };
 
   return (
     <div
@@ -31,9 +75,13 @@ function RectangleBox({
         pointerEvents: "all",
       }}
     >
-      {isSelected && <RotationPoint component={component} />}
+      {isSelected && (
+        <RotationPoint component={component} onMove={handleChangeAngle} />
+      )}
 
-      {isSelected && <ResizePoints component={component} />}
+      {isSelected && (
+        <ResizePoints component={component} onMove={handleResize} />
+      )}
 
       <div
         style={{
@@ -47,17 +95,12 @@ function RectangleBox({
         {children({ component })}
       </div>
 
-      <MovingCell component />
+      <MovingCell component={component} onMove={handleMove} />
     </div>
   );
 }
 
-RectangleBox.defaultProps = {
-  onPointerDown: () => {},
-  onPointerUp: () => {},
-  onPointerMove: () => {},
-  onSetAttributes: () => {},
-  onSelect: () => {},
-};
-
-export default RectangleBox;
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps()
+)(RectangleBox);

@@ -9,3 +9,12 @@ export const ELEMENT_TYPE_BUTTON: ElementType = "BUTTON";
 export const ELEMENT_TYPE_LINE: ElementType = "LINE";
 export const ELEMENT_TYPE_POLYGON: ElementType = "POLYGON";
 export const ELEMENT_TYPE_POLYLINE: ElementType = "POLYLINE";
+
+export const BOX_TOP_LEFT = "resize-top-left";
+export const BOX_TOP_RIGHT = "resize-top-right";
+export const BOX_BOTTOM_LEFT = "resize-bottom-left";
+export const BOX_BOTTOM_RIGHT = "resize-bottom-right";
+export const BOX_TOP_SIDE = "resize-top";
+export const BOX_BOTTOM_SIDE = "resize-bottom";
+export const BOX_LEFT_SIDE = "resize-left";
+export const BOX_RIGHT_SIDE = "resize-right";

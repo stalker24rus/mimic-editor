@@ -1,6 +1,15 @@
+import { FC } from "react";
 import { ELEMENT_TYPE_BUTTON } from "../../../../constants/literals";
 import { MimicElementProps } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
+
+interface ElementBaseProps {
+  [key: string]: FC;
+}
+
+const ElementBase: ElementBaseProps = {
+  [ELEMENT_TYPE_BUTTON]: Button,
+};
 
 export default function useDrawElement(): [Function] {
   function draw(component: MimicElementProps): JSX.Element {
@@ -11,15 +20,8 @@ export default function useDrawElement(): [Function] {
       component,
     };
 
-    switch (type) {
-      case ELEMENT_TYPE_BUTTON: {
-        return <Button {...drawProps} />;
-      }
-
-      default: {
-        throw "Invalid mimic element.";
-      }
-    }
+    const Element = ElementBase[type];
+    return <Element {...drawProps} />;
   }
 
   return [draw];
