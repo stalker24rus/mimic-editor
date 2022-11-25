@@ -1,52 +1,40 @@
 import { useState } from "react";
+import { MimicElementProps } from "../../../../../models/Editor";
+
+interface Props {
+  component: MimicElementProps;
+  onPointerDown: Function;
+  onPointerUp: Function;
+  onPointerMove: Function;
+}
 
 function MovingCell({
   component,
-  onClick,
-  onPointerUp,
   onPointerDown,
+  onPointerUp,
   onPointerMove,
-  onSetAttributes,
-}) {
+}: Props): JSX.Element {
   const { attributes } = component;
   const { position } = attributes;
   const { width, height, points } = position;
 
-  const [topLeftPoint] = points;
-
   const [isDragging, setIsDragging] = useState(false);
 
-  const handleOnClick = (e: any) => {
-    onClick(e);
-  };
-
-  const handlePointerDown = (e: any) => {
+  const handlePointerDown = (ev: any) => {
     setIsDragging(true);
-    const target = e.target;
-    target.setPointerCapture(e.pointerId);
-    onPointerDown(e);
+    const { target, pointerId } = ev;
+    target.setPointerCapture(pointerId);
+    onPointerDown(ev);
   };
 
-  const handlePointerUp = (e: any) => {
+  const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
     setIsDragging(false);
-    onPointerUp(e);
+    onPointerUp(ev);
   };
 
-  const handlePointerMove = (e: any) => {
-    if (isDragging) {
-      const attributes = {
-        position: {
-          points: [
-            {
-              y: topLeftPoint.y + e.movementY,
-              x: topLeftPoint.x + e.movementX,
-            },
-          ],
-        },
-      };
-      onSetAttributes(attributes);
-    }
-    onPointerMove(e);
+  const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    onPointerMove(ev);
   };
 
   return (
@@ -60,7 +48,6 @@ function MovingCell({
         top: 0,
         left: 0,
       }}
-      onClick={handleOnClick}
       onPointerUp={handlePointerUp}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
@@ -69,11 +56,24 @@ function MovingCell({
 }
 
 MovingCell.defaultProps = {
-  onClick: () => {},
   onPointerDown: () => {},
   onPointerUp: () => {},
   onPointerMove: () => {},
-  onDragMove: () => {},
 };
 
 export default MovingCell;
+
+/*
+      const attributes = {
+        position: {
+          points: [
+            {
+              y: topLeftPoint.y + e.movementY,
+              x: topLeftPoint.x + e.movementX,
+            },
+          ],
+        },
+      };
+      onSetAttributes(attributes);
+    }
+*/

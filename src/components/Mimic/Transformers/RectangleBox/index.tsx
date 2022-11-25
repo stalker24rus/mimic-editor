@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { connect } from "react-redux";
-import { MimicElementProps } from "../../../../models/Editor";
+import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
   changeElementAngle,
   moveElement,
@@ -20,7 +20,7 @@ interface DispatchProps {
 
 interface OwnProps {
   component: MimicElementProps;
-  children: JSX.Element | JSX.Element[];
+  children?: React.ReactNode;
   isSelected: boolean;
 }
 
@@ -48,16 +48,29 @@ function RectangleBox(props: Props): JSX.Element {
 
   const [topLeftPoint] = points;
 
-  const handleChangeAngle = (ev) => {
-    props.onChangeAngle(ev);
+  const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
+    const point: PointFromat = {
+      x: ev.pageX,
+      y: ev.pageY,
+    };
+    props.onChangeAngle(id, point);
   };
 
-  const handleMove = (ev) => {
-    props.onMove(ev);
+  const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+    const pointName: string = ev.currentTarget.className;
+    const point: PointFromat = {
+      x: ev.clientX,
+      y: ev.clientY,
+    };
+    props.onMove(id, pointName, point);
   };
 
-  const handleResize = (ev) => {
-    props.onResize(ev);
+  const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
+    const point = {
+      y: topLeftPoint.y + ev.movementY,
+      x: topLeftPoint.x + ev.movementX,
+    };
+    props.onResize(id, point);
   };
 
   return (
@@ -76,11 +89,11 @@ function RectangleBox(props: Props): JSX.Element {
       }}
     >
       {isSelected && (
-        <RotationPoint component={component} onMove={handleChangeAngle} />
+        <RotationPoint component={component} onDragMove={handleChangeAngle} />
       )}
 
       {isSelected && (
-        <ResizePoints component={component} onMove={handleResize} />
+        <ResizePoints component={component} onPointerMove={handleResize} />
       )}
 
       <div
@@ -92,10 +105,12 @@ function RectangleBox(props: Props): JSX.Element {
           border: isSelected ? "1px solid white" : "none",
         }}
       >
-        {children({ component })}
+        {children}
       </div>
 
-      <MovingCell component={component} onMove={handleMove} />
+      {isSelected && (
+        <MovingCell component={component} onPointerMove={handleMove} />
+      )}
     </div>
   );
 }

@@ -112,43 +112,63 @@ export default (state = defaultState, action: any) => {
     }
 
     case CHANGE_ELEMENT_ANGLE: {
-      /*
-          let boxCenter = {
-            x: topLeftPoint.x + width / 2,
-            y: topLeftPoint.y + height / 2,
-          };
+      const { id, point } = action?.payload;
+      const elements = [...state];
+      const index = elements.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
 
-          let angle =
-            Math.atan2(e.pageX - boxCenter.x, -(e.pageY - boxCenter.y)) *
-            (180 / Math.PI);
+      if (index) {
+        // TODO ADD SELECTOR
+        // FIXME
+        const topLeft = elements[index]?.attributes.position.points[0];
+        const width = elements[index]?.attributes.position.width;
+        const height = elements[index]?.attributes.position.height;
 
-          onSetAttributes({
-            position: {
-              angle: angle > 179.5 || angle < -179.5 ? 180 : Math.trunc(angle),
-            },
-          });
-      */
-      return state;
+        const boxCenter = {
+          x: topLeft.x + width / 2,
+          y: topLeft.y + height / 2,
+        };
+
+        const angle =
+          Math.atan2(point.x - boxCenter.x, -(point.y - boxCenter.y)) *
+          (180 / Math.PI);
+
+        elements[index].attributes.position.angle = angle;
+        return [...elements];
+      } else {
+        return state;
+      }
     }
 
     case MOVE_ELEMENT: {
-      /*
-      const attributes = {
-        position: {
-          points: [
-            {
-              y: topLeftPoint.y + e.movementY,
-              x: topLeftPoint.x + e.movementX,
-            },
-          ],
-        },
-      };
-      onSetAttributes(attributes);
-      */
-      return state;
+      const { id, pointName, point } = action?.payload;
+      const elements = [...state];
+      const index = elements.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index) {
+        elements[index].attributes.position.points[0] = { ...point };
+        return [...elements];
+      } else {
+        return state;
+      }
     }
 
     case RESIZE_ELEMENT: {
+      const { id, point } = action?.payload;
+      const elements = [...state];
+      const index = elements.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index) {
+        return [...elements];
+      } else {
+        return state;
+      }
+
       /*
         const cursorX = event.clientX;
         const cursorY = event.clientY;
