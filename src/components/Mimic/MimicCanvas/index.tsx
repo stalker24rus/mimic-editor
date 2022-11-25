@@ -1,12 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Attributes, CanvasMode } from "../../../models/mimic";
-import {
-  CREATE_ELEMENT,
-  SET_DRAWING_ID,
-  SET_LAST_TAKEN_ID,
-} from "../../MimicCanvas/actionTypes";
-import CursorInfo from "../../MimicCanvas/CursorInfo";
+import { Attributes } from "../../../models/Editor";
+import CursorInfo from "../CursorInfo";
 
 export const MIMIC_FRAME_ID: string = "mimic.frame";
 

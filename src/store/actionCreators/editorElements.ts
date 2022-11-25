@@ -13,7 +13,7 @@ export const changeElementAngle =
   };
 
 export const moveElement =
-  (id: number, pointName: string, point: PointFromat) =>
+  (id: number, point: PointFromat) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = {
@@ -22,17 +22,20 @@ export const moveElement =
     };
     dispatch({
       type: MOVE_ELEMENT,
-      payload: { id, pointName, point: newPoint },
+      payload: { id, point: newPoint },
     });
   };
 
 export const resizeElement =
-  (id: number, point: PointFromat) =>
+  (id: number, pointName: string, point: PointFromat) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = {
       x: point.x - viewPosition.x,
       y: point.y - viewPosition.y,
     };
-    dispatch({ type: RESIZE_ELEMENT, payload: { id, point: newPoint } });
+    dispatch({
+      type: RESIZE_ELEMENT,
+      payload: { id, pointName, point: newPoint },
+    });
   };

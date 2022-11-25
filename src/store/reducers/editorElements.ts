@@ -13,6 +13,7 @@ import {
   UPDATE_LAST_POINT_OF_ELEMENT,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
+import resizeBox from "./functions/resizeBox";
 
 const defaultState: MimicElementProps[] = [];
 
@@ -142,7 +143,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case MOVE_ELEMENT: {
-      const { id, pointName, point } = action?.payload;
+      const { id, point } = action?.payload;
       const elements = [...state];
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
@@ -157,40 +158,35 @@ export default (state = defaultState, action: any) => {
     }
 
     case RESIZE_ELEMENT: {
-      const { id, point } = action?.payload;
+      const { id, pointName: targetName, point } = action?.payload;
       const elements = [...state];
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index) {
+        const { points, width, height, angle } =
+          elements[index].attributes.position;
+        const { x, y } = points[0];
+
+        const newPosition = resizeBox({
+          x,
+          y,
+          width,
+          height,
+          cursorX: point.x,
+          cursorY: point.y,
+          angle,
+          targetName,
+        });
+        elements[index].attributes.position = {
+          ...elements[index].attributes.position,
+          ...newPosition,
+        };
         return [...elements];
       } else {
         return state;
       }
-
-      /*
-        const cursorX = event.clientX;
-        const cursorY = event.clientY;
-        const targetName = event.target.className;
-
-        const { left: mainLeft, top: mainTop } = document
-          .getElementById(MIMIC_FRAME_ID)
-          .getBoundingClientRect();
-
-        const result = resizeBox({
-          ...topLeftPoint,
-          width,
-          height,
-          cursorX: cursorX - mainLeft,
-          cursorY: cursorY - mainTop,
-          angle,
-          targetName,
-        });
-
-        onSetAttributes({ position: { ...result } });
-      */
-      return state;
     }
 
     case UPDATE_LAST_POINT_OF_ELEMENT: {
