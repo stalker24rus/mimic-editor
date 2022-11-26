@@ -86,15 +86,15 @@ function MimicCanvas(props: Props): JSX.Element {
       // simple click
       case 1: {
         if (mode !== CREATE_MODE) return;
+        const { clientX, clientY } = ev;
+        const point: PointFromat = {
+          x: clientX,
+          y: clientY,
+        };
         if (!drawId) {
-          const { clientX, clientY } = ev;
-          const point: PointFromat = {
-            x: clientX,
-            y: clientY,
-          };
           props.onCreateElement(point);
         } else {
-          props.onAppendPointToElement(ev);
+          props.onAppendPointToElement(drawId, point);
         }
         break;
       }
@@ -116,8 +116,14 @@ function MimicCanvas(props: Props): JSX.Element {
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
     if (!drawId) return;
-    props.onDrawingElement(ev);
+    const { clientX, clientY } = ev;
+    const point: PointFromat = {
+      x: clientX,
+      y: clientY,
+    };
+    props.onDrawingElement(drawId, point);
   };
+
   const handlePointerUp = () => {
     props.onUnFreezeHistory();
   };

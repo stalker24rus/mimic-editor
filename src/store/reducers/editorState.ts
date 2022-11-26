@@ -91,15 +91,12 @@ export default (state = defaultState(), action: any): Props => {
 
     case SET_MODE_CREATE: {
       const { element } = action?.payload;
-      const newTakenId = state.lastTakenId + 1;
 
-      if (element && newTakenId) {
+      if (element) {
         return {
           ...state,
           mode: EDITOR_MODE_CREATE,
           newElement: { ...element },
-          lastTakenId: newTakenId,
-          drawId: newTakenId,
         };
       } else {
         throw "Invalid playload format.";
