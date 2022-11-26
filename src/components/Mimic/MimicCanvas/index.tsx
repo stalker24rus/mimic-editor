@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
+import { MIMIC } from "../../../constants/literals";
 import { Attributes } from "../../../models/Editor";
+import {
+  appendPointToElement,
+  createElement,
+  drawingElement,
+  endDrawingElement,
+} from "../../../store/actionCreators/editorElements";
+import { selectElement } from "../../../store/actionCreators/editorState";
 import CursorInfo from "../CursorInfo";
 
 export const MIMIC_FRAME_ID: string = "mimic.frame";
@@ -12,10 +20,11 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onCreateEl: Function;
-  onAppendPointToEl: Function;
+  onCreateElement: Function;
+  onAppendPointToElement: Function;
   onEndDrawingElement: Function;
   onDrawingElement: Function;
+  onSelectElement: Function;
   onUnFreezeHistory: Function;
 }
 
@@ -37,17 +46,16 @@ function mapStateToProps(store) {
   };
 }
 
-const mapDispatchToProps = (dispatch: Function, getState: any) => ({
-  onCreateEl: (payload: PayloadProps) =>
-    dispatch({ type: "CREATE_ELEMENT_OR_APPEND_POINT", payload }),
-  onAppendPointToEl: (payload: PayloadProps) =>
-    dispatch({ type: CREATE_ELEMENT, payload }),
-  onEndDrawingElement: (payload: PayloadProps) =>
-    dispatch({ type: SET_LAST_TAKEN_ID, payload }),
-  onDrawingElement: (payload: PayloadProps) => dispatch({ type: "", payload }),
-  onUnFreezeHistory: (payload: PayloadProps) => dispatch({ type: "", payload }),
-});
-
+function mapDispatchToProps() {
+  return {
+    onCreateElement: createElement,
+    onAppendPointToElement: appendPointToElement,
+    onEndDrawingElement: endDrawingElement,
+    onDrawingElement: drawingElement,
+    onSelectElement: selectElement,
+    onUnFreezeHistory: () => {},
+  };
+}
 const CREATE_MODE = "CREATE";
 
 function MimicCanvas(props: Props): JSX.Element {
@@ -58,6 +66,20 @@ function MimicCanvas(props: Props): JSX.Element {
   const { fill } = appearance;
   const { name } = general;
 
+  useEffect(() => {
+    function selectComponent({ clientX, clientY }) {
+      const elements = document.elementsFromPoint(clientX, clientY);
+      for (let i = 0; i < elements.length; i++) {
+        const [parent, type, id] = elements[i].id.split(".");
+        if (parent === MIMIC) {
+          props.onSelectElement(id);
+          break;
+        }
+      }
+    }
+    window.addEventListener("click", selectComponent);
+  }, []);
+
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     const { detail } = ev;
     switch (detail) {
@@ -65,9 +87,10 @@ function MimicCanvas(props: Props): JSX.Element {
       case 1: {
         if (mode !== CREATE_MODE) return;
         if (!drawId) {
-          props.onCreateEl(ev);
+          const { clientX, clientY } = ev;
+          props.onCreateElement(ev);
         } else {
-          props.onAppendPointToEl(ev);
+          props.onAppendPointToElement(ev);
         }
         break;
       }

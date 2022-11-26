@@ -62,3 +62,11 @@ export const editorSetViewPosition =
     const point = undefined;
     dispatch({ type: SET_VIEW_POSITION, payload: { point } });
   };
+
+// 88888888888888888888888888888888888888888888888888888888888888888888888888888888888
+//FIXME
+
+export const selectElement = (point: number) => (dispatch: Function) => {
+  const point = undefined;
+  dispatch({ type: SET_VIEW_POSITION, payload: { point } });
+};
