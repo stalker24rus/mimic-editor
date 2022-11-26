@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { MIMIC } from "../../../constants/literals";
-import { Attributes } from "../../../models/Editor";
+import { Attributes, PointFromat } from "../../../models/Editor";
 import {
   appendPointToElement,
   createElement,
@@ -88,7 +88,11 @@ function MimicCanvas(props: Props): JSX.Element {
         if (mode !== CREATE_MODE) return;
         if (!drawId) {
           const { clientX, clientY } = ev;
-          props.onCreateElement(ev);
+          const point: PointFromat = {
+            x: clientX,
+            y: clientY,
+          };
+          props.onCreateElement(point);
         } else {
           props.onAppendPointToElement(ev);
         }
