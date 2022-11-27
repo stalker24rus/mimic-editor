@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { MIMIC } from "../../../constants/literals";
-import { Attributes, PointFromat } from "../../../models/Editor";
+import { EDITOR_MODE_CREATE, MIMIC } from "../../../constants/literals";
+import {
+  Attributes,
+  EditorModeProps,
+  PointFromat,
+} from "../../../models/Editor";
 import {
   appendPointToElement,
   createElement,
@@ -15,7 +19,7 @@ export const MIMIC_FRAME_ID: string = "mimic.frame";
 
 interface StateProps {
   attributes: Attributes;
-  mode: CanvasMode;
+  mode: EditorModeProps;
   drawId: number;
 }
 
@@ -25,15 +29,10 @@ interface DispatchProps {
   onEndDrawingElement: Function;
   onDrawingElement: Function;
   onSelectElement: Function;
-  onUnFreezeHistory: Function;
 }
 
 interface OwnProps {
   children: JSX.Element | JSX.Element[];
-}
-
-interface PayloadProps {
-  [key: string]: any;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -53,7 +52,6 @@ function mapDispatchToProps() {
     onEndDrawingElement: endDrawingElement,
     onDrawingElement: drawingElement,
     onSelectElement: selectElement,
-    onUnFreezeHistory: () => {},
   };
 }
 const CREATE_MODE = "CREATE";
@@ -72,7 +70,8 @@ function MimicCanvas(props: Props): JSX.Element {
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          props.onSelectElement(id);
+          //selected: undefined | number[];
+          props.onSelectElement([id]);
           break;
         }
       }
@@ -83,9 +82,8 @@ function MimicCanvas(props: Props): JSX.Element {
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     const { detail } = ev;
     switch (detail) {
-      // simple click
       case 1: {
-        if (mode !== CREATE_MODE) return;
+        if (mode !== EDITOR_MODE_CREATE) return;
         const { clientX, clientY } = ev;
         const point: PointFromat = {
           x: clientX,
@@ -100,8 +98,8 @@ function MimicCanvas(props: Props): JSX.Element {
       }
 
       case 2: {
-        if (!drawId || mode !== CREATE_MODE) return;
-        props.onEndDrawingElement(ev);
+        if (!drawId || mode !== EDITOR_MODE_CREATE) return;
+        props.onEndDrawingElement(drawId);
         break;
       }
       default: {
@@ -109,10 +107,6 @@ function MimicCanvas(props: Props): JSX.Element {
       }
     }
   };
-
-  // const handlePointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
-  //   props.onUnFreezeHistory();
-  // };
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
     if (!drawId) return;
@@ -124,9 +118,7 @@ function MimicCanvas(props: Props): JSX.Element {
     props.onDrawingElement(drawId, point);
   };
 
-  const handlePointerUp = () => {
-    props.onUnFreezeHistory();
-  };
+  const handlePointerUp = () => {};
 
   return (
     <div
@@ -137,15 +129,14 @@ function MimicCanvas(props: Props): JSX.Element {
         height: height,
         overflow: "scroll",
         background: fill,
-        cursor: mode === CREATE_MODE ? "crosshair" : "auto",
+        cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
       }}
-      // onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onClick={handleClick}
     >
       <div style={{ pointerEvents: "none" }}>{children}</div>
-      {mode === CREATE_MODE && <CursorInfo />}
+      {mode === EDITOR_MODE_CREATE && <CursorInfo />}
     </div>
   );
 }

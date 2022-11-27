@@ -2,7 +2,9 @@ import {
   APPEND_POINT_TO_ELEMENT,
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
+  DELETE_LAST_POINT_OF_ELEMENT,
   MOVE_ELEMENT,
+  REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
 } from "../../constants/actionTypes/editorElements";
 import {
@@ -19,6 +21,8 @@ const selectElement = (state: any, id: number) =>
   state.editorElements.find(
     (element: MimicElementProps) => element.attributes.general.id === id
   );
+const selectElementPointsLength = (element: MimicElementProps) =>
+  element.attributes.position.points.length;
 
 function correctPoint(
   point: PointFromat,
@@ -122,44 +126,26 @@ export const appendPointToElement =
     }
   };
 
-// 888888888888888888888888888888888888888888888888888888888888888888888888
-// FIXME
-
-/*
-setOverwriteHistory(true);
-
-    if (newElement.attributes.position.points.length > 0) {
-      newElement.attributes.position.points[
-        newElement.attributes.position.points.length - 1
-      ] = { ...point };
-    } else {
-      newElement.attributes.position.points.push({ ...point });
-    }
-
-    updateAttributes(newElement.attributes.general.id, newElement.attributes);
-*/
-
 export const drawingElement =
   (id: number, point: PointFromat) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
-    const element = selectElement(getState(), id);
-
     dispatch({
-      type: RESIZE_ELEMENT,
+      type: REDRAW_LAST_POINT,
       payload: { id, point: newPoint },
       passHistrory: true,
     });
   };
 
-export const endDrawingElement =
-  (id: number, pointName: string, point: PointFromat) =>
-  (dispatch: Function, getState: Function) => {
-    // const viewPosition = selectViewPosition(getState());
-    // const newPoint = correctPoint(point, viewPosition);
-    // dispatch({
-    //   type: RESIZE_ELEMENT,
-    //   payload: { id, pointName, point: newPoint },
-    // });
-  };
+export const endDrawingElement = (id: number) => (dispatch: Function) => {
+  dispatch({
+    type: DELETE_LAST_POINT_OF_ELEMENT,
+    payload: { id },
+    passHistrory: true,
+  });
+
+  dispatch({
+    type: SET_MODE_EDIT,
+  });
+};

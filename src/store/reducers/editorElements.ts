@@ -8,6 +8,7 @@ import {
   MOVE_ELEMENT,
   MOVE_ELEMENT_BACK_LAYER,
   MOVE_ELEMENT_TOP_LAYER,
+  REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
   UPDATE_ELEMENT,
   UPDATE_LAST_POINT_OF_ELEMENT,
@@ -16,6 +17,13 @@ import { MimicElementProps } from "../../models/Editor";
 import resizeBox from "./functions/resizeBox";
 
 const defaultState: MimicElementProps[] = [];
+
+const selectElement = (state: any, id: number) =>
+  state.editorElements.find(
+    (element: MimicElementProps) => element.attributes.general.id === id
+  );
+const selectElementPointsLength = (element: MimicElementProps) =>
+  element.attributes.position.points.length;
 
 export default (state = defaultState, action: any) => {
   switch (action.type) {
@@ -105,6 +113,31 @@ export default (state = defaultState, action: any) => {
         points.pop();
         element.attributes.position.points = [...points];
         const newElements = lodash.cloneDeep(elements);
+        newElements[index] = { ...element };
+        return newElements;
+      } else {
+        return state;
+      }
+    }
+
+    case REDRAW_LAST_POINT: {
+      const { id, point } = action?.payload;
+
+      const index = state.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index) {
+        const element = { ...state[index] };
+        const pointsLength = selectElementPointsLength(element);
+
+        if (pointsLength > 0) {
+          element.attributes.position.points[pointsLength - 1] = { ...point };
+        } else {
+          element.attributes.position.points.push({ ...point });
+        }
+
+        const newElements = lodash.cloneDeep(state);
         newElements[index] = { ...element };
         return newElements;
       } else {

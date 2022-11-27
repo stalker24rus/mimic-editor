@@ -5,6 +5,7 @@ import {
   SET_MODE_CREATE,
   SET_MODE_EDIT,
   SET_MODE_OPERATE,
+  SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
 } from "../../constants/actionTypes/editorState";
 import {
@@ -30,7 +31,7 @@ interface Props {
   lastTakenId: number;
   viewPosition: PointFromat;
   currentMimic: MimicElementProps;
-  selected: undefined | number | number[];
+  selected: undefined | number[];
 }
 
 const defaultState = (): Props => {
@@ -146,6 +147,11 @@ export default (state = defaultState(), action: any): Props => {
       } else {
         throw "Invalid playload format.";
       }
+    }
+
+    case SET_SELECTED_ELEMENTS: {
+      const { elements } = action.payload;
+      return { ...state, selected: elements };
     }
 
     default:
