@@ -12,6 +12,7 @@ import {
   SET_LAST_TAKEN_ID,
   SET_MODE_EDIT,
 } from "../../constants/actionTypes/editorState";
+import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
 import { MimicElementProps, PointFromat } from "../../models/Editor";
 
 const selectViewPosition = (state: any) => state.editorState.viewPosition;
@@ -147,5 +148,17 @@ export const endDrawingElement = (id: number) => (dispatch: Function) => {
 
   dispatch({
     type: SET_MODE_EDIT,
+  });
+};
+
+export const undo = () => (dispatch: Function) => {
+  dispatch({
+    type: UNDO,
+  });
+};
+
+export const redo = () => (dispatch: Function) => {
+  dispatch({
+    type: REDO,
   });
 };

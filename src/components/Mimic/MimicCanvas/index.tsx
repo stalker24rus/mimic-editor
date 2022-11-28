@@ -15,7 +15,7 @@ import {
 import { selectElement } from "../../../store/actionCreators/editorState";
 import CursorInfo from "../CursorInfo";
 
-export const MIMIC_FRAME_ID: string = "mimic.frame";
+// export const MIMIC_FRAME_ID: string = "mimic.frame";
 
 interface StateProps {
   attributes: Attributes;
@@ -54,7 +54,6 @@ function mapDispatchToProps() {
     onSelectElement: selectElement,
   };
 }
-const CREATE_MODE = "CREATE";
 
 function MimicCanvas(props: Props): JSX.Element {
   const { mode, drawId, attributes, children } = props;
@@ -70,7 +69,6 @@ function MimicCanvas(props: Props): JSX.Element {
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          //selected: undefined | number[];
           props.onSelectElement([id]);
           break;
         }
