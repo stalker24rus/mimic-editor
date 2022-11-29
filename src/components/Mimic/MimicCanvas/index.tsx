@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { EDITOR_MODE_CREATE, MIMIC } from "../../../constants/literals";
 import {
@@ -12,7 +12,10 @@ import {
   drawingElement,
   endDrawingElement,
 } from "../../../store/actionCreators/editorElements";
-import { selectElement } from "../../../store/actionCreators/editorState";
+import {
+  selectElement,
+  setViewPosition,
+} from "../../../store/actionCreators/editorState";
 import CursorInfo from "../CursorInfo";
 
 // export const MIMIC_FRAME_ID: string = "mimic.frame";
@@ -29,6 +32,7 @@ interface DispatchProps {
   onEndDrawingElement: Function;
   onDrawingElement: Function;
   onSelectElement: Function;
+  onSetViewPosition: Function;
 }
 
 interface OwnProps {
@@ -52,12 +56,12 @@ function mapDispatchToProps() {
     onEndDrawingElement: endDrawingElement,
     onDrawingElement: drawingElement,
     onSelectElement: selectElement,
+    onSetViewPosition: setViewPosition,
   };
 }
 
 function MimicCanvas(props: Props): JSX.Element {
   const { mode, drawId, attributes, children } = props;
-
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
@@ -74,7 +78,22 @@ function MimicCanvas(props: Props): JSX.Element {
         }
       }
     }
+
+    function handleResize() {
+      const { left: x, top: y } = document
+        .getElementById(name)
+        .getBoundingClientRect();
+      props.onSetViewPosition({ left: x, top: y });
+    }
+
     window.addEventListener("click", selectComponent);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("click", selectComponent);
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {

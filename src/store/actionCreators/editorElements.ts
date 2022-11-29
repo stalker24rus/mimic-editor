@@ -15,7 +15,8 @@ import {
 import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
 import { MimicElementProps, PointFromat } from "../../models/Editor";
 
-const selectViewPosition = (state: any) => state.editorState.viewPosition;
+export const selectViewPosition = (state: any) =>
+  state.editorState.viewPosition;
 const selectNewElement = (state: any) => state.editorState.newElement;
 const selectLastTakenId = (state: any) => state.editorState.lastTakenId;
 const selectElement = (state: any, id: number) =>

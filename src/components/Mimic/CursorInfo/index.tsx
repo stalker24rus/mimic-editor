@@ -1,1 +1,62 @@
-export default () => <></>;
+import { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { PointFromat } from "../../../models/Editor";
+import { selectViewPosition } from "../../../store/actionCreators/editorElements";
+
+interface StateProps {
+  viewPosition: PointFromat;
+}
+
+interface DispatchProps {}
+
+interface OwnProps {}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
+function mapStateToProps(store) {
+  return {
+    viewPosition: selectViewPosition(store),
+  };
+}
+
+function mapDispatchToProps() {
+  return {};
+}
+
+function CursorInfo(props: Props): JSX.Element {
+  const [x, setX] = useState(0);
+  const [y, setY] = useState(0);
+
+  useEffect(() => {
+    // FIXME
+    const update = (ev: any) => {
+      const { clientX, clientY } = ev;
+
+      const { x, y } = {
+        x: clientX - props.viewPosition.x,
+        y: clientY - props.viewPosition.y,
+      };
+      setX(x);
+      setY(y);
+    };
+
+    window.addEventListener("mousemove", update);
+    return () => {
+      window.removeEventListener("mousemove", update);
+    };
+  }, [setX, setY]);
+
+  return (
+    <div
+      className="bg-stone-50 rounded-md"
+      style={{ top: y, left: x, position: "absolute" }}
+    >
+      {x}.{y}
+    </div>
+  );
+}
+
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps
+)(CursorInfo);
