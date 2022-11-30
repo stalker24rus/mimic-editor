@@ -66,6 +66,7 @@ export const resizeElement =
 /**
  * DRAWING
  */
+
 export const createElement =
   (point: PointFromat) => (dispatch: Function, getState: Function) => {
     const newLastTakenId = selectLastTakenId(getState()) + 1;

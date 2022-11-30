@@ -21,7 +21,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    elements: store.editorHistory.elements,
+    elements: store.undoredobleEditorElements.present,
   };
 }
 

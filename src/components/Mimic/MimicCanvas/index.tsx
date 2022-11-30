@@ -43,9 +43,9 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    attributes: store.mimic.frame.attributes,
-    mode: store.mimic.canvas.mode,
-    drawId: 0,
+    attributes: store.editorState.currentMimic.attributes,
+    mode: store.editorState.mode,
+    drawId: store.editorState.drawId,
   };
 }
 
@@ -80,10 +80,10 @@ function MimicCanvas(props: Props): JSX.Element {
     }
 
     function handleResize() {
-      const { left: x, top: y } = document
-        .getElementById(name)
-        .getBoundingClientRect();
-      props.onSetViewPosition({ left: x, top: y });
+      // const { left: x, top: y } = document
+      //   .getElementById(name)
+      //   .getBoundingClientRect();
+      // props.onSetViewPosition({ left: x, top: y });
     }
 
     window.addEventListener("click", selectComponent);
@@ -101,12 +101,15 @@ function MimicCanvas(props: Props): JSX.Element {
     switch (detail) {
       case 1: {
         if (mode !== EDITOR_MODE_CREATE) return;
+        console.log("simple click");
         const { clientX, clientY } = ev;
         const point: PointFromat = {
           x: clientX,
           y: clientY,
         };
+
         if (!drawId) {
+          console.log("drawId", drawId);
           props.onCreateElement(point);
         } else {
           props.onAppendPointToElement(drawId, point);
@@ -160,5 +163,5 @@ function MimicCanvas(props: Props): JSX.Element {
 
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps()
 )(MimicCanvas);

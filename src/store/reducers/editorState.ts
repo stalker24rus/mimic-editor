@@ -35,9 +35,12 @@ interface Props {
 }
 
 const defaultState = (): Props => {
-  const { left, top } = document
-    .getElementById(MIMIC_FRAME_ID)
-    .getBoundingClientRect();
+  // const { left, top } = document
+  //   .getElementById(MIMIC_FRAME_ID)
+  //   .getBoundingClientRect();
+
+  const left = 0;
+  const top = 0;
 
   return {
     mode: EDITOR_MODE_EDIT,
