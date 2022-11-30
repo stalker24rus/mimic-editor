@@ -75,24 +75,20 @@ function ResizePoints({
       <Point
         className={BOX_BOTTOM_LEFT}
         cursorType={"pointer"}
-        position={
-          {
-            //     bottom: -5,
-            //     left: -5,
-          }
-        }
+        position={{
+          bottom: -5,
+          left: -5,
+        }}
         {...funcProps}
       />
 
       <Point
         className={BOX_BOTTOM_RIGHT}
         cursorType={"pointer"}
-        position={
-          {
-            //     bottom: -5,
-            //     right: -5,
-          }
-        }
+        position={{
+          bottom: -5,
+          right: -5,
+        }}
         {...funcProps}
       />
     </>

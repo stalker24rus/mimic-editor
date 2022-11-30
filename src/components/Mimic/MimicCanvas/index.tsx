@@ -18,8 +18,6 @@ import {
 } from "../../../store/actionCreators/editorState";
 import CursorInfo from "../CursorInfo";
 
-// export const MIMIC_FRAME_ID: string = "mimic.frame";
-
 interface StateProps {
   attributes: Attributes;
   mode: EditorModeProps;
@@ -73,17 +71,20 @@ function MimicCanvas(props: Props): JSX.Element {
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          props.onSelectElement([id]);
+          props.onSelectElement([parseInt(id)]);
           break;
         }
       }
     }
 
+    // FIXME  FIRST !!!!!!!!!!!!!!!!!
     function handleResize() {
-      // const { left: x, top: y } = document
-      //   .getElementById(name)
-      //   .getBoundingClientRect();
-      // props.onSetViewPosition({ left: x, top: y });
+      const htmlRect = document.getElementById(name)?.getBoundingClientRect();
+
+      if (htmlRect) {
+        const { x, y } = htmlRect;
+        props.onSetViewPosition({ x, y });
+      }
     }
 
     window.addEventListener("click", selectComponent);
@@ -101,7 +102,6 @@ function MimicCanvas(props: Props): JSX.Element {
     switch (detail) {
       case 1: {
         if (mode !== EDITOR_MODE_CREATE) return;
-        console.log("simple click");
         const { clientX, clientY } = ev;
         const point: PointFromat = {
           x: clientX,
@@ -109,7 +109,6 @@ function MimicCanvas(props: Props): JSX.Element {
         };
 
         if (!drawId) {
-          console.log("drawId", drawId);
           props.onCreateElement(point);
         } else {
           props.onAppendPointToElement(drawId, point);

@@ -35,13 +35,6 @@ interface Props {
 }
 
 const defaultState = (): Props => {
-  // const { left, top } = document
-  //   .getElementById(MIMIC_FRAME_ID)
-  //   .getBoundingClientRect();
-
-  const left = 0;
-  const top = 0;
-
   return {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined, service: undefined },
@@ -62,12 +55,12 @@ const defaultState = (): Props => {
         position: {
           points: [
             {
-              x: top | 0,
-              y: left | 0,
+              x: 0,
+              y: 0,
             },
           ],
-          width: 800,
-          height: 600,
+          width: 1300,
+          height: 1100,
         },
         appearance: {
           fill: "#CECECE",
@@ -144,9 +137,9 @@ export default (state = defaultState(), action: any): Props => {
     }
 
     case SET_VIEW_POSITION: {
-      const { position } = action.payload;
-      if (position) {
-        return { ...state, viewPosition: position };
+      const { point } = action.payload;
+      if (point) {
+        return { ...state, viewPosition: point };
       } else {
         throw "Invalid playload format.";
       }

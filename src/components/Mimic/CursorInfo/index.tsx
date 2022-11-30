@@ -26,6 +26,10 @@ function mapDispatchToProps() {
 function CursorInfo(props: Props): JSX.Element {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const indent: PointFromat = {
+    x: 10,
+    y: 10,
+  };
 
   useEffect(() => {
     // FIXME
@@ -48,8 +52,8 @@ function CursorInfo(props: Props): JSX.Element {
 
   return (
     <div
-      className="bg-stone-50 rounded-md"
-      style={{ top: y, left: x, position: "absolute" }}
+      className="w-100 h-100 bg-stone-50 rounded-md"
+      style={{ top: y + indent.y, left: x + indent.x, position: "absolute" }}
     >
       {x}.{y}
     </div>
