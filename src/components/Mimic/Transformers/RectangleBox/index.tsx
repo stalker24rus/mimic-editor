@@ -62,7 +62,7 @@ function RectangleBox(props: Props): JSX.Element {
       x: ev.clientX,
       y: ev.clientY,
     };
-    props.onMove(id, pointName, point);
+    props.onMove(id, point);
   };
 
   const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
