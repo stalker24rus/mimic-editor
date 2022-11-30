@@ -18,7 +18,7 @@ export default function Button(props: Props): JSX.Element {
   const style = " block  px-3 py-2 rounded-md bg-blue-500 text-white";
 
   return (
-    <RectangleBox component={props.component} isSelected={true}>
+    <RectangleBox component={props.component}>
       <button
         id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
         className={style}

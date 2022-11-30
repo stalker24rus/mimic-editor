@@ -31,7 +31,7 @@ interface Props {
   lastTakenId: number;
   viewPosition: PointFromat;
   currentMimic: MimicElementProps;
-  selected: undefined | number[];
+  selected: number[];
 }
 
 const defaultState = (): Props => {
@@ -41,7 +41,7 @@ const defaultState = (): Props => {
     drawId: undefined,
     lastTakenId: 1,
     viewPosition: { x: 0, y: 0 },
-    selected: undefined,
+    selected: [],
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
