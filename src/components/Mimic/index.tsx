@@ -1,23 +1,58 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { MimicElementProps } from "../../models/Editor";
+import { redo, undo } from "../../store/actionCreators/editorElements";
 import useDrawElement from "./Hooks/useDrawElement";
 
 import MimicCanvas from "./MimicCanvas";
 
+interface StateProps {
+  elements: MimicElementProps[];
+}
+
+interface DispatchProps {
+  undo: Function;
+  redo: Function;
+}
+
+interface OwnProps {}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
 function mapStateToProps(store) {
   return {
-    elements: store.editorHistory.elements,
+    elements: store.undoredobleEditorElements.present,
   };
 }
 
 function mapDispatchToProps() {
-  return {};
+  return {
+    undo: undo,
+    redo: redo,
+  };
 }
 
-const Mimic = (props) => {
+const Mimic = (props: Props): JSX.Element => {
   const elements = props.elements;
 
   const [DrawFabric] = useDrawElement();
+
+  useEffect(() => {
+    // FIXME -> Any
+    const keyListener = (ev: any) => {
+      if ((ev.metaKey || ev.ctrlKey) && (ev.key === "Z" || ev.key === "z")) {
+        if (ev.shiftKey) {
+          props.redo();
+        } else {
+          props.undo();
+        }
+      }
+    };
+    window.addEventListener("keydown", keyListener);
+    return () => {
+      window.removeEventListener("keydown", keyListener);
+    };
+  }, [elements]);
 
   return (
     <MimicCanvas>
@@ -32,4 +67,7 @@ const Mimic = (props) => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps())(Mimic);
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps()
+)(Mimic);

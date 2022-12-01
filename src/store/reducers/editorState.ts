@@ -5,6 +5,7 @@ import {
   SET_MODE_CREATE,
   SET_MODE_EDIT,
   SET_MODE_OPERATE,
+  SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
 } from "../../constants/actionTypes/editorState";
 import {
@@ -30,21 +31,17 @@ interface Props {
   lastTakenId: number;
   viewPosition: PointFromat;
   currentMimic: MimicElementProps;
-  selected: undefined | number | number[];
+  selected: number[];
 }
 
 const defaultState = (): Props => {
-  const { left, top } = document
-    .getElementById(MIMIC_FRAME_ID)
-    .getBoundingClientRect();
-
   return {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined, service: undefined },
     drawId: undefined,
     lastTakenId: 1,
     viewPosition: { x: 0, y: 0 },
-    selected: undefined,
+    selected: [],
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
@@ -58,12 +55,12 @@ const defaultState = (): Props => {
         position: {
           points: [
             {
-              x: top | 0,
-              y: left | 0,
+              x: 0,
+              y: 0,
             },
           ],
-          width: 800,
-          height: 600,
+          width: 1300,
+          height: 1100,
         },
         appearance: {
           fill: "#CECECE",
@@ -91,15 +88,12 @@ export default (state = defaultState(), action: any): Props => {
 
     case SET_MODE_CREATE: {
       const { element } = action?.payload;
-      const newTakenId = state.lastTakenId + 1;
 
-      if (element && newTakenId) {
+      if (element) {
         return {
           ...state,
           mode: EDITOR_MODE_CREATE,
           newElement: { ...element },
-          lastTakenId: newTakenId,
-          drawId: newTakenId,
         };
       } else {
         throw "Invalid playload format.";
@@ -143,12 +137,17 @@ export default (state = defaultState(), action: any): Props => {
     }
 
     case SET_VIEW_POSITION: {
-      const { position } = action.payload;
-      if (position) {
-        return { ...state, viewPosition: position };
+      const { point } = action.payload;
+      if (point) {
+        return { ...state, viewPosition: point };
       } else {
         throw "Invalid playload format.";
       }
+    }
+
+    case SET_SELECTED_ELEMENTS: {
+      const { elements } = action.payload;
+      return { ...state, selected: elements };
     }
 
     default:

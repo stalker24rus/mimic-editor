@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { MimicElementProps } from "../../../../../models/Editor";
 import Point from "../Point";
 
@@ -20,15 +21,22 @@ function RotationPoint({
   const { position } = attributes;
   const { width, height, points } = position;
 
-  const handlePointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
+  const [isDragging, setIsDragging] = useState(false);
+
+  const handlePointerDown = (ev: any) => {
+    setIsDragging(true);
+    const { target, pointerId } = ev;
+    target.setPointerCapture(pointerId);
     onPointerDown(ev);
   };
 
   const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
     onPointerUp(ev);
   };
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     onPointerMove(ev);
   };
 

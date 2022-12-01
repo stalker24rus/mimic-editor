@@ -1,85 +1,124 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Attributes, CanvasMode } from "../../../models/mimic";
+import { EDITOR_MODE_CREATE, MIMIC } from "../../../constants/literals";
 import {
-  CREATE_ELEMENT,
-  SET_DRAWING_ID,
-  SET_LAST_TAKEN_ID,
-} from "../../MimicCanvas/actionTypes";
-import CursorInfo from "../../MimicCanvas/CursorInfo";
-
-export const MIMIC_FRAME_ID: string = "mimic.frame";
+  Attributes,
+  EditorModeProps,
+  PointFromat,
+} from "../../../models/Editor";
+import {
+  appendPointToElement,
+  createElement,
+  drawingElement,
+  endDrawingElement,
+} from "../../../store/actionCreators/editorElements";
+import {
+  selectElement,
+  setViewPosition,
+} from "../../../store/actionCreators/editorState";
+import CursorInfo from "../CursorInfo";
 
 interface StateProps {
   attributes: Attributes;
-  mode: CanvasMode;
+  mode: EditorModeProps;
   drawId: number;
 }
 
 interface DispatchProps {
-  onCreateEl: Function;
-  onAppendPointToEl: Function;
+  onCreateElement: Function;
+  onAppendPointToElement: Function;
   onEndDrawingElement: Function;
   onDrawingElement: Function;
-  onUnFreezeHistory: Function;
+  onSelectElement: Function;
+  onSetViewPosition: Function;
 }
 
 interface OwnProps {
   children: JSX.Element | JSX.Element[];
 }
 
-interface PayloadProps {
-  [key: string]: any;
-}
-
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    attributes: store.mimic.frame.attributes,
-    mode: store.mimic.canvas.mode,
-    drawId: 0,
+    attributes: store.editorState.currentMimic.attributes,
+    mode: store.editorState.mode,
+    drawId: store.editorState.drawId,
   };
 }
 
-const mapDispatchToProps = (dispatch: Function, getState: any) => ({
-  onCreateEl: (payload: PayloadProps) =>
-    dispatch({ type: "CREATE_ELEMENT_OR_APPEND_POINT", payload }),
-  onAppendPointToEl: (payload: PayloadProps) =>
-    dispatch({ type: CREATE_ELEMENT, payload }),
-  onEndDrawingElement: (payload: PayloadProps) =>
-    dispatch({ type: SET_LAST_TAKEN_ID, payload }),
-  onDrawingElement: (payload: PayloadProps) => dispatch({ type: "", payload }),
-  onUnFreezeHistory: (payload: PayloadProps) => dispatch({ type: "", payload }),
-});
-
-const CREATE_MODE = "CREATE";
+function mapDispatchToProps() {
+  return {
+    onCreateElement: createElement,
+    onAppendPointToElement: appendPointToElement,
+    onEndDrawingElement: endDrawingElement,
+    onDrawingElement: drawingElement,
+    onSelectElement: selectElement,
+    onSetViewPosition: setViewPosition,
+  };
+}
 
 function MimicCanvas(props: Props): JSX.Element {
   const { mode, drawId, attributes, children } = props;
-
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
   const { name } = general;
 
+  useEffect(() => {
+    function selectComponent({ clientX, clientY }) {
+      const elements = document.elementsFromPoint(clientX, clientY);
+      for (let i = 0; i < elements.length; i++) {
+        const [parent, type, id] = elements[i].id.split(".");
+        if (parent === MIMIC) {
+          props.onSelectElement([parseInt(id)]);
+          break;
+        }
+      }
+    }
+
+    // FIXME  FIRST !!!!!!!!!!!!!!!!!
+    function handleResize() {
+      const htmlRect = document.getElementById(name)?.getBoundingClientRect();
+
+      if (htmlRect) {
+        const { x, y } = htmlRect;
+        props.onSetViewPosition({ x, y });
+      }
+    }
+
+    window.addEventListener("click", selectComponent);
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("click", selectComponent);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     const { detail } = ev;
     switch (detail) {
-      // simple click
       case 1: {
-        if (mode !== CREATE_MODE) return;
+        if (mode !== EDITOR_MODE_CREATE) return;
+        const { clientX, clientY } = ev;
+        const point: PointFromat = {
+          x: clientX,
+          y: clientY,
+        };
+
         if (!drawId) {
-          props.onCreateEl(ev);
+          props.onCreateElement(point);
         } else {
-          props.onAppendPointToEl(ev);
+          props.onAppendPointToElement(drawId, point);
         }
         break;
       }
 
       case 2: {
-        if (!drawId || mode !== CREATE_MODE) return;
-        props.onEndDrawingElement(ev);
+        if (!drawId || mode !== EDITOR_MODE_CREATE) return;
+        props.onEndDrawingElement(drawId);
         break;
       }
       default: {
@@ -88,17 +127,17 @@ function MimicCanvas(props: Props): JSX.Element {
     }
   };
 
-  // const handlePointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
-  //   props.onUnFreezeHistory();
-  // };
-
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
     if (!drawId) return;
-    props.onDrawingElement(ev);
+    const { clientX, clientY } = ev;
+    const point: PointFromat = {
+      x: clientX,
+      y: clientY,
+    };
+    props.onDrawingElement(drawId, point);
   };
-  const handlePointerUp = () => {
-    props.onUnFreezeHistory();
-  };
+
+  const handlePointerUp = () => {};
 
   return (
     <div
@@ -109,20 +148,19 @@ function MimicCanvas(props: Props): JSX.Element {
         height: height,
         overflow: "scroll",
         background: fill,
-        cursor: mode === CREATE_MODE ? "crosshair" : "auto",
+        cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
       }}
-      // onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
       onClick={handleClick}
     >
       <div style={{ pointerEvents: "none" }}>{children}</div>
-      {mode === CREATE_MODE && <CursorInfo />}
+      {mode === EDITOR_MODE_CREATE && <CursorInfo />}
     </div>
   );
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps()
 )(MimicCanvas);

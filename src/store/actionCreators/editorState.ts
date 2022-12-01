@@ -2,6 +2,7 @@ import {
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_CREATE,
+  SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
 } from "../../constants/actionTypes/editorState";
 import {
@@ -16,6 +17,7 @@ import {
   getBaseParamOfPolygon,
   getBaseParamOfPolyLine,
 } from "../../constants/mimicBaseElements";
+import { PointFromat } from "../../models/Editor";
 
 export const editorAddButton = () => (dispatch: Function) => {
   const element = {
@@ -57,8 +59,10 @@ export const editorSetLastTakenId = (id: number) => (dispatch: Function) => {
   dispatch({ type: SET_LAST_TAKEN_ID, payload: { id } });
 };
 
-export const editorSetViewPosition =
-  (point: number) => (dispatch: Function) => {
-    const point = undefined;
-    dispatch({ type: SET_VIEW_POSITION, payload: { point } });
-  };
+export const setViewPosition = (point: PointFromat) => (dispatch: Function) => {
+  dispatch({ type: SET_VIEW_POSITION, payload: { point } });
+};
+
+export const selectElement = (elements: number[]) => (dispatch: Function) => {
+  dispatch({ type: SET_SELECTED_ELEMENTS, payload: { elements } });
+};

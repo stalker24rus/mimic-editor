@@ -1,3 +1,4 @@
+import { ELEMENT_TYPE_BUTTON, MIMIC } from "../../../../constants/literals";
 import { MimicElementProps } from "../../../../models/Editor";
 import RectangleBox from "../../Transformers/RectangleBox";
 
@@ -17,8 +18,12 @@ export default function Button(props: Props): JSX.Element {
   const style = " block  px-3 py-2 rounded-md bg-blue-500 text-white";
 
   return (
-    <RectangleBox component={props.component} isSelected={true}>
-      <button className={style} style={{ width, height }}>
+    <RectangleBox component={props.component}>
+      <button
+        id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
+        className={style}
+        style={{ width, height }}
+      >
         {text}
       </button>
     </RectangleBox>

@@ -10,7 +10,9 @@ import MovingCell from "../Primitives/MovingCell";
 import ResizePoints from "../Primitives/ResizePoints";
 import RotationPoint from "../Primitives/RotationPoint";
 
-interface StateProps {}
+interface StateProps {
+  selected: Number[];
+}
 
 interface DispatchProps {
   onChangeAngle: Function;
@@ -21,13 +23,14 @@ interface DispatchProps {
 interface OwnProps {
   component: MimicElementProps;
   children?: React.ReactNode;
-  isSelected: boolean;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  return {};
+  return {
+    selected: store.editorState.selected,
+  };
 }
 
 function mapDispatchToProps() {
@@ -39,7 +42,7 @@ function mapDispatchToProps() {
 }
 
 function RectangleBox(props: Props): JSX.Element {
-  const { component, children, isSelected } = props;
+  const { component, children, selected } = props;
   const { attributes } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
@@ -47,6 +50,7 @@ function RectangleBox(props: Props): JSX.Element {
   const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
+  const isSelected = selected.includes(id);
 
   const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
     const point: PointFromat = {
@@ -57,20 +61,20 @@ function RectangleBox(props: Props): JSX.Element {
   };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const pointName: string = ev.currentTarget.className;
     const point: PointFromat = {
-      x: ev.clientX,
-      y: ev.clientY,
-    };
-    props.onMove(id, pointName, point);
-  };
-
-  const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const point = {
       y: topLeftPoint.y + ev.movementY,
       x: topLeftPoint.x + ev.movementX,
     };
-    props.onResize(id, point);
+    props.onMove(id, point);
+  };
+
+  const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
+    const pointName: string = ev.currentTarget.className;
+    const point = {
+      x: ev.clientX,
+      y: ev.clientY,
+    };
+    props.onResize(id, pointName, point);
   };
 
   return (
@@ -92,10 +96,6 @@ function RectangleBox(props: Props): JSX.Element {
         <RotationPoint component={component} onDragMove={handleChangeAngle} />
       )}
 
-      {isSelected && (
-        <ResizePoints component={component} onPointerMove={handleResize} />
-      )}
-
       <div
         style={{
           width,
@@ -109,7 +109,10 @@ function RectangleBox(props: Props): JSX.Element {
       </div>
 
       {isSelected && (
-        <MovingCell component={component} onPointerMove={handleMove} />
+        <>
+          <MovingCell component={component} onPointerMove={handleMove} />
+          <ResizePoints component={component} onPointerMove={handleResize} />
+        </>
       )}
     </div>
   );
