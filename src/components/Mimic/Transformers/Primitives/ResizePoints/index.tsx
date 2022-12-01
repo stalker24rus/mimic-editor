@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   BOX_BOTTOM_LEFT,
   BOX_BOTTOM_RIGHT,
@@ -27,15 +28,23 @@ function ResizePoints({
   const { position } = attributes;
   const { width, height, points, angle } = position;
 
-  const handlePointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
+  const [isDragging, setIsDragging] = useState(false);
+
+  //FIXME
+  const handlePointerDown = (ev: any) => {
+    setIsDragging(true);
+    const { target, pointerId } = ev;
+    target.setPointerCapture(pointerId);
     onPointerDown(ev);
   };
 
   const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
+    setIsDragging(false);
     onPointerUp(ev);
   };
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
     onPointerMove(ev);
   };
 

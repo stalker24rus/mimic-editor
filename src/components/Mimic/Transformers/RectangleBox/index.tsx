@@ -71,8 +71,6 @@ function RectangleBox(props: Props): JSX.Element {
   const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
     const pointName: string = ev.currentTarget.className;
     const point = {
-      // y: topLeftPoint.y + ev.movementY,
-      // x: topLeftPoint.x + ev.movementX,
       x: ev.clientX,
       y: ev.clientY,
     };
@@ -98,10 +96,6 @@ function RectangleBox(props: Props): JSX.Element {
         <RotationPoint component={component} onDragMove={handleChangeAngle} />
       )}
 
-      {isSelected && (
-        <ResizePoints component={component} onPointerMove={handleResize} />
-      )}
-
       <div
         style={{
           width,
@@ -115,7 +109,10 @@ function RectangleBox(props: Props): JSX.Element {
       </div>
 
       {isSelected && (
-        <MovingCell component={component} onPointerMove={handleMove} />
+        <>
+          <MovingCell component={component} onPointerMove={handleMove} />
+          <ResizePoints component={component} onPointerMove={handleResize} />
+        </>
       )}
     </div>
   );

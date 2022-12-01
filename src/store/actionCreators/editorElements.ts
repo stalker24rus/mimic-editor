@@ -38,7 +38,11 @@ function correctPoint(
 
 export const changeElementAngle =
   (id: number, point: PointFromat) => (dispatch: Function) => {
-    dispatch({ type: CHANGE_ELEMENT_ANGLE, payload: { id, point } });
+    dispatch({
+      type: CHANGE_ELEMENT_ANGLE,
+      payload: { id, point },
+      passHistrory: true,
+    });
   };
 
 export const moveElement =
@@ -47,6 +51,7 @@ export const moveElement =
     dispatch({
       type: MOVE_ELEMENT,
       payload: { id, point },
+      passHistrory: true,
     });
   };
 
@@ -58,6 +63,7 @@ export const resizeElement =
     dispatch({
       type: RESIZE_ELEMENT,
       payload: { id, pointName, point: newPoint },
+      passHistrory: true,
     });
   };
 
