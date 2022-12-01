@@ -28,13 +28,12 @@ function MovingCell({
   };
 
   const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
-    setIsDragging(false);
     onPointerUp(ev);
+    setIsDragging(false);
   };
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-    onPointerMove(ev);
+    if (isDragging) onPointerMove(ev);
   };
 
   return (
