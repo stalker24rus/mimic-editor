@@ -44,11 +44,9 @@ export const changeElementAngle =
 export const moveElement =
   (id: number, point: PointFromat) =>
   (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
-    const newPoint = correctPoint(point, viewPosition);
     dispatch({
       type: MOVE_ELEMENT,
-      payload: { id, point: newPoint },
+      payload: { id, point },
     });
   };
 

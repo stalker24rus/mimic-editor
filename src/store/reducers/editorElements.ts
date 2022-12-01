@@ -127,7 +127,7 @@ export default (state = defaultState, action: any) => {
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
-      if (index) {
+      if (index > -1) {
         const element = { ...state[index] };
         const pointsLength = selectElementPointsLength(element);
 
@@ -152,7 +152,7 @@ export default (state = defaultState, action: any) => {
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
-      if (index) {
+      if (index > -1) {
         // TODO ADD SELECTOR
         // FIXME
         const topLeft = elements[index]?.attributes.position.points[0];
@@ -182,7 +182,7 @@ export default (state = defaultState, action: any) => {
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
-      if (index) {
+      if (index > -1) {
         elements[index].attributes.position.points[0] = { ...point };
         return [...elements];
       } else {
@@ -197,7 +197,7 @@ export default (state = defaultState, action: any) => {
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
-      if (index) {
+      if (index > -1) {
         const { points, width, height, angle } =
           elements[index].attributes.position;
         const { x, y } = points[0];

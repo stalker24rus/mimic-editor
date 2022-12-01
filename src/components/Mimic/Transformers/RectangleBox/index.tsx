@@ -61,10 +61,9 @@ function RectangleBox(props: Props): JSX.Element {
   };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const pointName: string = ev.currentTarget.className;
     const point: PointFromat = {
-      x: ev.clientX,
-      y: ev.clientY,
+      y: topLeftPoint.y + ev.movementY,
+      x: topLeftPoint.x + ev.movementX,
     };
     props.onMove(id, point);
   };
@@ -72,8 +71,10 @@ function RectangleBox(props: Props): JSX.Element {
   const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
     const pointName: string = ev.currentTarget.className;
     const point = {
-      y: topLeftPoint.y + ev.movementY,
-      x: topLeftPoint.x + ev.movementX,
+      // y: topLeftPoint.y + ev.movementY,
+      // x: topLeftPoint.x + ev.movementX,
+      x: ev.clientX,
+      y: ev.clientY,
     };
     props.onResize(id, pointName, point);
   };
