@@ -1,3 +1,4 @@
+import { Console } from "console";
 import { useState } from "react";
 import { MimicElementProps } from "../../../../../models/Editor";
 
@@ -27,7 +28,7 @@ function MovingCell({
     onPointerDown(ev);
   };
 
-  const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
+  const handlePointerUp = (ev: any) => {
     onPointerUp(ev);
     setIsDragging(false);
   };
@@ -48,8 +49,8 @@ function MovingCell({
         left: 0,
       }}
       onPointerUp={handlePointerUp}
-      onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
+      onPointerDown={handlePointerDown}
     ></div>
   );
 }
@@ -58,6 +59,7 @@ MovingCell.defaultProps = {
   onPointerDown: () => {},
   onPointerUp: () => {},
   onPointerMove: () => {},
+  onDragMove: () => {},
 };
 
 export default MovingCell;
