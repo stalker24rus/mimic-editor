@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { connect } from "react-redux";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
