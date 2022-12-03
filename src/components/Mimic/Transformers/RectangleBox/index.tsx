@@ -4,6 +4,7 @@ import {
   changeElementAngle,
   moveElement,
   resizeElement,
+  startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 import ResizePoints from "../Primitives/ResizePoints";
@@ -17,6 +18,7 @@ interface DispatchProps {
   onChangeAngle: Function;
   onMove: Function;
   onResize: Function;
+  onStartChanges: Function;
 }
 
 interface OwnProps {
@@ -37,6 +39,7 @@ function mapDispatchToProps() {
     onChangeAngle: changeElementAngle,
     onMove: moveElement,
     onResize: resizeElement,
+    onStartChanges: startDoingChanges,
   };
 }
 
@@ -76,6 +79,10 @@ function RectangleBox(props: Props): JSX.Element {
     props.onResize(id, pointName, point);
   };
 
+  const handlePointerDown = () => {
+    props.onStartChanges();
+  };
+
   return (
     <div
       id={"mimic.button." + id}
@@ -92,7 +99,11 @@ function RectangleBox(props: Props): JSX.Element {
       }}
     >
       {isSelected && (
-        <RotationPoint component={component} onDragMove={handleChangeAngle} />
+        <RotationPoint
+          component={component}
+          onDragMove={handleChangeAngle}
+          onPointerDown={handlePointerDown}
+        />
       )}
 
       <div
@@ -109,8 +120,16 @@ function RectangleBox(props: Props): JSX.Element {
 
       {isSelected && (
         <>
-          <MovingCell component={component} onPointerMove={handleMove} />
-          <ResizePoints component={component} onPointerMove={handleResize} />
+          <MovingCell
+            component={component}
+            onPointerMove={handleMove}
+            onPointerDown={handlePointerDown}
+          />
+          <ResizePoints
+            component={component}
+            onPointerMove={handleResize}
+            onPointerDown={handlePointerDown}
+          />
         </>
       )}
     </div>

@@ -6,6 +6,7 @@ import {
   MOVE_ELEMENT,
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
+  HISTORY_POINT_FOR_CHANGES,
 } from "../../constants/actionTypes/editorElements";
 import {
   SET_DRAWING_ID,
@@ -70,6 +71,13 @@ export const resizeElement =
 /**
  * DRAWING
  */
+
+export const startDoingChanges = () => (dispatch: Function) => {
+  dispatch({
+    type: HISTORY_POINT_FOR_CHANGES,
+    passHistrory: false,
+  });
+};
 
 export const createElement =
   (point: PointFromat) => (dispatch: Function, getState: Function) => {

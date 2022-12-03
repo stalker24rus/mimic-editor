@@ -10,6 +10,7 @@ import {
   MOVE_ELEMENT_TOP_LAYER,
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
+  HISTORY_POINT_FOR_CHANGES,
   UPDATE_ELEMENT,
   UPDATE_LAST_POINT_OF_ELEMENT,
 } from "../../constants/actionTypes/editorElements";
@@ -51,7 +52,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case UPDATE_ELEMENT: {
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const { id, attributes } = action.payload;
 
       const index = elements?.findIndex(
@@ -81,7 +82,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case APPEND_POINT_TO_ELEMENT: {
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const { id, point } = action.payload;
 
       const index = elements.findIndex(
@@ -100,7 +101,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case DELETE_LAST_POINT_OF_ELEMENT: {
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const { id } = action.payload;
 
       const index = elements.findIndex(
@@ -147,7 +148,7 @@ export default (state = defaultState, action: any) => {
 
     case CHANGE_ELEMENT_ANGLE: {
       const { id, point } = action?.payload;
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
@@ -177,7 +178,7 @@ export default (state = defaultState, action: any) => {
 
     case MOVE_ELEMENT: {
       const { id, point } = action?.payload;
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
@@ -192,7 +193,7 @@ export default (state = defaultState, action: any) => {
 
     case RESIZE_ELEMENT: {
       const { id, pointName: targetName, point } = action?.payload;
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
@@ -220,6 +221,11 @@ export default (state = defaultState, action: any) => {
       } else {
         return state;
       }
+    }
+
+    case HISTORY_POINT_FOR_CHANGES: {
+      const elements = lodash.cloneDeep(state);
+      return [...elements];
     }
 
     case UPDATE_LAST_POINT_OF_ELEMENT: {

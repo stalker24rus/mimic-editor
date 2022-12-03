@@ -1,4 +1,5 @@
 import { connect } from "react-redux";
+import { redo, undo } from "../../../store/actionCreators/editorElements";
 import {
   editorAddButton,
   editorAddLine,
@@ -6,13 +7,18 @@ import {
   editorAddPolyline,
 } from "../../../store/actionCreators/editorState";
 
-interface StateProps {}
+interface StateProps {
+  future: [any];
+  past: [any];
+}
 
 interface DispatchProps {
   onAddButton: Function;
   onAddLine: Function;
   onAddPolyline: Function;
   onAddPolygon: Function;
+  onUndo: Function;
+  onRedo: Function;
 }
 
 interface OwnProps {
@@ -21,8 +27,11 @@ interface OwnProps {
 
 type Props = StateProps & DispatchProps & OwnProps;
 
-function mapStateToProps() {
-  return {};
+function mapStateToProps(store) {
+  return {
+    future: store.undoredobleEditorElements.future,
+    past: store.undoredobleEditorElements.past,
+  };
 }
 
 function mapDispatchToProps() {
@@ -31,6 +40,8 @@ function mapDispatchToProps() {
     onAddLine: editorAddLine,
     onAddPolyline: editorAddPolyline,
     onAddPolygon: editorAddPolygon,
+    onUndo: undo,
+    onRedo: redo,
   };
 }
 
@@ -49,6 +60,14 @@ const InstrumentPanel = (props: Props): JSX.Element => {
 
   const handleAddPolygone = () => {
     props.onAddPolygon();
+  };
+
+  const handleUndo = () => {
+    props.onUndo();
+  };
+
+  const handleRedo = () => {
+    props.onRedo();
   };
 
   return (
@@ -83,6 +102,28 @@ const InstrumentPanel = (props: Props): JSX.Element => {
           onClick={handleAddPolygone}
         >
           Полигон
+        </button>
+
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleUndo}
+          disabled={!props.past.length}
+        >
+          <div className="w-4 ">
+            <div>&#8630;</div>
+            <div className="text-xs">{props.past.length}</div>
+          </div>
+        </button>
+
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleRedo}
+          disabled={!props.future.length}
+        >
+          <div className="w-4 ">
+            <div>&#8631;</div>
+            <div className="text-xs">{props.future.length}</div>
+          </div>
         </button>
       </div>
     </div>
