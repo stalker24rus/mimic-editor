@@ -14,3 +14,5 @@ export const RESIZE_ELEMENT: string = `${module}/RESIZE_ELEMENT`;
 
 export const MOVE_ELEMENT_TOP_LAYER: string = `${module}/MOVE_ELEMENT_TOP_LAYER`;
 export const MOVE_ELEMENT_BACK_LAYER: string = `${module}/MOVE_ELEMENT_BACK_LAYER`;
+
+export const HISTORY_POINT_FOR_CHANGES: string = `${module}/HISTORY_POINT_FOR_CHANGES`;

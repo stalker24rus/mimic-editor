@@ -28,7 +28,6 @@ interface OwnProps {
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  console.log(store);
   return {
     future: store.undoredobleEditorElements.future,
     past: store.undoredobleEditorElements.past,
