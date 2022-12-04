@@ -1,8 +1,40 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { MimicElementProps } from "../../../../models/Editor";
 import { BoxProps } from "../../../../models/mimic";
 import useGetBoxByMultiPoints from "../../../CustomHooks/useGetBoxByMultiPoints";
 import { MIMIC_FRAME_ID } from "../../../MimicCanvas/Canvas";
 import Point from "../../Point";
+
+interface StateProps {
+  selected: Number[];
+}
+
+interface DispatchProps {
+  onChangeAngle: Function;
+  onMove: Function;
+  onResize: Function;
+  onStartChanges: Function;
+}
+
+interface OwnProps {
+  component: MimicElementProps;
+  children?: React.ReactNode;
+}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
+function mapStateToProps(store) {
+  return {
+    selected: store.editorState.selected,
+  };
+}
+
+function mapDispatchToProps() {
+  return {
+    onChangePoint: changePoint,
+  };
+}
 
 const POINT_1 = "point1";
 const POINT_2 = "point2";
@@ -10,18 +42,19 @@ const POINT_2 = "point2";
 /**
  *  The line box used for conteining a line element
  * */
-function LineBox({
-  component,
-  isCreating,
-  isSelected,
-  children,
-  onPointerDown,
-  onPointerUp,
-  onPointerMove,
-  onDragMove,
-  onSetAttributes,
-}: // onSelect,
-BoxProps): JSX.Element {
+function LineBox(props: Props): JSX.Element {
+
+  const {
+    component,
+    selected
+    children,
+    onPointerDown,
+    onPointerUp,
+    onPointerMove,
+    
+    onSetAttributes,
+  } = props;
+
   const { attributes } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
@@ -42,6 +75,8 @@ BoxProps): JSX.Element {
   const [getBox] = useGetBoxByMultiPoints();
   const [top, left, width, height] = getBox(points);
   const [isDragging, setIsDragging] = useState(false);
+
+  const isSelected = selected.includes(id);
 
   // Move points
   const handlePointerDown = (e: React.SyntheticEvent) => {
@@ -194,4 +229,8 @@ BoxProps): JSX.Element {
   );
 }
 
-export default LineBox;
+
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps()
+)(LineBox);
