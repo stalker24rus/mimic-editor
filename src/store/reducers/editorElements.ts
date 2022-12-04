@@ -13,6 +13,8 @@ import {
   HISTORY_POINT_FOR_CHANGES,
   UPDATE_ELEMENT,
   UPDATE_LAST_POINT_OF_ELEMENT,
+  CHANGE_POINT_POSITION,
+  MOVE_ELEMENT_POINTS,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
 import resizeBox from "./functions/resizeBox";
@@ -52,7 +54,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case UPDATE_ELEMENT: {
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state); //FIXME
       const { id, attributes } = action.payload;
 
       const index = elements?.findIndex(
@@ -62,7 +64,7 @@ export default (state = defaultState, action: any) => {
       if (index > -1) {
         const element = { ...elements[index] };
         const mergedElement = { ...merge({}, element, { attributes }) };
-        const newElements = lodash.cloneDeep(elements);
+        const newElements = lodash.cloneDeep(elements); //FIXME
         newElements[index] = { ...mergedElement };
         return newElements;
       } else {
@@ -82,7 +84,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case APPEND_POINT_TO_ELEMENT: {
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state); //FIXME
       const { id, point } = action.payload;
 
       const index = elements.findIndex(
@@ -93,7 +95,7 @@ export default (state = defaultState, action: any) => {
         const element = { ...elements[index] };
         const points = [...element.attributes.position.points, point];
         element.attributes.position.points = [...points];
-        const newElements = lodash.cloneDeep(elements);
+        const newElements = lodash.cloneDeep(elements); //FIXME
         newElements[index] = { ...element };
         return newElements;
       }
@@ -101,7 +103,7 @@ export default (state = defaultState, action: any) => {
     }
 
     case DELETE_LAST_POINT_OF_ELEMENT: {
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state); //FIXME
       const { id } = action.payload;
 
       const index = elements.findIndex(
@@ -113,9 +115,54 @@ export default (state = defaultState, action: any) => {
         const points = [...element.attributes.position.points];
         points.pop();
         element.attributes.position.points = [...points];
-        const newElements = lodash.cloneDeep(elements);
+        const newElements = lodash.cloneDeep(elements); // FIXME
         newElements[index] = { ...element };
         return newElements;
+      } else {
+        return state;
+      }
+    }
+
+    case CHANGE_POINT_POSITION: {
+      const { id, pointNo, point } = action.payload;
+      const index = state.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index > -1) {
+        const element = { ...state[index] };
+        element.attributes.position.points[pointNo] = { ...point };
+        const elements = lodash.cloneDeep(state);
+        elements[index] = { ...element };
+        return elements;
+      } else {
+        return state;
+      }
+    }
+
+    case MOVE_ELEMENT_POINTS: {
+      const { id, movement } = action.payload;
+      const index = state.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index > -1) {
+        const element = { ...state[index] };
+
+        const newPoints = element.attributes.position.points.map(function (
+          element
+        ) {
+          return {
+            x: element.x + movement.x,
+            y: element.y + movement.y,
+          };
+        });
+
+        element.attributes.position.points = [...newPoints];
+        const elements = lodash.cloneDeep(state);
+
+        elements[index] = { ...element };
+        return elements;
       } else {
         return state;
       }
