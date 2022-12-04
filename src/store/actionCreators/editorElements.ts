@@ -7,6 +7,8 @@ import {
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
   HISTORY_POINT_FOR_CHANGES,
+  CHANGE_POINT_POSITION,
+  MOVE_ELEMENT_POINTS,
 } from "../../constants/actionTypes/editorElements";
 import {
   SET_DRAWING_ID,
@@ -64,6 +66,27 @@ export const resizeElement =
     dispatch({
       type: RESIZE_ELEMENT,
       payload: { id, pointName, point: newPoint },
+      passHistrory: true,
+    });
+  };
+
+export const changePointPosition =
+  (id: number, pointNo: number, point: PointFromat) =>
+  (dispatch: Function, getState: Function) => {
+    const viewPosition = selectViewPosition(getState());
+    const newPoint = correctPoint(point, viewPosition);
+    dispatch({
+      type: CHANGE_POINT_POSITION,
+      payload: { id, pointNo, point: newPoint },
+      passHistrory: true,
+    });
+  };
+
+export const moveElementPoints =
+  (id: number, movement: PointFromat) => (dispatch: Function) => {
+    dispatch({
+      type: MOVE_ELEMENT_POINTS,
+      payload: { id, movement },
       passHistrory: true,
     });
   };

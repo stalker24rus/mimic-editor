@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { MimicElementProps } from "../../../../models/Editor";
+import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import { BoxProps } from "../../../../models/mimic";
+import {
+  changePointPosition,
+  moveElement,
+  moveElementPoints,
+} from "../../../../store/actionCreators/editorElements";
 import useGetBoxByMultiPoints from "../../../CustomHooks/useGetBoxByMultiPoints";
 import { MIMIC_FRAME_ID } from "../../../MimicCanvas/Canvas";
 import Point from "../../Point";
@@ -11,10 +16,8 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onChangeAngle: Function;
-  onMove: Function;
-  onResize: Function;
-  onStartChanges: Function;
+  onChangePointPosition: Function;
+  onMoveElementPoints: Function;
 }
 
 interface OwnProps {
@@ -23,6 +26,19 @@ interface OwnProps {
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
+
+function mapStateToProps(store) {
+  return {
+    selected: store.editorState.selected,
+  };
+}
+
+function mapDispatchToProps() {
+  return {
+    onChangeAngle: changePointPosition,
+    onMoveElementPoints: moveElementPoints,
+  };
+}
 
 /**
  *  The line box used for conteining a line element
@@ -42,43 +58,25 @@ function MultiObjectBox(props: Props): JSX.Element {
 
   const isSelected = selected.includes(id);
 
-  const handleDragMovePoint = (event: {
-    target: any;
-    pointerId: any;
-    clientX: any;
-    clientY: any;
-  }) => {
-    const target = event.target;
-    target.setPointerCapture(event.pointerId);
-    // Do some correction for cursor coordinates
-    const { left, top } = document
-      .getElementById(MIMIC_FRAME_ID)
-      .getBoundingClientRect();
-    const cursorX = event.clientX - left;
-    const cursorY = event.clientY - top;
+  const handleDragMovePoint = (ev: any) => {
+    const { target, pointerId, clientX, clientY } = ev;
+    target.setPointerCapture(pointerId);
 
-    const pointIndex = parseInt(target.className.split(".")[3]);
-    if (pointIndex >= 0) {
-      let newPoints = [...points];
-      newPoints[pointIndex] = { x: cursorX, y: cursorY };
-      onSetAttributes(id, { position: { points: newPoints } });
+    const pointNo = parseInt(target.className.split(".")[3]);
+    if (pointNo >= 0) {
+      const point: PointFromat = { x: clientX, y: clientY };
+      props.onChangePointPosition(id, pointNo, point);
     }
   };
 
-  const handleDragMoveLine = (event: any) => {
-    const { movementX, movementY } = event;
+  const handleDragMoveLine = (ev: any) => {
     if (isDragging) {
-      const attributes = {
-        position: {
-          points: points.map(function (element) {
-            return {
-              x: element.x + movementX,
-              y: element.y + movementY,
-            };
-          }),
-        },
+      const { movementX, movementY } = ev;
+      const movement: PointFromat = {
+        x: movementX,
+        y: movementY,
       };
-      onSetAttributes(id, attributes);
+      props.onMoveElementPoints(id, movement);
     }
   };
 
