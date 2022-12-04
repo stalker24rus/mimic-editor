@@ -1,24 +1,35 @@
 import React, { useEffect, useState } from "react";
+import { connect } from "react-redux";
+import { MimicElementProps } from "../../../../models/Editor";
 import { BoxProps } from "../../../../models/mimic";
 import useGetBoxByMultiPoints from "../../../CustomHooks/useGetBoxByMultiPoints";
 import { MIMIC_FRAME_ID } from "../../../MimicCanvas/Canvas";
 import Point from "../../Point";
 
+interface StateProps {
+  selected: Number[];
+}
+
+interface DispatchProps {
+  onChangeAngle: Function;
+  onMove: Function;
+  onResize: Function;
+  onStartChanges: Function;
+}
+
+interface OwnProps {
+  component: MimicElementProps;
+  children?: JSX.Element;
+}
+
+type Props = StateProps & DispatchProps & OwnProps;
+
 /**
  *  The line box used for conteining a line element
  * */
-function MultiObjectBox({
-  component,
-  isCreating,
-  isSelected,
-  children,
-  onPointerDown,
-  onPointerUp,
-  onPointerMove,
-  onDragMove,
-  onSetAttributes,
-}: // onSelect,
-BoxProps): JSX.Element {
+function MultiObjectBox(props: Props): JSX.Element {
+  const { component, selected, children } = props;
+
   const { attributes, type } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
@@ -29,18 +40,7 @@ BoxProps): JSX.Element {
   const [top, left, width, height] = getBox(points);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Move points
-  const handlePointerDown = (e: React.SyntheticEvent) => {
-    // onPointerDown(e);
-  };
-
-  const handlePointerUp = (e: React.SyntheticEvent) => {
-    // onPointerUp(e);
-  };
-
-  const handlePointerMove = (e: React.SyntheticEvent) => {
-    // onPointerMove(e);
-  };
+  const isSelected = selected.includes(id);
 
   const handleDragMovePoint = (event: {
     target: any;
@@ -94,9 +94,6 @@ BoxProps): JSX.Element {
 
   //  Child component props
   const pointHandlerProps = {
-    onPointerDown: handlePointerDown,
-    onPointerUp: handlePointerUp,
-    onPointerMove: handlePointerMove,
     onDragMove: handleDragMovePoint,
   };
 
@@ -127,8 +124,6 @@ BoxProps): JSX.Element {
         width: width + strokeWidth * 2,
         height: height + strokeWidth * 2,
         position: "absolute",
-        // border: isSelected ? "1px solid white" : "none",
-        // userSelect: "none",
       }}
     >
       {isSelected && (
@@ -150,19 +145,12 @@ BoxProps): JSX.Element {
           ))}{" "}
         </>
       )}
-
-      {children({
-        component: {
-          ...component,
-          attributes: {
-            ...component.attributes,
-            position: { ...innerAttributes },
-          },
-        },
-        ...lineHandlerProps,
-      })}
+      {children}
     </span>
   );
 }
 
-export default MultiObjectBox;
+export default connect<StateProps, DispatchProps, OwnProps>(
+  mapStateToProps,
+  mapDispatchToProps()
+)(MultiObjectBox);
