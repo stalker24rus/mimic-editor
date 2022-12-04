@@ -3,7 +3,6 @@ import { MimicElementProps } from "../../../../models/Editor";
 import RectangleBox from "../../Transformers/RectangleBox";
 
 interface Props {
-  key: number;
   component: MimicElementProps;
 }
 
@@ -18,14 +17,24 @@ export default function Button(props: Props): JSX.Element {
   const style = " block  px-3 py-2 rounded-md bg-blue-500 text-white";
 
   return (
-    <RectangleBox component={props.component}>
-      <button
-        id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
-        className={style}
-        style={{ width, height }}
-      >
-        {text}
-      </button>
-    </RectangleBox>
+    <button
+      id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
+      className={style}
+      style={{ width, height }}
+    >
+      {text}
+    </button>
   );
 }
+
+/*
+<RectangleBox component={props.component}>
+  <button
+    id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
+    className={style}
+    style={{ width, height }}
+  >
+    {text}
+  </button>
+</RectangleBox>
+*/
