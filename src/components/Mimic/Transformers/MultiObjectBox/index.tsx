@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
-import { BoxProps } from "../../../../models/mimic";
+
 import {
   changePointPosition,
-  moveElement,
   moveElementPoints,
+  startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
-import useGetBoxByMultiPoints from "../../../CustomHooks/useGetBoxByMultiPoints";
-import { MIMIC_FRAME_ID } from "../../../MimicCanvas/Canvas";
-import Point from "../../Point";
+import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
+import Point from "../Primitives/Point";
 
 interface StateProps {
   selected: Number[];
@@ -18,11 +17,12 @@ interface StateProps {
 interface DispatchProps {
   onChangePointPosition: Function;
   onMoveElementPoints: Function;
+  onStartChanges: Function;
 }
 
 interface OwnProps {
   component: MimicElementProps;
-  children?: JSX.Element;
+  children?: React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -35,8 +35,9 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onChangeAngle: changePointPosition,
+    onChangePointPosition: changePointPosition,
     onMoveElementPoints: moveElementPoints,
+    onStartChanges: startDoingChanges,
   };
 }
 
@@ -58,7 +59,8 @@ function MultiObjectBox(props: Props): JSX.Element {
 
   const isSelected = selected.includes(id);
 
-  const handleDragMovePoint = (ev: any) => {
+  // The points view handlers
+  const handlePointDragMove = (ev: any) => {
     const { target, pointerId, clientX, clientY } = ev;
     target.setPointerCapture(pointerId);
 
@@ -69,7 +71,12 @@ function MultiObjectBox(props: Props): JSX.Element {
     }
   };
 
-  const handleDragMoveLine = (ev: any) => {
+  const handlePointPointerDown = () => {
+    props.onStartChanges();
+  };
+
+  // The child object handlers
+  const handleObjDragMove = (ev: any) => {
     if (isDragging) {
       const { movementX, movementY } = ev;
       const movement: PointFromat = {
@@ -80,25 +87,23 @@ function MultiObjectBox(props: Props): JSX.Element {
     }
   };
 
-  const handlePointerDownLine = (e: any) => {
+  const handleObjPointerDown = (e: any) => {
     setIsDragging(true);
     const target = e.target;
     target.setPointerCapture(e.pointerId);
+    props.onStartChanges();
   };
 
-  const handlePointerUpLine = (e: any) => {
+  const handleObjPointerUp = (e: any) => {
     setIsDragging(false);
   };
 
   //  Child component props
-  const pointHandlerProps = {
-    onDragMove: handleDragMovePoint,
-  };
 
   const lineHandlerProps = {
-    onPointerMove: handleDragMoveLine,
-    onPointerUp: handlePointerUpLine,
-    onPointerDown: handlePointerDownLine,
+    onPointerMove: handleObjDragMove,
+    onPointerUp: handleObjPointerUp,
+    onPointerDown: handleObjPointerDown,
   };
 
   const innerAttributes = {
@@ -124,6 +129,10 @@ function MultiObjectBox(props: Props): JSX.Element {
         position: "absolute",
       }}
     >
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, { component, ...lineHandlerProps })
+      )}
+
       {isSelected && (
         <>
           {points.map((point, index) => (
@@ -138,12 +147,12 @@ function MultiObjectBox(props: Props): JSX.Element {
                 width: 15,
                 height: 15,
               }}
-              {...pointHandlerProps}
-            ></Point>
+              onDragMove={handlePointDragMove}
+              onPointerDown={handlePointPointerDown}
+            />
           ))}{" "}
         </>
       )}
-      {children}
     </span>
   );
 }

@@ -50,4 +50,11 @@ function Point({
   );
 }
 
+Point.defaultProps = {
+  onDragMove: () => {},
+  onPointerDown: () => {},
+  onPointerUp: () => {},
+  onPointerMove: () => {},
+};
+
 export default Point;
