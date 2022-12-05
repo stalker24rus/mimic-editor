@@ -22,7 +22,7 @@ interface DispatchProps {
 
 interface OwnProps {
   component: MimicElementProps;
-  children?: React.ReactNode;
+  children?: React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -35,7 +35,7 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onChangeAngle: changePointPosition,
+    onChangePointPosition: changePointPosition,
     onMoveElementPoints: moveElementPoints,
     onStartChanges: startDoingChanges,
   };
@@ -99,10 +99,6 @@ function MultiObjectBox(props: Props): JSX.Element {
   };
 
   //  Child component props
-  const pointHandlerProps = {
-    onDragMove: handlePointDragMove,
-    onPointerDown: handlePointPointerDown,
-  };
 
   const lineHandlerProps = {
     onPointerMove: handleObjDragMove,
@@ -122,7 +118,6 @@ function MultiObjectBox(props: Props): JSX.Element {
       };
     }),
   };
-  const Child = children;
 
   return (
     <span
@@ -134,11 +129,15 @@ function MultiObjectBox(props: Props): JSX.Element {
         position: "absolute",
       }}
     >
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child, { component, ...lineHandlerProps })
+      )}
+
       {isSelected && (
         <>
           {points.map((point, index) => (
             <Point
-              //key={type + "." + id + "point." + index}
+              key={type + "." + id + "point." + index}
               className={type + "." + id + ".point." + index}
               cursorType={"pointer"}
               position={{
@@ -148,12 +147,12 @@ function MultiObjectBox(props: Props): JSX.Element {
                 width: 15,
                 height: 15,
               }}
-              {...pointHandlerProps}
+              onDragMove={handlePointDragMove}
+              onPointerDown={handlePointPointerDown}
             />
           ))}{" "}
         </>
       )}
-      {children(lineHandlerProps)}
     </span>
   );
 }
