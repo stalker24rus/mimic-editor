@@ -23,7 +23,7 @@ export const selectViewPosition = (state: any) =>
 const selectNewElement = (state: any) => state.editorState.newElement;
 const selectLastTakenId = (state: any) => state.editorState.lastTakenId;
 const selectElement = (state: any, id: number) =>
-  state.editorElements.find(
+  state.undoredobleEditorElements.present.find(
     (element: MimicElementProps) => element.attributes.general.id === id
   );
 const selectElementPointsLength = (element: MimicElementProps) =>
@@ -141,13 +141,14 @@ export const appendPointToElement =
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
+    console.log(getState());
     const element = selectElement(getState(), id);
 
     if (element) {
       const pointAmount = element.service.pointsAmount;
       const pointLength = element.attributes.position.points.length;
-
-      if (pointAmount >= pointLength + 1) {
+      console.log(pointLength, pointAmount);
+      if (pointLength < pointAmount) {
         dispatch({
           type: APPEND_POINT_TO_ELEMENT,
           payload: { id, point: newPoint },
