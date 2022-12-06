@@ -109,8 +109,10 @@ function MimicCanvas(props: Props): JSX.Element {
         };
 
         if (!drawId) {
+          console.log("ONCREATE");
           props.onCreateElement(point);
         } else {
+          console.log("APPEND_POINT_TO_ELEMENT");
           props.onAppendPointToElement(drawId, point);
         }
         break;
