@@ -1,3 +1,4 @@
+import lodash from "lodash";
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
@@ -22,7 +23,7 @@ interface DispatchProps {
 
 interface OwnProps {
   component: MimicElementProps;
-  children?: React.ReactElement;
+  children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -106,7 +107,8 @@ function MultiObjectBox(props: Props): JSX.Element {
     onPointerDown: handleObjPointerDown,
   };
 
-  const innerAttributes = {
+  const adaptedComponent = lodash.cloneDeep(component);
+  adaptedComponent.attributes.position = {
     top,
     left,
     width,
@@ -129,9 +131,7 @@ function MultiObjectBox(props: Props): JSX.Element {
         position: "absolute",
       }}
     >
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child, { component, ...lineHandlerProps })
-      )}
+      {children({ component, ...lineHandlerProps })}
 
       {isSelected && (
         <>

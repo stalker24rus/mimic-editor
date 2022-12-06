@@ -1,7 +1,12 @@
 import { FC } from "react";
-import { ELEMENT_TYPE_BUTTON } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import {
+  ELEMENT_TYPE_BUTTON,
+  ELEMENT_TYPE_LINE,
+} from "../../../../constants/literals";
+import { ElementType, MimicElementProps } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
+import Line from "../../MimicBaseElements/Line";
+import MultiObjectBox from "../../Transformers/MultiObjectBox";
 import RectangleBox from "../../Transformers/RectangleBox";
 
 /*
@@ -29,11 +34,28 @@ export default function useDrawElement(): [Function] {
   return [draw];
 }
 */
+interface BaseProps {
+  [key: string]: {
+    element: (props: any) => JSX.Element;
+    box: (props: any) => JSX.Element;
+  };
+}
 
-const ElementBase = {
+interface Props {
+  component: MimicElementProps;
+  onPointerMove: Function;
+  onPointerUp: Function;
+  onPointerDown: Function;
+}
+
+const ElementBase: BaseProps = {
   [ELEMENT_TYPE_BUTTON]: {
     element: Button,
     box: RectangleBox,
+  },
+  [ELEMENT_TYPE_LINE]: {
+    element: Line,
+    box: MultiObjectBox,
   },
 };
 
@@ -44,7 +66,18 @@ export default function useDrawElement(): [Function] {
 
     const Element = ElementBase[type].element;
     const Box = ElementBase[type].box;
-    /*
+
+    return (
+      <Box key={id} component={component}>
+        {(props: Props) => <Element {...props} />}
+      </Box>
+    );
+  }
+
+  return [draw];
+}
+
+/*
     if(Mode === ...) {
      <Box key={id} component={component}>
         <Element component={component} />
@@ -54,13 +87,3 @@ export default function useDrawElement(): [Function] {
     }
     
     */
-
-    return (
-      <Box key={id} component={component}>
-        <Element component={component} />
-      </Box>
-    );
-  }
-
-  return [draw];
-}

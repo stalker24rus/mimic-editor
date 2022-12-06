@@ -1,3 +1,4 @@
+import React from "react";
 import { connect } from "react-redux";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
@@ -23,7 +24,7 @@ interface DispatchProps {
 
 interface OwnProps {
   component: MimicElementProps;
-  children?: React.ReactNode;
+  children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
@@ -115,7 +116,7 @@ function RectangleBox(props: Props): JSX.Element {
           border: isSelected ? "1px solid white" : "none",
         }}
       >
-        {children}
+        {children({ component })}
       </div>
 
       {isSelected && (
