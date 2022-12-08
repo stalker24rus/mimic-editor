@@ -18,16 +18,13 @@ import {
 } from "../../constants/actionTypes/editorState";
 import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
 import { MimicElementProps, PointFromat } from "../../models/Editor";
-
-export const selectViewPosition = (state: any) =>
-  state.editorState.viewPosition;
-const selectNewElement = (state: any) => state.editorState.newElement;
-const selectLastTakenId = (state: any) => state.editorState.lastTakenId;
-const selectElement = (state: any, id: number) =>
-  state.undoredobleEditorElements.present.find(
-    (element: MimicElementProps) => element.attributes.general.id === id
-  );
-const selectSelectedElements = (state: any) => state.editorState.selected;
+import {
+  selectLastTakenId,
+  selectNewElement,
+  selectSelectedElements,
+  selectViewPosition,
+} from "../selectors/editorElements";
+import { selectElement } from "../selectors/editorState";
 
 function correctPoint(
   point: PointFromat,

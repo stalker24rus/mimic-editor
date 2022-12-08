@@ -9,7 +9,8 @@ import { ElementType, MimicElementProps } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
 import Line from "../../MimicBaseElements/Line";
 import Polygon from "../../MimicBaseElements/Polygon";
-import PolyLine from "../../MimicBaseElements/PolyLine";
+import PolyLine from "../../MimicBaseElements/Polyline";
+
 import MultiObjectBox from "../../Transformers/MultiObjectBox";
 import RectangleBox from "../../Transformers/RectangleBox";
 
