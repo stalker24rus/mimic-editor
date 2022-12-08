@@ -5,6 +5,7 @@
  * @returns
  */
 
+import { ELEMENT_TYPE_LINE, MIMIC } from "../../../../constants/literals";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 
 interface Props {
@@ -29,16 +30,16 @@ function Line(props: Props): JSX.Element {
 
   // HANDLERS
 
-  const handlePointerMove = (event: React.PointerEvent<SVGLineElement>) => {
-    props.onPointerMove(event);
+  const handlePointerMove = (ev: React.PointerEvent<SVGLineElement>) => {
+    props.onPointerMove(ev);
   };
 
-  const handlePointerUp = (event: React.PointerEvent<SVGLineElement>) => {
-    props.onPointerUp(event);
+  const handlePointerUp = (ev: React.PointerEvent<SVGLineElement>) => {
+    props.onPointerUp(ev);
   };
 
-  const handlePointerDown = (event: React.PointerEvent<SVGLineElement>) => {
-    props.onPointerDown(event);
+  const handlePointerDown = (ev: React.PointerEvent<SVGLineElement>) => {
+    props.onPointerDown(ev);
   };
 
   return (
@@ -58,7 +59,7 @@ function Line(props: Props): JSX.Element {
         pointerEvents="none"
       >
         <line
-          id={"mimic.line." + id}
+          id={MIMIC + "." + ELEMENT_TYPE_LINE + "." + id}
           x1={point1.x}
           y1={point1.y}
           x2={point2.x}

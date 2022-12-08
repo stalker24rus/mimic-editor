@@ -130,32 +130,32 @@ function MultiObjectBox(props: Props): JSX.Element {
         height: height + strokeWidth * 2,
         position: "absolute",
         border: isSelected ? "1px solid white" : "none",
-        background: "green",
+        //background: "green",
       }}
     >
-      {children({ component, ...lineHandlerProps })}
-      {/* {isSelected && ( */}
-      {/* <> */}
-      {points.map((point, index) => (
-        <div>
-          <Point
-            key={type + "." + id + "point." + index}
-            className={type + "." + id + ".point." + index}
-            cursorType={"pointer"}
-            position={{
-              top: point.y - top + strokeWidth,
-              left: point.x - left + strokeWidth,
-              transform: "translate(-50%, -50%)",
-              width: 15,
-              height: 15,
-            }}
-            onDragMove={handlePointDragMove}
-            onPointerDown={handlePointPointerDown}
-          />
-        </div>
-      ))}{" "}
-      {/* </> */}
-      {/* )} */}
+      {children({ component: adaptedComponent, ...lineHandlerProps })}
+      {isSelected && (
+        <>
+          {points.map((point, index) => (
+            <div>
+              <Point
+                key={type + "." + id + "point." + index}
+                className={type + "." + id + ".point." + index}
+                cursorType={"pointer"}
+                position={{
+                  top: point.y - top + strokeWidth,
+                  left: point.x - left + strokeWidth,
+                  transform: "translate(-50%, -50%)",
+                  width: 15,
+                  height: 15,
+                }}
+                onDragMove={handlePointDragMove}
+                onPointerDown={handlePointPointerDown}
+              />
+            </div>
+          ))}{" "}
+        </>
+      )}
     </div>
   );
 }
