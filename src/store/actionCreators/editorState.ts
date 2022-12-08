@@ -1,4 +1,5 @@
 import {
+  HANDLE_ESCAPE,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_CREATE,
@@ -65,4 +66,8 @@ export const setViewPosition = (point: PointFromat) => (dispatch: Function) => {
 
 export const selectElement = (elements: number[]) => (dispatch: Function) => {
   dispatch({ type: SET_SELECTED_ELEMENTS, payload: { elements } });
+};
+
+export const handleEscapeButton = () => (dispatch: Function) => {
+  dispatch({ type: HANDLE_ESCAPE });
 };

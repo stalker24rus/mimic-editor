@@ -1,6 +1,6 @@
-import { MimicElementProps } from "../../models/Editor";
-
-export const selectElement = (state: any, id: number) =>
-  state.undoredobleEditorElements.present.find(
-    (element: MimicElementProps) => element.attributes.general.id === id
-  );
+export const selectViewPosition = (state: any) =>
+  state.editorState.viewPosition;
+export const selectNewElement = (state: any) => state.editorState.newElement;
+export const selectLastTakenId = (state: any) => state.editorState.lastTakenId;
+export const selectSelectedElements = (state: any) =>
+  state.editorState.selected;

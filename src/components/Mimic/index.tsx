@@ -6,6 +6,7 @@ import {
   redo,
   undo,
 } from "../../store/actionCreators/editorElements";
+import { handleEscapeButton } from "../../store/actionCreators/editorState";
 import useDrawElement from "./Hooks/useDrawElement";
 
 import MimicCanvas from "./MimicCanvas";
@@ -18,6 +19,7 @@ interface DispatchProps {
   undo: Function;
   redo: Function;
   onDelete: Function;
+  onEscape: Function;
 }
 
 interface OwnProps {}
@@ -35,6 +37,7 @@ function mapDispatchToProps() {
     undo: undo,
     redo: redo,
     onDelete: deleteSelectedElements,
+    onEscape: handleEscapeButton,
   };
 }
 
@@ -67,11 +70,11 @@ const Mimic = (props: Props): JSX.Element => {
       }
 
       if (ev.key === "Delete" || ev.code === "Delete") {
-        console.log(ev, ev.key);
         props.onDelete();
       }
 
       if (ev.key === "Escape" || ev.code === "Escape") {
+        props.onEscape();
       }
     };
     window.addEventListener("keydown", keyListener);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { PointFromat } from "../../../models/Editor";
-import { selectViewPosition } from "../../../store/selectors/editorElements";
+import { selectViewPosition } from "../../../store/selectors/editorState";
 
 interface StateProps {
   viewPosition: PointFromat;

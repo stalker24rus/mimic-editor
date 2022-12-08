@@ -5,11 +5,11 @@ import {
   ELEMENT_TYPE_POLYGON,
   ELEMENT_TYPE_POLYLINE,
 } from "../../../../constants/literals";
-import { ElementType, MimicElementProps } from "../../../../models/Editor";
+import { MimicElementProps } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
 import Line from "../../MimicBaseElements/Line";
 import Polygon from "../../MimicBaseElements/Polygon";
-import PolyLine from "../../MimicBaseElements/Polyline";
+import PolyLine from "../../MimicBaseElements/PolyLine";
 
 import MultiObjectBox from "../../Transformers/MultiObjectBox";
 import RectangleBox from "../../Transformers/RectangleBox";

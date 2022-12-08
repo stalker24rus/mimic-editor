@@ -1,4 +1,5 @@
 import {
+  HANDLE_ESCAPE,
   SET_CURRENT_MIMIC,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
@@ -98,6 +99,26 @@ export default (state = defaultState(), action: any): Props => {
       } else {
         throw "Invalid playload format.";
       }
+    }
+
+    case HANDLE_ESCAPE: {
+      if (state.mode === EDITOR_MODE_CREATE) {
+        return {
+          ...state,
+          mode: EDITOR_MODE_EDIT,
+          newElement: {},
+          drawId: undefined,
+        };
+      }
+
+      if (state.selected.length > 0) {
+        return {
+          ...state,
+          selected: [],
+        };
+      }
+
+      return state;
     }
 
     case SET_MODE_OPERATE: {

@@ -23,8 +23,8 @@ import {
   selectNewElement,
   selectSelectedElements,
   selectViewPosition,
-} from "../selectors/editorElements";
-import { selectElement } from "../selectors/editorState";
+} from "../selectors/editorState";
+import { selectElement } from "../selectors/editorElements";
 
 function correctPoint(
   point: PointFromat,
