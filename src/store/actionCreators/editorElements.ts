@@ -9,6 +9,7 @@ import {
   HISTORY_POINT_FOR_CHANGES,
   CHANGE_POINT_POSITION,
   MOVE_ELEMENT_POINTS,
+  DELETE_SELECTED_ELEMENTS,
 } from "../../constants/actionTypes/editorElements";
 import {
   SET_DRAWING_ID,
@@ -26,8 +27,7 @@ const selectElement = (state: any, id: number) =>
   state.undoredobleEditorElements.present.find(
     (element: MimicElementProps) => element.attributes.general.id === id
   );
-const selectElementPointsLength = (element: MimicElementProps) =>
-  element.attributes.position.points.length;
+const selectSelectedElements = (state: any) => state.editorState.selected;
 
 function correctPoint(
   point: PointFromat,
@@ -136,12 +136,23 @@ export const createElement =
     }
   };
 
+export const deleteSelectedElements =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+
+    dispatch({
+      type: DELETE_SELECTED_ELEMENTS,
+      payload: { selected },
+      passHistrory: selected.length > 0 ? true : false,
+    });
+  };
+
 export const appendPointToElement =
   (id: number, point: PointFromat) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
-    console.log(getState());
+
     const element = selectElement(getState(), id);
 
     if (element) {

@@ -1,7 +1,7 @@
 const module: string = "EDITOR_ELEMENTS";
 export const CREATE_ELEMENT: string = `${module}/CREATE_ELEMENT`;
 export const UPDATE_ELEMENT: string = `${module}/UPDATE_ELEMENT`;
-export const DELETE_ELEMENT: string = `${module}/DELETE_ELEMENT`;
+export const DELETE_SELECTED_ELEMENTS: string = `${module}/DELETE_SELECTED_ELEMENTS`;
 
 export const APPEND_POINT_TO_ELEMENT: string = `${module}/APPEND_POINT_TO_ELEMENT`;
 export const DELETE_LAST_POINT_OF_ELEMENT: string = `${module}/DELETE_LAST_POINT_OF_ELEMENT`;

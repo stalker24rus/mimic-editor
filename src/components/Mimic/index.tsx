@@ -1,7 +1,11 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { MimicElementProps } from "../../models/Editor";
-import { redo, undo } from "../../store/actionCreators/editorElements";
+import {
+  deleteSelectedElements,
+  redo,
+  undo,
+} from "../../store/actionCreators/editorElements";
 import useDrawElement from "./Hooks/useDrawElement";
 
 import MimicCanvas from "./MimicCanvas";
@@ -13,6 +17,7 @@ interface StateProps {
 interface DispatchProps {
   undo: Function;
   redo: Function;
+  onDelete: Function;
 }
 
 interface OwnProps {}
@@ -29,6 +34,7 @@ function mapDispatchToProps() {
   return {
     undo: undo,
     redo: redo,
+    onDelete: deleteSelectedElements,
   };
 }
 
@@ -40,12 +46,29 @@ const Mimic = (props: Props): JSX.Element => {
   useEffect(() => {
     // FIXME -> Any
     const keyListener = (ev: any) => {
-      if ((ev.metaKey || ev.ctrlKey) && (ev.key === "Z" || ev.key === "z")) {
+      console.log(ev);
+
+      if (
+        (ev.metaKey || ev.ctrlKey) &&
+        (ev.key === "Z" || ev.key === "z" || ev.code === "KeyZ")
+      ) {
         if (ev.shiftKey) {
           props.redo();
         } else {
           props.undo();
         }
+      }
+
+      if (
+        (ev.metaKey || ev.ctrlKey) &&
+        (ev.key === "A" || ev.key === "a" || ev.code === "KeyA")
+      ) {
+        console.log(ev, ev.key);
+      }
+
+      if (ev.key === "Delete" || ev.code === "Delete") {
+        console.log(ev, ev.key);
+        props.onDelete();
       }
     };
     window.addEventListener("keydown", keyListener);

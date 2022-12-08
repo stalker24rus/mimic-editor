@@ -3,7 +3,7 @@ import {
   APPEND_POINT_TO_ELEMENT,
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
-  DELETE_ELEMENT,
+  DELETE_SELECTED_ELEMENTS,
   DELETE_LAST_POINT_OF_ELEMENT,
   MOVE_ELEMENT,
   MOVE_ELEMENT_BACK_LAYER,
@@ -72,15 +72,19 @@ export default (state = defaultState, action: any) => {
       }
     }
 
-    case DELETE_ELEMENT: {
+    case DELETE_SELECTED_ELEMENTS: {
       const elements = [...state];
-      const { id } = action.payload;
-      const newElements = [...elements];
-      lodash.remove(
-        newElements,
-        (element: MimicElementProps) => element.attributes.general.id === id
-      );
-      return newElements;
+      const { selected } = action.payload;
+
+      if (selected.length > 0) {
+        const newElements = lodash.cloneDeep(elements);
+        lodash.remove(newElements, (element: MimicElementProps) =>
+          selected.includes(element.attributes.general.id)
+        );
+        return newElements;
+      } else {
+        return state;
+      }
     }
 
     case APPEND_POINT_TO_ELEMENT: {
