@@ -70,6 +70,9 @@ const Mimic = (props: Props): JSX.Element => {
         console.log(ev, ev.key);
         props.onDelete();
       }
+
+      if (ev.key === "Escape" || ev.code === "Escape") {
+      }
     };
     window.addEventListener("keydown", keyListener);
     return () => {
