@@ -26,7 +26,7 @@ import {
 } from "../selectors/editorState";
 import { selectElement } from "../selectors/editorElements";
 
-function correctPoint(
+export function correctPoint(
   point: PointFromat,
   correction: PointFromat
 ): PointFromat {

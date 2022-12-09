@@ -17,6 +17,7 @@ import {
   setViewPosition,
 } from "../../../store/actionCreators/editorState";
 import CursorInfo from "../CursorInfo";
+import ObjectSelector from "../ObjectSelector";
 
 interface StateProps {
   attributes: Attributes;
@@ -156,8 +157,10 @@ function MimicCanvas(props: Props): JSX.Element {
       onPointerUp={handlePointerUp}
       onClick={handleClick}
     >
-      <div style={{ pointerEvents: "none" }}>{children}</div>
-      {mode === EDITOR_MODE_CREATE && <CursorInfo />}
+      <ObjectSelector>
+        <div style={{ pointerEvents: "none" }}>{children}</div>
+        {mode === EDITOR_MODE_CREATE && <CursorInfo />}
+      </ObjectSelector>
     </div>
   );
 }
