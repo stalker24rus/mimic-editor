@@ -4,3 +4,6 @@ export const selectElement = (state: any, id: number) =>
   state.undoredobleEditorElements.present.find(
     (element: MimicElementProps) => element.attributes.general.id === id
   );
+
+export const selectEditorElements = (state: any) =>
+  state.undoredobleEditorElements.present;

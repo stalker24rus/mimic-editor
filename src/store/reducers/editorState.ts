@@ -2,6 +2,7 @@ import {
   DISABLE_SELECTION,
   ENABLE_SELECTION,
   HANDLE_ESCAPE,
+  SELECT_ELEMENTS,
   SET_CURRENT_MIMIC,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
@@ -24,6 +25,7 @@ import {
   MimicElementProps,
   PointFromat,
 } from "../../models/Editor";
+import checkIsPointInArea from "./functions/checkIsPointInArea";
 
 type DrawType = number | undefined;
 
@@ -36,6 +38,7 @@ interface Props {
   currentMimic: MimicElementProps;
   selected: number[];
   selectionDisabled: boolean;
+  selectorRect: [PointFromat, PointFromat]; // FIXME
 }
 
 const defaultState = (): Props => {
@@ -47,6 +50,10 @@ const defaultState = (): Props => {
     viewPosition: { x: 0, y: 0 },
     selected: [],
     selectionDisabled: false,
+    selectorRect: [
+      { x: 0, y: 0 },
+      { x: 0, y: 0 },
+    ],
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
@@ -181,6 +188,30 @@ export default (state = defaultState(), action: any): Props => {
 
     case ENABLE_SELECTION: {
       return { ...state, selectionDisabled: false };
+    }
+
+    case SELECT_ELEMENTS: {
+      const { area, elements } = action.payload;
+
+      const selected = [];
+
+      for (let i = 0; i < elements.length; i++) {
+        const element: MimicElementProps = elements[i];
+        const { width, height, points } = element.attributes.position;
+
+        // if (width && height) {
+        // }
+
+        for (let j = 0; j < points.length; j++) {
+          const point = points[j];
+          if (checkIsPointInArea(area, point)) {
+            selected.push(element.attributes.general.id);
+            break;
+          }
+        }
+      }
+
+      return { ...state, selected: [...selected] };
     }
 
     default:
