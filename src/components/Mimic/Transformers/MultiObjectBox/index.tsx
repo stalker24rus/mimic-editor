@@ -5,6 +5,7 @@ import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 
 import {
   changePointPosition,
+  endDoingChanges,
   moveElementPoints,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
@@ -19,6 +20,7 @@ interface DispatchProps {
   onChangePointPosition: Function;
   onMoveElementPoints: Function;
   onStartChanges: Function;
+  onEndChanges: Function;
 }
 
 interface OwnProps {
@@ -39,6 +41,7 @@ function mapDispatchToProps() {
     onChangePointPosition: changePointPosition,
     onMoveElementPoints: moveElementPoints,
     onStartChanges: startDoingChanges,
+    onEndChanges: endDoingChanges,
   };
 }
 
@@ -76,6 +79,10 @@ function MultiObjectBox(props: Props): JSX.Element {
     props.onStartChanges();
   };
 
+  const handlePointPointerUp = () => {
+    props.onEndChanges();
+  };
+
   // The child object handlers
   const handleObjDragMove = (ev: any) => {
     if (isDragging) {
@@ -97,6 +104,7 @@ function MultiObjectBox(props: Props): JSX.Element {
 
   const handleObjPointerUp = (e: any) => {
     setIsDragging(false);
+    props.onEndChanges();
   };
 
   //  Child component props
@@ -151,6 +159,7 @@ function MultiObjectBox(props: Props): JSX.Element {
                 }}
                 onDragMove={handlePointDragMove}
                 onPointerDown={handlePointPointerDown}
+                onPointerUp={handlePointPointerUp}
               />
             </div>
           ))}{" "}

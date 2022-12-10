@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
   changeElementAngle,
+  endDoingChanges,
   moveElement,
   resizeElement,
   startDoingChanges,
@@ -20,6 +21,7 @@ interface DispatchProps {
   onMove: Function;
   onResize: Function;
   onStartChanges: Function;
+  onEndChanges: Function;
 }
 
 interface OwnProps {
@@ -41,6 +43,7 @@ function mapDispatchToProps() {
     onMove: moveElement,
     onResize: resizeElement,
     onStartChanges: startDoingChanges,
+    onEndChanges: endDoingChanges,
   };
 }
 
@@ -84,6 +87,10 @@ function RectangleBox(props: Props): JSX.Element {
     props.onStartChanges();
   };
 
+  const handlePointerUp = () => {
+    props.onEndChanges();
+  };
+
   return (
     <div
       id={"mimic.button." + id}
@@ -104,6 +111,7 @@ function RectangleBox(props: Props): JSX.Element {
           component={component}
           onDragMove={handleChangeAngle}
           onPointerDown={handlePointerDown}
+          onPointerUp={handlePointerUp}
         />
       )}
 
@@ -125,11 +133,13 @@ function RectangleBox(props: Props): JSX.Element {
             component={component}
             onPointerMove={handleMove}
             onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
           />
           <ResizePoints
             component={component}
             onPointerMove={handleResize}
             onPointerDown={handlePointerDown}
+            onPointerUp={handlePointerUp}
           />
         </>
       )}

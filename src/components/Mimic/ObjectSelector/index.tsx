@@ -2,11 +2,15 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { PointFromat } from "../../../models/Editor";
 import { correctPoint } from "../../../store/actionCreators/editorElements";
-import { selectViewPosition } from "../../../store/selectors/editorState";
+import {
+  selectSelectionDisabled,
+  selectViewPosition,
+} from "../../../store/selectors/editorState";
 import useGetBoxByMultiPoints from "../Hooks/useGetBoxByMultiPoints";
 
 interface StateProps {
   viewPosition: PointFromat;
+  selectionDisabled: boolean;
 }
 
 interface DispatchProps {
@@ -22,6 +26,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 function mapStateToProps(store) {
   return {
     viewPosition: selectViewPosition(store),
+    selectionDisabled: selectSelectionDisabled(store),
   };
 }
 
@@ -80,7 +85,7 @@ function ObjectSelector(props: Props) {
       onPointerUp={handlePointerUp}
     >
       {props.children}
-      {showRect && (
+      {showRect && !props.selectionDisabled && (
         <div
           style={{
             top,

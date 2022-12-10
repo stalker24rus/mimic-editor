@@ -1,4 +1,6 @@
 import {
+  DISABLE_SELECTION,
+  ENABLE_SELECTION,
   HANDLE_ESCAPE,
   SET_CURRENT_MIMIC,
   SET_DRAWING_ID,
@@ -33,6 +35,7 @@ interface Props {
   viewPosition: PointFromat;
   currentMimic: MimicElementProps;
   selected: number[];
+  selectionDisabled: boolean;
 }
 
 const defaultState = (): Props => {
@@ -43,6 +46,7 @@ const defaultState = (): Props => {
     lastTakenId: 1,
     viewPosition: { x: 0, y: 0 },
     selected: [],
+    selectionDisabled: false,
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
@@ -169,6 +173,14 @@ export default (state = defaultState(), action: any): Props => {
     case SET_SELECTED_ELEMENTS: {
       const { elements } = action.payload;
       return { ...state, selected: elements };
+    }
+
+    case DISABLE_SELECTION: {
+      return { ...state, selectionDisabled: true };
+    }
+
+    case ENABLE_SELECTION: {
+      return { ...state, selectionDisabled: false };
     }
 
     default:

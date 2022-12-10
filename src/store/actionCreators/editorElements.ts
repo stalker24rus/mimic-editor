@@ -12,6 +12,8 @@ import {
   DELETE_SELECTED_ELEMENTS,
 } from "../../constants/actionTypes/editorElements";
 import {
+  DISABLE_SELECTION,
+  ENABLE_SELECTION,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_EDIT,
@@ -91,10 +93,20 @@ export const moveElementPoints =
 /**
  * DRAWING
  */
-
+// FIXME логически отвественность операций уже лежит вне файла, обобщить
 export const startDoingChanges = () => (dispatch: Function) => {
   dispatch({
     type: HISTORY_POINT_FOR_CHANGES,
+    passHistrory: false,
+  });
+  dispatch({
+    type: DISABLE_SELECTION,
+  });
+};
+
+export const endDoingChanges = () => (dispatch: Function) => {
+  dispatch({
+    type: ENABLE_SELECTION,
     passHistrory: false,
   });
 };

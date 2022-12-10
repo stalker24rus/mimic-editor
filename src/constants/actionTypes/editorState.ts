@@ -9,3 +9,5 @@ export const SET_MODE_OPERATE: string = `${module}/SET_MODE_OPERATE`;
 export const SET_CURRENT_MIMIC: string = `${module}/SET_CURRENT_MIMIC`;
 export const SET_VIEW_POSITION: string = `${module}/SET_VIEW_POSITION`;
 export const SET_SELECTED_ELEMENTS: string = `${module}/SET_SELECTED_ELEMENTS`;
+export const DISABLE_SELECTION: string = `${module}/DISABLE_SELECTION`;
+export const ENABLE_SELECTION: string = `${module}/ENABLE_SELECTION`;
