@@ -8,7 +8,7 @@ interface Props {
   onPointerDown: Function;
 }
 
-function PolyLine(props: Props): JSX.Element {
+function Polyline(props: Props): JSX.Element {
   // INCOMING STATES
   const { attributes } = props.component;
   const { general, position, appearance } = attributes;
@@ -71,7 +71,7 @@ function PolyLine(props: Props): JSX.Element {
   );
 }
 
-PolyLine.defaultProps = {
+Polyline.defaultProps = {
   onDragMove: () => {},
   onClick: () => {},
   onPointerDown: () => {},
@@ -79,4 +79,4 @@ PolyLine.defaultProps = {
   onPointerMove: () => {},
 };
 
-export default PolyLine;
+export default Polyline;

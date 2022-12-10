@@ -9,7 +9,7 @@ import { MimicElementProps } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
 import Line from "../../MimicBaseElements/Line";
 import Polygon from "../../MimicBaseElements/Polygon";
-import PolyLine from "../../MimicBaseElements/PolyLine";
+import Polyline from "../../MimicBaseElements/Polyline";
 
 import MultiObjectBox from "../../Transformers/MultiObjectBox";
 import RectangleBox from "../../Transformers/RectangleBox";
@@ -38,7 +38,7 @@ const ElementBase: BaseProps = {
     box: MultiObjectBox,
   },
   [ELEMENT_TYPE_POLYLINE]: {
-    element: PolyLine,
+    element: Polyline,
     box: MultiObjectBox,
   },
   [ELEMENT_TYPE_POLYGON]: {

@@ -62,16 +62,14 @@ function ObjectSelector(props: Props) {
   };
 
   const handlePointerMove = (ev: any) => {
-    //if (!showRect && props.selectionDisabled) return;
+    if (!showRect) return;
     const { clientX, clientY } = ev;
     const endPoint = correctPoint(
       { x: clientX, y: clientY },
       props.viewPosition
     );
     setSelectorRect([selectorRect[0], endPoint]);
-    if (showRect) {
-      props.onSelectElements([selectorRect[0], endPoint]);
-    }
+    props.onSelectElements([selectorRect[0], endPoint]);
   };
 
   const handlePointerUp = () => {
