@@ -21,8 +21,6 @@ import {
 } from "../../constants/mimicBaseElements";
 import { PointFromat } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
-import { selectViewPosition } from "../selectors/editorState";
-import { correctPoint } from "./editorElements";
 
 export const editorAddButton = () => (dispatch: Function) => {
   const element = {
@@ -75,15 +73,11 @@ export const selectElement = (elements: number[]) => (dispatch: Function) => {
 export const selectElements =
   (area: [PointFromat, PointFromat]) =>
   (dispatch: Function, getState: Function) => {
-    // const viewPosition = selectViewPosition(getState());
-    // const newPoint1 = correctPoint(area[0], viewPosition);
-    // const newPoint2 = correctPoint(area[1], viewPosition);
-
     const elements = selectEditorElements(getState());
 
     dispatch({
       type: SELECT_ELEMENTS,
-      payload: { area, elements }, //  [newPoint1, newPoint2]
+      payload: { area, elements },
     });
   };
 

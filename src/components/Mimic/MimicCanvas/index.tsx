@@ -75,6 +75,10 @@ function MimicCanvas(props: Props): JSX.Element {
           props.onSelectElement([parseInt(id)]);
           break;
         }
+        // else {
+        //   props.onSelectElement([]);
+        //   break;
+        // }
       }
     }
 
