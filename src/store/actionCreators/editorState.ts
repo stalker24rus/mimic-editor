@@ -75,15 +75,15 @@ export const selectElement = (elements: number[]) => (dispatch: Function) => {
 export const selectElements =
   (area: [PointFromat, PointFromat]) =>
   (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
-    const newPoint1 = correctPoint(area[0], viewPosition);
-    const newPoint2 = correctPoint(area[1], viewPosition);
+    // const viewPosition = selectViewPosition(getState());
+    // const newPoint1 = correctPoint(area[0], viewPosition);
+    // const newPoint2 = correctPoint(area[1], viewPosition);
 
     const elements = selectEditorElements(getState());
 
     dispatch({
       type: SELECT_ELEMENTS,
-      payload: { area: [newPoint1, newPoint2], elements },
+      payload: { area, elements }, //  [newPoint1, newPoint2]
     });
   };
 

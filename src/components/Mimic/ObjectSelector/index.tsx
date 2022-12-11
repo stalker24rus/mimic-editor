@@ -62,7 +62,7 @@ function ObjectSelector(props: Props) {
   };
 
   const handlePointerMove = (ev: any) => {
-    if (!showRect && props.selectionDisabled) return;
+    if (!showRect || props.selectionDisabled) return;
     const { clientX, clientY } = ev;
     const endPoint = correctPoint(
       { x: clientX, y: clientY },
