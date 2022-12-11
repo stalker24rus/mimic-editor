@@ -87,7 +87,6 @@ function ObjectSelector(props: Props) {
       props.viewPosition
     );
     setSelectorRect([selectorRect[0], endPoint]);
-    // TODO ПОДУМАТЬ КАК БУДУТ ВЫДЕЛЯТЬСЯ ЛИНИИ
     props.onSelectElements([selectorRect[0], endPoint]);
   };
 
@@ -109,6 +108,7 @@ function ObjectSelector(props: Props) {
       {props.children}
 
       {selectedElements.length > 1 && (
+        // TODO <SelectedRect />
         <div
           style={{
             top: topArea,
@@ -127,22 +127,21 @@ function ObjectSelector(props: Props) {
       )}
 
       {showRect && !props.selectionDisabled && (
-        <span>
-          <div
-            style={{
-              top,
-              left,
-              width,
-              height,
-              background: "#1E90FF",
-              position: "absolute",
-              opacity: 0.3,
-              border: "2px dashed white",
-            }}
-          >
-            {" "}
-          </div>
-        </span>
+        // TODO <SelectionRect />
+        <div
+          style={{
+            top,
+            left,
+            width,
+            height,
+            background: "#1E90FF",
+            position: "absolute",
+            opacity: 0.3,
+            border: "2px dashed white",
+          }}
+        >
+          {" "}
+        </div>
       )}
     </div>
   );

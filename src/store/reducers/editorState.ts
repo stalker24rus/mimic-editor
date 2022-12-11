@@ -17,7 +17,6 @@ import {
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
   ELEMENT_TYPE_FRAME,
-  MIMIC_FRAME_ID,
 } from "../../constants/literals";
 import {
   CanvasNewElement,
