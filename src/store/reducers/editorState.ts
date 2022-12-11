@@ -199,15 +199,18 @@ export default (state = defaultState(), action: any): Props => {
         const element: MimicElementProps = elements[i];
         const { width, height, points } = element.attributes.position;
 
-        // if (width && height) {
-        // }
+        let innerPoints = 0;
 
         for (let j = 0; j < points.length; j++) {
           const point = points[j];
+
           if (checkIsPointInArea(area, point)) {
-            selected.push(element.attributes.general.id);
-            break;
+            innerPoints++;
           }
+        }
+
+        if (innerPoints === points.length) {
+          selected.push(element.attributes.general.id);
         }
       }
 
