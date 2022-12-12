@@ -125,6 +125,22 @@ const InstrumentPanel = (props: Props): JSX.Element => {
             <div className="text-xs">{props.future.length}</div>
           </div>
         </button>
+
+        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+          on top
+        </button>
+
+        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+          on forward
+        </button>
+
+        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+          on bottom
+        </button>
+
+        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+          on back
+        </button>
       </div>
     </div>
   );
