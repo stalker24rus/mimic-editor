@@ -10,6 +10,7 @@ import {
   CHANGE_POINT_POSITION,
   MOVE_ELEMENT_POINTS,
   DELETE_SELECTED_ELEMENTS,
+  MOVE_ELEMENT_GROUP,
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
@@ -86,6 +87,15 @@ export const moveElementPoints =
     dispatch({
       type: MOVE_ELEMENT_POINTS,
       payload: { id, movement },
+      passHistrory: true,
+    });
+  };
+
+export const moveElementGroup =
+  (selected: number[], movement: PointFromat) => (dispatch: Function) => {
+    dispatch({
+      type: MOVE_ELEMENT_GROUP,
+      payload: { selected, movement },
       passHistrory: true,
     });
   };

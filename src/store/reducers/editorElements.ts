@@ -15,6 +15,7 @@ import {
   UPDATE_LAST_POINT_OF_ELEMENT,
   CHANGE_POINT_POSITION,
   MOVE_ELEMENT_POINTS,
+  MOVE_ELEMENT_GROUP,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
 import resizeBox from "./functions/resizeBox";
@@ -166,6 +167,41 @@ export default (state = defaultState, action: any) => {
         const elements = lodash.cloneDeep(state);
 
         elements[index] = { ...element };
+        return elements;
+      } else {
+        return state;
+      }
+    }
+
+    case MOVE_ELEMENT_GROUP: {
+      const { selected, movement } = action.payload;
+      const elements = lodash.cloneDeep(state);
+
+      for (let i = 0; i < selected.length; i++) {
+        const index = state.findIndex(
+          (element: MimicElementProps) =>
+            element.attributes.general.id === selected[i]
+        );
+
+        if (index > -1) {
+          const element = { ...state[index] };
+
+          const newPoints = element.attributes.position.points.map(function (
+            element
+          ) {
+            return {
+              x: element.x + movement.x,
+              y: element.y + movement.y,
+            };
+          });
+
+          element.attributes.position.points = [...newPoints];
+
+          elements[index] = { ...element };
+        }
+      }
+
+      if (selected.length > 0) {
         return elements;
       } else {
         return state;

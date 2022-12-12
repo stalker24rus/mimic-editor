@@ -13,6 +13,7 @@ export const MOVE_ELEMENT: string = `${module}/MOVE_ELEMENT`;
 export const RESIZE_ELEMENT: string = `${module}/RESIZE_ELEMENT`;
 export const CHANGE_POINT_POSITION: string = `${module}/CHANGE_POINT_POSITION`;
 export const MOVE_ELEMENT_POINTS: string = `${module}/MOVE_ELEMENT_POINTS`;
+export const MOVE_ELEMENT_GROUP: string = `${module}/MOVE_ELEMENT_GROUP`;
 
 export const MOVE_ELEMENT_TOP_LAYER: string = `${module}/MOVE_ELEMENT_TOP_LAYER`;
 export const MOVE_ELEMENT_BACK_LAYER: string = `${module}/MOVE_ELEMENT_BACK_LAYER`;

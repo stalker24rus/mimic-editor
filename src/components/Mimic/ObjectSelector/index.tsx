@@ -12,6 +12,8 @@ import {
 import useGetBoxByMultiPoints, {
   useGetBoxFromElements,
 } from "../Hooks/useGetBoxByMultiPoints";
+import GroupMover from "./GroupMover";
+import SelectionRect from "./SelectionRect";
 
 interface StateProps {
   viewPosition: PointFromat;
@@ -58,15 +60,6 @@ function ObjectSelector(props: Props) {
   const [getBox] = useGetBoxByMultiPoints();
   const [top, left, width, height] = getBox(selectorRect);
 
-  const [getBoxFromElements] = useGetBoxFromElements();
-
-  const selectedElements = props.elements.filter((element) => {
-    return props.selected.indexOf(element.attributes.general.id) !== -1;
-  });
-
-  const [topArea, leftArea, widthArea, heightArea] =
-    getBoxFromElements(selectedElements);
-
   const handlePointerDown = (ev: any) => {
     const { target, pointerId, clientX, clientY } = ev;
     target.setPointerCapture(pointerId);
@@ -92,7 +85,6 @@ function ObjectSelector(props: Props) {
 
   const handlePointerUp = () => {
     setShowRect(false);
-    //setSelectorRect(defaultPoints);
   };
 
   return (
@@ -107,42 +99,10 @@ function ObjectSelector(props: Props) {
     >
       {props.children}
 
-      {selectedElements.length > 1 && (
-        // TODO <SelectedRect />
-        <div
-          style={{
-            top: topArea,
-            left: leftArea,
-            width: widthArea,
-            height: heightArea,
-            //background: "#1E90FF",
-            position: "absolute",
-            //opacity: 0.3,
-            border: "2px solid green",
-            cursor: "move",
-          }}
-        >
-          {" "}
-        </div>
-      )}
-
       {showRect && !props.selectionDisabled && (
-        // TODO <SelectionRect />
-        <div
-          style={{
-            top,
-            left,
-            width,
-            height,
-            background: "#1E90FF",
-            position: "absolute",
-            opacity: 0.3,
-            border: "2px dashed white",
-          }}
-        >
-          {" "}
-        </div>
+        <SelectionRect top={top} left={left} width={width} height={height} />
       )}
+      <GroupMover />
     </div>
   );
 }
