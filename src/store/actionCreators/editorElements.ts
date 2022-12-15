@@ -11,6 +11,10 @@ import {
   MOVE_ELEMENT_POINTS,
   DELETE_SELECTED_ELEMENTS,
   MOVE_ELEMENT_GROUP,
+  MOVE_ELEMENTS_ON_TOP_LEVEL,
+  MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
+  MOVE_ELEMENTS_ON_FORWARD_LEVEL,
+  MOVE_ELEMENTS_ON_BACK_LEVEL,
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
@@ -97,6 +101,49 @@ export const moveElementGroup =
       type: MOVE_ELEMENT_GROUP,
       payload: { selected, movement },
       passHistrory: true,
+    });
+  };
+
+/**
+ * CHANGE LAYER POSITION
+ */
+export const moveOnTopLevel =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: MOVE_ELEMENTS_ON_TOP_LEVEL,
+      payload: { selected },
+      passHistrory: false,
+    });
+  };
+
+export const moveOnBottomLevel =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
+      payload: { selected },
+      passHistrory: false,
+    });
+  };
+
+export const moveOnForwardLevel =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: MOVE_ELEMENTS_ON_FORWARD_LEVEL,
+      payload: { selected },
+      passHistrory: false,
+    });
+  };
+
+export const moveOnBackLevel =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: MOVE_ELEMENTS_ON_BACK_LEVEL,
+      payload: { selected },
+      passHistrory: false,
     });
   };
 

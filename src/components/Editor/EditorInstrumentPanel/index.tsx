@@ -1,5 +1,12 @@
 import { connect } from "react-redux";
-import { redo, undo } from "../../../store/actionCreators/editorElements";
+import {
+  moveOnBackLevel,
+  moveOnBottomLevel,
+  moveOnForwardLevel,
+  moveOnTopLevel,
+  redo,
+  undo,
+} from "../../../store/actionCreators/editorElements";
 import {
   editorAddButton,
   editorAddLine,
@@ -19,6 +26,10 @@ interface DispatchProps {
   onAddPolygon: Function;
   onUndo: Function;
   onRedo: Function;
+  onTopLevel: Function;
+  onForwardLevel: Function;
+  onBottomLevel: Function;
+  onBackLevel: Function;
 }
 
 interface OwnProps {
@@ -42,6 +53,10 @@ function mapDispatchToProps() {
     onAddPolygon: editorAddPolygon,
     onUndo: undo,
     onRedo: redo,
+    onTopLevel: moveOnTopLevel,
+    onForwardLevel: moveOnForwardLevel,
+    onBottomLevel: moveOnBottomLevel,
+    onBackLevel: moveOnBackLevel,
   };
 }
 
@@ -70,11 +85,27 @@ const InstrumentPanel = (props: Props): JSX.Element => {
     props.onRedo();
   };
 
+  const handleOnTopLevel = () => {
+    props.onTopLevel();
+  };
+
+  const handleOnForwardLevel = () => {
+    props.onForwardLevel();
+  };
+
+  const handleOnBottomLevel = () => {
+    props.onBottomLevel();
+  };
+
+  const handleOnBackLevel = () => {
+    props.onBackLevel();
+  };
+
   return (
     <div className="bg-gradient-to-r from-gray-900 to-gray-50">
       <div className="inline-flex" id="Component" style={{ top: 0, left: 0 }}>
         <div className="text-1xl text-center font-small text-gray-900 dark:text-white bg-gray-800 align-middle m-2">
-          REACT_SCADA
+          MIMIC_EDITOR
         </div>
         <button
           className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
@@ -126,19 +157,31 @@ const InstrumentPanel = (props: Props): JSX.Element => {
           </div>
         </button>
 
-        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleOnTopLevel}
+        >
           on top
         </button>
 
-        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleOnForwardLevel}
+        >
           on forward
         </button>
 
-        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleOnBottomLevel}
+        >
           on bottom
         </button>
 
-        <button className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60">
+        <button
+          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
+          onClick={handleOnBackLevel}
+        >
           on back
         </button>
       </div>

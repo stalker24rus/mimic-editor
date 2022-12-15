@@ -18,4 +18,10 @@ export const MOVE_ELEMENT_GROUP: string = `${module}/MOVE_ELEMENT_GROUP`;
 export const MOVE_ELEMENT_TOP_LAYER: string = `${module}/MOVE_ELEMENT_TOP_LAYER`;
 export const MOVE_ELEMENT_BACK_LAYER: string = `${module}/MOVE_ELEMENT_BACK_LAYER`;
 
+export const MOVE_ELEMENTS_ON_TOP_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_TOP_LEVEL`;
+export const MOVE_ELEMENTS_ON_BOTTOM_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_BOTTOM_LEVEL`;
+
+export const MOVE_ELEMENTS_ON_FORWARD_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_FORWARD_LEVEL`;
+export const MOVE_ELEMENTS_ON_BACK_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_BACK_LEVEL`;
+
 export const HISTORY_POINT_FOR_CHANGES: string = `${module}/HISTORY_POINT_FOR_CHANGES`;
