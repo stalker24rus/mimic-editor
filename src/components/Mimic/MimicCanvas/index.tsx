@@ -30,7 +30,7 @@ interface DispatchProps {
   onAppendPointToElement: Function;
   onEndDrawingElement: Function;
   onDrawingElement: Function;
-  onSelectElement: Function;
+  // onSelectElement: Function;
   onSetViewPosition: Function;
 }
 
@@ -54,7 +54,7 @@ function mapDispatchToProps() {
     onAppendPointToElement: appendPointToElement,
     onEndDrawingElement: endDrawingElement,
     onDrawingElement: drawingElement,
-    onSelectElement: selectElement,
+    // onSelectElement: selectElement,
     onSetViewPosition: setViewPosition,
   };
 }
@@ -67,22 +67,6 @@ function MimicCanvas(props: Props): JSX.Element {
   const { name } = general;
 
   useEffect(() => {
-    function selectComponent({ clientX, clientY }) {
-      const elements = document.elementsFromPoint(clientX, clientY);
-      for (let i = 0; i < elements.length; i++) {
-        const [parent, type, id] = elements[i].id.split(".");
-        if (parent === MIMIC) {
-          props.onSelectElement([parseInt(id)]);
-          break;
-        }
-        // else {
-        //   props.onSelectElement([]);
-        //   break;
-        // }
-      }
-    }
-
-    // FIXME  FIRST !!!!!!!!!!!!!!!!!
     function handleResize() {
       const htmlRect = document.getElementById(name)?.getBoundingClientRect();
 
@@ -91,13 +75,10 @@ function MimicCanvas(props: Props): JSX.Element {
         props.onSetViewPosition({ x, y });
       }
     }
-
-    window.addEventListener("click", selectComponent);
     window.addEventListener("resize", handleResize);
     handleResize();
 
     return () => {
-      window.removeEventListener("click", selectComponent);
       window.removeEventListener("resize", handleResize);
     };
   }, []);

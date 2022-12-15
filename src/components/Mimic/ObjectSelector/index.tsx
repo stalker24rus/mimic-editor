@@ -1,8 +1,14 @@
 import { useState } from "react";
 import { connect } from "react-redux";
+import { MIMIC } from "../../../constants/literals";
 import { MimicElementProps, PointFromat } from "../../../models/Editor";
 import { correctPoint } from "../../../store/actionCreators/editorElements";
-import { selectElements } from "../../../store/actionCreators/editorState";
+import {
+  // addElementToSelectionList,
+  selectElement,
+  selectElements,
+  toggleElementSelection,
+} from "../../../store/actionCreators/editorState";
 import { selectEditorElements } from "../../../store/selectors/editorElements";
 import {
   selectSelectedElements,
@@ -23,7 +29,10 @@ interface StateProps {
 }
 
 interface DispatchProps {
+  onSelectElement: Function;
   onSelectElements: Function;
+  onToggleSelect: Function;
+  //onAddToSelection: Function;
   //setSelectorRect: Function;
 }
 
@@ -44,7 +53,10 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
+    onSelectElement: selectElement,
     onSelectElements: selectElements,
+    onToggleSelect: toggleElementSelection,
+    // onAddToSelection: addElementToSelectionList,
   };
 }
 
@@ -87,6 +99,30 @@ function ObjectSelector(props: Props) {
     setShowRect(false);
   };
 
+  const handleClick = (ev: any) => {
+    const { clientX, clientY } = ev;
+
+    if (ev.shiftKey) {
+      const elements = document.elementsFromPoint(clientX, clientY);
+      for (let i = 0; i < elements.length; i++) {
+        const [parent, type, id] = elements[i].id.split(".");
+        if (parent === MIMIC) {
+          props.onToggleSelect(parseInt(id));
+          break;
+        }
+      }
+    } else {
+      const elements = document.elementsFromPoint(clientX, clientY);
+      for (let i = 0; i < elements.length; i++) {
+        const [parent, type, id] = elements[i].id.split(".");
+        if (parent === MIMIC) {
+          props.onSelectElement([parseInt(id)]);
+          break;
+        }
+      }
+    }
+  };
+
   return (
     <div
       style={{
@@ -96,6 +132,7 @@ function ObjectSelector(props: Props) {
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
+      onClick={handleClick}
     >
       {props.children}
 

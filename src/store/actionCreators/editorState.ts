@@ -1,4 +1,6 @@
 import {
+  // ADD_ELEMENT_TO_SELECTION_LIST,
+  // DEL_ELEMENT_FROM_SELECTION_LIST,
   HANDLE_ESCAPE,
   SELECT_ELEMENTS,
   SET_DRAWING_ID,
@@ -6,6 +8,7 @@ import {
   SET_MODE_CREATE,
   SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
+  TOGGLE_ELEMENT_SELECTION,
 } from "../../constants/actionTypes/editorState";
 import {
   ELEMENT_TYPE_BUTTON,
@@ -80,6 +83,19 @@ export const selectElements =
       payload: { area, elements },
     });
   };
+
+// export const addElementToSelectionList =
+//   (id: number) => (dispatch: Function) => {
+//     dispatch({ type: ADD_ELEMENT_TO_SELECTION_LIST, payload: { id } });
+//   };
+
+// export const delFromSelectionList = (id: number) => (dispatch: Function) => {
+//   dispatch({ type: DEL_ELEMENT_FROM_SELECTION_LIST, payload: { id } });
+// };
+
+export const toggleElementSelection = (id: number) => (dispatch: Function) => {
+  dispatch({ type: TOGGLE_ELEMENT_SELECTION, payload: { id } });
+};
 
 export const handleEscapeButton = () => (dispatch: Function) => {
   dispatch({ type: HANDLE_ESCAPE });

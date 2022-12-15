@@ -1,4 +1,6 @@
 import {
+  // ADD_ELEMENT_TO_SELECTION_LIST,
+  // DEL_ELEMENT_FROM_SELECTION_LIST,
   DISABLE_SELECTION,
   ENABLE_SELECTION,
   HANDLE_ESCAPE,
@@ -11,6 +13,7 @@ import {
   SET_MODE_OPERATE,
   SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
+  TOGGLE_ELEMENT_SELECTION,
 } from "../../constants/actionTypes/editorState";
 import {
   EDITOR_MODE_CREATE,
@@ -214,6 +217,28 @@ export default (state = defaultState(), action: any): Props => {
       }
 
       return { ...state, selected: [...selected] };
+    }
+
+    // case ADD_ELEMENT_TO_SELECTION_LIST: {
+    //   const { id } = action.payload;
+    //   return { ...state, selected: [...state.selected, id] };
+    // }
+
+    // case DEL_ELEMENT_FROM_SELECTION_LIST: {
+    //   const { id } = action.payload;
+    //   const selected = state.selected.filter((element) => !(element === id));
+    //   return { ...state, selected: [...selected] };
+    // }
+
+    case TOGGLE_ELEMENT_SELECTION: {
+      const { id } = action.payload;
+
+      if (state.selected.includes(id)) {
+        const selected = state.selected.filter((element) => !(element === id));
+        return { ...state, selected: [...selected] };
+      } else {
+        return { ...state, selected: [...state.selected, id] };
+      }
     }
 
     default:

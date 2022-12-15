@@ -51,6 +51,8 @@ const Mimic = (props: Props): JSX.Element => {
     const keyListener = (ev: any) => {
       console.log(ev);
 
+      //ev.target.preventDefault();
+
       if (
         (ev.metaKey || ev.ctrlKey) &&
         (ev.key === "Z" || ev.key === "z" || ev.code === "KeyZ")
@@ -78,6 +80,7 @@ const Mimic = (props: Props): JSX.Element => {
       }
     };
     window.addEventListener("keydown", keyListener);
+
     return () => {
       window.removeEventListener("keydown", keyListener);
     };
