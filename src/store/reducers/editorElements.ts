@@ -16,6 +16,10 @@ import {
   CHANGE_POINT_POSITION,
   MOVE_ELEMENT_POINTS,
   MOVE_ELEMENT_GROUP,
+  MOVE_ELEMENTS_ON_TOP_LEVEL,
+  MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
+  MOVE_ELEMENTS_ON_FORWARD_LEVEL,
+  MOVE_ELEMENTS_ON_BACK_LEVEL,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
 import resizeBox from "./functions/resizeBox";
@@ -313,6 +317,28 @@ export default (state = defaultState, action: any) => {
     case HISTORY_POINT_FOR_CHANGES: {
       const elements = lodash.cloneDeep(state);
       return [...elements];
+    }
+
+    case MOVE_ELEMENTS_ON_TOP_LEVEL: {
+      const { selected } = action.payload;
+      const movementArr = [];
+
+      return state;
+    }
+
+    case MOVE_ELEMENTS_ON_BOTTOM_LEVEL: {
+      const { selected } = action.payload;
+      return state;
+    }
+
+    case MOVE_ELEMENTS_ON_FORWARD_LEVEL: {
+      const { selected } = action.payload;
+      return state;
+    }
+
+    case MOVE_ELEMENTS_ON_BACK_LEVEL: {
+      const { selected } = action.payload;
+      return state;
     }
 
     case UPDATE_LAST_POINT_OF_ELEMENT: {
