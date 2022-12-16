@@ -321,19 +321,67 @@ export default (state = defaultState, action: any) => {
 
     case MOVE_ELEMENTS_ON_TOP_LEVEL: {
       const { selected } = action.payload;
+      const newState = [];
       const movementArr = [];
 
-      return state;
+      if (selected.length > 0) {
+        for (let i = 0; i < state.length; i++) {
+          const element = state[i];
+
+          if (selected.includes(element.attributes.general.id)) {
+            movementArr.push(element);
+          } else {
+            newState.push(element);
+          }
+        }
+
+        return [...newState, ...movementArr];
+      } else {
+        return state;
+      }
     }
 
     case MOVE_ELEMENTS_ON_BOTTOM_LEVEL: {
       const { selected } = action.payload;
-      return state;
+      const newState = [];
+      const movementArr = [];
+
+      if (selected.length > 0) {
+        for (let i = 0; i < state.length; i++) {
+          const element = state[i];
+
+          if (selected.includes(element.attributes.general.id)) {
+            movementArr.push(element);
+          } else {
+            newState.push(element);
+          }
+        }
+        return [...movementArr, ...newState];
+      } else {
+        return state;
+      }
     }
 
     case MOVE_ELEMENTS_ON_FORWARD_LEVEL: {
       const { selected } = action.payload;
-      return state;
+      const newState = [];
+      const memoryArr = [];
+
+      if (selected.length > 0) {
+        for (let i = 0; i < state.length; i++) {
+          const element = state[i];
+
+          if (selected.includes(element.attributes.general.id)) {
+            memoryArr.push(element);
+          } else {
+            newState.push(element);
+          }
+        }
+
+        return [...memoryArr, ...newState];
+      } else {
+        return state;
+      }
     }
 
     case MOVE_ELEMENTS_ON_BACK_LEVEL: {
