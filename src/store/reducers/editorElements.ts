@@ -53,7 +53,6 @@ export default (state = defaultState, action: any) => {
           },
           general: { id: id, name: type + id, tagName: "" },
         },
-        // service: service,
         children: [],
       };
 
