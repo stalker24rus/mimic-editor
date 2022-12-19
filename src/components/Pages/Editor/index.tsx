@@ -1,3 +1,4 @@
+import EditorContextMenu from "../../Editor/EditorContextMenu";
 import EditorInstrumentPanel from "../../Editor/EditorInstrumentPanel";
 import Mimic from "../../Mimic";
 import "./index.css";
@@ -7,6 +8,7 @@ function Editor() {
     <div>
       <EditorInstrumentPanel />
       <Mimic />
+      <EditorContextMenu />
     </div>
   );
 }
