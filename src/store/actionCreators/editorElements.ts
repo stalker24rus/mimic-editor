@@ -32,6 +32,7 @@ import {
   selectViewPosition,
 } from "../selectors/editorState";
 import { selectElement } from "../selectors/editorElements";
+import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
 
 export function correctPoint(
   point: PointFromat,
@@ -174,7 +175,7 @@ export const createElement =
 
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
-    const newElement = selectNewElement(getState());
+    const newElement: MimicElementProps = selectNewElement(getState());
 
     dispatch({
       type: CREATE_ELEMENT,
@@ -195,7 +196,9 @@ export const createElement =
       },
     });
 
-    if (newElement.service.pointsAmount <= 1) {
+    // TODO THIS IS NOT GOOD
+    const pointsAmount = ElementBase[newElement.type].maxPoints;
+    if (pointsAmount <= 1) {
       dispatch({
         type: SET_MODE_EDIT,
       });
@@ -219,12 +222,12 @@ export const appendPointToElement =
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
 
-    const element = selectElement(getState(), id);
+    const element: MimicElementProps = selectElement(getState(), id);
 
     if (element) {
-      const pointAmount = element.service.pointsAmount;
+      const pointAmount = ElementBase[element.type].maxPoints;
       const pointLength = element.attributes.position.points.length;
-      console.log(pointLength, pointAmount);
+
       if (pointLength < pointAmount) {
         dispatch({
           type: APPEND_POINT_TO_ELEMENT,

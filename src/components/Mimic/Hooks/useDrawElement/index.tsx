@@ -18,6 +18,7 @@ interface BaseProps {
   [key: string]: {
     element: (props: any) => JSX.Element;
     box: (props: any) => JSX.Element;
+    maxPoints: number;
   };
 }
 
@@ -28,22 +29,26 @@ interface Props {
   onPointerDown: Function;
 }
 
-const ElementBase: BaseProps = {
+export const ElementBase: BaseProps = {
   [ELEMENT_TYPE_BUTTON]: {
     element: Button,
     box: RectangleBox,
+    maxPoints: 1,
   },
   [ELEMENT_TYPE_LINE]: {
     element: Line,
     box: MultiObjectBox,
+    maxPoints: 2,
   },
   [ELEMENT_TYPE_POLYLINE]: {
     element: Polyline,
     box: MultiObjectBox,
+    maxPoints: 999,
   },
   [ELEMENT_TYPE_POLYGON]: {
     element: Polygon,
     box: MultiObjectBox,
+    maxPoints: 999,
   },
 };
 

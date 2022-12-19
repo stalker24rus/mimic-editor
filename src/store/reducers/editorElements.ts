@@ -1,4 +1,5 @@
 import lodash, { merge } from "lodash";
+import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
 import {
   APPEND_POINT_TO_ELEMENT,
   CHANGE_ELEMENT_ANGLE,
@@ -38,8 +39,8 @@ export default (state = defaultState, action: any) => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { id, newElement, point } = action.payload;
-      const { type, attributes, service } = newElement;
-      const pointsAmount = service.pointsAmount;
+      const { type, attributes } = newElement;
+      const pointsAmount = ElementBase[type].maxPoints;
 
       const element = {
         type: type,
@@ -52,7 +53,7 @@ export default (state = defaultState, action: any) => {
           },
           general: { id: id, name: type + id, tagName: "" },
         },
-        service: service,
+        // service: service,
         children: [],
       };
 

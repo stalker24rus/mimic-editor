@@ -46,7 +46,7 @@ interface Props {
 const defaultState = (): Props => {
   return {
     mode: EDITOR_MODE_EDIT,
-    newElement: { type: undefined, attributes: undefined, service: undefined },
+    newElement: { type: undefined, attributes: undefined },
     drawId: undefined,
     lastTakenId: 1,
     viewPosition: { x: 0, y: 0 },
@@ -59,7 +59,7 @@ const defaultState = (): Props => {
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
-      service: undefined,
+      //service: undefined,
       attributes: {
         general: {
           id: 0,

@@ -41,7 +41,7 @@ export function getBaseParamOfButton(): BaseElementOutput {
         handler: undefined,
       },
     },
-    service: { pointsAmount: 1 },
+    //service: { pointsAmount: 1 },
   };
 }
 
@@ -66,7 +66,7 @@ export function getBaseParamOfLine(): BaseElementOutput {
       },
       animation: [],
     },
-    service: { pointsAmount: 2 },
+    //service: { pointsAmount: 2 },
   };
 }
 
@@ -91,7 +91,7 @@ export function getBaseParamOfPolyLine(): BaseElementOutput {
       },
       animation: [],
     },
-    service: { pointsAmount: 999 },
+    //service: { pointsAmount: 999 },
   };
 }
 
@@ -117,6 +117,6 @@ export function getBaseParamOfPolygon(): BaseElementOutput {
       },
       animation: [],
     },
-    service: { pointsAmount: 999 },
+    //service: { pointsAmount: 999 },
   };
 }

@@ -26,7 +26,7 @@ export type MimicElementProps = {
   type: ElementType;
   layer: number;
   attributes: Attributes;
-  service: Service | undefined; // TODO remove
+  //service: Service | undefined; // TODO remove
   children?: Array<MimicElementProps>;
 };
 
@@ -217,7 +217,7 @@ export type CanvasMimicProps = {
 
 export type BaseElementOutput = {
   attributes: InitAttributes | undefined;
-  service: Service | undefined;
+  //service: Service | undefined;
 };
 
 export interface CanvasNewElement extends BaseElementOutput {
