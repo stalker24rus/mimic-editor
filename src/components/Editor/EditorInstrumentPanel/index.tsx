@@ -13,10 +13,12 @@ import {
   editorAddPolygon,
   editorAddPolyline,
 } from "../../../store/actionCreators/editorState";
+import { selectSelectedElements } from "../../../store/selectors/editorState";
 
 interface StateProps {
   future: [any];
   past: [any];
+  selected: number[] | undefined;
 }
 
 interface DispatchProps {
@@ -42,6 +44,7 @@ function mapStateToProps(store) {
   return {
     future: store.undoredobleEditorElements.future,
     past: store.undoredobleEditorElements.past,
+    selected: selectSelectedElements(store),
   };
 }
 
@@ -167,6 +170,7 @@ const InstrumentPanel = (props: Props): JSX.Element => {
         <button
           className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
           onClick={handleOnForwardLevel}
+          disabled={props.selected.length !== 1}
         >
           on forward
         </button>
@@ -181,6 +185,7 @@ const InstrumentPanel = (props: Props): JSX.Element => {
         <button
           className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
           onClick={handleOnBackLevel}
+          disabled={props.selected.length !== 1}
         >
           on back
         </button>

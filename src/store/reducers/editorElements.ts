@@ -22,6 +22,7 @@ import {
   MOVE_ELEMENTS_ON_BACK_LEVEL,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
+import changeIndexArr from "./functions/changeIndexArray";
 import resizeBox from "./functions/resizeBox";
 
 const defaultState: MimicElementProps[] = [];
@@ -323,12 +324,23 @@ export default (state = defaultState, action: any) => {
       const { selected } = action.payload;
       const newState = [];
       const movementArr = [];
+      const selectedArr = [...selected];
 
-      if (selected.length > 0) {
+      if (selectedArr.length > 0) {
         for (let i = 0; i < state.length; i++) {
           const element = state[i];
 
-          if (selected.includes(element.attributes.general.id)) {
+          let included = false;
+
+          for (let j = 0; j < selectedArr.length; j++) {
+            if (selectedArr[j] === element.attributes.general.id) {
+              included = true;
+              selectedArr.splice(j, 1);
+              break;
+            }
+          }
+
+          if (included) {
             movementArr.push(element);
           } else {
             newState.push(element);
@@ -345,12 +357,23 @@ export default (state = defaultState, action: any) => {
       const { selected } = action.payload;
       const newState = [];
       const movementArr = [];
+      const selectedArr = [...selected];
 
-      if (selected.length > 0) {
+      if (selectedArr.length > 0) {
         for (let i = 0; i < state.length; i++) {
           const element = state[i];
 
-          if (selected.includes(element.attributes.general.id)) {
+          let included = false;
+
+          for (let j = 0; j < selectedArr.length; j++) {
+            if (selectedArr[j] === element.attributes.general.id) {
+              included = true;
+              selectedArr.splice(j, 1);
+              break;
+            }
+          }
+
+          if (included) {
             movementArr.push(element);
           } else {
             newState.push(element);
@@ -364,21 +387,29 @@ export default (state = defaultState, action: any) => {
 
     case MOVE_ELEMENTS_ON_FORWARD_LEVEL: {
       const { selected } = action.payload;
-      const newState = [];
-      const memoryArr = [];
+      const newState = [...state];
+      const selectedArr = [...selected];
 
-      if (selected.length > 0) {
+      if (selectedArr.length === 1) {
         for (let i = 0; i < state.length; i++) {
           const element = state[i];
 
-          if (selected.includes(element.attributes.general.id)) {
-            memoryArr.push(element);
-          } else {
-            newState.push(element);
+          let included = false;
+
+          for (let j = 0; j < selectedArr.length; j++) {
+            if (selectedArr[j] === element.attributes.general.id) {
+              included = true;
+              selectedArr.splice(j, 1);
+              break;
+            }
+          }
+
+          if (included && i < state.length - 1) {
+            changeIndexArr(newState, i, i + 1);
           }
         }
 
-        return [...memoryArr, ...newState];
+        return [...newState];
       } else {
         return state;
       }
@@ -386,7 +417,31 @@ export default (state = defaultState, action: any) => {
 
     case MOVE_ELEMENTS_ON_BACK_LEVEL: {
       const { selected } = action.payload;
-      return state;
+      const newState = [...state];
+      const selectedArr = [...selected];
+
+      if (selected.length === 1) {
+        for (let i = 0; i < state.length; i++) {
+          const element = state[i];
+
+          let included = false;
+
+          for (let j = 0; j < selectedArr.length; j++) {
+            if (selectedArr[j] === element.attributes.general.id) {
+              included = true;
+              selectedArr.splice(j, 1);
+              break;
+            }
+          }
+
+          if (included && i > 0) {
+            changeIndexArr(newState, i, i - 1);
+          }
+        }
+        return [...newState];
+      } else {
+        return state;
+      }
     }
 
     case UPDATE_LAST_POINT_OF_ELEMENT: {

@@ -26,13 +26,13 @@ export type MimicElementProps = {
   type: ElementType;
   layer: number;
   attributes: Attributes;
-  service: Service | undefined;
+  service: Service | undefined; // TODO remove
   children?: Array<MimicElementProps>;
 };
 
 export interface InitAttributes {
   position: PositionType;
-  properties: { [any: string]: any }; // It defines inside a component.
+  properties: { [any: string]: any }; //TODO rename to custom It defines inside a component.
   appearance?: AppearenceType;
   animation?: Array<AnimationType>;
   action?: Action;
