@@ -72,8 +72,6 @@ function SimpleSpliter(props: IWSplitterProps): JSX.Element {
       : (objectCur.x / wrapperRect["width"] ?? 0) * 100;
 
     currentPercent = limitValue(currentPercent, 0.3, 99.7);
-    console.log(wrapperRect);
-    console.log(currentPercent);
 
     setViewSize({
       first: currentPercent,

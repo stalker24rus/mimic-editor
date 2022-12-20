@@ -105,10 +105,14 @@ const InstrumentPanel = (props: Props): JSX.Element => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-gray-900 to-gray-50">
+    <div
+      className="bg-gradient-to-r from-gray-900 to-gray-50"
+      style={{ height: "52px" }}
+    >
       <div className="inline-flex" id="Component" style={{ top: 0, left: 0 }}>
-        <div className="text-1xl text-center font-small text-gray-900 dark:text-white bg-gray-800 align-middle m-2">
-          MIMIC_EDITOR
+        <div className="text-1xl text-center font-small text-gray-900 dark:text-white bg-gray-800 align-middle m-1">
+          <div style={{ fontSize: "18px" }}>MIMIC_EDITOR</div>
+          <div style={{ fontSize: "10px" }}>by IEG</div>
         </div>
         <button
           className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
