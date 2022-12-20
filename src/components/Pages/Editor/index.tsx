@@ -1,26 +1,59 @@
+import { useEffect, useState } from "react";
 import EditorContextMenu from "../../Editor/EditorContextMenu";
 import EditorInstrumentPanel from "../../Editor/EditorInstrumentPanel";
-import WindowSplitter from "../../Editor/WindowSplitter";
+import SimpleSpliter from "../../Editor/SimpleSpliter";
 import Mimic from "../../Mimic";
 import "./index.css";
 
+const HEADER_HEIGHT = 52;
+
 function Editor() {
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
+
+  useEffect(() => {
+    function handleResize() {
+      setWidth(window.innerWidth);
+      setHeight(window.innerHeight);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div>
-      <EditorInstrumentPanel />
+    <div
+      style={{
+        width,
+        height,
+        overflow: "hidden",
+      }}
+    >
       <div
-      // style={{
-      //   position: "relative",
-      //   left: "100px",
-      //   height: "70%",
-      //   width: "70%",
-      // }}
+        style={{
+          height: HEADER_HEIGHT,
+        }}
       >
-        <WindowSplitter isHorizontally={false}>
-          <Mimic />
-          <div>Thirt</div>
-        </WindowSplitter>
+        <EditorInstrumentPanel />
       </div>
+
+      <div
+        style={{
+          height: height - HEADER_HEIGHT, //"1000px",
+        }}
+      >
+        <SimpleSpliter isHorizontally={true}>
+          <SimpleSpliter isHorizontally={false} split="horizontal">
+            <Mimic />
+            <div>PROJECT VIEW</div>
+          </SimpleSpliter>
+          <>SIMULATOR</>
+        </SimpleSpliter>
+      </div>
+
       <EditorContextMenu />
     </div>
   );

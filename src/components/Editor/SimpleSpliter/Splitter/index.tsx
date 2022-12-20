@@ -23,14 +23,14 @@ function Splitter({ isHorizontally, onDrag }) {
       className={
         isHorizontally ? "spliter-horizon-block " : "spliter-vertical-block"
       }
+      onPointerDown={handlePointerDown}
+      onPointerUp={handlePointerUp}
+      onPointerMove={handlePointerMove}
     >
       <div
         className={
           isHorizontally ? "spliter-horizon-btn" : "spliter-vertical-btn"
         }
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-        onPointerMove={handlePointerMove}
       ></div>
     </div>
   );
