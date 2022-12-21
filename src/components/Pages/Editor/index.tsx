@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EditorContextMenu from "../../Editor/EditorContextMenu";
 import EditorInstrumentPanel from "../../Editor/EditorInstrumentPanel";
+import EditorPanel from "../../Editor/EditorPanel";
 import SimpleSpliter from "../../Editor/SimpleSpliter";
 import Mimic from "../../Mimic";
 import "./index.css";
@@ -48,7 +49,7 @@ function Editor() {
         <SimpleSpliter isHorizontally={true}>
           <SimpleSpliter isHorizontally={false} split="horizontal">
             <Mimic />
-            <div>PROJECT VIEW</div>
+            <EditorPanel />
           </SimpleSpliter>
           <>SIMULATOR</>
         </SimpleSpliter>

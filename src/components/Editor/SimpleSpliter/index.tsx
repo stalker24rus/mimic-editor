@@ -18,16 +18,20 @@ import Splitter from "./Splitter";
 // https://github.com/yyllff/split-pane-react/blob/main/src/SplitPane.tsx
 
 function SimpleSpliter(props: IWSplitterProps): JSX.Element {
-  const { split } = props;
+  const { split, defaaultPos } = props;
   const wrapper = useRef<HTMLDivElement>(null);
   const [firstChild, setFirstChild] = useState<JSX.Element>();
   const [secondChild, setSecondChild] = useState<JSX.Element | JSX.Element[]>();
   const [wrapperRect, setWrapperRect] = useState({});
 
   const [viewSize, setViewSize] = useState<IViewsProps>({
-    first: 80,
-    second: 20,
+    first: defaaultPos,
+    second: 100 - defaaultPos,
   });
+
+  const spliterPos = props.isHorizontally
+    ? wrapperRect["height"] * (viewSize.first / 100)
+    : wrapperRect["width"] * (viewSize.first / 100);
 
   useEffect(() => {
     if (props.children.constructor === Array) {
@@ -97,16 +101,17 @@ function SimpleSpliter(props: IWSplitterProps): JSX.Element {
         >
           {firstChild}
         </Container>
-        <Splitter
-          onDrag={handleChangeView}
-          isHorizontally={props.isHorizontally}
-        ></Splitter>
         <Container
           percent={viewSize.second}
           isHorizontally={props.isHorizontally}
         >
           {secondChild}
         </Container>
+        <Splitter
+          position={spliterPos}
+          onDrag={handleChangeView}
+          isHorizontally={props.isHorizontally}
+        ></Splitter>
       </div>
     </>
   );
@@ -115,6 +120,7 @@ function SimpleSpliter(props: IWSplitterProps): JSX.Element {
 SimpleSpliter.defaultProps = {
   isAutoWidth: false,
   isHorizontally: false,
+  defaaultPos: 70,
   split: "vertical",
 };
 

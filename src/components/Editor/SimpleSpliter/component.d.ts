@@ -4,6 +4,7 @@ interface IWSplitterProps {
   isHorizontally: boolean | undefined;
   splitValue?: number | string; // in percent (0-100) or px
   split?: "vertical" | "horizontal";
+  defaaultPos?: number;
 }
 
 interface IViewsProps {

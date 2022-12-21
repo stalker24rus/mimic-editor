@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./index.css";
 
-function Splitter({ isHorizontally, onDrag }) {
+function Splitter({ position, isHorizontally, onDrag }) {
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = (ev) => {
@@ -18,8 +18,16 @@ function Splitter({ isHorizontally, onDrag }) {
     if (isDragging) onDrag(ev);
   };
 
+  console.log({ position });
+
   return (
     <div
+      style={{
+        position: "absolute",
+        top: isHorizontally ? position : 0,
+        left: isHorizontally ? 0 : position,
+        //height: "100%",
+      }}
       className={
         isHorizontally ? "spliter-horizon-block " : "spliter-vertical-block"
       }
