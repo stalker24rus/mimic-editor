@@ -13,6 +13,7 @@ export function getBaseParamOfButton(): BaseElementOutput {
     attributes: {
       appearance: {
         fill: "#CF0000",
+        stroke: "#CF5500",
         opacity: 1,
         visability: true,
       },

@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { ChromePicker } from "react-color";
 
 function PropsView({ title, children }) {
   const [expand, setExpand] = useState<boolean>(true);
@@ -50,7 +51,7 @@ function General({ data }) {
             </td>
           </tr>
           <tr>
-            <td>tagName</td>
+            <td>tagName:</td>
             <td>
               <input value={tagName} />
             </td>
@@ -62,7 +63,10 @@ function General({ data }) {
 }
 
 function Appearance({ data }) {
-  const { fill, opacity, visability } = data;
+  const { fill, stroke, opacity, visability } = data;
+
+  const [fiilColorView, setFillCollorView] = useState<boolean>(false);
+  const [strokeColorView, setStrokeColorView] = useState<boolean>(false);
 
   return (
     <>
@@ -83,8 +87,53 @@ function Appearance({ data }) {
                     }}
                   ></div>
 
-                  <input value={fill} />
+                  <button onClick={() => setFillCollorView(!fiilColorView)}>
+                    {fill}
+                  </button>
+
+                  {/* <input value={fill} /> */}
                 </div>
+                {fiilColorView && (
+                  <div style={{ position: "absolute", zIndex: "2" }}>
+                    <ChromePicker
+                      color={fill}
+                      onChange={(color) => console.log(color)}
+                    />
+                  </div>
+                )}
+              </td>
+            </tr>
+          )}
+
+          {stroke !== undefined && (
+            <tr>
+              <td>stroke</td>
+              <td>
+                <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{
+                      margin: "2px",
+                      height: "20px",
+                      width: "20px",
+                      border: "solid 1px",
+                      background: stroke,
+                    }}
+                  ></div>
+
+                  <button onClick={() => setStrokeColorView(!strokeColorView)}>
+                    {stroke}
+                  </button>
+
+                  {/* <input value={fill} /> */}
+                </div>
+                {strokeColorView && (
+                  <div style={{ position: "absolute", zIndex: "2" }}>
+                    <ChromePicker
+                      color={stroke}
+                      onChange={(color) => console.log(color)}
+                    />
+                  </div>
+                )}
               </td>
             </tr>
           )}
@@ -93,7 +142,12 @@ function Appearance({ data }) {
             <tr>
               <td>opacity</td>
               <td>
-                <input value={opacity} />
+                <input
+                  style={{ width: "60px" }}
+                  value={opacity}
+                  type="number"
+                  step="0.01"
+                />
               </td>
             </tr>
           )}
@@ -102,7 +156,13 @@ function Appearance({ data }) {
             <tr>
               <td>visability</td>
               <td>
-                <input value={visability} />
+                <select
+                  value={visability}
+                  onChange={(event) => console.log(event.target.value)}
+                >
+                  <option>true</option>
+                  <option>false</option>
+                </select>
               </td>
             </tr>
           )}
@@ -112,6 +172,21 @@ function Appearance({ data }) {
   );
 }
 
+const FONT_FAMILY = [
+  "Arial",
+  "Verdana",
+  "Tahoma",
+  "Helvetica",
+  "Georgia",
+  "Times New Roman",
+];
+
+const FONT_STYLE = ["normal", "italic", "oblique", "inherit"];
+
+const FONT_WEIGHT = ["bold", "bolder", "lighter", "normal"];
+
+const FONT_HORIZON_ALIGHN = ["left", "right", "middle"];
+
 function Font({ data }) {
   const { fontFamily, fontSize, fontStyle, fontWeight, horizonAlign } = data;
   return (
@@ -119,37 +194,65 @@ function Font({ data }) {
       <PropsView title="Шрифт">
         <table>
           <tr>
-            <td>fontFamily</td>
+            <td>fontFamily:</td>
             <td>
-              <input value={fontFamily} />
+              <select
+                value={fontFamily}
+                onChange={(event) => console.log(event.target.value)}
+              >
+                {FONT_FAMILY.map((font, i) => (
+                  <option key={i}>{font}</option>
+                ))}
+              </select>
             </td>
           </tr>
 
           <tr>
-            <td>fontSize</td>
+            <td>fontSize:</td>
             <td>
-              <input value={fontSize} />
+              <input style={{ width: "60px" }} value={fontSize} type="number" />
             </td>
           </tr>
 
           <tr>
-            <td>fontStyle</td>
+            <td>fontStyle:</td>
             <td>
-              <input value={fontStyle} />
+              <select
+                value={fontStyle}
+                onChange={(event) => console.log(event.target.value)}
+              >
+                {FONT_STYLE.map((font, i) => (
+                  <option key={i}>{font}</option>
+                ))}
+              </select>
             </td>
           </tr>
 
           <tr>
-            <td>fontWeight</td>
+            <td>fontWeight:</td>
             <td>
-              <input value={fontWeight} />
+              <select
+                value={fontWeight}
+                onChange={(event) => console.log(event.target.value)}
+              >
+                {FONT_WEIGHT.map((font, i) => (
+                  <option key={i}>{font}</option>
+                ))}
+              </select>
             </td>
           </tr>
 
           <tr>
-            <td>horizonAlign</td>
+            <td>horizonAlign:</td>
             <td>
-              <input value={horizonAlign} />
+              <select
+                value={horizonAlign}
+                onChange={(event) => console.log(event.target.value)}
+              >
+                {FONT_HORIZON_ALIGHN.map((font, i) => (
+                  <option key={i}>{font}</option>
+                ))}
+              </select>
             </td>
           </tr>
         </table>
@@ -169,7 +272,7 @@ function Position({ data }) {
             <tr>
               <td>angle : </td>
               <td>
-                <input style={{ width: "60px" }} value={angle} />
+                <input style={{ width: "60px" }} value={angle} type="number" />
               </td>
             </tr>
           )}
@@ -178,7 +281,7 @@ function Position({ data }) {
             <tr>
               <td>height: </td>
               <td>
-                <input style={{ width: "60px" }} value={height} />
+                <input style={{ width: "60px" }} value={height} type="number" />
               </td>
             </tr>
           )}
@@ -187,7 +290,7 @@ function Position({ data }) {
             <tr>
               <td>width: </td>
               <td>
-                <input style={{ width: "60px" }} value={width} />
+                <input style={{ width: "60px" }} value={width} type="number" />
               </td>
             </tr>
           )}
@@ -207,11 +310,19 @@ function Position({ data }) {
                     <td>{index}</td>
 
                     <td>
-                      <input style={{ width: "60px" }} value={point.x} />
+                      <input
+                        style={{ width: "60px" }}
+                        value={point.x}
+                        type="number"
+                      />
                     </td>
 
                     <td>
-                      <input style={{ width: "60px" }} value={point.y} />
+                      <input
+                        style={{ width: "60px" }}
+                        value={point.y}
+                        type="number"
+                      />
                     </td>
                   </tr>
                 );
