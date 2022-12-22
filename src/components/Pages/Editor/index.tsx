@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import EditorContextMenu from "../../Editor/EditorContextMenu";
-import EditorInstrumentPanel from "../../Editor/EditorInstrumentPanel";
+import EditorHeader from "../../Editor/EditorHeader";
 import EditorPanel from "../../Editor/EditorPanel";
 import SimpleSpliter from "../../Editor/SimpleSpliter";
 import Mimic from "../../Mimic";
@@ -38,7 +38,7 @@ function Editor() {
           height: HEADER_HEIGHT,
         }}
       >
-        <EditorInstrumentPanel />
+        <EditorHeader />
       </div>
 
       <div

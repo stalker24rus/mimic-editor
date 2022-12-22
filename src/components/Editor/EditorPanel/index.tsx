@@ -1,4 +1,6 @@
+import Primitives from "./Primitives";
 import SimpleSpliter from "../SimpleSpliter";
+import Properties from "./Properties";
 
 function EditorPanel() {
   return (
@@ -10,17 +12,9 @@ function EditorPanel() {
           background: "#727272",
         }}
       >
-        PROJECT TREE
+        <Primitives></Primitives>
       </div>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "yellow",
-        }}
-      >
-        PROPERTIES
-      </div>
+      <Properties />
     </SimpleSpliter>
   );
 }

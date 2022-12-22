@@ -63,7 +63,7 @@ function mapDispatchToProps() {
   };
 }
 
-const InstrumentPanel = (props: Props): JSX.Element => {
+const EditorHeader = (props: Props): JSX.Element => {
   const handleAddButton = () => {
     props.onAddButton();
   };
@@ -114,33 +114,6 @@ const InstrumentPanel = (props: Props): JSX.Element => {
           <div style={{ fontSize: "18px" }}>MIMIC_EDITOR</div>
           <div style={{ fontSize: "10px" }}>by IEG</div>
         </div>
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={handleAddButton}
-        >
-          Кнопка
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={handleAddLine}
-        >
-          Линия
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={handleAddPolyline}
-        >
-          Поли линия
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={handleAddPolygone}
-        >
-          Полигон
-        </button>
 
         <button
           className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
@@ -201,4 +174,4 @@ const InstrumentPanel = (props: Props): JSX.Element => {
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
-)(InstrumentPanel);
+)(EditorHeader);

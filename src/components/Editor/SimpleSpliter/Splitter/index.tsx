@@ -18,8 +18,6 @@ function Splitter({ position, isHorizontally, onDrag }) {
     if (isDragging) onDrag(ev);
   };
 
-  console.log({ position });
-
   return (
     <div
       style={{

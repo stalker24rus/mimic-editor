@@ -12,7 +12,7 @@ export function getBaseParamOfButton(): BaseElementOutput {
   return {
     attributes: {
       appearance: {
-        fill: "#B8A5A1",
+        fill: "#CF0000",
         opacity: 1,
         visability: true,
       },
