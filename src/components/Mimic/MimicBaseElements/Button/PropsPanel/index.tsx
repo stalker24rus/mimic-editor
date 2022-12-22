@@ -1,6 +1,10 @@
 import { useCallback, useState } from "react";
 import { ChromePicker } from "react-color";
 
+interface IChangeData {
+  [key: string]: number | string;
+}
+
 function PropsView({ title, children }) {
   const [expand, setExpand] = useState<boolean>(true);
 
@@ -33,8 +37,12 @@ function PropsView({ title, children }) {
   );
 }
 
-function General({ data }) {
+function General({ data, onChange }) {
   const { id, name, tagName } = data;
+
+  const handleChange = (ev) => {
+    onChange({ [ev.target.name]: ev.target.value });
+  };
 
   return (
     <>
@@ -47,13 +55,13 @@ function General({ data }) {
           <tr>
             <td>name:</td>
             <td>
-              <input value={name} />
+              <input name="name" value={name} onChange={handleChange} />
             </td>
           </tr>
           <tr>
             <td>tagName:</td>
             <td>
-              <input value={tagName} />
+              <input name="tagName" value={tagName} onChange={handleChange} />
             </td>
           </tr>
         </table>
@@ -62,11 +70,19 @@ function General({ data }) {
   );
 }
 
-function Appearance({ data }) {
+function Appearance({ data, onChange }) {
   const { fill, stroke, opacity, visability } = data;
 
   const [fiilColorView, setFillCollorView] = useState<boolean>(false);
   const [strokeColorView, setStrokeColorView] = useState<boolean>(false);
+
+  const handleChange = (ev) => {
+    onChange({ [ev.target.name]: ev.target.value });
+  };
+
+  const handleChangeColor = (fieldName, color) => {
+    onChange({ [fieldName]: color.rgb });
+  };
 
   return (
     <>
@@ -97,7 +113,7 @@ function Appearance({ data }) {
                   <div style={{ position: "absolute", zIndex: "2" }}>
                     <ChromePicker
                       color={fill}
-                      onChange={(color) => console.log(color)}
+                      onChange={(color) => handleChangeColor("fill", color)}
                     />
                   </div>
                 )}
@@ -130,7 +146,7 @@ function Appearance({ data }) {
                   <div style={{ position: "absolute", zIndex: "2" }}>
                     <ChromePicker
                       color={stroke}
-                      onChange={(color) => console.log(color)}
+                      onChange={(color) => handleChangeColor("stroke", color)}
                     />
                   </div>
                 )}
@@ -143,10 +159,12 @@ function Appearance({ data }) {
               <td>opacity</td>
               <td>
                 <input
+                  name="opacity"
                   style={{ width: "60px" }}
                   value={opacity}
                   type="number"
                   step="0.01"
+                  onChange={handleChange}
                 />
               </td>
             </tr>
@@ -157,8 +175,9 @@ function Appearance({ data }) {
               <td>visability</td>
               <td>
                 <select
+                  name="opacity"
                   value={visability}
-                  onChange={(event) => console.log(event.target.value)}
+                  onChange={handleChange}
                 >
                   <option>true</option>
                   <option>false</option>
@@ -187,8 +206,13 @@ const FONT_WEIGHT = ["bold", "bolder", "lighter", "normal"];
 
 const FONT_HORIZON_ALIGHN = ["left", "right", "middle"];
 
-function Font({ data }) {
+function Font({ data, onChange }) {
   const { fontFamily, fontSize, fontStyle, fontWeight, horizonAlign } = data;
+
+  const handleChange = (ev) => {
+    onChange({ [ev.target.name]: ev.target.value });
+  };
+
   return (
     <>
       <PropsView title="Шрифт">
@@ -198,7 +222,8 @@ function Font({ data }) {
             <td>
               <select
                 value={fontFamily}
-                onChange={(event) => console.log(event.target.value)}
+                name="fontFamily"
+                onChange={handleChange}
               >
                 {FONT_FAMILY.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -210,7 +235,13 @@ function Font({ data }) {
           <tr>
             <td>fontSize:</td>
             <td>
-              <input style={{ width: "60px" }} value={fontSize} type="number" />
+              <input
+                name="fontSize"
+                style={{ width: "60px" }}
+                value={fontSize}
+                type="number"
+                onChange={handleChange}
+              />
             </td>
           </tr>
 
@@ -218,8 +249,9 @@ function Font({ data }) {
             <td>fontStyle:</td>
             <td>
               <select
+                name="fontStyle"
                 value={fontStyle}
-                onChange={(event) => console.log(event.target.value)}
+                onChange={handleChange}
               >
                 {FONT_STYLE.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -232,8 +264,9 @@ function Font({ data }) {
             <td>fontWeight:</td>
             <td>
               <select
+                name="fontWeight"
                 value={fontWeight}
-                onChange={(event) => console.log(event.target.value)}
+                onChange={handleChange}
               >
                 {FONT_WEIGHT.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -246,8 +279,9 @@ function Font({ data }) {
             <td>horizonAlign:</td>
             <td>
               <select
+                name="horizonAlign"
+                onChange={handleChange}
                 value={horizonAlign}
-                onChange={(event) => console.log(event.target.value)}
               >
                 {FONT_HORIZON_ALIGHN.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -261,8 +295,12 @@ function Font({ data }) {
   );
 }
 
-function Position({ data }) {
+function Position({ data, onChange }) {
   const { angle, height, width, points } = data;
+
+  const handleChange = (ev) => {
+    onChange({ [ev.target.name]: ev.target.value });
+  };
 
   return (
     <>
@@ -272,7 +310,13 @@ function Position({ data }) {
             <tr>
               <td>angle : </td>
               <td>
-                <input style={{ width: "60px" }} value={angle} type="number" />
+                <input
+                  type="number"
+                  name="angle"
+                  value={angle}
+                  style={{ width: "60px" }}
+                  onChange={handleChange}
+                />
               </td>
             </tr>
           )}
@@ -281,7 +325,13 @@ function Position({ data }) {
             <tr>
               <td>height: </td>
               <td>
-                <input style={{ width: "60px" }} value={height} type="number" />
+                <input
+                  type="number"
+                  name="height"
+                  value={height}
+                  style={{ width: "60px" }}
+                  onChange={handleChange}
+                />
               </td>
             </tr>
           )}
@@ -290,7 +340,13 @@ function Position({ data }) {
             <tr>
               <td>width: </td>
               <td>
-                <input style={{ width: "60px" }} value={width} type="number" />
+                <input
+                  type="number"
+                  name="width"
+                  value={width}
+                  style={{ width: "60px" }}
+                  onChange={handleChange}
+                />
               </td>
             </tr>
           )}
@@ -299,7 +355,7 @@ function Position({ data }) {
             <div>points:</div>
             <div>
               <tr>
-                <td>index</td>
+                <td style={{ width: "20px" }}> </td>
                 <td>x</td>
                 <td>y</td>
               </tr>
@@ -311,17 +367,21 @@ function Position({ data }) {
 
                     <td>
                       <input
+                        type="number"
+                        name={"point.x." + index}
                         style={{ width: "60px" }}
                         value={point.x}
-                        type="number"
+                        onChange={handleChange}
                       />
                     </td>
 
                     <td>
                       <input
+                        type="number"
+                        name={"point.y." + index}
                         style={{ width: "60px" }}
                         value={point.y}
-                        type="number"
+                        onChange={handleChange}
                       />
                     </td>
                   </tr>
@@ -335,7 +395,11 @@ function Position({ data }) {
   );
 }
 
-function CustomProperties({ data }) {
+function CustomProperties({ data, onChange }) {
+  const handleChange = (ev) => {
+    onChange({ [ev.target.name]: ev.target.value });
+  };
+
   return (
     <>
       <PropsView title="Доп. свойства">
@@ -343,7 +407,11 @@ function CustomProperties({ data }) {
           <tr key={i}>
             <td>{keyName}: </td>
             <td>
-              <input value={data[keyName]} />
+              <input
+                name={keyName}
+                value={data[keyName]}
+                onChange={handleChange}
+              />
             </td>
           </tr>
         ))}
@@ -355,19 +423,53 @@ function CustomProperties({ data }) {
 function PropsPanel({ id, attributes, onChange }) {
   const { general, appearance, font, position, properties } = attributes;
 
-  // console.log(attributes);
+  const handleChange = (change: IChangeData) => {
+    console.log({ id: general.id, ...change });
+    onChange({ id: general.id, ...change });
+  };
   return (
     <div>
-      {general && <General data={general} />}
+      {general && (
+        <General
+          data={general}
+          onChange={(change) =>
+            handleChange({ propFamily: "general", ...change })
+          }
+        />
+      )}
 
-      {appearance && <Appearance data={appearance} />}
+      {appearance && (
+        <Appearance
+          data={appearance}
+          onChange={(change) =>
+            handleChange({ propFamily: "appearance", ...change })
+          }
+        />
+      )}
 
-      {font && <Font data={font} />}
+      {font && (
+        <Font
+          data={font}
+          onChange={(change) => handleChange({ propFamily: "font", ...change })}
+        />
+      )}
 
-      {position && <Position data={position} />}
+      {position && (
+        <Position
+          data={position}
+          onChange={(change) =>
+            handleChange({ propFamily: "position", ...change })
+          }
+        />
+      )}
 
       {Object.keys(properties).length > 0 && (
-        <CustomProperties data={properties} />
+        <CustomProperties
+          data={properties}
+          onChange={(change) =>
+            handleChange({ propFamily: "properties", ...change })
+          }
+        />
       )}
     </div>
   );
