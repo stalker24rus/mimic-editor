@@ -21,6 +21,7 @@ import {
   MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
+  CHANGE_ATTRIBUTES,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
 import changeIndexArr from "./functions/changeIndexArray";
@@ -439,6 +440,22 @@ export default (state = defaultState, action: any) => {
           }
         }
         return [...newState];
+      } else {
+        return state;
+      }
+    }
+
+    case CHANGE_ATTRIBUTES: {
+      const { id, propFamily, name, value } = action.payload;
+
+      const elements = lodash.cloneDeep(state);
+      const index = elements.findIndex(
+        (element: MimicElementProps) => element.attributes.general.id === id
+      );
+
+      if (index > -1) {
+        elements[index].attributes[propFamily][name] = value;
+        return [...elements];
       } else {
         return state;
       }

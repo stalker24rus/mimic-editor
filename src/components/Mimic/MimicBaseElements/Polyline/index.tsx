@@ -14,7 +14,7 @@ function Polyline(props: Props): JSX.Element {
   const { general, position, appearance } = attributes;
   const { id } = general;
   const { points, width, height, top, left } = position;
-  const { fill, visability, stroke, strokeWidth } = appearance;
+  const { fill, visability, stroke, strokeWidth, opacity } = appearance;
 
   // HANDLERS
 
@@ -61,6 +61,7 @@ function Polyline(props: Props): JSX.Element {
             strokeWidth: strokeWidth,
             cursor: "move",
             pointerEvents: "stroke",
+            opacity: opacity,
           }}
           onPointerDown={handlePointerDown}
           onPointerUp={handlePointerUp}

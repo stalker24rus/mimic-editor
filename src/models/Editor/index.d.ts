@@ -223,3 +223,10 @@ export type BaseElementOutput = {
 export interface CanvasNewElement extends BaseElementOutput {
   type: string | undefined;
 }
+
+interface IChangesData {
+  id: number;
+  propFamily: string;
+  name: string;
+  value: number | string;
+}

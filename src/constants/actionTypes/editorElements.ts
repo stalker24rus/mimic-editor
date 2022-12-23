@@ -25,3 +25,5 @@ export const MOVE_ELEMENTS_ON_FORWARD_LEVEL: string = `${module}/MOVE_ELEMENTS_O
 export const MOVE_ELEMENTS_ON_BACK_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_BACK_LEVEL`;
 
 export const HISTORY_POINT_FOR_CHANGES: string = `${module}/HISTORY_POINT_FOR_CHANGES`;
+
+export const CHANGE_ATTRIBUTES: string = `${module}/CHANGE_ATTRIBUTES`;

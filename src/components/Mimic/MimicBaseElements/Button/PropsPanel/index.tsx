@@ -1,8 +1,14 @@
-import { useCallback, useState } from "react";
+import lodash from "lodash";
+import { useState } from "react";
 import { ChromePicker } from "react-color";
 
 interface IChangeData {
-  [key: string]: number | string;
+  name: string;
+  value: number | string;
+}
+
+function isNumeric(num) {
+  return !isNaN(num) && !(num === "");
 }
 
 function PropsView({ title, children }) {
@@ -41,7 +47,12 @@ function General({ data, onChange }) {
   const { id, name, tagName } = data;
 
   const handleChange = (ev) => {
-    onChange({ [ev.target.name]: ev.target.value });
+    onChange({
+      name: ev.target.name,
+      value: isNumeric(ev.target.value)
+        ? parseFloat(ev.target.value)
+        : ev.target.value,
+    });
   };
 
   return (
@@ -71,17 +82,24 @@ function General({ data, onChange }) {
 }
 
 function Appearance({ data, onChange }) {
-  const { fill, stroke, opacity, visability } = data;
+  const { fill, stroke, opacity, strokeWidth, visability } = data;
 
   const [fiilColorView, setFillCollorView] = useState<boolean>(false);
   const [strokeColorView, setStrokeColorView] = useState<boolean>(false);
 
   const handleChange = (ev) => {
-    onChange({ [ev.target.name]: ev.target.value });
+    onChange({
+      name: ev.target.name,
+      value: isNumeric(ev.target.value)
+        ? parseFloat(ev.target.value)
+        : ev.target.value,
+    });
   };
 
   const handleChangeColor = (fieldName, color) => {
-    onChange({ [fieldName]: color.rgb });
+    const rgba = `rgba(${color.rgb.r},${color.rgb.g},${color.rgb.b},${color.rgb.a})`;
+    console.log(rgba);
+    onChange({ name: fieldName, value: rgba });
   };
 
   return (
@@ -154,6 +172,22 @@ function Appearance({ data, onChange }) {
             </tr>
           )}
 
+          {strokeWidth !== undefined && (
+            <tr>
+              <td>strokeWidth</td>
+              <td>
+                <input
+                  name="strokeWidth"
+                  style={{ width: "60px" }}
+                  value={strokeWidth}
+                  type="number"
+                  step="1"
+                  onChange={handleChange}
+                />
+              </td>
+            </tr>
+          )}
+
           {opacity !== undefined && (
             <tr>
               <td>opacity</td>
@@ -210,7 +244,12 @@ function Font({ data, onChange }) {
   const { fontFamily, fontSize, fontStyle, fontWeight, horizonAlign } = data;
 
   const handleChange = (ev) => {
-    onChange({ [ev.target.name]: ev.target.value });
+    onChange({
+      name: ev.target.name,
+      value: isNumeric(ev.target.value)
+        ? parseFloat(ev.target.value)
+        : ev.target.value,
+    });
   };
 
   return (
@@ -299,7 +338,20 @@ function Position({ data, onChange }) {
   const { angle, height, width, points } = data;
 
   const handleChange = (ev) => {
-    onChange({ [ev.target.name]: ev.target.value });
+    onChange({
+      name: ev.target.name,
+      value: isNumeric(ev.target.value)
+        ? parseFloat(ev.target.value)
+        : ev.target.value,
+    });
+  };
+
+  const handleChangePoints = (ev) => {
+    let newPoints = lodash.cloneDeep(points);
+    const [name, axis, index] = ev.target.name.split(".");
+    newPoints[parseInt(index)][axis] = parseInt(ev.target.value);
+
+    onChange({ name: name, value: newPoints });
   };
 
   return (
@@ -368,20 +420,20 @@ function Position({ data, onChange }) {
                     <td>
                       <input
                         type="number"
-                        name={"point.x." + index}
+                        name={"points.x." + index}
                         style={{ width: "60px" }}
                         value={point.x}
-                        onChange={handleChange}
+                        onChange={handleChangePoints}
                       />
                     </td>
 
                     <td>
                       <input
                         type="number"
-                        name={"point.y." + index}
+                        name={"points.y." + index}
                         style={{ width: "60px" }}
                         value={point.y}
-                        onChange={handleChange}
+                        onChange={handleChangePoints}
                       />
                     </td>
                   </tr>
@@ -397,7 +449,12 @@ function Position({ data, onChange }) {
 
 function CustomProperties({ data, onChange }) {
   const handleChange = (ev) => {
-    onChange({ [ev.target.name]: ev.target.value });
+    onChange({
+      name: ev.target.name,
+      value: isNumeric(ev.target.value)
+        ? parseFloat(ev.target.value)
+        : ev.target.value,
+    });
   };
 
   return (
@@ -420,11 +477,10 @@ function CustomProperties({ data, onChange }) {
   );
 }
 
-function PropsPanel({ id, attributes, onChange }) {
+function PropsPanel({ attributes, onChange }) {
   const { general, appearance, font, position, properties } = attributes;
 
   const handleChange = (change: IChangeData) => {
-    console.log({ id: general.id, ...change });
     onChange({ id: general.id, ...change });
   };
   return (
@@ -475,7 +531,6 @@ function PropsPanel({ id, attributes, onChange }) {
   );
 }
 PropsPanel.defaultProps = {
-  id: 0,
   onChange: () => {},
 };
 export default PropsPanel;

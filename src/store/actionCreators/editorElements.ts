@@ -15,6 +15,7 @@ import {
   MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
+  CHANGE_ATTRIBUTES,
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
@@ -24,7 +25,11 @@ import {
   SET_MODE_EDIT,
 } from "../../constants/actionTypes/editorState";
 import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
-import { MimicElementProps, PointFromat } from "../../models/Editor";
+import {
+  IChangesData,
+  MimicElementProps,
+  PointFromat,
+} from "../../models/Editor";
 import {
   selectLastTakenId,
   selectNewElement,
@@ -280,3 +285,11 @@ export const redo = () => (dispatch: Function) => {
     type: REDO,
   });
 };
+
+export const changeAttributes =
+  (changes: IChangesData) => (dispatch: Function) => {
+    dispatch({
+      type: CHANGE_ATTRIBUTES,
+      payload: { ...changes },
+    });
+  };
