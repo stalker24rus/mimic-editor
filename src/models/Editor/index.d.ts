@@ -58,6 +58,7 @@ export type AppearenceType = {
   opacity?: number;
   stroke?: RGB | RGBA | HEX | CLASS_NAMED;
   strokeWidth?: number;
+  textColor?: RGB | RGBA | HEX | CLASS_NAMED;
   visability?: boolean;
 };
 
@@ -72,7 +73,14 @@ export type FontType = {
   fontSize: number;
   fontStyle: "normal" | "italic" | "oblique" | "inherit";
   fontWeight: "bold" | "bolder" | "lighter" | "normal";
-  horizonAlign: "left" | "right" | "middle";
+  horizonAlign:
+    | "start"
+    | "end"
+    | "left"
+    | "right"
+    | "justify"
+    | "center"
+    | "match-parent";
 };
 
 export type PositionType = {

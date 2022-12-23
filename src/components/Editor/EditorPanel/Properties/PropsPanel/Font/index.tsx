@@ -14,7 +14,15 @@ const FONT_STYLE = ["normal", "italic", "oblique", "inherit"];
 
 const FONT_WEIGHT = ["bold", "bolder", "lighter", "normal"];
 
-const FONT_HORIZON_ALIGHN = ["left", "right", "middle"];
+const FONT_HORIZON_ALIGHN = [
+  "start",
+  "end",
+  "left",
+  "right",
+  "justify",
+  "center",
+  "match-parent",
+];
 
 function Font({ data, onChange }) {
   const { fontFamily, fontSize, fontStyle, fontWeight, horizonAlign } = data;

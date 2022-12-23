@@ -12,8 +12,10 @@ export function getBaseParamOfButton(): BaseElementOutput {
   return {
     attributes: {
       appearance: {
-        fill: "#CF0000",
-        stroke: "#CF5500",
+        fill: "rgba(59,130,246, 1)",
+        stroke: "rgba(59,130,246, 1)",
+        textColor: "rgba(255,255,255, 1)",
+        strokeWidth: 1,
         opacity: 1,
         visability: true,
       },
@@ -31,10 +33,10 @@ export function getBaseParamOfButton(): BaseElementOutput {
 
       font: {
         fontFamily: "Arial",
-        fontSize: 12,
+        fontSize: 14,
         fontStyle: "normal",
         fontWeight: "normal",
-        horizonAlign: "middle",
+        horizonAlign: "center",
       },
 
       action: {

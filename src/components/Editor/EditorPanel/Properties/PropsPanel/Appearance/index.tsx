@@ -4,10 +4,11 @@ import { isNumeric } from "../../../../../../constants/functions/isNumeric";
 import PropsView from "../PropsView";
 
 function Appearance({ data, onChange }) {
-  const { fill, stroke, opacity, strokeWidth, visability } = data;
+  const { fill, stroke, opacity, strokeWidth, textColor, visability } = data;
 
   const [fiilColorView, setFillCollorView] = useState<boolean>(false);
   const [strokeColorView, setStrokeColorView] = useState<boolean>(false);
+  const [textColorView, setTextColorView] = useState<boolean>(false);
 
   const handleChange = (ev) => {
     onChange({
@@ -87,6 +88,41 @@ function Appearance({ data, onChange }) {
                     <ChromePicker
                       color={stroke}
                       onChange={(color) => handleChangeColor("stroke", color)}
+                    />
+                  </div>
+                )}
+              </td>
+            </tr>
+          )}
+
+          {textColor !== undefined && (
+            <tr>
+              <td>textColor</td>
+              <td>
+                <div style={{ display: "inline-flex" }}>
+                  <div
+                    style={{
+                      margin: "2px",
+                      height: "20px",
+                      width: "20px",
+                      border: "solid 1px",
+                      background: textColor,
+                    }}
+                  ></div>
+
+                  <button onClick={() => setTextColorView(!textColorView)}>
+                    {textColor}
+                  </button>
+
+                  {/* <input value={fill} /> */}
+                </div>
+                {textColorView && (
+                  <div style={{ position: "absolute", zIndex: "2" }}>
+                    <ChromePicker
+                      color={textColor}
+                      onChange={(color) =>
+                        handleChangeColor("textColor", color)
+                      }
                     />
                   </div>
                 )}
