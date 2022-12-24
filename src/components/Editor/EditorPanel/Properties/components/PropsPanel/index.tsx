@@ -1,8 +1,8 @@
-import Appearance from "./Appearance";
-import Custom from "./Custom";
-import Font from "./Font";
-import General from "./General";
-import Position from "./Position";
+import Appearance from "../Appearance";
+import Custom from "../Custom";
+import Font from "../Font";
+import General from "../General";
+import Position from "../Position";
 
 interface IChangeData {
   name: string;

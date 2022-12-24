@@ -8,7 +8,14 @@ export default function PropsView({ title, children }) {
   };
 
   return (
-    <div style={{ display: "flex", height: "100%", background: "#ACACAC" }}>
+    <div
+      style={{
+        position: "relative",
+        display: "flex",
+        height: "100%",
+        background: "#ACACAC",
+      }}
+    >
       <div
         className="flex items-center justify-center h-screen"
         style={{ background: "#ACACAC", width: "40px", height: "100%" }}

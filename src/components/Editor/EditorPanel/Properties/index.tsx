@@ -4,7 +4,7 @@ import { IChangesData, MimicElementProps } from "../../../../models/Editor";
 import { changeAttributes } from "../../../../store/actionCreators/editorElements";
 import { selectEditorElements } from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import PropsPanel from "./PropsPanel";
+import PropsPanel from "./components/PropsPanel";
 
 interface IStateProps {
   selected: number[];
