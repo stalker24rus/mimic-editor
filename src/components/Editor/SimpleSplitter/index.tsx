@@ -19,7 +19,6 @@ function SimpleSplitter(props: SimpleSplitterProps): JSX.Element {
   >();
 
   const [viewRatio, setViewRatio] = useState<number>(defaultRatio);
-  const [spliterRatio, setSpliterRatio] = useState<number>(0);
 
   const wrapper = useRef<HTMLDivElement>(null);
   const [wrapperState, setWrapperState] = useState({});
@@ -28,11 +27,6 @@ function SimpleSplitter(props: SimpleSplitterProps): JSX.Element {
     const resizeObserver = new ResizeObserver(() => {
       const newWrapperState = wrapper?.current?.getBoundingClientRect();
       setWrapperState(newWrapperState ?? {});
-      changeSplitterPosition(
-        newWrapperState["height"],
-        newWrapperState["width"],
-        viewRatio
-      );
     });
     resizeObserver.observe(wrapper.current!);
     return () => {
@@ -49,20 +43,6 @@ function SimpleSplitter(props: SimpleSplitterProps): JSX.Element {
     }
   }, [children]);
 
-  const changeSplitterPosition = (
-    height: number,
-    width: number,
-    ratio: number
-  ) => {
-    setSpliterRatio(
-      orientation === "horizontal"
-        ? height * (ratio / 100)
-        : orientation === "vertical"
-        ? width * (ratio / 100)
-        : 0
-    );
-  };
-
   const handleDrag = (ev: React.PointerEvent<HTMLDivElement>) => {
     const cursor = {
       x: ev.pageX - wrapperState["x"] ?? 0,
@@ -77,12 +57,14 @@ function SimpleSplitter(props: SimpleSplitterProps): JSX.Element {
         : undefined;
     newRatio = limitValue(newRatio, 0.3, 99.7);
     setViewRatio(newRatio);
-    changeSplitterPosition(
-      wrapperState["height"],
-      wrapperState["width"],
-      newRatio
-    );
   };
+
+  const spliterRatio =
+    orientation === "horizontal"
+      ? wrapperState["height"] * (viewRatio / 100)
+      : orientation === "vertical"
+      ? wrapperState["width"] * (viewRatio / 100)
+      : 0;
 
   return (
     <>

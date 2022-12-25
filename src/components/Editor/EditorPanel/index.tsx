@@ -2,18 +2,16 @@ import Primitives from "./Primitives";
 import SimpleSplitter from "../SimpleSplitter";
 import Properties from "./Properties";
 
-function EditorPanel() {
+/**
+ * The EditorPanel is a component for Editor module.
+ * It provides functionality for changing Editor states.
+ *
+ * @returns {JSX.Element}
+ */
+function EditorPanel(): JSX.Element {
   return (
-    <SimpleSplitter orientation="horizontal" defaultRatio={30}>
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          background: "#727272",
-        }}
-      >
-        <Primitives></Primitives>
-      </div>
+    <SimpleSplitter orientation="horizontal" defaultRatio={25}>
+      <Primitives />
       <Properties />
     </SimpleSplitter>
   );

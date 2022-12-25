@@ -108,7 +108,7 @@ const Primitives = (props: Props): JSX.Element => {
     <>
       <div>
         <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
+          className="w-100 h-200 hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
           onClick={handleAddButton}
         >
           Кнопка
