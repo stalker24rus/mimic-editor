@@ -24,10 +24,11 @@ import {
   CHANGE_ATTRIBUTES,
 } from "../../constants/actionTypes/editorElements";
 import { MimicElementProps } from "../../models/Editor";
+import { demo1JSON } from "../demo/templateJson";
 import changeIndexArr from "./functions/changeIndexArray";
 import resizeBox from "./functions/resizeBox";
 
-const defaultState: MimicElementProps[] = [];
+const defaultState: MimicElementProps[] = JSON.parse(demo1JSON);
 
 const selectElement = (state: any, id: number) =>
   state.editorElements.find(
