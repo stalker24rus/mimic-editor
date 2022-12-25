@@ -4,7 +4,7 @@ import Font from "../Font";
 import General from "../General";
 import Position from "../Position";
 
-interface IChangeData {
+interface ChangeDataProps {
   name: string;
   value: number | string;
 }
@@ -12,7 +12,7 @@ interface IChangeData {
 function PropsPanel({ attributes, onChange }) {
   const { general, appearance, font, position, properties } = attributes;
 
-  const handleChange = (change: IChangeData) => {
+  const handleChange = (change: ChangeDataProps) => {
     onChange({ id: general.id, ...change });
   };
   return (

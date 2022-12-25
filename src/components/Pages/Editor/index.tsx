@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
+import { HEADER_HEIGHT } from "../../../constants/literals";
 import EditorContextMenu from "../../Editor/EditorContextMenu";
 import EditorHeader from "../../Editor/EditorHeader";
 import EditorPanel from "../../Editor/EditorPanel";
-import SimpleSpliter from "../../Editor/SimpleSpliter";
+import SimpleSplitter from "../../Editor/SimpleSplitter";
 import Mimic from "../../Mimic";
 import "./index.css";
 
-const HEADER_HEIGHT = 52;
-
-function Editor() {
+function Editor(): JSX.Element {
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
@@ -27,32 +26,20 @@ function Editor() {
 
   return (
     <div
+      className="editor"
       style={{
         width,
         height,
         overflow: "hidden",
       }}
     >
-      <div
-        style={{
-          height: HEADER_HEIGHT,
-        }}
-      >
-        <EditorHeader />
-      </div>
+      <EditorHeader />
 
-      <div
-        style={{
-          height: height - HEADER_HEIGHT, //"1000px",
-        }}
-      >
-        <SimpleSpliter isHorizontally={true}>
-          <SimpleSpliter isHorizontally={false} split="horizontal">
-            <Mimic />
-            <EditorPanel />
-          </SimpleSpliter>
-          <>SIMULATOR</>
-        </SimpleSpliter>
+      <div style={{ height: height - HEADER_HEIGHT }}>
+        <SimpleSplitter orientation="vertical">
+          <Mimic />
+          <EditorPanel />
+        </SimpleSplitter>
       </div>
 
       <EditorContextMenu />

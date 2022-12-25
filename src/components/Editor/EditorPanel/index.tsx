@@ -1,10 +1,10 @@
 import Primitives from "./Primitives";
-import SimpleSpliter from "../SimpleSpliter";
+import SimpleSplitter from "../SimpleSplitter";
 import Properties from "./Properties";
 
 function EditorPanel() {
   return (
-    <SimpleSpliter isHorizontally={true} defaaultPos={30}>
+    <SimpleSplitter orientation="horizontal" defaultRatio={30}>
       <div
         style={{
           width: "100%",
@@ -15,7 +15,7 @@ function EditorPanel() {
         <Primitives></Primitives>
       </div>
       <Properties />
-    </SimpleSpliter>
+    </SimpleSplitter>
   );
 }
 
