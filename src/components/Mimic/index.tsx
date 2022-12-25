@@ -7,6 +7,7 @@ import {
   undo,
 } from "../../store/actionCreators/editorElements";
 import { handleEscapeButton } from "../../store/actionCreators/editorState";
+import EditorContextMenu from "../Editor/EditorContextMenu";
 import useDrawElement from "./Hooks/useDrawElement";
 
 import MimicCanvas from "./MimicCanvas";
@@ -95,6 +96,7 @@ const Mimic = (props: Props): JSX.Element => {
           })}
         </span>
       )}
+      <EditorContextMenu />
     </MimicCanvas>
   );
 };

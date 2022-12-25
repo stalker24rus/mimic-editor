@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../../../constants/literals";
-import EditorContextMenu from "../../Editor/EditorContextMenu";
 import EditorHeader from "../../Editor/EditorHeader";
 import EditorPanel from "../../Editor/EditorPanel";
 import SimpleSplitter from "../../Editor/SimpleSplitter";
 import Mimic from "../../Mimic";
 import "./index.css";
 
+/**
+ * There is a mnemonic editor.
+ * This module provides functions for viewing and creating vector graphics for SCADA.
+ *
+ * @returns {JSX.Element}
+ */
 function Editor(): JSX.Element {
+  // Options for Responsive View
   const [width, setWidth] = useState<number>(0);
   const [height, setHeight] = useState<number>(0);
 
@@ -41,8 +47,6 @@ function Editor(): JSX.Element {
           <EditorPanel />
         </SimpleSplitter>
       </div>
-
-      <EditorContextMenu />
     </div>
   );
 }
