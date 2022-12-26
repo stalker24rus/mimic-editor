@@ -12,12 +12,12 @@ export default function PropsView({ title, children }) {
       style={{
         position: "relative",
         display: "flex",
-        height: "100%",
+        //height: "100%",
         background: "#ACACAC",
       }}
     >
       <div
-        className="flex items-center justify-center h-screen"
+        //className="flex items-center justify-center h-screen"
         style={{ background: "#ACACAC", width: "40px", height: "100%" }}
       >
         <button

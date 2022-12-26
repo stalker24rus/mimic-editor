@@ -16,7 +16,11 @@ function PropsPanel({ attributes, onChange }) {
     onChange({ id: general.id, ...change });
   };
   return (
-    <div>
+    <div
+      style={{
+        overflow: "scroll",
+      }}
+    >
       {general && (
         <General
           data={general}
