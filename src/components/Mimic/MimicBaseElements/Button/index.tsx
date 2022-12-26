@@ -16,7 +16,7 @@ export default function Button(props: Props): JSX.Element {
   const { fontFamily, fontStyle, fontWeight, fontSize, horizonAlign } = font;
   const { text } = properties;
 
-  const style = " block  px-3 py-2 rounded-md ";
+  const style = "rounded-md ";
 
   return (
     <button

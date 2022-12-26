@@ -1,5 +1,15 @@
 import { useState } from "react";
 
+interface Props {
+  className: string;
+  styleComponent: { [key: string]: any };
+  onDragMove: Function;
+  onPointerDown: Function;
+  onPointerUp: Function;
+  onPointerMove: Function;
+  children?: JSX.Element | JSX.Element[];
+}
+
 function BaseDrag({
   className,
   styleComponent,
@@ -8,7 +18,7 @@ function BaseDrag({
   onPointerUp,
   onPointerMove,
   children,
-}) {
+}: Props) {
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = (e) => {

@@ -23,7 +23,7 @@ function Container({
       style={{
         height,
         width,
-        overflow: "scroll",
+        overflow: "hidden",
       }}
     >
       {children}

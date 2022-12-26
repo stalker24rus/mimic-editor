@@ -94,7 +94,7 @@ function RectangleBox(props: Props): JSX.Element {
   return (
     <div
       id={"mimic.button." + id}
-      className="shadow-xl" //{isSelected ? "shadow-xl" : ""} //className="shadow-xl"
+      //className="shadow-xl" //{isSelected ? "shadow-xl" : ""} //className="shadow-xl"
       style={{
         userSelect: "none",
         position: "absolute",

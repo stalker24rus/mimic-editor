@@ -48,7 +48,7 @@ const defaultState = (): Props => {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined },
     drawId: undefined,
-    lastTakenId: 1,
+    lastTakenId: 99,
     viewPosition: { x: 0, y: 0 },
     selected: [],
     selectionDisabled: false,

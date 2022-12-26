@@ -30,7 +30,7 @@ function VerticalEdge({
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerMove={onPointerMove}
-    />
+    ></BaseDrag>
   );
 }
 
