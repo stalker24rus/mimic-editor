@@ -31,14 +31,15 @@ import {
   PointFromat,
 } from "../../models/Editor";
 import {
-  selectLastTakenId,
   selectNewElement,
   selectSelectedElements,
   selectViewPosition,
 } from "../selectors/editorState";
+import { selectEditorElements } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
 import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
 
+// TODO ??? detach to other file
 export function correctPoint(
   point: PointFromat,
   correction: PointFromat
@@ -47,6 +48,19 @@ export function correctPoint(
     x: point.x - correction.x,
     y: point.y - correction.y,
   };
+}
+
+// TODO ??? detach to other file
+export function getNewId(elements: MimicElementProps[]): number {
+  let newID: number = 0;
+  for (let i = 0; i < elements.length; i++) {
+    const element = elements[i];
+
+    if (element.attributes.general.id > newID) {
+      newID = element.attributes.general.id;
+    }
+  }
+  return newID + 1;
 }
 
 export const changeElementAngle =
@@ -176,7 +190,8 @@ export const endDoingChanges = () => (dispatch: Function) => {
 
 export const createElement =
   (point: PointFromat) => (dispatch: Function, getState: Function) => {
-    const newLastTakenId = selectLastTakenId(getState()) + 1;
+    // ADD FUNCTION FOR GET A new ID
+    const newLastTakenId = getNewId(selectEditorElements(getState())); //selectLastTakenId(getState()) + 1;
 
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
