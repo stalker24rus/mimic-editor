@@ -77,6 +77,29 @@ const EditorHeader = (props: Props): JSX.Element => {
   };
 
   const [menuChange, setMenuChanges] = useState(false);
+  const [menuPosition, setMenuPosition] = useState(false);
+
+  const change = "change";
+  const position = "position";
+  const handleOpenMenu = (menu: string) => {
+    switch (menu) {
+      case change: {
+        setMenuChanges(!menuChange);
+        setMenuPosition(false);
+        break;
+      }
+      case position: {
+        setMenuPosition(!menuPosition);
+        setMenuChanges(false);
+        break;
+      }
+
+      default: {
+        setMenuChanges(false);
+        setMenuPosition(false);
+      }
+    }
+  };
 
   return (
     <div
@@ -95,7 +118,7 @@ const EditorHeader = (props: Props): JSX.Element => {
             style={{
               height: HEADER_HEIGHT,
             }}
-            onClick={() => setMenuChanges(!menuChange)}
+            onClick={() => handleOpenMenu(change)}
           >
             Изменить
             <svg
@@ -153,6 +176,45 @@ const EditorHeader = (props: Props): JSX.Element => {
                   </button>
                 </li>
               </ul>
+            </div>
+          )}
+        </div>
+
+        <div style={{ position: "relative" }}>
+          <button
+            className="text-white bg-grey-700 hover:bg-grey-800 focus:ring-4 focus:outline-none focus:ring-grey-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-grey-600 dark:hover:bg-grey-700 dark:focus:ring-grey-800"
+            style={{
+              height: HEADER_HEIGHT,
+            }}
+            onClick={() => handleOpenMenu(position)}
+          >
+            Расстановка
+            <svg
+              className="ml-2 w-4 h-4"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </button>
+          {menuPosition && (
+            <div
+              className=" z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+              style={{
+                top: HEADER_HEIGHT,
+                left: 0,
+                position: "absolute",
+                zIndex: 1,
+              }}
+            >
               <ul
                 className="py-1 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefault"
@@ -165,7 +227,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                     }}
                     onClick={handleOnTopLevel}
                   >
-                    наверх
+                    на передний план
                   </button>
                 </li>
                 <li>
@@ -188,7 +250,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                     }}
                     onClick={handleOnBottomLevel}
                   >
-                    вниз
+                    на задний план
                   </button>
                 </li>
                 <li>
