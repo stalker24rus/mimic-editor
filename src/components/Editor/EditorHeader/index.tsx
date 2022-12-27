@@ -109,7 +109,7 @@ const EditorHeader = (props: Props): JSX.Element => {
       <div className="inline-flex" id="Component" style={{ top: 0, left: 0 }}>
         <div className="text-1xl text-center font-small text-white  align-middle m-1">
           <div style={{ fontSize: "18px" }}>MIMIC_EDITOR</div>
-          <div style={{ fontSize: "10px" }}>by IEG</div>
+          <div style={{ fontSize: "10px" }}> v.0.0.1</div>
         </div>
 
         <div style={{ position: "relative" }}>
@@ -226,6 +226,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handleOnTopLevel}
+                    disabled={!(props.selected.length >= 1)}
                   >
                     на передний план
                   </button>
@@ -249,6 +250,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handleOnBottomLevel}
+                    disabled={!(props.selected.length >= 1)}
                   >
                     на задний план
                   </button>
