@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { connect } from "react-redux";
 import { HEADER_HEIGHT } from "../../../constants/literals";
 import {
@@ -75,6 +76,8 @@ const EditorHeader = (props: Props): JSX.Element => {
     props.onBackLevel();
   };
 
+  const [menuChange, setMenuChanges] = useState(false);
+
   return (
     <div
       className="bg-gradient-to-r from-gray-900 to-gray-50"
@@ -86,57 +89,124 @@ const EditorHeader = (props: Props): JSX.Element => {
           <div style={{ fontSize: "10px" }}>by IEG</div>
         </div>
 
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleUndo}
-          disabled={!props.past.length}
-        >
-          <div className="w-4 ">
-            <div>&#8630;</div>
-            <div className="text-xs">{props.past.length}</div>
-          </div>
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleRedo}
-          disabled={!props.future.length}
-        >
-          <div className="w-4 ">
-            <div>&#8631;</div>
-            <div className="text-xs">{props.future.length}</div>
-          </div>
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleOnTopLevel}
-        >
-          on top
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleOnForwardLevel}
-          disabled={props.selected.length !== 1}
-        >
-          on forward
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleOnBottomLevel}
-        >
-          on bottom
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm disabled:opacity-60"
-          onClick={handleOnBackLevel}
-          disabled={props.selected.length !== 1}
-        >
-          on back
-        </button>
+        <div style={{ position: "relative" }}>
+          <button
+            className="text-white bg-grey-700 hover:bg-grey-800 focus:ring-4 focus:outline-none focus:ring-grey-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-grey-600 dark:hover:bg-grey-700 dark:focus:ring-grey-800"
+            style={{
+              height: HEADER_HEIGHT,
+            }}
+            onClick={() => setMenuChanges(!menuChange)}
+          >
+            Изменить
+            <svg
+              className="ml-2 w-4 h-4"
+              aria-hidden="true"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M19 9l-7 7-7-7"
+              ></path>
+            </svg>
+          </button>
+          {menuChange && (
+            <div
+              className=" z-10 w-44 bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700"
+              style={{
+                top: HEADER_HEIGHT,
+                left: 0,
+                position: "absolute",
+                zIndex: 1,
+              }}
+            >
+              <ul
+                className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefault"
+              >
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleUndo}
+                    disabled={!props.past.length}
+                  >
+                    &#8630; назад {props.past.length}
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleRedo}
+                    disabled={!props.future.length}
+                  >
+                    &#8631; вперед {props.future.length}
+                  </button>
+                </li>
+              </ul>
+              <ul
+                className="py-1 text-sm text-gray-700 dark:text-gray-200"
+                aria-labelledby="dropdownDefault"
+              >
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleOnTopLevel}
+                  >
+                    наверх
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleOnForwardLevel}
+                    disabled={props.selected.length !== 1}
+                  >
+                    вперед
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleOnBottomLevel}
+                  >
+                    вниз
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleOnBackLevel}
+                    disabled={props.selected.length !== 1}
+                  >
+                    назад
+                  </button>
+                </li>
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
