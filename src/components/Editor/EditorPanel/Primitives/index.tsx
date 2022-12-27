@@ -1,5 +1,11 @@
 import { connect } from "react-redux";
 import {
+  ELEMENT_TYPE_BUTTON,
+  ELEMENT_TYPE_LINE,
+  ELEMENT_TYPE_POLYGON,
+  ELEMENT_TYPE_POLYLINE,
+} from "../../../../constants/literals";
+import {
   moveOnBackLevel,
   moveOnBottomLevel,
   moveOnForwardLevel,
@@ -8,10 +14,11 @@ import {
   undo,
 } from "../../../../store/actionCreators/editorElements";
 import {
-  editorAddButton,
-  editorAddLine,
-  editorAddPolygon,
-  editorAddPolyline,
+  // editorAddButton,
+  // editorAddLine,
+  // editorAddPolygon,
+  // editorAddPolyline,
+  editorAddElement,
 } from "../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 
@@ -22,10 +29,11 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onAddButton: Function;
-  onAddLine: Function;
-  onAddPolyline: Function;
-  onAddPolygon: Function;
+  // onAddButton: Function;
+  // onAddLine: Function;
+  // onAddPolyline: Function;
+  // onAddPolygon: Function;
+  onAddElement: Function;
   onUndo: Function;
   onRedo: Function;
   onTopLevel: Function;
@@ -50,10 +58,11 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onAddButton: editorAddButton,
-    onAddLine: editorAddLine,
-    onAddPolyline: editorAddPolyline,
-    onAddPolygon: editorAddPolygon,
+    // onAddButton: editorAddButton,
+    // onAddLine: editorAddLine,
+    // onAddPolyline: editorAddPolyline,
+    // onAddPolygon: editorAddPolygon,
+    onAddElement: editorAddElement,
     onUndo: undo,
     onRedo: redo,
     onTopLevel: moveOnTopLevel,
@@ -65,19 +74,19 @@ function mapDispatchToProps() {
 
 const Primitives = (props: Props): JSX.Element => {
   const handleAddButton = () => {
-    props.onAddButton();
+    props.onAddElement(ELEMENT_TYPE_BUTTON);
   };
 
   const handleAddLine = () => {
-    props.onAddLine();
+    props.onAddElement(ELEMENT_TYPE_LINE);
   };
 
   const handleAddPolyline = () => {
-    props.onAddPolyline();
+    props.onAddElement(ELEMENT_TYPE_POLYLINE);
   };
 
   const handleAddPolygone = () => {
-    props.onAddPolygon();
+    props.onAddElement(ELEMENT_TYPE_POLYGON);
   };
 
   const handleUndo = () => {

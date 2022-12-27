@@ -1,8 +1,21 @@
 import { BaseElementOutput } from "../../models/Editor";
+import {
+  ELEMENT_TYPE_BUTTON,
+  ELEMENT_TYPE_LINE,
+  ELEMENT_TYPE_POLYGON,
+  ELEMENT_TYPE_POLYLINE,
+} from "../literals";
 
 /**
  * BASE ELEMENT STATES
  */
+
+export const elementsDefaultStates = {
+  [ELEMENT_TYPE_BUTTON]: getBaseParamOfButton(),
+  [ELEMENT_TYPE_LINE]: getBaseParamOfLine(),
+  [ELEMENT_TYPE_POLYLINE]: getBaseParamOfPolyLine(),
+  [ELEMENT_TYPE_POLYGON]: getBaseParamOfPolygon(),
+};
 
 /**
  * It return basic states for a Button element.

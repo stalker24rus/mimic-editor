@@ -8,12 +8,6 @@ import {
   redo,
   undo,
 } from "../../../store/actionCreators/editorElements";
-import {
-  editorAddButton,
-  editorAddLine,
-  editorAddPolygon,
-  editorAddPolyline,
-} from "../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../store/selectors/editorState";
 
 interface StateProps {
@@ -23,10 +17,6 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  onAddButton: Function;
-  onAddLine: Function;
-  onAddPolyline: Function;
-  onAddPolygon: Function;
   onUndo: Function;
   onRedo: Function;
   onTopLevel: Function;
@@ -51,10 +41,6 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onAddButton: editorAddButton,
-    onAddLine: editorAddLine,
-    onAddPolyline: editorAddPolyline,
-    onAddPolygon: editorAddPolygon,
     onUndo: undo,
     onRedo: redo,
     onTopLevel: moveOnTopLevel,
@@ -65,22 +51,6 @@ function mapDispatchToProps() {
 }
 
 const EditorHeader = (props: Props): JSX.Element => {
-  const handleAddButton = () => {
-    props.onAddButton();
-  };
-
-  const handleAddLine = () => {
-    props.onAddLine();
-  };
-
-  const handleAddPolyline = () => {
-    props.onAddPolyline();
-  };
-
-  const handleAddPolygone = () => {
-    props.onAddPolygon();
-  };
-
   const handleUndo = () => {
     props.onUndo();
   };

@@ -1,6 +1,4 @@
 import {
-  // ADD_ELEMENT_TO_SELECTION_LIST,
-  // DEL_ELEMENT_FROM_SELECTION_LIST,
   HANDLE_ESCAPE,
   SELECT_ELEMENTS,
   SET_DRAWING_ID,
@@ -10,49 +8,14 @@ import {
   SET_VIEW_POSITION,
   TOGGLE_ELEMENT_SELECTION,
 } from "../../constants/actionTypes/editorState";
-import {
-  ELEMENT_TYPE_BUTTON,
-  ELEMENT_TYPE_LINE,
-  ELEMENT_TYPE_POLYGON,
-  ELEMENT_TYPE_POLYLINE,
-} from "../../constants/literals";
-import {
-  getBaseParamOfButton,
-  getBaseParamOfLine,
-  getBaseParamOfPolygon,
-  getBaseParamOfPolyLine,
-} from "../../constants/mimicBaseElements";
-import { PointFromat } from "../../models/Editor";
+import { elementsDefaultStates } from "../../constants/mimicBaseElements";
+import { ElementType, PointFromat } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
 
-export const editorAddButton = () => (dispatch: Function) => {
+export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
-    type: ELEMENT_TYPE_BUTTON,
-    ...getBaseParamOfButton(),
-  };
-  dispatch({ type: SET_MODE_CREATE, payload: { element } });
-};
-
-export const editorAddLine = () => (dispatch: Function) => {
-  const element = {
-    type: ELEMENT_TYPE_LINE,
-    ...getBaseParamOfLine(),
-  };
-  dispatch({ type: SET_MODE_CREATE, payload: { element } });
-};
-
-export const editorAddPolyline = () => (dispatch: Function) => {
-  const element = {
-    type: ELEMENT_TYPE_POLYLINE,
-    ...getBaseParamOfPolyLine(),
-  };
-  dispatch({ type: SET_MODE_CREATE, payload: { element } });
-};
-
-export const editorAddPolygon = () => (dispatch: Function) => {
-  const element = {
-    type: ELEMENT_TYPE_POLYGON,
-    ...getBaseParamOfPolygon(),
+    type,
+    ...elementsDefaultStates[type],
   };
   dispatch({ type: SET_MODE_CREATE, payload: { element } });
 };
