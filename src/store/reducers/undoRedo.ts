@@ -1,4 +1,5 @@
 import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
+import { HISTORY_MAX_LENGHT } from "../../constants/literals";
 
 export default function undoRedo(reducer: Function) {
   const initialState = {
@@ -54,8 +55,14 @@ export default function undoRedo(reducer: Function) {
             future: [],
           };
         } else {
+          let newPast = [...past, present];
+
+          if (newPast.length > HISTORY_MAX_LENGHT) {
+            newPast = [...newPast.slice(newPast.length - HISTORY_MAX_LENGHT)];
+          }
+
           return {
-            past: [...past, present],
+            past: [...newPast],
             present: newPresent,
             future: [],
           };
