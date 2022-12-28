@@ -19,6 +19,8 @@ function SelectionRect(props: Props): JSX.Element {
         position: "absolute",
         opacity: 0.3,
         border: "2px dashed white",
+        userSelect: "none",
+        pointerEvents: "none",
       }}
     >
       {" "}

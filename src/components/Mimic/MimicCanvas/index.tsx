@@ -84,6 +84,7 @@ function MimicCanvas(props: Props): JSX.Element {
   }, []);
 
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
+    ev.preventDefault();
     const { detail } = ev;
     switch (detail) {
       case 1: {

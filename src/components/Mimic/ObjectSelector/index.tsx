@@ -4,7 +4,6 @@ import { MIMIC } from "../../../constants/literals";
 import { MimicElementProps, PointFromat } from "../../../models/Editor";
 import { correctPoint } from "../../../store/actionCreators/editorElements";
 import {
-  // addElementToSelectionList,
   selectElement,
   selectElements,
   toggleElementSelection,
@@ -15,9 +14,7 @@ import {
   selectSelectionDisabled,
   selectViewPosition,
 } from "../../../store/selectors/editorState";
-import useGetBoxByMultiPoints, {
-  useGetBoxFromElements,
-} from "../Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../Hooks/useGetBoxByMultiPoints";
 import GroupMover from "./GroupMover";
 import SelectionRect from "./SelectionRect";
 
@@ -32,8 +29,6 @@ interface DispatchProps {
   onSelectElement: Function;
   onSelectElements: Function;
   onToggleSelect: Function;
-  //onAddToSelection: Function;
-  //setSelectorRect: Function;
 }
 
 interface OwnProps {
@@ -56,7 +51,6 @@ function mapDispatchToProps() {
     onSelectElement: selectElement,
     onSelectElements: selectElements,
     onToggleSelect: toggleElementSelection,
-    // onAddToSelection: addElementToSelectionList,
   };
 }
 
@@ -73,6 +67,7 @@ function ObjectSelector(props: Props) {
   const [top, left, width, height] = getBox(selectorRect);
 
   const handlePointerDown = (ev: any) => {
+    console.log("DOWN");
     const { target, pointerId, clientX, clientY } = ev;
     target.setPointerCapture(pointerId);
 
@@ -85,6 +80,8 @@ function ObjectSelector(props: Props) {
   };
 
   const handlePointerMove = (ev: any) => {
+    console.log("MOVE");
+    ev.preventDefault();
     if (!showRect || props.selectionDisabled) return;
     const { clientX, clientY } = ev;
     const endPoint = correctPoint(
@@ -95,11 +92,14 @@ function ObjectSelector(props: Props) {
     props.onSelectElements([selectorRect[0], endPoint]);
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (ev) => {
+    console.log("UP");
+    ev.preventDefault();
     setShowRect(false);
   };
 
   const handleClick = (ev: any) => {
+    console.log("CLICK");
     const { clientX, clientY } = ev;
 
     if (ev.shiftKey) {
@@ -113,6 +113,7 @@ function ObjectSelector(props: Props) {
       }
     } else {
       const elements = document.elementsFromPoint(clientX, clientY);
+
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
@@ -121,6 +122,7 @@ function ObjectSelector(props: Props) {
         }
       }
     }
+    ev.preventDefault();
   };
 
   return (
@@ -129,10 +131,10 @@ function ObjectSelector(props: Props) {
         width: "100%",
         height: "100%",
       }}
+      onClick={handleClick}
       onPointerDown={handlePointerDown}
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
-      onClick={handleClick}
     >
       {props.children}
 

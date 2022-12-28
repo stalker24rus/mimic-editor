@@ -96,7 +96,7 @@ const Mimic = (props: Props): JSX.Element => {
           })}
         </span>
       )}
-      <EditorContextMenu />
+      {/* <EditorContextMenu /> */}
     </MimicCanvas>
   );
 };

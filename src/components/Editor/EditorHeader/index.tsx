@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { HEADER_HEIGHT } from "../../../constants/literals";
+import { APP_VERSION, HEADER_HEIGHT } from "../../../constants/literals";
 import {
   moveOnBackLevel,
   moveOnBottomLevel,
@@ -109,7 +109,7 @@ const EditorHeader = (props: Props): JSX.Element => {
       <div className="inline-flex" id="Component" style={{ top: 0, left: 0 }}>
         <div className="text-1xl text-center font-small text-white  align-middle m-1">
           <div style={{ fontSize: "18px" }}>MIMIC_EDITOR</div>
-          <div style={{ fontSize: "10px" }}> v.0.0.1</div>
+          <div style={{ fontSize: "10px" }}> {APP_VERSION}</div>
         </div>
 
         <div style={{ position: "relative" }}>
