@@ -1,4 +1,6 @@
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { getAreaPointsByHWP } from "../../../../store/reducers/functions/getAreaPointsByHWP";
+import rotateElementPoints from "../../../../store/reducers/functions/rotateElementPoints";
 
 type FuncResult = [top: number, left: number, width: number, height: number];
 
@@ -61,7 +63,30 @@ export function useGetBoxFromElements(): [Function] {
 
     for (let i = 0; i < elements.length; i++) {
       const element = elements[i];
-      points.push(...element.attributes.position.points);
+
+      const {
+        width,
+        height,
+        angle,
+        points: oldPoints,
+      } = element.attributes.position;
+
+      let tempPoints = [...oldPoints];
+
+      if (width && height && angle !== undefined && oldPoints.length === 1) {
+        const center = {
+          x: tempPoints[0].x + width / 2,
+          y: tempPoints[0].y + height / 2,
+        };
+        tempPoints = rotateElementPoints(
+          center,
+          getAreaPointsByHWP(width, height, tempPoints[0]),
+          angle
+        );
+      }
+
+      points = [...points, ...tempPoints];
+      // points.push(...element.attributes.position.points);
     }
 
     for (let j = 0; j < points.length; j++) {
