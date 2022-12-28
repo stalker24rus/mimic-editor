@@ -86,7 +86,7 @@ const Mimic = (props: Props): JSX.Element => {
       window.removeEventListener("keydown", keyListener);
     };
   }, [elements]);
-  // console.log(JSON.stringify(elements));
+  console.log(JSON.stringify(elements));
   return (
     <MimicCanvas>
       {elements.length > 0 && (
