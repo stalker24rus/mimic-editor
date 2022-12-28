@@ -76,9 +76,6 @@ export function getBaseParamOfLine(): BaseElementOutput {
       properties: {},
       position: {
         points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
       },
       animation: [],
     },
@@ -101,9 +98,6 @@ export function getBaseParamOfPolyLine(): BaseElementOutput {
       properties: {},
       position: {
         points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
       },
       animation: [],
     },
@@ -127,9 +121,6 @@ export function getBaseParamOfPolygon(): BaseElementOutput {
       properties: {},
       position: {
         points: [],
-        angle: 0,
-        width: 150,
-        height: 50,
       },
       animation: [],
     },

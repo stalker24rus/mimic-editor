@@ -127,18 +127,6 @@ function RectangleBox(props: Props): JSX.Element {
         {children({ component })}
       </div>
 
-      {/* <div
-        style={{
-          userSelect: "none",
-          cursor: "move",
-          position: "absolute",
-          width,
-          height,
-          top: 0,
-          left: 0,
-        }}
-      ></div> */}
-
       {isSelected && (
         <>
           <MovingCell

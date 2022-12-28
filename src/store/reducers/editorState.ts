@@ -199,19 +199,43 @@ export default (state = defaultState(), action: any): Props => {
 
       for (let i = 0; i < elements.length; i++) {
         const element: MimicElementProps = elements[i];
-        const { width, height, points } = element.attributes.position;
+        const { width, height, angle, points } = element.attributes.position;
+
+        let tempPoints = [...points];
 
         let innerPoints = 0;
 
-        for (let j = 0; j < points.length; j++) {
-          const point = points[j];
+        function getAreaPoints(
+          width: number,
+          height: number,
+          point: PointFromat
+        ): PointFromat[] {
+          return [
+            point,
+            { x: point.x + width, y: point.y },
+            { x: point.x, y: point.y + height },
+            { x: point.x + width, y: point.y + height },
+          ];
+        }
+
+        if (
+          width &&
+          height &&
+          (angle !== 0 || angle !== undefined) &&
+          points.length === 1
+        ) {
+          tempPoints = getAreaPoints(width, height, tempPoints[0]);
+        }
+
+        for (let j = 0; j < tempPoints.length; j++) {
+          const point = tempPoints[j];
 
           if (checkIsPointInArea(area, point)) {
             innerPoints++;
           }
         }
 
-        if (innerPoints === points.length) {
+        if (innerPoints === tempPoints.length) {
           selected.push(element.attributes.general.id);
         }
       }
