@@ -1,6 +1,4 @@
 import {
-  // ADD_ELEMENT_TO_SELECTION_LIST,
-  // DEL_ELEMENT_FROM_SELECTION_LIST,
   DISABLE_SELECTION,
   ENABLE_SELECTION,
   HANDLE_ESCAPE,
@@ -28,6 +26,8 @@ import {
   PointFromat,
 } from "../../models/Editor";
 import checkIsPointInArea from "./functions/checkIsPointInArea";
+import { getAreaPointsByHWP } from "./functions/getAreaPointsByHWP";
+import rotateElementPoints from "./functions/rotateElementPoints";
 
 type DrawType = number | undefined;
 
@@ -205,26 +205,16 @@ export default (state = defaultState(), action: any): Props => {
 
         let innerPoints = 0;
 
-        function getAreaPoints(
-          width: number,
-          height: number,
-          point: PointFromat
-        ): PointFromat[] {
-          return [
-            point,
-            { x: point.x + width, y: point.y },
-            { x: point.x, y: point.y + height },
-            { x: point.x + width, y: point.y + height },
-          ];
-        }
-
-        if (
-          width &&
-          height &&
-          (angle !== 0 || angle !== undefined) &&
-          points.length === 1
-        ) {
-          tempPoints = getAreaPoints(width, height, tempPoints[0]);
+        if (width && height && angle !== undefined && points.length === 1) {
+          const center = {
+            x: tempPoints[0].x + width / 2,
+            y: tempPoints[0].y + height / 2,
+          };
+          tempPoints = rotateElementPoints(
+            center,
+            getAreaPointsByHWP(width, height, tempPoints[0]),
+            angle
+          );
         }
 
         for (let j = 0; j < tempPoints.length; j++) {
@@ -242,17 +232,6 @@ export default (state = defaultState(), action: any): Props => {
 
       return { ...state, selected: [...selected] };
     }
-
-    // case ADD_ELEMENT_TO_SELECTION_LIST: {
-    //   const { id } = action.payload;
-    //   return { ...state, selected: [...state.selected, id] };
-    // }
-
-    // case DEL_ELEMENT_FROM_SELECTION_LIST: {
-    //   const { id } = action.payload;
-    //   const selected = state.selected.filter((element) => !(element === id));
-    //   return { ...state, selected: [...selected] };
-    // }
 
     case TOGGLE_ELEMENT_SELECTION: {
       const { id } = action.payload;

@@ -67,7 +67,6 @@ function ObjectSelector(props: Props) {
   const [top, left, width, height] = getBox(selectorRect);
 
   const handlePointerDown = (ev: any) => {
-    console.log("DOWN");
     const { target, pointerId, clientX, clientY } = ev;
     target.setPointerCapture(pointerId);
 
@@ -80,7 +79,6 @@ function ObjectSelector(props: Props) {
   };
 
   const handlePointerMove = (ev: any) => {
-    console.log("MOVE");
     ev.preventDefault();
     if (!showRect || props.selectionDisabled) return;
     const { clientX, clientY } = ev;
@@ -93,13 +91,11 @@ function ObjectSelector(props: Props) {
   };
 
   const handlePointerUp = (ev) => {
-    console.log("UP");
     ev.preventDefault();
     setShowRect(false);
   };
 
   const handleClick = (ev: any) => {
-    console.log("CLICK");
     const { clientX, clientY } = ev;
 
     if (ev.shiftKey) {
