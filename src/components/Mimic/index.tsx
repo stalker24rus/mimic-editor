@@ -6,7 +6,10 @@ import {
   redo,
   undo,
 } from "../../store/actionCreators/editorElements";
-import { handleEscapeButton } from "../../store/actionCreators/editorState";
+import {
+  handleEscapeButton,
+  setViewPosition,
+} from "../../store/actionCreators/editorState";
 import EditorContextMenu from "../Editor/EditorContextMenu";
 import useDrawElement from "./Hooks/useDrawElement";
 
@@ -21,6 +24,7 @@ interface DispatchProps {
   redo: Function;
   onDelete: Function;
   onEscape: Function;
+  onSetViewPosition: Function;
 }
 
 interface OwnProps {}
@@ -39,6 +43,7 @@ function mapDispatchToProps() {
     redo: redo,
     onDelete: deleteSelectedElements,
     onEscape: handleEscapeButton,
+    onSetViewPosition: setViewPosition,
   };
 }
 
@@ -86,18 +91,35 @@ const Mimic = (props: Props): JSX.Element => {
       window.removeEventListener("keydown", keyListener);
     };
   }, [elements]);
+
+  const handleScroll = () => {
+    const htmlRect = document
+      .getElementById("mimic.frame")
+      ?.getBoundingClientRect();
+
+    if (htmlRect) {
+      const { x, y } = htmlRect;
+
+      props.onSetViewPosition({ x, y });
+    }
+  };
   // console.log(JSON.stringify(elements));
   return (
-    <MimicCanvas>
-      {elements.length > 0 && (
-        <span>
-          {elements?.map((element: MimicElementProps) => {
-            return DrawFabric(element);
-          })}
-        </span>
-      )}
-      {/* <EditorContextMenu /> */}
-    </MimicCanvas>
+    <div
+      style={{ width: "100%", height: "100%", overflow: "scroll" }}
+      onScroll={handleScroll}
+    >
+      <MimicCanvas>
+        {elements.length > 0 && (
+          <span>
+            {elements?.map((element: MimicElementProps) => {
+              return DrawFabric(element);
+            })}
+          </span>
+        )}
+        {/* <EditorContextMenu /> */}
+      </MimicCanvas>
+    </div>
   );
 };
 

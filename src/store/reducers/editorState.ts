@@ -73,8 +73,8 @@ const defaultState = (): Props => {
               y: 0,
             },
           ],
-          width: 1300,
-          height: 1100,
+          width: 1900,
+          height: 1080,
         },
         appearance: {
           fill: "#CECECE",
