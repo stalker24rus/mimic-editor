@@ -22,16 +22,19 @@ function Splitter({
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = (ev: React.PointerEvent<HTMLDivElement>) => {
+    ev.preventDefault();
     setIsDragging(true);
     const target = ev.target as HTMLInputElement;
     target.setPointerCapture(ev.pointerId);
   };
 
-  const handlePointerUp = () => {
+  const handlePointerUp = (ev: React.PointerEvent<HTMLDivElement>) => {
+    ev.preventDefault();
     setIsDragging(false);
   };
 
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+    ev.preventDefault();
     if (isDragging) onDrag(ev);
   };
 

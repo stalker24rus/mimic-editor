@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ChromePicker } from "react-color";
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
 import { AppearenceType } from "../../../../../../models/Editor";
+import InputField from "../InputField";
 import PropsView from "../PropsView";
 
 interface Props {
@@ -46,7 +47,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
   };
 
   const handleOpenColorPanel = (ev) => {
-    console.log(ev);
+    ev.preventDefault();
     const key = ev.target.name;
     setColorPanel(true);
     setColorPanelParametr(key);
@@ -166,8 +167,10 @@ function Appearance({ data, onChange }: Props): JSX.Element {
             <tr>
               <td>textColor</td>
               <td>
-                <div style={{ display: "inline-flex" }}>
-                  <div
+                <div>
+                  <button
+                    name="textColor"
+                    onClick={handleOpenColorPanel}
                     style={{
                       margin: "2px",
                       height: "20px",
@@ -175,7 +178,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
                       border: "solid 1px",
                       background: textColor,
                     }}
-                  ></div>
+                  ></button>
 
                   <button name="textColor" onClick={handleOpenColorPanel}>
                     {textColor}
@@ -189,12 +192,15 @@ function Appearance({ data, onChange }: Props): JSX.Element {
             <tr>
               <td>strokeWidth</td>
               <td>
-                <input
-                  name="strokeWidth"
-                  style={{ width: "60px" }}
+                <InputField
                   value={strokeWidth}
-                  type="number"
-                  step="1"
+                  props={{
+                    name: "strokeWidth",
+                    type: "number",
+                    min: 1,
+                    max: 100,
+                    step: 1,
+                  }}
                   onChange={handleChange}
                 />
               </td>
@@ -205,19 +211,23 @@ function Appearance({ data, onChange }: Props): JSX.Element {
             <tr>
               <td>opacity</td>
               <td>
-                <input
-                  name="opacity"
-                  style={{ width: "60px" }}
+                <InputField
                   value={opacity}
-                  type="number"
-                  step="0.01"
+                  props={{
+                    style: { width: "60px" },
+                    name: "opacity",
+                    type: "number",
+                    min: 0,
+                    max: 1,
+                    step: 0.01,
+                  }}
                   onChange={handleChange}
                 />
               </td>
             </tr>
           )}
 
-          {visability !== undefined && (
+          {/* {visability !== undefined && (
             <tr>
               <td>visability</td>
               <td>
@@ -231,7 +241,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
                 </select>
               </td>
             </tr>
-          )}
+          )} */}
         </table>
       </PropsView>
     </>

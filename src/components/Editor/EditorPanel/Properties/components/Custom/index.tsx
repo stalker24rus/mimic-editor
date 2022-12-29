@@ -1,4 +1,5 @@
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
+import InputField from "../InputField";
 import PropsView from "../PropsView";
 
 function Custom({ data, onChange }) {
@@ -18,8 +19,10 @@ function Custom({ data, onChange }) {
           <tr key={i}>
             <td>{keyName}: </td>
             <td>
-              <input
-                name={keyName}
+              <InputField
+                props={{
+                  name: keyName,
+                }}
                 value={data[keyName]}
                 onChange={handleChange}
               />

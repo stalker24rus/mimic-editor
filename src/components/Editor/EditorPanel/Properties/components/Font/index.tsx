@@ -1,4 +1,5 @@
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
+import InputField from "../InputField";
 import PropsView from "../PropsView";
 
 const FONT_FAMILY = [
@@ -58,11 +59,15 @@ function Font({ data, onChange }) {
           <tr>
             <td>fontSize:</td>
             <td>
-              <input
-                name="fontSize"
-                style={{ width: "60px" }}
+              <InputField
                 value={fontSize}
-                type="number"
+                props={{
+                  style: { width: "60px" },
+                  name: "fontSize",
+                  type: "number",
+                  min: 1,
+                  max: 1000,
+                }}
                 onChange={handleChange}
               />
             </td>

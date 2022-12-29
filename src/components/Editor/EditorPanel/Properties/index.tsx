@@ -58,7 +58,13 @@ function Properties(props: IProps): JSX.Element {
   const ElementProps = element?.type ? PropsPanel : () => <></>;
 
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        overflowY: "scroll",
+      }}
+    >
       {selected.length === 0 && <div>Выберете объект</div>}
       {selected.length > 1 && (
         <div>Редактирование свойств доступно только для одного объекта</div>

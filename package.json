@@ -27,7 +27,7 @@
   "scripts": {
     "start-webpack": "npx webpack serve --mode development",
     "build-webpack": "npx webpack --config webpack.config.js",
-    "build-webpack-prod":  "npx webpack --config webpack.config.js --progress --profile --bail --mode=production",
+    "build-webpack-prod": "npx webpack --config webpack.config.js --progress --profile --bail --mode=production",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -1,5 +1,6 @@
 import lodash from "lodash";
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
+import InputField from "../InputField";
 import PropsView from "../PropsView";
 
 function Position({ data, onChange }) {
@@ -30,11 +31,15 @@ function Position({ data, onChange }) {
             <tr>
               <td>angle : </td>
               <td>
-                <input
-                  type="number"
-                  name="angle"
+                <InputField
                   value={angle}
-                  style={{ width: "60px" }}
+                  props={{
+                    style: { width: "60px" },
+                    name: "angle",
+                    type: "number",
+                    min: -360,
+                    max: 360,
+                  }}
                   onChange={handleChange}
                 />
               </td>
@@ -45,11 +50,15 @@ function Position({ data, onChange }) {
             <tr>
               <td>height: </td>
               <td>
-                <input
-                  type="number"
-                  name="height"
+                <InputField
                   value={height}
-                  style={{ width: "60px" }}
+                  props={{
+                    style: { width: "60px" },
+                    name: "height",
+                    type: "number",
+                    min: 0,
+                    max: 999999,
+                  }}
                   onChange={handleChange}
                 />
               </td>
@@ -60,11 +69,15 @@ function Position({ data, onChange }) {
             <tr>
               <td>width: </td>
               <td>
-                <input
-                  type="number"
-                  name="width"
+                <InputField
                   value={width}
-                  style={{ width: "60px" }}
+                  props={{
+                    style: { width: "60px" },
+                    name: "width",
+                    type: "number",
+                    min: 0,
+                    max: 999999,
+                  }}
                   onChange={handleChange}
                 />
               </td>
@@ -86,21 +99,29 @@ function Position({ data, onChange }) {
                     <td>{index}</td>
 
                     <td>
-                      <input
-                        type="number"
-                        name={"points.x." + index}
-                        style={{ width: "60px" }}
+                      <InputField
                         value={point.x}
+                        props={{
+                          style: { width: "60px" },
+                          name: "points.x." + index,
+                          type: "number",
+                          min: 0,
+                          max: 999999,
+                        }}
                         onChange={handleChangePoints}
                       />
                     </td>
 
                     <td>
-                      <input
-                        type="number"
-                        name={"points.y." + index}
-                        style={{ width: "60px" }}
+                      <InputField
                         value={point.y}
+                        props={{
+                          style: { width: "60px" },
+                          name: "points.y." + index,
+                          type: "number",
+                          min: 0,
+                          max: 999999,
+                        }}
                         onChange={handleChangePoints}
                       />
                     </td>
