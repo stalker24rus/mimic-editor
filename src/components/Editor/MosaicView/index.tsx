@@ -19,6 +19,7 @@ function View({ name, img, onClick }: ViewProps): JSX.Element {
     <div
       className="bg-gray-500 hover:bg-gray-700"
       style={{
+        cursor: "pointer",
         margin: "2px",
         position: "relative",
         borderRadius: "10px",
