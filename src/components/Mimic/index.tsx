@@ -3,11 +3,13 @@ import { connect } from "react-redux";
 import { MimicElementProps } from "../../models/Editor";
 import {
   deleteSelectedElements,
+  pasteElements,
   redo,
   undo,
 } from "../../store/actionCreators/editorElements";
 import {
-  handleEscapeButton,
+  copyElements,
+  escapeElements,
   setViewPosition,
 } from "../../store/actionCreators/editorState";
 import EditorContextMenu from "../Editor/EditorContextMenu";
@@ -25,6 +27,8 @@ interface DispatchProps {
   onDelete: Function;
   onEscape: Function;
   onSetViewPosition: Function;
+  onCopy: Function;
+  onPaste: Function;
 }
 
 interface OwnProps {}
@@ -42,8 +46,10 @@ function mapDispatchToProps() {
     undo: undo,
     redo: redo,
     onDelete: deleteSelectedElements,
-    onEscape: handleEscapeButton,
+    onEscape: escapeElements,
     onSetViewPosition: setViewPosition,
+    onCopy: copyElements,
+    onPaste: pasteElements,
   };
 }
 
@@ -75,6 +81,20 @@ const Mimic = (props: Props): JSX.Element => {
         (ev.key === "A" || ev.key === "a" || ev.code === "KeyA")
       ) {
         console.log(ev, ev.key);
+      }
+
+      if (
+        (ev.metaKey || ev.ctrlKey) &&
+        (ev.key === "C" || ev.key === "c" || ev.code === "KeyC")
+      ) {
+        props.onCopy();
+      }
+
+      if (
+        (ev.metaKey || ev.ctrlKey) &&
+        (ev.key === "V" || ev.key === "v" || ev.code === "KeyV")
+      ) {
+        props.onPaste();
       }
 
       if (ev.key === "Delete" || ev.code === "Delete") {

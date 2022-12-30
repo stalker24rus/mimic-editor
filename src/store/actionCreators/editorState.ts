@@ -1,4 +1,5 @@
 import {
+  COPY_ELEMENTS,
   HANDLE_ESCAPE,
   SELECT_ELEMENTS,
   SET_DRAWING_ID,
@@ -11,6 +12,7 @@ import {
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, PointFromat } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
+import { selectSelectedElements } from "../selectors/editorState";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
@@ -60,6 +62,18 @@ export const toggleElementSelection = (id: number) => (dispatch: Function) => {
   dispatch({ type: TOGGLE_ELEMENT_SELECTION, payload: { id } });
 };
 
-export const handleEscapeButton = () => (dispatch: Function) => {
+export const escapeElements = () => (dispatch: Function) => {
   dispatch({ type: HANDLE_ESCAPE });
+};
+
+export const copyElements = () => (dispatch: Function, getState: Function) => {
+  const elements = selectEditorElements(getState());
+  const selected = selectSelectedElements(getState());
+  dispatch({
+    type: COPY_ELEMENTS,
+    payload: {
+      elements,
+      selected,
+    },
+  });
 };

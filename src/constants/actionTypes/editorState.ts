@@ -15,3 +15,6 @@ export const SELECT_ELEMENTS: string = `${module}/SELECT_ELEMENTS`;
 export const TOGGLE_ELEMENT_SELECTION: string = `${module}/TOGGLE_ELEMENT_SELECTION`;
 export const DISABLE_SELECTION: string = `${module}/DISABLE_SELECTION`;
 export const ENABLE_SELECTION: string = `${module}/ENABLE_SELECTION`;
+
+export const COPY_ELEMENTS: string = `${module}/COPY_ELEMENTS`;
+export const PASTE_ELEMENTS: string = `${module}/PASTE_ELEMENTS`;

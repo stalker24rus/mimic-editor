@@ -6,9 +6,14 @@ import {
   moveOnBottomLevel,
   moveOnForwardLevel,
   moveOnTopLevel,
+  pasteElements,
   redo,
   undo,
 } from "../../../store/actionCreators/editorElements";
+import {
+  copyElements,
+  escapeElements,
+} from "../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../store/selectors/editorState";
 
 interface StateProps {
@@ -24,6 +29,9 @@ interface DispatchProps {
   onForwardLevel: Function;
   onBottomLevel: Function;
   onBackLevel: Function;
+  onCopy: Function;
+  onPaste: Function;
+  onEscape: Function;
 }
 
 interface OwnProps {
@@ -48,6 +56,9 @@ function mapDispatchToProps() {
     onForwardLevel: moveOnForwardLevel,
     onBottomLevel: moveOnBottomLevel,
     onBackLevel: moveOnBackLevel,
+    onCopy: copyElements,
+    onPaste: pasteElements,
+    onEscape: escapeElements,
   };
 }
 
@@ -74,6 +85,18 @@ const EditorHeader = (props: Props): JSX.Element => {
 
   const handleOnBackLevel = () => {
     props.onBackLevel();
+  };
+
+  const handleCopy = () => {
+    props.onCopy();
+  };
+
+  const handlePaste = () => {
+    props.onPaste();
+  };
+
+  const handleEscape = () => {
+    props.onEscape();
   };
 
   const [menuChange, setMenuChanges] = useState(false);
@@ -147,6 +170,19 @@ const EditorHeader = (props: Props): JSX.Element => {
                 zIndex: 1,
               }}
             >
+              <ul>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleEscape}
+                  >
+                    Отмена
+                  </button>
+                </li>
+              </ul>
               <ul
                 className="py-1 text-sm text-gray-700 dark:text-gray-200"
                 aria-labelledby="dropdownDefault"
@@ -173,6 +209,30 @@ const EditorHeader = (props: Props): JSX.Element => {
                     disabled={!props.future.length}
                   >
                     &#8631; вперед {props.future.length}
+                  </button>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleCopy}
+                  >
+                    Копировать
+                  </button>
+                </li>
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handlePaste}
+                  >
+                    Вставить
                   </button>
                 </li>
               </ul>

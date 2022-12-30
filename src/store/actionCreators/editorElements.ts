@@ -20,6 +20,7 @@ import {
 import {
   DISABLE_SELECTION,
   ENABLE_SELECTION,
+  PASTE_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_EDIT,
@@ -31,6 +32,7 @@ import {
   PointFromat,
 } from "../../models/Editor";
 import {
+  selectCopyPasteBuffer,
   selectNewElement,
   selectSelectedElements,
   selectViewPosition,
@@ -308,3 +310,11 @@ export const changeAttributes =
       payload: { ...changes },
     });
   };
+
+export const pasteElements = () => (dispatch: Function, getState: Function) => {
+  const elements = selectCopyPasteBuffer(getState());
+  dispatch({
+    type: PASTE_ELEMENTS,
+    payload: { elements },
+  });
+};

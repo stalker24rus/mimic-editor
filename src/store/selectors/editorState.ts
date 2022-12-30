@@ -8,3 +8,6 @@ export const selectNewElement = (state: any) => state.editorState.newElement;
 export const selectLastTakenId = (state: any) => state.editorState.lastTakenId;
 export const selectSelectedElements = (state: any) =>
   state.editorState.selected;
+
+export const selectCopyPasteBuffer = (state: any) =>
+  state.editorState.copyPasteBuffer;

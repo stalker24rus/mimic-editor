@@ -23,7 +23,9 @@ import {
   MOVE_ELEMENTS_ON_BACK_LEVEL,
   CHANGE_ATTRIBUTES,
 } from "../../constants/actionTypes/editorElements";
+import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
 import { MimicElementProps } from "../../models/Editor";
+import { getNewId } from "../actionCreators/editorElements";
 import { demo1JSON } from "../demo/templateJson";
 import changeIndexArr from "./functions/changeIndexArray";
 import resizeBox from "./functions/resizeBox";
@@ -472,6 +474,20 @@ export default (state = defaultState, action: any) => {
 
     case MOVE_ELEMENT_BACK_LAYER: {
       return state;
+    }
+
+    case PASTE_ELEMENTS: {
+      const { elements } = action.payload;
+      let lastId: number = getNewId(state);
+      let newElements: MimicElementProps[] = [];
+
+      for (let i = 0; i < elements.length; i++) {
+        const element: MimicElementProps = elements[i];
+        element.attributes.general.id = lastId;
+        newElements.push(lodash.cloneDeep(element));
+        lastId++;
+      }
+      return [...state, ...newElements];
     }
 
     default: {

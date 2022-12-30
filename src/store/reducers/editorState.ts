@@ -1,4 +1,6 @@
+import lodash from "lodash";
 import {
+  COPY_ELEMENTS,
   DISABLE_SELECTION,
   ENABLE_SELECTION,
   HANDLE_ESCAPE,
@@ -41,6 +43,7 @@ interface Props {
   selected: number[];
   selectionDisabled: boolean;
   selectorRect: [PointFromat, PointFromat]; // FIXME
+  copyPasteBuffer: MimicElementProps[];
 }
 
 const defaultState = (): Props => {
@@ -56,6 +59,7 @@ const defaultState = (): Props => {
       { x: 0, y: 0 },
       { x: 0, y: 0 },
     ],
+    copyPasteBuffer: [],
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
@@ -242,6 +246,21 @@ export default (state = defaultState(), action: any): Props => {
       } else {
         return { ...state, selected: [...state.selected, id] };
       }
+    }
+
+    case COPY_ELEMENTS: {
+      const { elements, selected } = action.payload;
+
+      const copiedArr = [];
+
+      for (let i = 0; i < elements.length; i++) {
+        const element: MimicElementProps = elements[i];
+        if (selected.includes(element.attributes.general.id)) {
+          copiedArr.push(lodash.cloneDeep(element));
+        }
+      }
+
+      return { ...state, copyPasteBuffer: copiedArr };
     }
 
     default:
