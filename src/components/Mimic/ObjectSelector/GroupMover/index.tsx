@@ -67,7 +67,7 @@ function GroupMover(props: Props): JSX.Element {
         x: movementX,
         y: movementY,
       };
-      props.onGroupMove(props.selected, movement);
+      props.onGroupMove(movement); // props.onGroupMove(props.selected, movement);
     }
   };
 

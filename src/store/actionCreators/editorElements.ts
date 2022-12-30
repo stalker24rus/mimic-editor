@@ -118,7 +118,9 @@ export const moveElementPoints =
   };
 
 export const moveElementGroup =
-  (selected: number[], movement: PointFromat) => (dispatch: Function) => {
+  (movement: PointFromat) => (dispatch: Function, getState: Function) => {
+    // selected: number[],
+    const selected = selectSelectedElements(getState());
     dispatch({
       type: MOVE_ELEMENT_GROUP,
       payload: { selected, movement },

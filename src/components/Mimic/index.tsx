@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { MimicElementProps } from "../../models/Editor";
 import {
   deleteSelectedElements,
+  moveElementGroup,
   pasteElements,
   redo,
   undo,
@@ -29,6 +30,7 @@ interface DispatchProps {
   onSetViewPosition: Function;
   onCopy: Function;
   onPaste: Function;
+  onMoveElementGroup: Function;
 }
 
 interface OwnProps {}
@@ -50,6 +52,7 @@ function mapDispatchToProps() {
     onSetViewPosition: setViewPosition,
     onCopy: copyElements,
     onPaste: pasteElements,
+    onMoveElementGroup: moveElementGroup,
   };
 }
 
@@ -61,7 +64,7 @@ const Mimic = (props: Props): JSX.Element => {
   useEffect(() => {
     // FIXME -> Any
     const keyListener = (ev: any) => {
-      console.log(ev);
+      console.log("useEffect keyListener >>>", ev);
 
       //ev.target.preventDefault();
 
@@ -104,6 +107,26 @@ const Mimic = (props: Props): JSX.Element => {
       if (ev.key === "Escape" || ev.code === "Escape") {
         props.onEscape();
       }
+
+      if (ev.key === "ArrowLeft") {
+        ev.preventDefault();
+        props.onMoveElementGroup({ x: -1, y: 0 });
+      }
+
+      if (ev.key === "ArrowRight") {
+        ev.preventDefault();
+        props.onMoveElementGroup({ x: 1, y: 0 });
+      }
+
+      if (ev.key === "ArrowUp") {
+        ev.preventDefault();
+        props.onMoveElementGroup({ x: 0, y: -1 });
+      }
+
+      if (ev.key === "ArrowDown") {
+        ev.preventDefault();
+        props.onMoveElementGroup({ x: 0, y: 1 });
+      }
     };
     window.addEventListener("keydown", keyListener);
 
@@ -112,7 +135,8 @@ const Mimic = (props: Props): JSX.Element => {
     };
   }, [elements]);
 
-  const handleScroll = () => {
+  const handleScroll = (ev) => {
+    ev.preventDefault();
     const htmlRect = document
       .getElementById("mimic.frame")
       ?.getBoundingClientRect();
@@ -123,6 +147,7 @@ const Mimic = (props: Props): JSX.Element => {
       props.onSetViewPosition({ x, y });
     }
   };
+
   // console.log(JSON.stringify(elements));
   return (
     <div

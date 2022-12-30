@@ -134,7 +134,6 @@ function MimicCanvas(props: Props): JSX.Element {
         position: "relative",
         width: width,
         height: height,
-        //overflow: "scroll",
         background: fill,
         cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
       }}

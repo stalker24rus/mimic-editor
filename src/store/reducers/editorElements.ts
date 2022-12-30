@@ -204,6 +204,8 @@ export default (state = defaultState, action: any) => {
             };
           });
 
+          console.log(newPoints);
+
           element.attributes.position.points = [...newPoints];
 
           elements[index] = { ...element };
