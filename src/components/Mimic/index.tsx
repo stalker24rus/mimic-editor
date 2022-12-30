@@ -109,6 +109,7 @@ const Mimic = (props: Props): JSX.Element => {
       style={{ width: "100%", height: "100%", overflow: "scroll" }}
       onScroll={handleScroll}
     >
+      {/* TODO  Mimic make union with  MimicCanvas */}
       <MimicCanvas>
         {elements.length > 0 && (
           <span>

@@ -7,6 +7,7 @@ import {
 } from "../../../../constants/literals";
 import { editorAddElement } from "../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
+import MosaicView, { MosaicProps, ViewProps } from "../../MosaicView";
 
 interface StateProps {
   future: [any];
@@ -41,36 +42,49 @@ function mapDispatchToProps() {
 const Primitives = (props: Props): JSX.Element => {
   const { onAddElement } = props;
 
+  const elements: ViewProps[] = [
+    {
+      name: "Кнопка",
+      img: "",
+      onClick: () => {
+        onAddElement(ELEMENT_TYPE_BUTTON);
+      },
+    },
+    {
+      name: "Линия",
+      img: "",
+      onClick: () => {
+        onAddElement(ELEMENT_TYPE_LINE);
+      },
+    },
+    {
+      name: "Поли-линия",
+      img: "",
+      onClick: () => {
+        onAddElement(ELEMENT_TYPE_POLYLINE);
+      },
+    },
+    {
+      name: "Полигон",
+      img: "",
+      onClick: () => {
+        onAddElement(ELEMENT_TYPE_POLYGON);
+      },
+    },
+  ];
+
   return (
     <>
-      <div>
-        <button
-          className="w-100 h-200 hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={() => onAddElement(ELEMENT_TYPE_BUTTON)}
-        >
-          Кнопка
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={() => onAddElement(ELEMENT_TYPE_LINE)}
-        >
-          Линия
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={() => onAddElement(ELEMENT_TYPE_POLYLINE)}
-        >
-          Поли линия
-        </button>
-
-        <button
-          className="hover:bg-blue-400 group flex items-center rounded-md bg-blue-500 text-white text-sm font-medium pl-2 pr-3 py-2 shadow-sm"
-          onClick={() => onAddElement(ELEMENT_TYPE_POLYGON)}
-        >
-          Полигон
-        </button>
+      <div
+        style={{
+          // top: "0",
+          //position: "absolute",
+          width: "100%",
+          height: "100%",
+          overflow: "scroll",
+        }}
+      >
+        <MosaicView elements={elements} />
       </div>
     </>
   );

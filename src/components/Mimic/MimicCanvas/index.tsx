@@ -66,23 +66,23 @@ function MimicCanvas(props: Props): JSX.Element {
   const { fill } = appearance;
   const { name } = general;
 
-  // useEffect(() => {
-  //   function handleResize() {
-  //     const htmlRect = document.getElementById(name)?.getBoundingClientRect();
+  useEffect(() => {
+    function handleResize() {
+      const htmlRect = document.getElementById(name)?.getBoundingClientRect();
 
-  //     if (htmlRect) {
-  //       const { x, y } = htmlRect;
+      if (htmlRect) {
+        const { x, y } = htmlRect;
 
-  //       props.onSetViewPosition({ x, y });
-  //     }
-  //   }
-  //   window.addEventListener("resize", handleResize);
-  //   handleResize();
+        props.onSetViewPosition({ x, y });
+      }
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
 
-  //   return () => {
-  //     window.removeEventListener("resize", handleResize);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     ev.preventDefault();
