@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { APP_VERSION, HEADER_HEIGHT } from "../../../constants/literals";
+import { MimicElementProps } from "../../../models/Editor";
 import {
+  deleteSelectedElements,
   moveOnBackLevel,
   moveOnBottomLevel,
   moveOnForwardLevel,
@@ -14,12 +16,16 @@ import {
   copyElements,
   escapeElements,
 } from "../../../store/actionCreators/editorState";
-import { selectSelectedElements } from "../../../store/selectors/editorState";
+import {
+  selectSelectedElements,
+  selectCopyPasteBuffer,
+} from "../../../store/selectors/editorState";
 
 interface StateProps {
   future: [any];
   past: [any];
   selected: number[] | undefined;
+  copyPasteBuffer: MimicElementProps[];
 }
 
 interface DispatchProps {
@@ -32,6 +38,7 @@ interface DispatchProps {
   onCopy: Function;
   onPaste: Function;
   onEscape: Function;
+  onDelete: Function;
 }
 
 interface OwnProps {
@@ -45,6 +52,7 @@ function mapStateToProps(store) {
     future: store.undoredobleEditorElements.future,
     past: store.undoredobleEditorElements.past,
     selected: selectSelectedElements(store),
+    copyPasteBuffer: selectCopyPasteBuffer(store),
   };
 }
 
@@ -59,6 +67,7 @@ function mapDispatchToProps() {
     onCopy: copyElements,
     onPaste: pasteElements,
     onEscape: escapeElements,
+    onDelete: deleteSelectedElements,
   };
 }
 
@@ -97,6 +106,10 @@ const EditorHeader = (props: Props): JSX.Element => {
 
   const handleEscape = () => {
     props.onEscape();
+  };
+
+  const handleDelete = () => {
+    props.onDelete();
   };
 
   const [menuChange, setMenuChanges] = useState(false);
@@ -177,9 +190,23 @@ const EditorHeader = (props: Props): JSX.Element => {
                     style={{
                       width: "100%",
                     }}
-                    onClick={handleEscape}
+                    onClick={handleDelete}
+                    disabled={props.selected.length === 0}
                   >
-                    Отмена
+                    Удалить
+                  </button>
+                </li>
+
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleEscape}
+                    disabled={props.selected.length === 0}
+                  >
+                    Снять выделение
                   </button>
                 </li>
               </ul>
@@ -220,6 +247,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handleCopy}
+                    disabled={props.selected.length === 0}
                   >
                     Копировать
                   </button>
@@ -231,6 +259,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handlePaste}
+                    disabled={props.copyPasteBuffer.length === 0}
                   >
                     Вставить
                   </button>

@@ -64,7 +64,7 @@ const Mimic = (props: Props): JSX.Element => {
   useEffect(() => {
     // FIXME -> Any
     const keyListener = (ev: any) => {
-      console.log("useEffect keyListener >>>", ev);
+      // console.log("useEffect keyListener >>>", ev);
 
       //ev.target.preventDefault();
 
