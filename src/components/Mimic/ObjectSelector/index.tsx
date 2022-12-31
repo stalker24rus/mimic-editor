@@ -126,6 +126,8 @@ function ObjectSelector(props: Props) {
       style={{
         width: "100%",
         height: "100%",
+        pointerEvents: "none",
+        userSelect: "none", //FIXME ???
       }}
       onClick={handleClick}
       onPointerDown={handlePointerDown}

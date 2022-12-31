@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { EDITOR_MODE_CREATE, MIMIC } from "../../../constants/literals";
+import { EDITOR_MODE_CREATE } from "../../../constants/literals";
 import {
   Attributes,
   EditorModeProps,
@@ -12,12 +11,7 @@ import {
   drawingElement,
   endDrawingElement,
 } from "../../../store/actionCreators/editorElements";
-import {
-  selectElement,
-  setViewPosition,
-} from "../../../store/actionCreators/editorState";
-import CursorInfo from "../CursorInfo";
-import ObjectSelector from "../ObjectSelector";
+import { setViewPosition } from "../../../store/actionCreators/editorState";
 
 interface StateProps {
   attributes: Attributes;
@@ -30,7 +24,6 @@ interface DispatchProps {
   onAppendPointToElement: Function;
   onEndDrawingElement: Function;
   onDrawingElement: Function;
-  // onSelectElement: Function;
   onSetViewPosition: Function;
 }
 
@@ -54,35 +47,16 @@ function mapDispatchToProps() {
     onAppendPointToElement: appendPointToElement,
     onEndDrawingElement: endDrawingElement,
     onDrawingElement: drawingElement,
-    // onSelectElement: selectElement,
     onSetViewPosition: setViewPosition,
   };
 }
 
-function MimicCanvas(props: Props): JSX.Element {
+function PointListener(props: Props): JSX.Element {
   const { mode, drawId, attributes, children } = props;
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
   const { name } = general;
-
-  useEffect(() => {
-    function handleResize() {
-      const htmlRect = document.getElementById(name)?.getBoundingClientRect();
-
-      if (htmlRect) {
-        const { x, y } = htmlRect;
-
-        props.onSetViewPosition({ x, y });
-      }
-    }
-    window.addEventListener("resize", handleResize);
-    handleResize();
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     ev.preventDefault();
@@ -141,10 +115,7 @@ function MimicCanvas(props: Props): JSX.Element {
       onPointerUp={handlePointerUp}
       onClick={handleClick}
     >
-      <ObjectSelector>
-        <div style={{ pointerEvents: "none" }}>{children}</div>
-        {mode === EDITOR_MODE_CREATE && <CursorInfo />}
-      </ObjectSelector>
+      {children}
     </div>
   );
 }
@@ -152,4 +123,4 @@ function MimicCanvas(props: Props): JSX.Element {
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
-)(MimicCanvas);
+)(PointListener);
