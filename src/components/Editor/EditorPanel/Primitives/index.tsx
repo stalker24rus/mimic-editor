@@ -74,19 +74,15 @@ const Primitives = (props: Props): JSX.Element => {
   ];
 
   return (
-    <>
-      <div
-        style={{
-          // top: "0",
-          //position: "absolute",
-          width: "100%",
-          height: "100%",
-          overflow: "scroll",
-        }}
-      >
-        <MosaicView elements={elements} />
-      </div>
-    </>
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        overflow: "scroll",
+      }}
+    >
+      <MosaicView elements={elements} />
+    </div>
   );
 };
 
