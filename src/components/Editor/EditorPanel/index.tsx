@@ -3,6 +3,7 @@ import SimpleSplitter from "../SimpleSplitter";
 import Properties from "./Properties";
 import TabsPanel, { TabProps } from "../TabsPanel";
 import ElementsTree from "./ElementsTree";
+import ExpressPanel from "./ExpressPanel";
 
 /**
  * The EditorPanel is a component for Editor module.
@@ -22,11 +23,14 @@ function EditorPanel(): JSX.Element {
     },
   ];
   return (
-    <SimpleSplitter orientation="horizontal" defaultRatio={25}>
-      <TabsPanel width={"100%"} height={"100%"} elements={tabs} />
-      {/* <Primitives /> */}
-      <Properties />
-    </SimpleSplitter>
+    <>
+      <ExpressPanel />
+      <SimpleSplitter orientation="horizontal" defaultRatio={25}>
+        <TabsPanel width={"100%"} height={"100%"} elements={tabs} />
+
+        <Properties />
+      </SimpleSplitter>
+    </>
   );
 }
 

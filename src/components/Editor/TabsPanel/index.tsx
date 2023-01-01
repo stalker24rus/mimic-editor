@@ -44,6 +44,8 @@ function TabsPanel({ elements, width, height }: Props) {
       <div
         className="flex flex-inline"
         style={{
+          borderTop: "1px solid",
+
           bottom: 0,
           left: 0,
           width: "100%",
