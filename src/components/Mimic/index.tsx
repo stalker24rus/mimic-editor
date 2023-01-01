@@ -69,6 +69,7 @@ const Mimic = (props: Props): JSX.Element => {
   // console.log(JSON.stringify(elements));
   return (
     <div
+      className="noselect"
       style={{ width: "100%", height: "100%", overflow: "scroll" }}
       onScroll={handleScroll}
     >
