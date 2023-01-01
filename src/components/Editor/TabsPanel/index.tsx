@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export interface TabProps {
   name: string;
@@ -14,26 +14,40 @@ export interface Props {
 
 function TabsPanel({ elements, width, height }: Props) {
   const [activeTab, setActiveTab] = useState(0);
+  const [heightCur, setHeightCur] = useState(null);
+  const view = useRef<HTMLDivElement>(null);
+  const footerHeight = 40;
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      const newWrapperState = view?.current?.getBoundingClientRect();
+      setHeightCur(newWrapperState.height ?? 0);
+    });
+    resizeObserver.observe(view.current!);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, []);
 
   return (
-    <div style={{ width, height, position: "relative" }}>
-      {elements.length > 0 && (
-        <div
-          style={{
-            width: "100%",
-            height: "100%",
-            overflow: "scroll",
-          }}
-        >
-          {elements[activeTab].element}
-        </div>
-      )}
+    <div ref={view} style={{ width, height, position: "relative" }}>
+      <div
+        style={{
+          width: "100%",
+          height: `${heightCur - footerHeight}px`,
+          overflow: "scroll",
+        }}
+      >
+        {elements.length > 0 && <>{elements[activeTab].element}</>}
+      </div>
+
       <div
         className="flex flex-inline"
         style={{
           bottom: 0,
           left: 0,
           width: "100%",
+          height: `${footerHeight}px`,
           position: "absolute",
           background: "white",
           overflowX: "scroll",
@@ -42,7 +56,9 @@ function TabsPanel({ elements, width, height }: Props) {
         {elements.map((element, index) => {
           return (
             <div
-              className="bg-gray-500 hover:bg-gray-700 m-1 rounded py-1 px-3 text-white "
+              className={`text-black ${
+                index === activeTab ? "bg-gray-200" : ""
+              } hover:bg-gray-200 m-1 rounded py-1 px-3`}
               style={{
                 cursor: "pointer",
               }}

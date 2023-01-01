@@ -4,6 +4,8 @@ import Font from "../Font";
 import General from "../General";
 import Position from "../Position";
 
+import "./index.css";
+
 interface ChangeDataProps {
   name: string;
   value: number | string;
@@ -17,6 +19,7 @@ function PropsPanel({ attributes, onChange }) {
   };
   return (
     <div
+      className="noselect"
       style={{
         overflow: "scroll",
       }}

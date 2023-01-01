@@ -2,6 +2,7 @@ import Primitives from "./Primitives";
 import SimpleSplitter from "../SimpleSplitter";
 import Properties from "./Properties";
 import TabsPanel, { TabProps } from "../TabsPanel";
+import ElementsTree from "./ElementsTree";
 
 /**
  * The EditorPanel is a component for Editor module.
@@ -16,8 +17,8 @@ function EditorPanel(): JSX.Element {
       element: <Primitives />,
     },
     {
-      name: "Дерево",
-      element: <>ТУТ БУДЕТ ДЕРЕВО ОБЪЕКТОВ</>,
+      name: "Элементы",
+      element: <ElementsTree />,
     },
   ];
   return (
