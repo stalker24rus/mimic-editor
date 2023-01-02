@@ -27,3 +27,10 @@ export const MOVE_ELEMENTS_ON_BACK_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_B
 export const HISTORY_POINT_FOR_CHANGES: string = `${module}/HISTORY_POINT_FOR_CHANGES`;
 
 export const CHANGE_ATTRIBUTES: string = `${module}/CHANGE_ATTRIBUTES`;
+
+export const ELEMENTS_LEFT_ALIGN: string = `${module}/ELEMENTS_LEFT_ALIGN`;
+export const ELEMENTS_HORIZON_ALIGN: string = `${module}/ELEMENTS_HORIZON_ALIGN`;
+export const ELEMENTS_RIGHT_ALIGN: string = `${module}/ELEMENTS_RIGHT_ALIGN`;
+export const ELEMENTS_TOP_ALIGN: string = `${module}/ELEMENTS_TOP_ALIGN`;
+export const ELEMENTS_VERTICAL_ALIGN: string = `${module}/ELEMENTS_VERTICAL_ALIGN`;
+export const ELEMENTS_BOTTOM_ALIGN: string = `${module}/ELEMENTS_BOTTOM_ALIGN`;

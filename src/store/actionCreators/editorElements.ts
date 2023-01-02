@@ -16,10 +16,18 @@ import {
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
   CHANGE_ATTRIBUTES,
+  ELEMENTS_LEFT_ALIGN,
+  ELEMENTS_HORIZON_ALIGN,
+  ELEMENTS_RIGHT_ALIGN,
+  ELEMENTS_TOP_ALIGN,
+  ELEMENTS_VERTICAL_ALIGN,
+  ELEMENTS_BOTTOM_ALIGN,
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
+  DISABLE_TOUCH,
   ENABLE_SELECTION,
+  ENABLE_TOUCH,
   PASTE_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
@@ -183,6 +191,9 @@ export const startDoingChanges = () => (dispatch: Function) => {
   dispatch({
     type: DISABLE_SELECTION,
   });
+  // dispatch({
+  //   type: DISABLE_TOUCH,
+  // });
 };
 
 export const endDoingChanges = () => (dispatch: Function) => {
@@ -190,6 +201,9 @@ export const endDoingChanges = () => (dispatch: Function) => {
     type: ENABLE_SELECTION,
     passHistrory: false,
   });
+  // dispatch({
+  //   type: ENABLE_TOUCH,
+  // });
 };
 
 export const createElement =
@@ -320,3 +334,57 @@ export const pasteElements = () => (dispatch: Function, getState: Function) => {
     payload: { elements },
   });
 };
+
+export const setElementsLeftAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_LEFT_ALIGN,
+      payload: { selected },
+    });
+  };
+
+export const setElementsHorizonAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_HORIZON_ALIGN,
+      payload: { selected },
+    });
+  };
+
+export const setElementsRightAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_RIGHT_ALIGN,
+      payload: { selected },
+    });
+  };
+
+export const setElementsTopAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_TOP_ALIGN,
+      payload: { selected },
+    });
+  };
+
+export const setElementsVerticalAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_VERTICAL_ALIGN,
+      payload: { selected },
+    });
+  };
+
+export const setElementsBottomAlign =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: ELEMENTS_BOTTOM_ALIGN,
+      payload: { selected },
+    });
+  };

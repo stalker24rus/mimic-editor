@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MimicElementProps } from "../../../../../models/Editor";
 
 interface Props {
@@ -21,6 +21,7 @@ function MovingCell({
   const [isDragging, setIsDragging] = useState(false);
 
   const handlePointerDown = (ev: any) => {
+    ev.preventDefault();
     setIsDragging(true);
     const { target, pointerId } = ev;
     target.setPointerCapture(pointerId);
@@ -28,11 +29,13 @@ function MovingCell({
   };
 
   const handlePointerUp = (ev: any) => {
+    ev.preventDefault();
     onPointerUp(ev);
     setIsDragging(false);
   };
 
-  const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
+  const handlePointerMove = (ev: any) => {
+    ev.preventDefault();
     if (isDragging) onPointerMove(ev);
   };
 
@@ -62,18 +65,3 @@ MovingCell.defaultProps = {
 };
 
 export default MovingCell;
-
-/*
-      const attributes = {
-        position: {
-          points: [
-            {
-              y: topLeftPoint.y + e.movementY,
-              x: topLeftPoint.x + e.movementX,
-            },
-          ],
-        },
-      };
-      onSetAttributes(attributes);
-    }
-*/

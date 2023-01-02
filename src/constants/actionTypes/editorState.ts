@@ -18,3 +18,7 @@ export const ENABLE_SELECTION: string = `${module}/ENABLE_SELECTION`;
 
 export const COPY_ELEMENTS: string = `${module}/COPY_ELEMENTS`;
 export const PASTE_ELEMENTS: string = `${module}/PASTE_ELEMENTS`;
+
+//
+export const DISABLE_TOUCH: string = `${module}/DISABLE_TOUCH`;
+export const ENABLE_TOUCH: string = `${module}/ENABLE_TOUCH`;

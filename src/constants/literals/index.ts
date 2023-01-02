@@ -1,5 +1,5 @@
 import { EditorModeProps, ElementType } from "../../models/Editor";
-export const APP_VERSION: string = "v.0.0.1:11";
+export const APP_VERSION: string = "v.0.0.1:14";
 export const HEADER_HEIGHT: number = 52;
 export const MIMIC: string = "MIMIC";
 export const MIMIC_FRAME_ID: string = `${MIMIC}.FRAME`;

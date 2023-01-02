@@ -22,11 +22,25 @@ import {
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
   CHANGE_ATTRIBUTES,
+  ELEMENTS_LEFT_ALIGN,
+  ELEMENTS_HORIZON_ALIGN,
+  ELEMENTS_RIGHT_ALIGN,
+  ELEMENTS_TOP_ALIGN,
+  ELEMENTS_VERTICAL_ALIGN,
+  ELEMENTS_BOTTOM_ALIGN,
 } from "../../constants/actionTypes/editorElements";
 import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
 import { MimicElementProps } from "../../models/Editor";
 import { getNewId } from "../actionCreators/editorElements";
 import { demo1JSON } from "../demo/templateJson";
+import {
+  alignBottom,
+  alignHorizon,
+  alignLeft,
+  alignRight,
+  alignTop,
+  alignVertical,
+} from "./functions/alighElements";
 import changeIndexArr from "./functions/changeIndexArray";
 import resizeBox from "./functions/resizeBox";
 
@@ -39,7 +53,7 @@ const selectElement = (state: any, id: number) =>
 const selectElementPointsLength = (element: MimicElementProps) =>
   element.attributes.position.points.length;
 
-export default (state = defaultState, action: any) => {
+export default (state = defaultState, action: any): MimicElementProps[] => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { id, newElement, point } = action.payload;
@@ -466,16 +480,52 @@ export default (state = defaultState, action: any) => {
       }
     }
 
-    case UPDATE_LAST_POINT_OF_ELEMENT: {
-      return state;
+    // case UPDATE_LAST_POINT_OF_ELEMENT: {
+    //   return state;
+    // }
+
+    // case MOVE_ELEMENT_TOP_LAYER: {
+    //   return state;
+    // }
+
+    // case MOVE_ELEMENT_BACK_LAYER: {
+    //   return state;
+    // }
+
+    case ELEMENTS_LEFT_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignLeft(selected, state);
+      return [...elements];
     }
 
-    case MOVE_ELEMENT_TOP_LAYER: {
-      return state;
+    case ELEMENTS_HORIZON_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignHorizon(selected, state);
+      return [...elements];
     }
 
-    case MOVE_ELEMENT_BACK_LAYER: {
-      return state;
+    case ELEMENTS_RIGHT_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignRight(selected, state);
+      return [...elements];
+    }
+
+    case ELEMENTS_TOP_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignTop(selected, state);
+      return [...elements];
+    }
+
+    case ELEMENTS_VERTICAL_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignVertical(selected, state);
+      return [...elements];
+    }
+
+    case ELEMENTS_BOTTOM_ALIGN: {
+      const { selected } = action.payload;
+      const elements = alignBottom(selected, state);
+      return [...elements];
     }
 
     case PASTE_ELEMENTS: {

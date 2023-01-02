@@ -3,6 +3,12 @@ import { connect } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../constants/literals";
 import { EditorModeProps, MimicElementProps } from "../../models/Editor";
 import { setViewPosition } from "../../store/actionCreators/editorState";
+import {
+  selectEditorMode,
+  // selectIsMimicTouch,
+} from "../../store/selectors/editorState";
+import { selectEditorElements } from "../../store/selectors/editorElements";
+
 import CursorInfo from "./CursorInfo";
 import useDrawElement from "./Hooks/useDrawElement";
 import KeyListener from "./KeyListener";
@@ -13,6 +19,7 @@ import PointListener from "./PointListener";
 interface StateProps {
   elements: MimicElementProps[];
   mode: EditorModeProps;
+  // isMimicTouch: boolean;
 }
 
 interface DispatchProps {
@@ -25,8 +32,9 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    elements: store.undoredobleEditorElements.present,
-    mode: store.editorState.mode,
+    elements: selectEditorElements(store),
+    mode: selectEditorMode(store),
+    // isMimicTouch: selectIsMimicTouch(store),
   };
 }
 
@@ -70,8 +78,14 @@ const Mimic = (props: Props): JSX.Element => {
   return (
     <div
       className="noselect"
-      style={{ width: "100%", height: "100%", overflow: "scroll" }}
+      style={{
+        width: "100%",
+        height: "100%",
+        overflow: "scroll",
+        touchAction: "none", //isMimicTouch ? "auto" : "none",
+      }}
       onScroll={handleScroll}
+      onPointerDown={() => console.log("MAIN POINTER DOWN")}
     >
       <KeyListener>
         <PointListener>

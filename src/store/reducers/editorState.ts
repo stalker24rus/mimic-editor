@@ -2,7 +2,9 @@ import lodash from "lodash";
 import {
   COPY_ELEMENTS,
   DISABLE_SELECTION,
+  // DISABLE_TOUCH,
   ENABLE_SELECTION,
+  // ENABLE_TOUCH,
   HANDLE_ESCAPE,
   SELECT_ELEMENTS,
   SET_CURRENT_MIMIC,
@@ -44,6 +46,7 @@ interface Props {
   selectionDisabled: boolean;
   selectorRect: [PointFromat, PointFromat]; // FIXME
   copyPasteBuffer: MimicElementProps[];
+  // isMimicTouch: boolean;
 }
 
 const defaultState = (): Props => {
@@ -60,6 +63,7 @@ const defaultState = (): Props => {
       { x: 0, y: 0 },
     ],
     copyPasteBuffer: [],
+    // isMimicTouch: true,
     currentMimic: {
       type: ELEMENT_TYPE_FRAME,
       layer: 0,
@@ -262,6 +266,16 @@ export default (state = defaultState(), action: any): Props => {
 
       return { ...state, copyPasteBuffer: copiedArr };
     }
+
+    //*********************************************** */
+    // case DISABLE_TOUCH: {
+    //   return { ...state, isMimicTouch: false };
+    // }
+
+    // case ENABLE_TOUCH: {
+    //   return { ...state, isMimicTouch: true };
+    // }
+    //************************************************ */
 
     default:
       return state;

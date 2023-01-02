@@ -11,3 +11,9 @@ export const selectSelectedElements = (state: any) =>
 
 export const selectCopyPasteBuffer = (state: any) =>
   state.editorState.copyPasteBuffer;
+
+export const selectEditorMode = (state: any) => state.editorState.mode;
+
+//************************************************ */
+// export const selectIsMimicTouch = (state: any) =>
+//   state.editorState.isMimicTouch;
