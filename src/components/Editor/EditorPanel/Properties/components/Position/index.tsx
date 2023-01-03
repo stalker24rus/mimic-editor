@@ -83,53 +83,54 @@ function Position({ data, onChange }) {
               </td>
             </tr>
           )}
+          {points !== undefined && (
+            <tr>
+              <div>points:</div>
+              <div>
+                <tr>
+                  <td style={{ width: "20px" }}> </td>
+                  <td>x</td>
+                  <td>y</td>
+                </tr>
 
-          <tr>
-            <div>points:</div>
-            <div>
-              <tr>
-                <td style={{ width: "20px" }}> </td>
-                <td>x</td>
-                <td>y</td>
-              </tr>
+                {points.map((point, index) => {
+                  return (
+                    <tr>
+                      <td>{index}</td>
 
-              {points.map((point, index) => {
-                return (
-                  <tr>
-                    <td>{index}</td>
+                      <td>
+                        <InputField
+                          value={point.x}
+                          props={{
+                            style: { width: "60px" },
+                            name: "points.x." + index,
+                            type: "number",
+                            min: 0,
+                            max: 999999,
+                          }}
+                          onChange={handleChangePoints}
+                        />
+                      </td>
 
-                    <td>
-                      <InputField
-                        value={point.x}
-                        props={{
-                          style: { width: "60px" },
-                          name: "points.x." + index,
-                          type: "number",
-                          min: 0,
-                          max: 999999,
-                        }}
-                        onChange={handleChangePoints}
-                      />
-                    </td>
-
-                    <td>
-                      <InputField
-                        value={point.y}
-                        props={{
-                          style: { width: "60px" },
-                          name: "points.y." + index,
-                          type: "number",
-                          min: 0,
-                          max: 999999,
-                        }}
-                        onChange={handleChangePoints}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </div>
-          </tr>
+                      <td>
+                        <InputField
+                          value={point.y}
+                          props={{
+                            style: { width: "60px" },
+                            name: "points.y." + index,
+                            type: "number",
+                            min: 0,
+                            max: 999999,
+                          }}
+                          onChange={handleChangePoints}
+                        />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </div>
+            </tr>
+          )}
         </table>
       </PropsView>
     </>

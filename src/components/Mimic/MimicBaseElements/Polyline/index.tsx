@@ -1,7 +1,11 @@
 import { ELEMENT_TYPE_POLYLINE, MIMIC } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import {
+  BaseElementOutput,
+  MimicElementProps,
+} from "../../../../models/Editor";
 
 interface Props {
+  disablePointerEvents?: boolean;
   component: MimicElementProps;
   onPointerMove: Function;
   onPointerUp: Function;
@@ -60,7 +64,7 @@ function Polyline(props: Props): JSX.Element {
             stroke: stroke,
             strokeWidth: strokeWidth,
             cursor: "move",
-            pointerEvents: "stroke",
+            pointerEvents: props.disablePointerEvents ? "none" : "stroke",
             opacity: opacity,
           }}
           onPointerDown={handlePointerDown}
@@ -81,3 +85,84 @@ Polyline.defaultProps = {
 };
 
 export default Polyline;
+
+export const startState: BaseElementOutput = {
+  attributes: {
+    appearance: {
+      stroke: "rgb(255, 0, 0)",
+      strokeWidth: 5,
+      opacity: 1,
+    },
+    properties: {},
+    position: {
+      points: [],
+    },
+    animation: [],
+  },
+};
+
+export const Demo = () => {
+  const demoState: MimicElementProps = {
+    type: "POLYLINE",
+    attributes: {
+      general: {
+        id: 99999999,
+        name: "DemoPoliline",
+        tagName: "",
+      },
+      appearance: {
+        stroke: "rgba(59,130,246, 1)",
+        strokeWidth: 5,
+        opacity: 1,
+      },
+
+      properties: {},
+
+      position: {
+        width: 90,
+        height: 90,
+        top: 0,
+        left: 0,
+        points: [
+          { x: 5, y: 70 },
+          { x: 65, y: 15 },
+          { x: 85, y: 70 },
+          { x: 30, y: 70 },
+          { x: 60, y: 40 },
+          { x: 70, y: 65 },
+          // { x: 80, y: 80 },
+          // { x: 80, y: 10 },
+          // { x: 45, y: 45 },
+        ],
+      },
+
+      font: {
+        fontFamily: "Arial",
+        fontSize: 14,
+        fontStyle: "normal",
+        fontWeight: "normal",
+        horizonAlign: "center",
+      },
+
+      action: {
+        operation: "none",
+        handler: undefined,
+      },
+    },
+    children: [],
+  };
+
+  return (
+    <div
+      style={{
+        cursor: "pointer",
+        top: demoState.attributes.appearance.strokeWidth,
+        left: demoState.attributes.appearance.strokeWidth,
+        position: "relative",
+        userSelect: "none",
+      }}
+    >
+      <Polyline disablePointerEvents={true} component={demoState} />
+    </div>
+  );
+};

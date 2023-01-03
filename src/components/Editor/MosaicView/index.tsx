@@ -3,6 +3,7 @@ import React from "react";
 export interface ViewProps {
   name: string;
   img: string;
+  demo?: JSX.Element;
   onClick: Function;
 }
 
@@ -10,14 +11,14 @@ export interface MosaicProps {
   elements: ViewProps[];
 }
 
-function View({ name, img, onClick }: ViewProps): JSX.Element {
+function View({ name, img, demo, onClick }: ViewProps): JSX.Element {
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     onClick(ev);
   };
 
   return (
     <div
-      className="bg-gray-500 hover:bg-gray-700"
+      className="bg-gray-100 hover:bg-gray-300"
       style={{
         cursor: "pointer",
         margin: "2px",
@@ -32,23 +33,26 @@ function View({ name, img, onClick }: ViewProps): JSX.Element {
     >
       <div
         style={{
-          top: "4px",
-          position: "absolute",
+          top: "50%",
           left: "50%",
-          transform: "translate(-50%, 0%)",
+          position: "absolute",
+          transform: "translate(-50%, -50%)",
         }}
       >
-        <img
-          alt="future"
-          src={img}
-          style={{
-            height: "60px",
-            width: "90px",
-          }}
-        />
+        {demo && <>{demo}</>}
+        {/* {!demo && (
+          <img
+            alt="future"
+            src={img}
+            style={{
+              height: "60px",
+              width: "90px",
+            }}
+          />
+        )} */}
       </div>
 
-      <div
+      {/* <div
         className="flex items-center"
         style={{
           maxWidth: "100%",
@@ -61,7 +65,7 @@ function View({ name, img, onClick }: ViewProps): JSX.Element {
         }}
       >
         {name}
-      </div>
+      </div> */}
     </div>
   );
 }

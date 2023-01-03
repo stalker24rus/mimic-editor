@@ -3,6 +3,7 @@ import { EDITOR_MODE_CREATE } from "../../../constants/literals";
 import {
   Attributes,
   EditorModeProps,
+  MimicElementProps,
   PointFromat,
 } from "../../../models/Editor";
 import {
@@ -12,10 +13,14 @@ import {
   endDrawingElement,
 } from "../../../store/actionCreators/editorElements";
 import { setViewPosition } from "../../../store/actionCreators/editorState";
-import { selectMimicAttributes } from "../../../store/selectors/editorElements";
+import {
+  selectMimic,
+  selectMimicAttributes,
+} from "../../../store/selectors/editorElements";
 
 interface StateProps {
-  attributes: Attributes;
+  // attributes: Attributes;
+  mimic: MimicElementProps;
   mode: EditorModeProps;
   drawId: number;
 }
@@ -36,7 +41,8 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    attributes: selectMimicAttributes(store), //store.editorState.currentMimic.attributes,
+    // attributes: selectMimicAttributes(store), //store.editorState.currentMimic.attributes,
+    mimic: selectMimic(store),
     mode: store.editorState.mode,
     drawId: store.editorState.drawId,
   };
@@ -53,7 +59,8 @@ function mapDispatchToProps() {
 }
 
 function PointListener(props: Props): JSX.Element {
-  const { mode, drawId, attributes, children } = props;
+  const { mode, drawId, mimic, children } = props;
+  const { attributes, type: mimicFrameType } = mimic;
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
@@ -104,7 +111,7 @@ function PointListener(props: Props): JSX.Element {
 
   return (
     <div
-      id={name}
+      id={mimicFrameType}
       style={{
         position: "relative",
         width: width,

@@ -20,11 +20,11 @@ export type Properties = {
   tag?: string;
 };
 
-type ElementType = "FRAME" | "BUTTON" | "LINE" | "POLYGON" | "POLYLINE";
+type ElementType = "MAIN_FRAME" | "BUTTON" | "LINE" | "POLYGON" | "POLYLINE";
 
 export type MimicElementProps = {
   type: ElementType;
-  layer: number;
+  layer?: number;
   attributes: Attributes;
   //service: Service | undefined; // TODO remove
   children?: Array<MimicElementProps>;

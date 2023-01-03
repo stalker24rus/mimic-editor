@@ -7,6 +7,10 @@ import {
 } from "../../../../constants/literals";
 import { editorAddElement } from "../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
+import { Demo as DemoButton } from "../../../Mimic/MimicBaseElements/Button";
+import { Demo as DemoLine } from "../../../Mimic/MimicBaseElements/Line";
+import { Demo as DemoPoligon } from "../../../Mimic/MimicBaseElements/Polygon";
+import { Demo as DemoPoliline } from "../../../Mimic/MimicBaseElements/Polyline";
 import MosaicView, { MosaicProps, ViewProps } from "../../MosaicView";
 
 interface StateProps {
@@ -46,6 +50,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Кнопка",
       img: "",
+      demo: <DemoButton />,
       onClick: () => {
         onAddElement(ELEMENT_TYPE_BUTTON);
       },
@@ -53,6 +58,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Линия",
       img: "",
+      demo: <DemoLine />,
       onClick: () => {
         onAddElement(ELEMENT_TYPE_LINE);
       },
@@ -60,6 +66,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Поли-линия",
       img: "",
+      demo: <DemoPoliline />,
       onClick: () => {
         onAddElement(ELEMENT_TYPE_POLYLINE);
       },
@@ -67,6 +74,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Полигон",
       img: "",
+      demo: <DemoPoligon />,
       onClick: () => {
         onAddElement(ELEMENT_TYPE_POLYGON);
       },

@@ -7,7 +7,10 @@ import {
   selectEditorMode,
   // selectIsMimicTouch,
 } from "../../store/selectors/editorState";
-import { selectEditorElements } from "../../store/selectors/editorElements";
+import {
+  selectEditorElements,
+  selectMimic,
+} from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
 import useDrawElement from "./Hooks/useDrawElement";
@@ -19,6 +22,7 @@ import PointListener from "./PointListener";
 interface StateProps {
   elements: MimicElementProps[];
   mode: EditorModeProps;
+  mimic: MimicElementProps;
   // isMimicTouch: boolean;
 }
 
@@ -34,6 +38,7 @@ function mapStateToProps(store) {
   return {
     elements: selectEditorElements(store),
     mode: selectEditorMode(store),
+    mimic: selectMimic(store),
     // isMimicTouch: selectIsMimicTouch(store),
   };
 }
@@ -45,13 +50,13 @@ function mapDispatchToProps() {
 }
 
 const Mimic = (props: Props): JSX.Element => {
-  const { elements, mode } = props;
+  const { mimic, elements, mode } = props;
 
   const [DrawFabric] = useDrawElement();
 
   function handleResize() {
     const htmlRect = document
-      .getElementById("mimic.frame")
+      .getElementById(mimic.type)
       ?.getBoundingClientRect();
 
     if (htmlRect) {

@@ -52,16 +52,10 @@ const defaultState: MimicElementProps = {
   attributes: {
     general: {
       id: 0, // ALWAYS ZERO
-      name: "mimic.frame",
+      name: "Демо-мнемосхема",
       tagName: undefined,
     },
     position: {
-      points: [
-        {
-          x: 0,
-          y: 0,
-        },
-      ],
       width: 1900,
       height: 1080,
     },
