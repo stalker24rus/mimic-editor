@@ -41,7 +41,7 @@ interface Props {
   drawId: DrawType;
   lastTakenId: number;
   viewPosition: PointFromat;
-  currentMimic: MimicElementProps;
+  // currentMimic: MimicElementProps;
   selected: number[];
   selectionDisabled: boolean;
   selectorRect: [PointFromat, PointFromat]; // FIXME
@@ -64,36 +64,6 @@ const defaultState = (): Props => {
     ],
     copyPasteBuffer: [],
     // isMimicTouch: true,
-    currentMimic: {
-      type: ELEMENT_TYPE_FRAME,
-      layer: 0,
-      //service: undefined,
-      attributes: {
-        general: {
-          id: 0,
-          name: "mimic.frame",
-          tagName: undefined,
-        },
-        position: {
-          points: [
-            {
-              x: 0,
-              y: 0,
-            },
-          ],
-          width: 1900,
-          height: 1080,
-        },
-        appearance: {
-          fill: "#CECECE",
-        },
-        properties: {
-          title: "Mimic",
-          lastTakenID: 1,
-        },
-      },
-      children: [],
-    },
   };
 };
 
@@ -169,14 +139,14 @@ export default (state = defaultState(), action: any): Props => {
       }
     }
 
-    case SET_CURRENT_MIMIC: {
-      const { mimic } = action.payload;
-      if (mimic) {
-        return { ...state, currentMimic: mimic };
-      } else {
-        throw "Invalid playload format.";
-      }
-    }
+    // case SET_CURRENT_MIMIC: {
+    //   const { mimic } = action.payload;
+    //   if (mimic) {
+    //     return { ...state, currentMimic: mimic };
+    //   } else {
+    //     throw "Invalid playload format.";
+    //   }
+    // }
 
     case SET_VIEW_POSITION: {
       const { point } = action.payload;

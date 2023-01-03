@@ -7,13 +7,13 @@ import {
   DELETE_SELECTED_ELEMENTS,
   DELETE_LAST_POINT_OF_ELEMENT,
   MOVE_ELEMENT,
-  MOVE_ELEMENT_BACK_LAYER,
-  MOVE_ELEMENT_TOP_LAYER,
+  // MOVE_ELEMENT_BACK_LAYER,
+  // MOVE_ELEMENT_TOP_LAYER,
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
   HISTORY_POINT_FOR_CHANGES,
   UPDATE_ELEMENT,
-  UPDATE_LAST_POINT_OF_ELEMENT,
+  // UPDATE_LAST_POINT_OF_ELEMENT,
   CHANGE_POINT_POSITION,
   MOVE_ELEMENT_POINTS,
   MOVE_ELEMENT_GROUP,
@@ -30,6 +30,7 @@ import {
   ELEMENTS_BOTTOM_ALIGN,
 } from "../../constants/actionTypes/editorElements";
 import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
+import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
 import { MimicElementProps } from "../../models/Editor";
 import { getNewId } from "../actionCreators/editorElements";
 import { demo1JSON } from "../demo/templateJson";
@@ -41,10 +42,38 @@ import {
   alignTop,
   alignVertical,
 } from "./functions/alighElements";
+import changeAttribute from "./functions/changeAttributes";
 import changeIndexArr from "./functions/changeIndexArray";
 import resizeBox from "./functions/resizeBox";
 
-const defaultState: MimicElementProps[] = JSON.parse(demo1JSON);
+const defaultState: MimicElementProps = {
+  type: ELEMENT_TYPE_FRAME,
+  layer: 0,
+  attributes: {
+    general: {
+      id: 0, // ALWAYS ZERO
+      name: "mimic.frame",
+      tagName: undefined,
+    },
+    position: {
+      points: [
+        {
+          x: 0,
+          y: 0,
+        },
+      ],
+      width: 1900,
+      height: 1080,
+    },
+    appearance: {
+      fill: "#CECECE",
+    },
+    properties: {
+      title: "Mimic",
+    },
+  },
+  children: JSON.parse(demo1JSON),
+};
 
 const selectElement = (state: any, id: number) =>
   state.editorElements.find(
@@ -53,7 +82,7 @@ const selectElement = (state: any, id: number) =>
 const selectElementPointsLength = (element: MimicElementProps) =>
   element.attributes.position.points.length;
 
-export default (state = defaultState, action: any): MimicElementProps[] => {
+export default (state = defaultState, action: any): MimicElementProps => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { id, newElement, point } = action.payload;
@@ -74,11 +103,11 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         children: [],
       };
 
-      return [...state, element];
+      return { ...state, children: [...state.children, element] };
     }
 
     case UPDATE_ELEMENT: {
-      const elements = lodash.cloneDeep(state); //FIXME
+      const elements = lodash.cloneDeep(state.children); //FIXME
       const { id, attributes } = action.payload;
 
       const index = elements?.findIndex(
@@ -90,14 +119,14 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         const mergedElement = { ...merge({}, element, { attributes }) };
         const newElements = lodash.cloneDeep(elements); //FIXME
         newElements[index] = { ...mergedElement };
-        return newElements;
+        return { ...state, children: [...newElements] };
       } else {
         return state;
       }
     }
 
     case DELETE_SELECTED_ELEMENTS: {
-      const elements = [...state];
+      const elements = lodash.cloneDeep(state.children);
       const { selected } = action.payload;
 
       if (selected.length > 0) {
@@ -105,14 +134,14 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         lodash.remove(newElements, (element: MimicElementProps) =>
           selected.includes(element.attributes.general.id)
         );
-        return newElements;
+        return { ...state, children: [...newElements] };
       } else {
         return state;
       }
     }
 
     case APPEND_POINT_TO_ELEMENT: {
-      const elements = lodash.cloneDeep(state); //FIXME
+      const elements = lodash.cloneDeep(state.children);
       const { id, point } = action.payload;
 
       const index = elements.findIndex(
@@ -123,15 +152,15 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         const element = { ...elements[index] };
         const points = [...element.attributes.position.points, point];
         element.attributes.position.points = [...points];
-        const newElements = lodash.cloneDeep(elements); //FIXME
+        const newElements = lodash.cloneDeep(elements);
         newElements[index] = { ...element };
-        return newElements;
+        return { ...state, children: [...newElements] };
       }
       return state;
     }
 
     case DELETE_LAST_POINT_OF_ELEMENT: {
-      const elements = lodash.cloneDeep(state); //FIXME
+      const elements = lodash.cloneDeep(state.children);
       const { id } = action.payload;
 
       const index = elements.findIndex(
@@ -143,9 +172,9 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         const points = [...element.attributes.position.points];
         points.pop();
         element.attributes.position.points = [...points];
-        const newElements = lodash.cloneDeep(elements); // FIXME
+        const newElements = lodash.cloneDeep(elements);
         newElements[index] = { ...element };
-        return newElements;
+        return { ...state, children: [...newElements] };
       } else {
         return state;
       }
@@ -153,16 +182,16 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case CHANGE_POINT_POSITION: {
       const { id, pointNo, point } = action.payload;
-      const index = state.findIndex(
+      const index = state.children.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
-        const element = { ...state[index] };
+        const element = { ...state.children[index] };
         element.attributes.position.points[pointNo] = { ...point };
-        const elements = lodash.cloneDeep(state);
+        const elements = lodash.cloneDeep(state.children);
         elements[index] = { ...element };
-        return elements;
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
@@ -170,12 +199,12 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case MOVE_ELEMENT_POINTS: {
       const { id, movement } = action.payload;
-      const index = state.findIndex(
+      const index = state.children.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
-        const element = { ...state[index] };
+        const element = { ...state.children[index] };
 
         const newPoints = element.attributes.position.points.map(function (
           element
@@ -187,10 +216,10 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         });
 
         element.attributes.position.points = [...newPoints];
-        const elements = lodash.cloneDeep(state);
+        const elements = lodash.cloneDeep(state.children);
 
         elements[index] = { ...element };
-        return elements;
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
@@ -198,16 +227,16 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case MOVE_ELEMENT_GROUP: {
       const { selected, movement } = action.payload;
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state.children);
 
       for (let i = 0; i < selected.length; i++) {
-        const index = state.findIndex(
+        const index = state.children.findIndex(
           (element: MimicElementProps) =>
             element.attributes.general.id === selected[i]
         );
 
         if (index > -1) {
-          const element = { ...state[index] };
+          const element = { ...state.children[index] };
 
           const newPoints = element.attributes.position.points.map(function (
             element
@@ -217,17 +246,13 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
               y: element.y + movement.y,
             };
           });
-
-          console.log(newPoints);
-
           element.attributes.position.points = [...newPoints];
-
           elements[index] = { ...element };
         }
       }
 
       if (selected.length > 0) {
-        return elements;
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
@@ -236,12 +261,12 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
     case REDRAW_LAST_POINT: {
       const { id, point } = action?.payload;
 
-      const index = state.findIndex(
+      const index = state.children.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
-        const element = { ...state[index] };
+        const element = { ...state.children[index] };
         const pointsLength = selectElementPointsLength(element);
 
         if (pointsLength > 0) {
@@ -250,9 +275,9 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
           element.attributes.position.points.push({ ...point });
         }
 
-        const newElements = lodash.cloneDeep(state);
+        const newElements = lodash.cloneDeep(state.children);
         newElements[index] = { ...element };
-        return newElements;
+        return { ...state, children: [...newElements] };
       } else {
         return state;
       }
@@ -260,7 +285,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case CHANGE_ELEMENT_ANGLE: {
       const { id, point } = action?.payload;
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state.children);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
@@ -282,7 +307,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
           (180 / Math.PI);
 
         elements[index].attributes.position.angle = angle;
-        return [...elements];
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
@@ -290,14 +315,14 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case MOVE_ELEMENT: {
       const { id, point } = action?.payload;
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state.children);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
 
       if (index > -1) {
         elements[index].attributes.position.points[0] = { ...point };
-        return [...elements];
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
@@ -305,7 +330,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case RESIZE_ELEMENT: {
       const { id, pointName: targetName, point } = action?.payload;
-      const elements = lodash.cloneDeep(state);
+      const elements = lodash.cloneDeep(state.children);
       const index = elements.findIndex(
         (element: MimicElementProps) => element.attributes.general.id === id
       );
@@ -329,15 +354,15 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
           ...elements[index].attributes.position,
           ...newPosition,
         };
-        return [...elements];
+        return { ...state, children: [...elements] };
       } else {
         return state;
       }
     }
 
     case HISTORY_POINT_FOR_CHANGES: {
-      const elements = lodash.cloneDeep(state);
-      return [...elements];
+      const newState = lodash.cloneDeep(state);
+      return { ...newState };
     }
 
     case MOVE_ELEMENTS_ON_TOP_LEVEL: {
@@ -347,8 +372,8 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
       const selectedArr = [...selected];
 
       if (selectedArr.length > 0) {
-        for (let i = 0; i < state.length; i++) {
-          const element = state[i];
+        for (let i = 0; i < state.children.length; i++) {
+          const element = state.children[i];
 
           let included = false;
 
@@ -366,8 +391,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
             newState.push(element);
           }
         }
-
-        return [...newState, ...movementArr];
+        return { ...state, children: [...newState, ...movementArr] };
       } else {
         return state;
       }
@@ -380,8 +404,8 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
       const selectedArr = [...selected];
 
       if (selectedArr.length > 0) {
-        for (let i = 0; i < state.length; i++) {
-          const element = state[i];
+        for (let i = 0; i < state.children.length; i++) {
+          const element = state.children[i];
 
           let included = false;
 
@@ -399,7 +423,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
             newState.push(element);
           }
         }
-        return [...movementArr, ...newState];
+        return { ...state, children: [...movementArr, ...newState] };
       } else {
         return state;
       }
@@ -407,12 +431,12 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case MOVE_ELEMENTS_ON_FORWARD_LEVEL: {
       const { selected } = action.payload;
-      const newState = [...state];
+      const newState = [...state.children];
       const selectedArr = [...selected];
 
       if (selectedArr.length === 1) {
-        for (let i = 0; i < state.length; i++) {
-          const element = state[i];
+        for (let i = 0; i < state.children.length; i++) {
+          const element = state.children[i];
 
           let included = false;
 
@@ -424,12 +448,11 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
             }
           }
 
-          if (included && i < state.length - 1) {
+          if (included && i < state.children.length - 1) {
             changeIndexArr(newState, i, i + 1);
           }
         }
-
-        return [...newState];
+        return { ...state, children: [...newState] };
       } else {
         return state;
       }
@@ -437,12 +460,12 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case MOVE_ELEMENTS_ON_BACK_LEVEL: {
       const { selected } = action.payload;
-      const newState = [...state];
+      const newState = [...state.children];
       const selectedArr = [...selected];
 
       if (selected.length === 1) {
-        for (let i = 0; i < state.length; i++) {
-          const element = state[i];
+        for (let i = 0; i < state.children.length; i++) {
+          const element = state.children[i];
 
           let included = false;
 
@@ -458,7 +481,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
             changeIndexArr(newState, i, i - 1);
           }
         }
-        return [...newState];
+        return { ...state, children: [...newState] };
       } else {
         return state;
       }
@@ -466,18 +489,9 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case CHANGE_ATTRIBUTES: {
       const { id, propFamily, name, value } = action.payload;
-
-      const elements = lodash.cloneDeep(state);
-      const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === id
-      );
-
-      if (index > -1) {
-        elements[index].attributes[propFamily][name] = value;
-        return [...elements];
-      } else {
-        return state;
-      }
+      const main = lodash.cloneDeep(state);
+      changeAttribute(id, main, { propFamily, name, value });
+      return { ...main };
     }
 
     // case UPDATE_LAST_POINT_OF_ELEMENT: {
@@ -494,43 +508,43 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
 
     case ELEMENTS_LEFT_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignLeft(selected, state);
-      return [...elements];
+      const elements = alignLeft(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case ELEMENTS_HORIZON_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignHorizon(selected, state);
-      return [...elements];
+      const elements = alignHorizon(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case ELEMENTS_RIGHT_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignRight(selected, state);
-      return [...elements];
+      const elements = alignRight(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case ELEMENTS_TOP_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignTop(selected, state);
-      return [...elements];
+      const elements = alignTop(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case ELEMENTS_VERTICAL_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignVertical(selected, state);
-      return [...elements];
+      const elements = alignVertical(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case ELEMENTS_BOTTOM_ALIGN: {
       const { selected } = action.payload;
-      const elements = alignBottom(selected, state);
-      return [...elements];
+      const elements = alignBottom(selected, state.children);
+      return { ...state, children: [...elements] };
     }
 
     case PASTE_ELEMENTS: {
       const { elements } = action.payload;
-      let lastId: number = getNewId(state);
+      let lastId: number = getNewId(state.children);
       let newElements: MimicElementProps[] = [];
 
       for (let i = 0; i < elements.length; i++) {
@@ -539,7 +553,7 @@ export default (state = defaultState, action: any): MimicElementProps[] => {
         newElements.push(lodash.cloneDeep(element));
         lastId++;
       }
-      return [...state, ...newElements];
+      return { ...state, children: [...state.children, ...newElements] };
     }
 
     default: {

@@ -11,6 +11,10 @@ import {
   setElementsTopAlign,
   setElementsVerticalAlign,
 } from "../../../../store/actionCreators/editorElements";
+import {
+  selectEditorElementsFuture,
+  selectEditorElementsPast,
+} from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import BackLevel from "./icons/BackLevel";
 import BottomAlign from "./icons/BottomAlign";
@@ -50,8 +54,8 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    future: store.undoredobleEditorElements.future,
-    past: store.undoredobleEditorElements.past,
+    future: selectEditorElementsFuture(store),
+    past: selectEditorElementsPast(store),
     selected: selectSelectedElements(store),
   };
 }

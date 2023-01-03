@@ -2,13 +2,17 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { IChangesData, MimicElementProps } from "../../../../models/Editor";
 import { changeAttributes } from "../../../../store/actionCreators/editorElements";
-import { selectEditorElements } from "../../../../store/selectors/editorElements";
+import {
+  selectEditorElements,
+  selectMimic,
+  // selectMimicAttributes,
+} from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import PropsPanel from "./components/PropsPanel";
 
 interface IStateProps {
   selected: number[];
-  elements: MimicElementProps[];
+  mimic: MimicElementProps;
 }
 
 interface IDispatchProps {
@@ -22,7 +26,7 @@ type IProps = IStateProps & IDispatchProps & IOwnProps;
 function mapStateToProps(store) {
   return {
     selected: selectSelectedElements(store),
-    elements: selectEditorElements(store),
+    mimic: selectMimic(store),
   };
 }
 
@@ -33,30 +37,40 @@ function mapDispatchToProps() {
 }
 
 function Properties(props: IProps): JSX.Element {
-  const { selected, elements } = props;
+  const { selected, mimic } = props;
 
   const [element, setElement] = useState<MimicElementProps | undefined>(
     undefined
   );
 
   useEffect(() => {
-    if (selected.length === 1) {
-      setElement(
-        elements.find((element) =>
-          selected.includes(element.attributes.general.id)
-        )
-      );
-    } else {
-      setElement(undefined);
+    switch (selected.length) {
+      case 0: {
+        setElement(mimic);
+        break;
+      }
+
+      case 1: {
+        setElement(
+          mimic.children.find((element) =>
+            selected.includes(element.attributes.general.id)
+          )
+        );
+        break;
+      }
+
+      default:
+        setElement(undefined);
+        break;
     }
-  }, [selected, elements]);
+  }, [selected, mimic.children, mimic]);
 
   const handleChange = (changes: IChangesData) => {
     props.onChanges(changes);
   };
 
   const ElementProps = element?.type ? PropsPanel : () => <></>;
-
+  // console.log(mimicAttributes);
   return (
     <div
       style={{
@@ -65,7 +79,12 @@ function Properties(props: IProps): JSX.Element {
         overflowY: "scroll",
       }}
     >
-      {selected.length === 0 && <div>Выберете объект</div>}
+      {selected.length === 0 && (
+        <ElementProps
+          attributes={element?.attributes}
+          onChange={handleChange}
+        />
+      )}
       {selected.length > 1 && (
         <div>Редактирование свойств доступно только для одного объекта</div>
       )}

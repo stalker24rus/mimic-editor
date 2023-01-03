@@ -85,7 +85,7 @@ const Mimic = (props: Props): JSX.Element => {
         touchAction: "none", //isMimicTouch ? "auto" : "none",
       }}
       onScroll={handleScroll}
-      onPointerDown={() => console.log("MAIN POINTER DOWN")}
+      // onPointerDown={() => console.log("MAIN POINTER DOWN")}
     >
       <KeyListener>
         <PointListener>
@@ -111,3 +111,17 @@ export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
 )(Mimic);
+
+/**
+ import React from "react";
+
+const RecursiveComponent = ({children}) => {
+  return (
+    <div>
+      {children.length > 0 && <RecursiveComponent children={children} />}
+    </div>
+  );
+};
+
+export default RecursiveComponent;
+ */

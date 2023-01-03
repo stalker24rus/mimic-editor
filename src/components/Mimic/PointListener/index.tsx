@@ -12,6 +12,7 @@ import {
   endDrawingElement,
 } from "../../../store/actionCreators/editorElements";
 import { setViewPosition } from "../../../store/actionCreators/editorState";
+import { selectMimicAttributes } from "../../../store/selectors/editorElements";
 
 interface StateProps {
   attributes: Attributes;
@@ -35,7 +36,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    attributes: store.editorState.currentMimic.attributes,
+    attributes: selectMimicAttributes(store), //store.editorState.currentMimic.attributes,
     mode: store.editorState.mode,
     drawId: store.editorState.drawId,
   };
