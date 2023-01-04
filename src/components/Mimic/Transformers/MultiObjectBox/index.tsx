@@ -138,6 +138,7 @@ function MultiObjectBox(props: Props): JSX.Element {
         height: height + strokeWidth * 2,
         position: "absolute",
         border: isSelected ? "1px solid white" : "none",
+        pointerEvents: "none",
         //background: "green",
       }}
     >
