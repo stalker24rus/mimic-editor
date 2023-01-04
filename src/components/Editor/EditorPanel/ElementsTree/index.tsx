@@ -1,14 +1,18 @@
 import { connect } from "react-redux";
 import { MimicElementProps } from "../../../../models/Editor";
 import { selectElement } from "../../../../store/actionCreators/editorState";
-import { selectEditorElements } from "../../../../store/selectors/editorElements";
+import {
+  selectEditorElements,
+  selectMimic,
+} from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 
 import "./index.css";
 
 interface StateProps {
   selected: number[];
-  elements: MimicElementProps[];
+  // elements: MimicElementProps[];
+  mimic: MimicElementProps;
 }
 
 interface DispatchProps {
@@ -21,8 +25,9 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    elements: selectEditorElements(store),
+    // elements: selectEditorElements(store),
     selected: selectSelectedElements(store),
+    mimic: selectMimic(store),
   };
 }
 
@@ -33,7 +38,7 @@ function mapDispatchToProps() {
 }
 
 function ElementsTree({
-  elements,
+  mimic,
   selected,
   onSelectElement,
 }: Props): JSX.Element {
@@ -50,26 +55,42 @@ function ElementsTree({
 
   return (
     <div className="noselect">
-      {elements.map((elemen_, index) => {
-        const element: MimicElementProps = elemen_;
-        return (
-          <div
-            key={"tree" + index}
-            className={`text-black ${
-              selected.includes(element.attributes.general.id)
-                ? "bg-gray-200"
-                : ""
-            } hover:bg-gray-200 m-1 rounded`}
-            style={{
-              cursor: "pointer",
-              userSelect: "none",
-            }}
-            onClick={(ev) => handleSelect(ev, element.attributes.general.id)}
-          >
-            {element.type} - {element.attributes.general.name}
+      <RecursiveTree
+        element={mimic}
+        selected={selected}
+        onSelectElement={handleSelect}
+      />
+    </div>
+  );
+}
+
+function RecursiveTree({ element, selected, onSelectElement }): JSX.Element {
+  return (
+    <div>
+      <div
+        className={`text-black ${
+          selected.includes(element.attributes.general.id) ? "bg-gray-200" : ""
+        } hover:bg-gray-200 m-1 rounded`}
+        style={{
+          cursor: "pointer",
+          userSelect: "none",
+        }}
+        onClick={(ev) => onSelectElement(ev, element.attributes.general.id)}
+      >
+        {element.type} - {element.attributes.general.name}
+      </div>
+      {element.children.length > 0 &&
+        element.children.map((child: MimicElementProps) => (
+          <div className="flex inline">
+            <div className="w-8 text-right">{""}</div>
+            <RecursiveTree
+              key={child.attributes.general.id}
+              element={child}
+              selected={selected}
+              onSelectElement={onSelectElement}
+            />
           </div>
-        );
-      })}
+        ))}
     </div>
   );
 }

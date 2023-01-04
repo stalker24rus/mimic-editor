@@ -51,6 +51,7 @@ function Properties(props: IProps): JSX.Element {
       }
 
       case 1: {
+        //TODO recursive function need to create
         setElement(
           mimic.children.find((element) =>
             selected.includes(element.attributes.general.id)
