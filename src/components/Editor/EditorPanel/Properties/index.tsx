@@ -44,6 +44,20 @@ function Properties(props: IProps): JSX.Element {
   );
 
   useEffect(() => {
+    function returnElement(id: number, object: MimicElementProps) {
+      if (object.attributes.general.id === id) {
+        return object;
+      } else {
+        for (let i = 0; i < object.children.length; i++) {
+          const objectChild = object.children[i];
+          const result = returnElement(id, objectChild);
+          if (result) {
+            return result;
+          }
+        }
+      }
+    }
+
     switch (selected.length) {
       case 0: {
         setElement(mimic);
@@ -51,12 +65,7 @@ function Properties(props: IProps): JSX.Element {
       }
 
       case 1: {
-        //TODO recursive function need to create
-        setElement(
-          mimic.children.find((element) =>
-            selected.includes(element.attributes.general.id)
-          )
-        );
+        setElement(returnElement(selected[0], mimic));
         break;
       }
 
