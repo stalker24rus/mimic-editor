@@ -4,7 +4,8 @@ import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
   changeElementAngle,
   endDoingChanges,
-  moveElement,
+  // moveElement,
+  moveElementPoints,
   resizeElement,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
@@ -40,7 +41,7 @@ function mapStateToProps(store) {
 function mapDispatchToProps() {
   return {
     onChangeAngle: changeElementAngle,
-    onMove: moveElement,
+    onMove: moveElementPoints, // moveElement,
     onResize: resizeElement,
     onStartChanges: startDoingChanges,
     onEndChanges: endDoingChanges,
@@ -67,11 +68,11 @@ function RectangleBox(props: Props): JSX.Element {
   };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const point: PointFromat = {
-      y: topLeftPoint.y + ev.movementY,
-      x: topLeftPoint.x + ev.movementX,
+    const movement: PointFromat = {
+      y: ev.movementY,
+      x: ev.movementX,
     };
-    props.onMove(id, point);
+    props.onMove(id, movement);
   };
 
   const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {

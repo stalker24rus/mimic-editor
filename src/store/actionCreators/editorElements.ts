@@ -3,7 +3,7 @@ import {
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
   DELETE_LAST_POINT_OF_ELEMENT,
-  MOVE_ELEMENT,
+  // MOVE_ELEMENT,
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
   HISTORY_POINT_FOR_CHANGES,
@@ -25,9 +25,9 @@ import {
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
-  DISABLE_TOUCH,
+  // DISABLE_TOUCH,
   ENABLE_SELECTION,
-  ENABLE_TOUCH,
+  // ENABLE_TOUCH,
   PASTE_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
@@ -45,9 +45,10 @@ import {
   selectSelectedElements,
   selectViewPosition,
 } from "../selectors/editorState";
-import { selectEditorElements } from "../selectors/editorElements";
+import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
 import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
+import getLastGID from "../reducers/functions/editorElements/getLastGID";
 
 // TODO ??? detach to other file
 export function correctPoint(
@@ -60,19 +61,6 @@ export function correctPoint(
   };
 }
 
-// TODO ??? detach to other file
-export function getNewId(elements: MimicElementProps[]): number {
-  let newID: number = 0;
-  for (let i = 0; i < elements.length; i++) {
-    const element = elements[i];
-
-    if (element.attributes.general.id > newID) {
-      newID = element.attributes.general.id;
-    }
-  }
-  return newID + 1;
-}
-
 export const changeElementAngle =
   (id: number, point: PointFromat) => (dispatch: Function) => {
     dispatch({
@@ -82,15 +70,15 @@ export const changeElementAngle =
     });
   };
 
-export const moveElement =
-  (id: number, point: PointFromat) =>
-  (dispatch: Function, getState: Function) => {
-    dispatch({
-      type: MOVE_ELEMENT,
-      payload: { id, point },
-      passHistrory: true,
-    });
-  };
+// export const moveElement =
+//   (id: number, point: PointFromat) =>
+//   (dispatch: Function, getState: Function) => {
+//     dispatch({
+//       type: MOVE_ELEMENT,
+//       payload: { id, point },
+//       passHistrory: true,
+//     });
+//   };
 
 export const resizeElement =
   (id: number, pointName: string, point: PointFromat) =>
@@ -209,7 +197,8 @@ export const endDoingChanges = () => (dispatch: Function) => {
 export const createElement =
   (point: PointFromat) => (dispatch: Function, getState: Function) => {
     // ADD FUNCTION FOR GET A new ID
-    const newLastTakenId = getNewId(selectEditorElements(getState())); //selectLastTakenId(getState()) + 1;
+    const root: MimicElementProps = selectMimic(getState());
+    const newLastTakenId = getLastGID(root.attributes.general.id, root) + 1;
 
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);

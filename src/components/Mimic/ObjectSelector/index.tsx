@@ -97,9 +97,9 @@ function ObjectSelector(props: Props) {
 
   const handleClick = (ev: any) => {
     const { clientX, clientY } = ev;
+    const elements = document.elementsFromPoint(clientX, clientY);
 
     if (ev.shiftKey) {
-      const elements = document.elementsFromPoint(clientX, clientY);
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
@@ -108,8 +108,6 @@ function ObjectSelector(props: Props) {
         }
       }
     } else {
-      const elements = document.elementsFromPoint(clientX, clientY);
-
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
