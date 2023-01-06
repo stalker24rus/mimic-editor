@@ -16,7 +16,7 @@ function TabsPanel({ elements, width, height }: Props) {
   const [activeTab, setActiveTab] = useState(0);
   const [heightCur, setHeightCur] = useState(null);
   const view = useRef<HTMLDivElement>(null);
-  const footerHeight = 40;
+  const footerHeight = 45;
 
   useEffect(() => {
     const resizeObserver = new ResizeObserver(() => {
@@ -35,7 +35,7 @@ function TabsPanel({ elements, width, height }: Props) {
         style={{
           width: "100%",
           height: `${heightCur - footerHeight}px`,
-          overflow: "scroll",
+          // overflow: "scroll",
         }}
       >
         {elements.length > 0 && <>{elements[activeTab].element}</>}

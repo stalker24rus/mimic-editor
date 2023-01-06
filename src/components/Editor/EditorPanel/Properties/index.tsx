@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { IChangesData, MimicElementProps } from "../../../../models/Editor";
 import { changeAttributes } from "../../../../store/actionCreators/editorElements";
 import {
-  selectEditorElements,
   selectMimic,
   // selectMimicAttributes,
 } from "../../../../store/selectors/editorElements";
@@ -81,6 +80,7 @@ function Properties(props: IProps): JSX.Element {
 
   const ElementProps = element?.type ? PropsPanel : () => <></>;
   // console.log(mimicAttributes);
+
   return (
     <div
       style={{

@@ -20,9 +20,13 @@ function PropsPanel({ attributes, onChange }) {
   return (
     <div
       className="noselect"
-      style={{
-        overflow: "scroll",
-      }}
+      style={
+        {
+          // width: "100%",
+          // height: "100%",
+          // overflow: "scroll",
+        }
+      }
     >
       {general && (
         <General

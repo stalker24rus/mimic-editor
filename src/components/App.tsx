@@ -1,4 +1,5 @@
 import Editor from "./Pages/Editor";
+import "./App.css";
 
 function App() {
   return (
