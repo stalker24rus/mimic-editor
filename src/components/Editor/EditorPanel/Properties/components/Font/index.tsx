@@ -25,7 +25,7 @@ const FONT_HORIZON_ALIGHN = [
   "match-parent",
 ];
 
-function Font({ data, onChange }) {
+function Font({ freezed, data, onChange }) {
   const { fontFamily, fontSize, fontStyle, fontWeight, horizonAlign } = data;
 
   const handleChange = (ev) => {
@@ -48,6 +48,7 @@ function Font({ data, onChange }) {
                 value={fontFamily}
                 name="fontFamily"
                 onChange={handleChange}
+                disabled={freezed || false}
               >
                 {FONT_FAMILY.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -67,6 +68,7 @@ function Font({ data, onChange }) {
                   type: "number",
                   min: 1,
                   max: 1000,
+                  disabled: freezed,
                 }}
                 onChange={handleChange}
               />
@@ -80,6 +82,7 @@ function Font({ data, onChange }) {
                 name="fontStyle"
                 value={fontStyle}
                 onChange={handleChange}
+                disabled={freezed || false}
               >
                 {FONT_STYLE.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -95,6 +98,7 @@ function Font({ data, onChange }) {
                 name="fontWeight"
                 value={fontWeight}
                 onChange={handleChange}
+                disabled={freezed || false}
               >
                 {FONT_WEIGHT.map((font, i) => (
                   <option key={i}>{font}</option>
@@ -110,6 +114,7 @@ function Font({ data, onChange }) {
                 name="horizonAlign"
                 onChange={handleChange}
                 value={horizonAlign}
+                disabled={freezed || false}
               >
                 {FONT_HORIZON_ALIGHN.map((font, i) => (
                   <option key={i}>{font}</option>

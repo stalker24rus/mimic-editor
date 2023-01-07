@@ -6,6 +6,7 @@ import InputField from "../InputField";
 import PropsView from "../PropsView";
 
 interface Props {
+  freezed: boolean;
   data: AppearenceType;
   onChange: Function;
 }
@@ -45,7 +46,7 @@ function CollorSample({ fill }) {
   );
 }
 
-function Appearance({ data, onChange }: Props): JSX.Element {
+function Appearance({ freezed, data, onChange }: Props): JSX.Element {
   const { fill, stroke, opacity, strokeWidth, textColor, visability } = data;
 
   const [colorPanel, setColorPanel] = useState<boolean>(false);
@@ -138,7 +139,11 @@ function Appearance({ data, onChange }: Props): JSX.Element {
               <td>
                 <div style={{ display: "inline-flex" }}>
                   <CollorSample fill={fill} />
-                  <button name="fill" onClick={handleOpenColorPanel}>
+                  <button
+                    name="fill"
+                    onClick={handleOpenColorPanel}
+                    disabled={freezed || false}
+                  >
                     {fill}
                   </button>
                 </div>
@@ -152,7 +157,11 @@ function Appearance({ data, onChange }: Props): JSX.Element {
               <td>
                 <div style={{ display: "inline-flex" }}>
                   <CollorSample fill={stroke} />
-                  <button name="stroke" onClick={handleOpenColorPanel}>
+                  <button
+                    name="stroke"
+                    onClick={handleOpenColorPanel}
+                    disabled={freezed || false}
+                  >
                     {stroke}
                   </button>
                 </div>
@@ -166,7 +175,11 @@ function Appearance({ data, onChange }: Props): JSX.Element {
               <td>
                 <div style={{ display: "inline-flex" }}>
                   <CollorSample fill={textColor} />
-                  <button name="textColor" onClick={handleOpenColorPanel}>
+                  <button
+                    name="textColor"
+                    onClick={handleOpenColorPanel}
+                    disabled={freezed || false}
+                  >
                     {stroke}
                   </button>
                 </div>
@@ -186,6 +199,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
                     min: 1,
                     max: 100,
                     step: 1,
+                    disabled: freezed,
                   }}
                   onChange={handleChange}
                 />
@@ -206,6 +220,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
                     min: 0,
                     max: 1,
                     step: 0.01,
+                    disabled: freezed,
                   }}
                   onChange={handleChange}
                 />

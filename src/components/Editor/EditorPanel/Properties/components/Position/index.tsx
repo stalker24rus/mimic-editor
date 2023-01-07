@@ -3,7 +3,7 @@ import { isNumeric } from "../../../../../../constants/functions/isNumeric";
 import InputField from "../InputField";
 import PropsView from "../PropsView";
 
-function Position({ data, onChange }) {
+function Position({ freezed, data, onChange }) {
   const { angle, height, width, points } = data;
 
   const handleChange = (ev) => {
@@ -39,6 +39,7 @@ function Position({ data, onChange }) {
                     type: "number",
                     min: -360,
                     max: 360,
+                    disabled: freezed,
                   }}
                   onChange={handleChange}
                 />
@@ -58,6 +59,7 @@ function Position({ data, onChange }) {
                     type: "number",
                     min: 0,
                     max: 999999,
+                    disabled: freezed,
                   }}
                   onChange={handleChange}
                 />
@@ -77,6 +79,7 @@ function Position({ data, onChange }) {
                     type: "number",
                     min: 0,
                     max: 999999,
+                    disabled: freezed,
                   }}
                   onChange={handleChange}
                 />
@@ -107,6 +110,7 @@ function Position({ data, onChange }) {
                             type: "number",
                             min: 0,
                             max: 999999,
+                            disabled: freezed,
                           }}
                           onChange={handleChangePoints}
                         />
@@ -121,6 +125,7 @@ function Position({ data, onChange }) {
                             type: "number",
                             min: 0,
                             max: 999999,
+                            disabled: freezed,
                           }}
                           onChange={handleChangePoints}
                         />

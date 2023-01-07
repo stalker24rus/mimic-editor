@@ -7,29 +7,34 @@ import Position from "../Position";
 import "./index.css";
 
 interface ChangeDataProps {
+  freezed: boolean;
   name: string;
   value: number | string;
 }
 
-function PropsPanel({ attributes, onChange }) {
+function PropsPanel({ freezed, attributes, onChange }) {
   const { general, appearance, font, position, properties } = attributes;
 
   const handleChange = (change: ChangeDataProps) => {
     onChange({ id: general.id, ...change });
   };
   return (
-    <div
-      className="noselect"
-      style={
-        {
-          // width: "100%",
-          // height: "100%",
-          // overflow: "scroll",
-        }
-      }
-    >
+    <div className="noselect">
+      {freezed && (
+        <div
+          style={{
+            width: "100%",
+
+            background: "red",
+            color: "white",
+          }}
+        >
+          <span style={{ marginLeft: "15px" }}>Только чтение</span>
+        </div>
+      )}
       {general && (
         <General
+          freezed={freezed}
           data={general}
           onChange={(change) =>
             handleChange({ propFamily: "general", ...change })
@@ -39,6 +44,7 @@ function PropsPanel({ attributes, onChange }) {
 
       {appearance && (
         <Appearance
+          freezed={freezed}
           data={appearance}
           onChange={(change) =>
             handleChange({ propFamily: "appearance", ...change })
@@ -48,6 +54,7 @@ function PropsPanel({ attributes, onChange }) {
 
       {font && (
         <Font
+          freezed={freezed}
           data={font}
           onChange={(change) => handleChange({ propFamily: "font", ...change })}
         />
@@ -55,6 +62,7 @@ function PropsPanel({ attributes, onChange }) {
 
       {position && (
         <Position
+          freezed={freezed}
           data={position}
           onChange={(change) =>
             handleChange({ propFamily: "position", ...change })
@@ -64,6 +72,7 @@ function PropsPanel({ attributes, onChange }) {
 
       {Object.keys(properties).length > 0 && (
         <Custom
+          freezed={freezed}
           data={properties}
           onChange={(change) =>
             handleChange({ propFamily: "properties", ...change })

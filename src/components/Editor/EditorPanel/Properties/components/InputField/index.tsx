@@ -38,7 +38,14 @@ const InputField = ({ value, props, onChange }: Props): JSX.Element => {
     setVal(tempVal);
   }, [value]);
 
-  return <input value={val} {...props} onChange={handleChange} />;
+  return (
+    <input
+      value={val}
+      {...props}
+      onChange={handleChange}
+      disabled={props.disabled || false}
+    />
+  );
 };
 
 export default InputField;

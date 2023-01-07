@@ -30,10 +30,10 @@ type ElementType =
 
 export type MimicElementProps = {
   type: ElementType;
-  layer?: number;
   attributes: Attributes;
-  //service: Service | undefined; // TODO remove
   children?: Array<MimicElementProps>;
+  freezed?: boolean;
+  layer?: number; //TODO remove
 };
 
 export interface InitAttributes {
@@ -50,7 +50,7 @@ export interface Attributes extends InitAttributes {
 }
 
 export type Service = {
-  pointsAmount: number;
+  freezed?: boolean;
 };
 
 export type GeneralElementType = {

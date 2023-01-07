@@ -91,6 +91,7 @@ function Properties(props: IProps): JSX.Element {
     >
       {selected.length === 0 && (
         <ElementProps
+          freezed={element?.freezed || false}
           attributes={element?.attributes}
           onChange={handleChange}
         />
@@ -100,6 +101,7 @@ function Properties(props: IProps): JSX.Element {
       )}
       {selected.length === 1 && (
         <ElementProps
+          freezed={element?.freezed || false}
           attributes={element?.attributes}
           onChange={handleChange}
         />

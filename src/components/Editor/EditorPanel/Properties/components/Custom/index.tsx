@@ -2,7 +2,7 @@ import { isNumeric } from "../../../../../../constants/functions/isNumeric";
 import InputField from "../InputField";
 import PropsView from "../PropsView";
 
-function Custom({ data, onChange }) {
+function Custom({ freezed, data, onChange }) {
   const handleChange = (ev) => {
     onChange({
       name: ev.target.name,
@@ -22,6 +22,7 @@ function Custom({ data, onChange }) {
               <InputField
                 props={{
                   name: keyName,
+                  disabled: freezed,
                 }}
                 value={data[keyName]}
                 onChange={handleChange}

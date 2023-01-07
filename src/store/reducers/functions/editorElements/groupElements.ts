@@ -100,6 +100,7 @@ const groupElements =
         };
       });
       rawGroup[i].attributes.position.points = points;
+      rawGroup[i].freezed = true;
     }
 
     const newGroupElement: MimicElementProps = {
@@ -124,6 +125,7 @@ const groupElements =
         animation: [],
       },
       children: [...rawGroup],
+      freezed: false,
     };
 
     // 3 add grouped element
