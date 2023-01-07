@@ -12,6 +12,7 @@ import {
   pasteElements,
   redo,
   undo,
+  unGroupElements,
 } from "../../../store/actionCreators/editorElements";
 import {
   copyElements,
@@ -41,6 +42,7 @@ interface DispatchProps {
   onEscape: Function;
   onDelete: Function;
   onGroupElements: Function;
+  onUnGroupElements: Function;
 }
 
 interface OwnProps {
@@ -71,6 +73,7 @@ function mapDispatchToProps() {
     onEscape: escapeElements,
     onDelete: deleteSelectedElements,
     onGroupElements: groupElements,
+    onUnGroupElements: unGroupElements,
   };
 }
 
@@ -116,6 +119,7 @@ const EditorHeader = (props: Props): JSX.Element => {
   };
 
   const handleGroupElements = () => props.onGroupElements();
+  const handleUnGroupElements = () => props.onUnGroupElements();
 
   const [menuChange, setMenuChanges] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
@@ -362,17 +366,30 @@ const EditorHeader = (props: Props): JSX.Element => {
                   </button>
                 </li>
               </ul>
-              <ul>
-                <button
-                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
-                  style={{
-                    width: "100%",
-                  }}
-                  onClick={handleGroupElements}
-                  disabled={!(props.selected.length > 1)}
-                >
-                  Группировать
-                </button>
+              <ul className="py-1 text-sm text-gray-700 dark:text-gray-200">
+                <li>
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleGroupElements}
+                    disabled={!(props.selected.length > 1)}
+                  >
+                    Группировать
+                  </button>
+
+                  <button
+                    className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                    style={{
+                      width: "100%",
+                    }}
+                    onClick={handleUnGroupElements}
+                    disabled={!(props.selected.length === 1)}
+                  >
+                    Разгруппировать
+                  </button>
+                </li>
               </ul>
             </div>
           )}
