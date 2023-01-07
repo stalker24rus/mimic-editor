@@ -34,3 +34,6 @@ export const ELEMENTS_RIGHT_ALIGN: string = `${module}/ELEMENTS_RIGHT_ALIGN`;
 export const ELEMENTS_TOP_ALIGN: string = `${module}/ELEMENTS_TOP_ALIGN`;
 export const ELEMENTS_VERTICAL_ALIGN: string = `${module}/ELEMENTS_VERTICAL_ALIGN`;
 export const ELEMENTS_BOTTOM_ALIGN: string = `${module}/ELEMENTS_BOTTOM_ALIGN`;
+
+export const GROUP_ELEMENTS: string = `${module}/GROUP_ELEMENTS`;
+export const UNGROUP_ELEMENTS: string = `${module}/UNGROUP_ELEMENTS`;

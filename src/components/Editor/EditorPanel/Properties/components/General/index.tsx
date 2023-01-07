@@ -27,12 +27,14 @@ function General({ data, onChange }) {
               <input name="name" value={name} onChange={handleChange} />
             </td>
           </tr>
-          <tr>
-            <td>tagName:</td>
-            <td>
-              <input name="tagName" value={tagName} onChange={handleChange} />
-            </td>
-          </tr>
+          {tagName && (
+            <tr>
+              <td>tagName:</td>
+              <td>
+                <input name="tagName" value={tagName} onChange={handleChange} />
+              </td>
+            </tr>
+          )}
         </table>
       </PropsView>
     </>

@@ -11,6 +11,7 @@ export const ELEMENT_TYPE_BUTTON: ElementType = "BUTTON";
 export const ELEMENT_TYPE_LINE: ElementType = "LINE";
 export const ELEMENT_TYPE_POLYGON: ElementType = "POLYGON";
 export const ELEMENT_TYPE_POLYLINE: ElementType = "POLYLINE";
+export const ELEMENT_TYPE_GROUP: ElementType = "GROUP";
 
 export const BOX_TOP_LEFT = "resize-top-left";
 export const BOX_TOP_RIGHT = "resize-top-right";

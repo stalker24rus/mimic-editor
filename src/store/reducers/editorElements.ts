@@ -23,6 +23,8 @@ import {
   ELEMENTS_TOP_ALIGN,
   ELEMENTS_VERTICAL_ALIGN,
   ELEMENTS_BOTTOM_ALIGN,
+  UNGROUP_ELEMENTS,
+  GROUP_ELEMENTS,
 } from "../../constants/actionTypes/editorElements";
 import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
@@ -56,6 +58,8 @@ import moveElementsOnForward from "./functions/editorElements/moveElementsOnForw
 import moveElementsOnBack from "./functions/editorElements/moveElementsOnBack";
 import pasteElements from "./functions/editorElements/pasteElements";
 import getLastGID from "./functions/editorElements/getLastGID";
+import groupElements from "./functions/editorElements/groupElements";
+import unGroupElements from "./functions/editorElements/unGroupElements";
 
 const defaultState: MimicElementProps = {
   type: ELEMENT_TYPE_FRAME,
@@ -270,6 +274,23 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const root = lodash.cloneDeep(state);
       const lastId: number = getLastGID(root.attributes.general.id, root) + 1;
       const func = pasteElements({ elements, id: lastId });
+      mutateElement(parentId || 0, root, func);
+      return { ...root };
+    }
+
+    case GROUP_ELEMENTS: {
+      const { parentId, selected } = action.payload;
+      const root = lodash.cloneDeep(state);
+      const id = getLastGID(root.attributes.general.id, root) + 1;
+      const func = groupElements({ id, selected });
+      mutateElement(parentId || 0, root, func);
+      return { ...root };
+    }
+
+    case UNGROUP_ELEMENTS: {
+      const { parentId, id } = action.payload;
+      const root = lodash.cloneDeep(state);
+      const func = unGroupElements({ id });
       mutateElement(parentId || 0, root, func);
       return { ...root };
     }

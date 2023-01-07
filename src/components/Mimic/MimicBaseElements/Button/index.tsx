@@ -14,7 +14,7 @@ export default function Button(props: Props): JSX.Element {
   const { general, position, appearance, properties, action, font } =
     attributes;
   const { id } = general;
-  const { points, width, height, top, left } = position;
+  const { points, width, height, angle } = position;
   const { fill, visability, stroke, strokeWidth, textColor, opacity } =
     appearance;
   const { fontFamily, fontStyle, fontWeight, fontSize, horizonAlign } = font;
@@ -27,8 +27,12 @@ export default function Button(props: Props): JSX.Element {
       id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
       className={style}
       style={{
+        position: "absolute",
+        top: points[0]?.y | 0,
+        left: points[0]?.x | 0,
         width,
         height,
+        transform: ` rotate(${angle ? angle : 0}deg)`,
         background: fill,
         border: `${strokeWidth}px solid ${stroke}`,
         color: textColor,
@@ -106,7 +110,12 @@ export const Demo = () => {
       },
 
       position: {
-        points: [],
+        points: [
+          {
+            x: 0,
+            y: 0,
+          },
+        ],
         angle: 0,
         width: 90,
         height: 50,
@@ -128,5 +137,17 @@ export const Demo = () => {
     children: [],
   };
 
-  return <Button disablePointerEvents={true} component={demoState} />;
+  return (
+    <div
+      style={{
+        cursor: "pointer",
+        height: "50px",
+        width: "90px",
+        pointerEvents: "none",
+        position: "relative",
+      }}
+    >
+      <Button disablePointerEvents={true} component={demoState} />;
+    </div>
+  );
 };

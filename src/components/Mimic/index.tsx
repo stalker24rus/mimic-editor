@@ -5,6 +5,7 @@ import { EditorModeProps, MimicElementProps } from "../../models/Editor";
 import { setViewPosition } from "../../store/actionCreators/editorState";
 import {
   selectEditorMode,
+  selectSelectedElements,
   // selectIsMimicTouch,
 } from "../../store/selectors/editorState";
 import {
@@ -13,7 +14,9 @@ import {
 } from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
-import useDrawElement from "./Hooks/useDrawElement";
+import useDrawElement, {
+  useDrawElementWithoutBox,
+} from "./Hooks/useDrawElement";
 import KeyListener from "./KeyListener";
 
 import ObjectSelector from "./ObjectSelector";
@@ -23,6 +26,7 @@ interface StateProps {
   elements: MimicElementProps[];
   mode: EditorModeProps;
   mimic: MimicElementProps;
+  selected: number[];
   // isMimicTouch: boolean;
 }
 
@@ -39,6 +43,7 @@ function mapStateToProps(store) {
     elements: selectEditorElements(store),
     mode: selectEditorMode(store),
     mimic: selectMimic(store),
+    selected: selectSelectedElements(store),
     // isMimicTouch: selectIsMimicTouch(store),
   };
 }
@@ -52,7 +57,7 @@ function mapDispatchToProps() {
 const Mimic = (props: Props): JSX.Element => {
   const { mimic, elements, mode } = props;
 
-  const [DrawFabric] = useDrawElement();
+  const [DrawFabric] = useDrawElement(); //useDrawElement();
 
   function handleResize() {
     const htmlRect = document
@@ -96,11 +101,14 @@ const Mimic = (props: Props): JSX.Element => {
         <PointListener>
           <ObjectSelector>
             {elements.length > 0 && (
-              <span>
+              <>
                 {elements?.map((element: MimicElementProps) => {
-                  return DrawFabric(element);
+                  const active =
+                    props.selected.includes(element.attributes?.general?.id) ||
+                    false;
+                  return DrawFabric(active, element);
                 })}
-              </span>
+              </>
             )}
             {/* <EditorContextMenu /> */}
 
@@ -116,17 +124,3 @@ export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
 )(Mimic);
-
-/**
- import React from "react";
-
-const RecursiveComponent = ({children}) => {
-  return (
-    <div>
-      {children.length > 0 && <RecursiveComponent children={children} />}
-    </div>
-  );
-};
-
-export default RecursiveComponent;
- */

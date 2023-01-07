@@ -11,6 +11,7 @@ import {
   MimicElementProps,
   PointFromat,
 } from "../../../../models/Editor";
+import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
@@ -21,19 +22,18 @@ interface Props {
 }
 
 function Line(props: Props): JSX.Element {
-  // INCOMING STATES
-
   const { attributes } = props.component;
   const { general, position, appearance } = attributes;
   const { id } = general;
-  const { points, width, height, top, left } = position;
-  const { fill, visability, stroke, strokeWidth, opacity } = appearance;
+  const { points } = position;
 
+  const [getBox] = useGetBoxByMultiPoints();
+  const [boxTop, boxLeft, boxWidth, boxHeight] = getBox(points);
+
+  const { stroke, strokeWidth, opacity } = appearance;
   const [_point1, _point2]: PointFromat[] = points;
   const point1 = _point1;
   const point2 = _point2 ? _point2 : point1;
-
-  // HANDLERS
 
   const handlePointerMove = (ev: React.PointerEvent<SVGLineElement>) => {
     props.onPointerMove(ev);
@@ -50,25 +50,27 @@ function Line(props: Props): JSX.Element {
   return (
     <span
       style={{
-        top: top - strokeWidth,
-        left: left - strokeWidth,
-        width: width + strokeWidth * 2,
-        height: height + strokeWidth * 2,
+        top: boxTop,
+        left: boxLeft,
+        width: boxWidth,
+        height: boxHeight,
+        position: "absolute",
       }}
     >
       <svg
-        x={strokeWidth}
-        y={strokeWidth}
-        height={height + strokeWidth * 2}
-        width={width + strokeWidth * 2}
+        x={0}
+        y={0}
+        width={boxWidth}
+        height={boxHeight}
+        overflow="visible"
         pointerEvents="none"
       >
         <line
           id={MIMIC + "." + ELEMENT_TYPE_LINE + "." + id}
-          x1={point1.x}
-          y1={point1.y}
-          x2={point2.x}
-          y2={point2.y}
+          x1={point1.x - boxLeft}
+          y1={point1.y - boxTop}
+          x2={point2.x - boxLeft}
+          y2={point2.y - boxTop}
           style={{
             stroke: stroke,
             strokeWidth: strokeWidth,
@@ -157,8 +159,10 @@ export const Demo = () => {
   return (
     <div
       style={{
-        top: demoState.attributes.appearance.strokeWidth,
-        left: demoState.attributes.appearance.strokeWidth,
+        cursor: "pointer",
+        height: "90px",
+        width: "90px",
+        pointerEvents: "none",
         position: "relative",
       }}
     >

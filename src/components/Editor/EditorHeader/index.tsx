@@ -4,6 +4,7 @@ import { APP_VERSION, HEADER_HEIGHT } from "../../../constants/literals";
 import { MimicElementProps } from "../../../models/Editor";
 import {
   deleteSelectedElements,
+  groupElements,
   moveOnBackLevel,
   moveOnBottomLevel,
   moveOnForwardLevel,
@@ -39,6 +40,7 @@ interface DispatchProps {
   onPaste: Function;
   onEscape: Function;
   onDelete: Function;
+  onGroupElements: Function;
 }
 
 interface OwnProps {
@@ -68,6 +70,7 @@ function mapDispatchToProps() {
     onPaste: pasteElements,
     onEscape: escapeElements,
     onDelete: deleteSelectedElements,
+    onGroupElements: groupElements,
   };
 }
 
@@ -111,6 +114,8 @@ const EditorHeader = (props: Props): JSX.Element => {
   const handleDelete = () => {
     props.onDelete();
   };
+
+  const handleGroupElements = () => props.onGroupElements();
 
   const [menuChange, setMenuChanges] = useState(false);
   const [menuPosition, setMenuPosition] = useState(false);
@@ -356,6 +361,18 @@ const EditorHeader = (props: Props): JSX.Element => {
                     назад
                   </button>
                 </li>
+              </ul>
+              <ul>
+                <button
+                  className="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white disabled:opacity-50"
+                  style={{
+                    width: "100%",
+                  }}
+                  onClick={handleGroupElements}
+                  disabled={!(props.selected.length > 1)}
+                >
+                  Группировать
+                </button>
               </ul>
             </div>
           )}

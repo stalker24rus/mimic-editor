@@ -13,7 +13,7 @@ import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 import Point from "../Primitives/Point";
 
 interface StateProps {
-  selected: Number[];
+  // selected: Number[];
 }
 
 interface DispatchProps {
@@ -32,7 +32,7 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    selected: store.editorState.selected,
+    // selected: store.editorState.selected,
   };
 }
 
@@ -49,7 +49,7 @@ function mapDispatchToProps() {
  *  The line box used for conteining a line element
  * */
 function MultiObjectBox(props: Props): JSX.Element {
-  const { component, selected, children } = props;
+  const { component, children } = props;
 
   const { attributes, type } = component;
   const { general, position, appearance } = attributes;
@@ -61,7 +61,7 @@ function MultiObjectBox(props: Props): JSX.Element {
   const [top, left, width, height] = getBox(points);
   const [isDragging, setIsDragging] = useState(false);
 
-  const isSelected = selected.includes(id);
+  // const isSelected = selected.includes(id);
 
   // The points view handlers
   const handlePointDragMove = (ev: any) => {
@@ -109,25 +109,25 @@ function MultiObjectBox(props: Props): JSX.Element {
 
   //  Child component props
 
-  const lineHandlerProps = {
-    onPointerMove: handleObjDragMove,
-    onPointerUp: handleObjPointerUp,
-    onPointerDown: handleObjPointerDown,
-  };
+  // const lineHandlerProps = {
+  //   onPointerMove: handleObjDragMove,
+  //   onPointerUp: handleObjPointerUp,
+  //   onPointerDown: handleObjPointerDown,
+  // };
 
-  const adaptedComponent = lodash.cloneDeep(component);
-  adaptedComponent.attributes.position = {
-    top,
-    left,
-    width,
-    height,
-    points: points.map(function (element) {
-      return {
-        x: element.x - left + strokeWidth,
-        y: element.y - top + strokeWidth,
-      };
-    }),
-  };
+  // const adaptedComponent = lodash.cloneDeep(component);
+  // adaptedComponent.attributes.position = {
+  //   top,
+  //   left,
+  //   width,
+  //   height,
+  //   points: points.map(function (element) {
+  //     return {
+  //       x: element.x - left + strokeWidth,
+  //       y: element.y - top + strokeWidth,
+  //     };
+  //   }),
+  // };
 
   return (
     <div
@@ -137,35 +137,45 @@ function MultiObjectBox(props: Props): JSX.Element {
         width: width + strokeWidth * 2,
         height: height + strokeWidth * 2,
         position: "absolute",
-        border: isSelected ? "1px solid white" : "none",
+        border: "1px solid white",
         pointerEvents: "none",
-        //background: "green",
+        userSelect: "none",
       }}
     >
-      {children({ component: adaptedComponent, ...lineHandlerProps })}
-      {isSelected && (
-        <>
-          {points.map((point, index) => (
-            <div>
-              <Point
-                key={type + "." + id + "point." + index}
-                className={type + "." + id + ".point." + index}
-                cursorType={"pointer"}
-                position={{
-                  top: point.y - top + strokeWidth,
-                  left: point.x - left + strokeWidth,
-                  transform: "translate(-50%, -50%)",
-                  width: 15,
-                  height: 15,
-                }}
-                onDragMove={handlePointDragMove}
-                onPointerDown={handlePointPointerDown}
-                onPointerUp={handlePointPointerUp}
-              />
-            </div>
-          ))}{" "}
-        </>
-      )}
+      {/* {children({ component: adaptedComponent, ...lineHandlerProps })} */}
+      <div
+        style={{
+          top: top,
+          left: left,
+          width: width + strokeWidth * 2,
+          height: height + strokeWidth * 2,
+          pointerEvents: "auto",
+          cursor: "move",
+          // background: "black",
+        }}
+        onPointerMove={handleObjDragMove}
+        onPointerDown={handleObjPointerDown}
+        onPointerUp={handleObjPointerUp}
+      />
+      {points.map((point, index) => (
+        <div>
+          <Point
+            key={type + "." + id + "point." + index}
+            className={type + "." + id + ".point." + index}
+            cursorType={"pointer"}
+            position={{
+              top: point.y - top + strokeWidth,
+              left: point.x - left + strokeWidth,
+              transform: "translate(-50%, -50%)",
+              width: 15,
+              height: 15,
+            }}
+            onDragMove={handlePointDragMove}
+            onPointerDown={handlePointPointerDown}
+            onPointerUp={handlePointPointerUp}
+          />
+        </div>
+      ))}{" "}
     </div>
   );
 }

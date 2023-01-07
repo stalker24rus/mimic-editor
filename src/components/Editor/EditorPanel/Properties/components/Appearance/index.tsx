@@ -30,6 +30,21 @@ interface ColorResult {
   rgb: RGBColor;
 }
 
+function CollorSample({ fill }) {
+  return (
+    <div
+      style={{
+        margin: "2px",
+        height: "20px",
+        width: "20px",
+        borderRadius: "5px",
+        background: fill,
+        border: "solid 1px black",
+      }}
+    ></div>
+  );
+}
+
 function Appearance({ data, onChange }: Props): JSX.Element {
   const { fill, stroke, opacity, strokeWidth, textColor, visability } = data;
 
@@ -122,16 +137,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
               <td>fill</td>
               <td>
                 <div style={{ display: "inline-flex" }}>
-                  <div
-                    style={{
-                      margin: "2px",
-                      height: "20px",
-                      width: "20px",
-                      border: "solid 1px",
-                      background: fill,
-                    }}
-                  ></div>
-
+                  <CollorSample fill={fill} />
                   <button name="fill" onClick={handleOpenColorPanel}>
                     {fill}
                   </button>
@@ -145,16 +151,7 @@ function Appearance({ data, onChange }: Props): JSX.Element {
               <td>stroke</td>
               <td>
                 <div style={{ display: "inline-flex" }}>
-                  <div
-                    style={{
-                      margin: "2px",
-                      height: "20px",
-                      width: "20px",
-                      border: "solid 1px",
-                      background: stroke,
-                    }}
-                  ></div>
-
+                  <CollorSample fill={stroke} />
                   <button name="stroke" onClick={handleOpenColorPanel}>
                     {stroke}
                   </button>
@@ -167,21 +164,10 @@ function Appearance({ data, onChange }: Props): JSX.Element {
             <tr>
               <td>textColor</td>
               <td>
-                <div>
-                  <button
-                    name="textColor"
-                    onClick={handleOpenColorPanel}
-                    style={{
-                      margin: "2px",
-                      height: "20px",
-                      width: "20px",
-                      border: "solid 1px",
-                      background: textColor,
-                    }}
-                  ></button>
-
+                <div style={{ display: "inline-flex" }}>
+                  <CollorSample fill={textColor} />
                   <button name="textColor" onClick={handleOpenColorPanel}>
-                    {textColor}
+                    {stroke}
                   </button>
                 </div>
               </td>

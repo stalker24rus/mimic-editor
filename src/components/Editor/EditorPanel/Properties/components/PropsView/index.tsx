@@ -12,28 +12,24 @@ export default function PropsView({ title, children }) {
       style={{
         position: "relative",
         display: "flex",
-        //height: "100%",
-        background: "#ACACAC",
+        background: "#ffffff",
       }}
     >
-      <div
-        //className="flex items-center justify-center h-screen"
-        style={{ background: "#ACACAC", width: "40px", height: "100%" }}
-      >
-        <button
-          className="w-5 h-5 hover:bg-gray-200 flex items-center rounded-xl font-bold p-1 text-center"
-          onClick={handleClick}
-        >
-          {expand ? "-" : "+"}
-        </button>
-      </div>
-
       <div style={{ background: "#ffffff", width: "100%" }}>
-        <div style={{ background: "#ACACAC", width: "100%" }}>
-          <>{title}</>
+        <div
+          className="bg-gray-200 hover:bg-gray-300 "
+          style={{ width: "100%", height: "25px" }}
+        >
+          <div style={{ marginLeft: "15px" }} onClick={handleClick}>
+            {title}
+          </div>
         </div>
 
-        <div style={{ background: "#ffffff" }}>{expand && <>{children}</>}</div>
+        {expand && (
+          <div style={{ background: "#ffffff", marginLeft: "15px" }}>
+            {children}
+          </div>
+        )}
       </div>
     </div>
   );

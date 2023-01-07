@@ -20,7 +20,13 @@ export type Properties = {
   tag?: string;
 };
 
-type ElementType = "MAIN_FRAME" | "BUTTON" | "LINE" | "POLYGON" | "POLYLINE";
+type ElementType =
+  | "MAIN_FRAME"
+  | "BUTTON"
+  | "LINE"
+  | "POLYGON"
+  | "POLYLINE"
+  | "GROUP";
 
 export type MimicElementProps = {
   type: ElementType;
@@ -32,7 +38,7 @@ export type MimicElementProps = {
 
 export interface InitAttributes {
   position: PositionType;
-  properties: { [any: string]: any }; //TODO rename to custom It defines inside a component.
+  properties?: { [any: string]: any }; //TODO rename to custom It defines inside a component.
   appearance?: AppearenceType;
   animation?: Array<AnimationType>;
   action?: Action;
@@ -50,7 +56,7 @@ export type Service = {
 export type GeneralElementType = {
   id: number;
   name: string;
-  tagName: string | undefined;
+  tagName?: string | undefined;
 };
 
 export type AppearenceType = {

@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { MIMIC } from "../../../../constants/literals";
 import { MimicElementProps, PointFromat } from "../../../../models/Editor";
 import {
   changeElementAngle,
@@ -10,8 +11,6 @@ import {
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
-import ResizePoints from "../Primitives/ResizePoints";
-import RotationPoint from "../Primitives/RotationPoint";
 
 interface StateProps {
   // selected: Number[];
@@ -48,16 +47,15 @@ function mapDispatchToProps() {
   };
 }
 
-function RectangleBox(props: Props): JSX.Element {
+function MoverBox(props: Props): JSX.Element {
   const { component, children } = props;
-  const { attributes } = component;
+  const { attributes, type } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
   const { points, width, height, angle } = position;
   const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
-  // const isSelected = selected.includes(id);
 
   const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
     const point: PointFromat = {
@@ -103,37 +101,12 @@ function RectangleBox(props: Props): JSX.Element {
           topLeftPoint.y
         }px) rotate(${angle ? angle : 0}deg)`,
         pointerEvents: "all",
-        border: "1px solid white",
+        border: "1px white solid",
       }}
     >
-      <RotationPoint
-        component={component}
-        onDragMove={handleChangeAngle}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-      />
-      {/* 
-      <div
-        style={{
-          width,
-          height,
-          overflowX: "hidden",
-          overflowY: "hidden",
-          border: "1px solid white",
-        }}
-      >
-        {children({ component })}
-      </div> */}
-
       <MovingCell
         component={component}
         onPointerMove={handleMove}
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-      />
-      <ResizePoints
-        component={component}
-        onPointerMove={handleResize}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
       />
@@ -144,4 +117,4 @@ function RectangleBox(props: Props): JSX.Element {
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
-)(RectangleBox);
+)(MoverBox);

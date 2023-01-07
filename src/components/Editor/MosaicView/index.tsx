@@ -23,9 +23,7 @@ function View({ name, img, demo, onClick }: ViewProps): JSX.Element {
         cursor: "pointer",
         margin: "2px",
         position: "relative",
-        borderRadius: "10px",
-        border: "solid rgba(4,4,4,0.35) 1px",
-        // background: "rgba(150,150,150,0.35)",
+        borderRadius: "20px",
         height: "100px",
         width: "100px",
       }}
@@ -35,37 +33,12 @@ function View({ name, img, demo, onClick }: ViewProps): JSX.Element {
         style={{
           top: "50%",
           left: "50%",
-          position: "absolute",
           transform: "translate(-50%, -50%)",
+          position: "absolute",
         }}
       >
         {demo && <>{demo}</>}
-        {/* {!demo && (
-          <img
-            alt="future"
-            src={img}
-            style={{
-              height: "60px",
-              width: "90px",
-            }}
-          />
-        )} */}
       </div>
-
-      {/* <div
-        className="flex items-center"
-        style={{
-          maxWidth: "100%",
-          position: "absolute",
-          bottom: "0px",
-          color: "rgba(255,255,255,1)",
-          fontSize: "12px",
-          left: "50%",
-          transform: "translate(-50%, 0%)",
-        }}
-      >
-        {name}
-      </div> */}
     </div>
   );
 }

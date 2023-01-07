@@ -3,6 +3,7 @@ import {
   BaseElementOutput,
   MimicElementProps,
 } from "../../../../models/Editor";
+import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
@@ -17,7 +18,11 @@ function Polygon(props: Props): JSX.Element {
   const { attributes } = props.component;
   const { general, position, appearance } = attributes;
   const { id } = general;
-  const { points, width, height, top, left } = position;
+  const { points } = position;
+
+  const [getBox] = useGetBoxByMultiPoints();
+  const [boxTop, boxLeft, boxWidth, boxHeight] = getBox(points);
+
   const { fill, visability, stroke, strokeWidth, opacity } = appearance;
 
   // HANDLERS
@@ -36,24 +41,26 @@ function Polygon(props: Props): JSX.Element {
 
   const polinePointsFormat: string = points
     .map(function (point) {
-      return `${point.x}, ${point.y}`;
+      return `${point.x - boxLeft}, ${point.y - boxTop}`;
     })
     .join();
 
   return (
     <span
       style={{
-        top: top - strokeWidth,
-        left: left - strokeWidth,
-        width: width + strokeWidth * 2,
-        height: height + strokeWidth * 2,
+        top: boxTop,
+        left: boxLeft,
+        width: boxWidth,
+        height: boxHeight,
+        position: "absolute",
       }}
     >
       <svg
-        x={strokeWidth}
-        y={strokeWidth}
-        height={height + strokeWidth * 2}
-        width={width + strokeWidth * 2}
+        x={0}
+        y={0}
+        width={boxWidth}
+        height={boxHeight}
+        overflow="visible"
         pointerEvents="none"
       >
         <polygon
@@ -121,10 +128,10 @@ export const Demo = () => {
       properties: {},
 
       position: {
-        width: 90,
-        height: 90,
-        top: 0,
-        left: 0,
+        // width: 90,
+        // height: 90,
+        // top: 0,
+        // left: 0,
         points: [
           { x: 10, y: 10 },
           { x: 10, y: 80 },
@@ -154,10 +161,10 @@ export const Demo = () => {
     <div
       style={{
         cursor: "pointer",
-        top: demoState.attributes.appearance.strokeWidth,
-        left: demoState.attributes.appearance.strokeWidth,
-        position: "relative",
+        height: "90px",
+        width: "90px",
         pointerEvents: "none",
+        position: "relative",
       }}
     >
       <Polygon disablePointerEvents={true} component={demoState} />

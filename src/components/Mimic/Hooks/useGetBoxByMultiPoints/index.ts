@@ -54,6 +54,7 @@ function useGetBoxByMultiPoints(): [Function] {
 }
 
 export function useGetBoxFromElements(): [Function] {
+  //TODO it remove
   function func(elements: MimicElementProps[]): FuncResult {
     let minX: number;
     let maxX: number;
@@ -73,7 +74,7 @@ export function useGetBoxFromElements(): [Function] {
 
       let tempPoints = [...oldPoints];
 
-      if (width && height && angle !== undefined && oldPoints.length === 1) {
+      if (width && height !== undefined && oldPoints.length === 1) {
         const center = {
           x: tempPoints[0].x + width / 2,
           y: tempPoints[0].y + height / 2,
@@ -81,7 +82,7 @@ export function useGetBoxFromElements(): [Function] {
         tempPoints = rotateElementPoints(
           center,
           getAreaPointsByHWP(width, height, tempPoints[0]),
-          angle
+          angle | 0
         );
       }
 

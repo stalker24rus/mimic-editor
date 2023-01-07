@@ -22,6 +22,8 @@ import {
   ELEMENTS_TOP_ALIGN,
   ELEMENTS_VERTICAL_ALIGN,
   ELEMENTS_BOTTOM_ALIGN,
+  GROUP_ELEMENTS,
+  UNGROUP_ELEMENTS,
 } from "../../constants/actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
@@ -375,5 +377,22 @@ export const setElementsBottomAlign =
     dispatch({
       type: ELEMENTS_BOTTOM_ALIGN,
       payload: { selected },
+    });
+  };
+
+export const groupElements = () => (dispatch: Function, getState: Function) => {
+  const selected = selectSelectedElements(getState());
+  dispatch({
+    type: GROUP_ELEMENTS,
+    payload: { selected },
+  });
+};
+
+export const unGroupElements =
+  () => (dispatch: Function, getState: Function) => {
+    const selected = selectSelectedElements(getState());
+    dispatch({
+      type: UNGROUP_ELEMENTS,
+      payload: { id: selected[0] },
     });
   };

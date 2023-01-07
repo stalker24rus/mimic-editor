@@ -35,7 +35,7 @@ function TabsPanel({ elements, width, height }: Props) {
         style={{
           width: "100%",
           height: `${heightCur - footerHeight}px`,
-          // overflow: "scroll",
+          overflow: "scroll",
         }}
       >
         {elements.length > 0 && <>{elements[activeTab].element}</>}
