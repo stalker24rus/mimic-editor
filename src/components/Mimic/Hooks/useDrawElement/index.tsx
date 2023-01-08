@@ -12,9 +12,9 @@ import Polygon from "../../MimicBaseElements/Polygon";
 import Polyline from "../../MimicBaseElements/Polyline";
 import Group from "../../ServiceElements/Group";
 
-import MoverBox from "../../Transformers/MoverBox";
-import MultiObjectBox from "../../Transformers/MultiObjectBox";
-import RectangleBox from "../../Transformers/RectangleBox";
+import MoverBox from "../../../Editor/Transformers/MoverBox";
+import MultiObjectBox from "../../../Editor/Transformers/MultiObjectBox";
+import RectangleBox from "../../../Editor/Transformers/RectangleBox";
 
 interface BaseProps {
   [key: string]: {

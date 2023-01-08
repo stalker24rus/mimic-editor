@@ -50,6 +50,7 @@ function Polygon(props: Props): JSX.Element {
         width: boxWidth,
         height: boxHeight,
         position: "absolute",
+        pointerEvents: "none",
       }}
     >
       <svg

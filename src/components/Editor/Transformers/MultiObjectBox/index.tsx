@@ -1,5 +1,4 @@
-import lodash from "lodash";
-import React, { useState } from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { IMimicElement, IPoint } from "../../../../models/Editor";
 
@@ -9,12 +8,10 @@ import {
   moveElementPoints,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
-import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../../../Mimic/Hooks/useGetBoxByMultiPoints";
 import Point from "../Primitives/Point";
 
-interface StateProps {
-  // selected: Number[];
-}
+interface StateProps {}
 
 interface DispatchProps {
   onChangePointPosition: Function;
@@ -25,15 +22,12 @@ interface DispatchProps {
 
 interface OwnProps {
   component: IMimicElement;
-  children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  return {
-    // selected: store.editorState.selected,
-  };
+  return {};
 }
 
 function mapDispatchToProps() {
@@ -45,23 +39,18 @@ function mapDispatchToProps() {
   };
 }
 
-/**
- *  The line box used for conteining a line element
- * */
 function MultiObjectBox(props: Props): JSX.Element {
-  const { component, children } = props;
+  const { component } = props;
 
   const { attributes, type } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
   const { points } = position;
-  const { fill, visability, strokeWidth } = appearance;
+  const { strokeWidth } = appearance;
 
   const [getBox] = useGetBoxByMultiPoints();
   const [top, left, width, height] = getBox(points);
   const [isDragging, setIsDragging] = useState(false);
-
-  // const isSelected = selected.includes(id);
 
   // The points view handlers
   const handlePointDragMove = (ev: any) => {
@@ -107,28 +96,6 @@ function MultiObjectBox(props: Props): JSX.Element {
     props.onEndChanges();
   };
 
-  //  Child component props
-
-  // const lineHandlerProps = {
-  //   onPointerMove: handleObjDragMove,
-  //   onPointerUp: handleObjPointerUp,
-  //   onPointerDown: handleObjPointerDown,
-  // };
-
-  // const adaptedComponent = lodash.cloneDeep(component);
-  // adaptedComponent.attributes.position = {
-  //   top,
-  //   left,
-  //   width,
-  //   height,
-  //   points: points.map(function (element) {
-  //     return {
-  //       x: element.x - left + strokeWidth,
-  //       y: element.y - top + strokeWidth,
-  //     };
-  //   }),
-  // };
-
   return (
     <div
       style={{
@@ -142,7 +109,6 @@ function MultiObjectBox(props: Props): JSX.Element {
         userSelect: "none",
       }}
     >
-      {/* {children({ component: adaptedComponent, ...lineHandlerProps })} */}
       <div
         style={{
           top: top,
@@ -151,7 +117,6 @@ function MultiObjectBox(props: Props): JSX.Element {
           height: height + strokeWidth * 2,
           pointerEvents: "auto",
           cursor: "move",
-          // background: "black",
         }}
         onPointerMove={handleObjDragMove}
         onPointerDown={handleObjPointerDown}

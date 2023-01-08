@@ -1,69 +1,48 @@
 import React from "react";
 import { connect } from "react-redux";
-import { MIMIC } from "../../../../constants/literals";
 import { IMimicElement, IPoint } from "../../../../models/Editor";
 import {
-  changeElementAngle,
   endDoingChanges,
-  // moveElement,
   moveElementPoints,
-  resizeElement,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 
-interface StateProps {
-  // selected: Number[];
-}
+interface StateProps {}
 
 interface DispatchProps {
-  onChangeAngle: Function;
   onMove: Function;
-  onResize: Function;
   onStartChanges: Function;
   onEndChanges: Function;
 }
 
 interface OwnProps {
   component: IMimicElement;
-  children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  return {
-    // selected: store.editorState.selected,
-  };
+  return {};
 }
 
 function mapDispatchToProps() {
   return {
-    onChangeAngle: changeElementAngle,
     onMove: moveElementPoints, // moveElement,
-    onResize: resizeElement,
+
     onStartChanges: startDoingChanges,
     onEndChanges: endDoingChanges,
   };
 }
 
 function MoverBox(props: Props): JSX.Element {
-  const { component, children } = props;
-  const { attributes, type } = component;
-  const { general, position, appearance } = attributes;
+  const { component } = props;
+  const { attributes } = component;
+  const { general, position } = attributes;
   const { id } = general;
   const { points, width, height, angle } = position;
-  const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
-
-  const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const point: IPoint = {
-      x: ev.pageX,
-      y: ev.pageY,
-    };
-    props.onChangeAngle(id, point);
-  };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
     const movement: IPoint = {
@@ -71,15 +50,6 @@ function MoverBox(props: Props): JSX.Element {
       x: ev.movementX,
     };
     props.onMove(id, movement);
-  };
-
-  const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const pointName: string = ev.currentTarget.className;
-    const point = {
-      x: ev.clientX,
-      y: ev.clientY,
-    };
-    props.onResize(id, pointName, point);
   };
 
   const handlePointerDown = () => {
