@@ -84,7 +84,7 @@ const defaultState: IMimicElement = {
   children: JSON.parse(demo1JSON),
 };
 
-export default (state = defaultState, action: any): IMimicElement => {
+const editorElements = (state = defaultState, action: any): IMimicElement => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { parentId, id, newElement, point } = action.payload;
@@ -298,3 +298,5 @@ export default (state = defaultState, action: any): IMimicElement => {
     }
   }
 };
+
+export default editorElements;

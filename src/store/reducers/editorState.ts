@@ -2,12 +2,9 @@ import lodash from "lodash";
 import {
   COPY_ELEMENTS,
   DISABLE_SELECTION,
-  // DISABLE_TOUCH,
   ENABLE_SELECTION,
-  // ENABLE_TOUCH,
   HANDLE_ESCAPE,
   SELECT_ELEMENTS,
-  SET_CURRENT_MIMIC,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_CREATE,
@@ -21,7 +18,6 @@ import {
   EDITOR_MODE_CREATE,
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
-  ELEMENT_TYPE_FRAME,
   ELEMENT_TYPE_GROUP,
 } from "../../constants/literals";
 import {
@@ -97,7 +93,7 @@ const defaultState = (): IProps => {
   };
 };
 
-export default (state = defaultState(), action: any): IProps => {
+const editorState = (state = defaultState(), action: any): IProps => {
   switch (action.type) {
     case SET_MODE_EDIT: {
       return {
@@ -118,7 +114,7 @@ export default (state = defaultState(), action: any): IProps => {
           newElement: { ...element },
         };
       } else {
-        throw "Invalid playload format.";
+        return state;
       }
     }
 
@@ -156,7 +152,7 @@ export default (state = defaultState(), action: any): IProps => {
       if (id) {
         return { ...state, drawId: id };
       } else {
-        throw "Invalid playload format.";
+        return state;
       }
     }
 
@@ -165,7 +161,7 @@ export default (state = defaultState(), action: any): IProps => {
       if (id) {
         return { ...state, lastTakenId: id };
       } else {
-        throw "Invalid playload format.";
+        return state;
       }
     }
 
@@ -174,7 +170,7 @@ export default (state = defaultState(), action: any): IProps => {
       if (point) {
         return { ...state, viewPosition: point };
       } else {
-        throw "Invalid playload format.";
+        return state;
       }
     }
 
@@ -306,3 +302,5 @@ export default (state = defaultState(), action: any): IProps => {
       return state;
   }
 };
+
+export default editorState;

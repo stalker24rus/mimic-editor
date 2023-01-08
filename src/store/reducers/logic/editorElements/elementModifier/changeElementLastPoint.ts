@@ -1,5 +1,5 @@
 import { IPointProp } from ".";
-import { IMimicElement, IPoint } from "../../../../../models/Editor";
+import { IMimicElement } from "../../../../../models/Editor";
 
 const selectElementPointsLength = (element: IMimicElement) =>
   element.attributes.position.points.length;

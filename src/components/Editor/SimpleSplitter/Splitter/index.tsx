@@ -38,8 +38,8 @@ function Splitter({
     if (isDragging) onDrag(ev);
   };
 
-  const top: number = orientation === "horizontal" ? position : 0;
-  const left: number = orientation === "horizontal" ? 0 : position;
+  const top: number = orientation === "horizontal" ? position | 0 : 0;
+  const left: number = orientation === "horizontal" ? 0 : position | 0;
   const cssWrapperClass: string =
     orientation === "horizontal"
       ? "spliter-horizon-block "

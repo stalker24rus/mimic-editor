@@ -1,5 +1,5 @@
 import { IChangeElementPoint } from ".";
-import { IMimicElement, IPoint } from "../../../../../models/Editor";
+import { IMimicElement } from "../../../../../models/Editor";
 
 const changeElementPoint =
   ({ pointNo, point }: IChangeElementPoint) =>
