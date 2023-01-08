@@ -5,13 +5,13 @@
  * @returns
  */
 
-import { ELEMENT_TYPE_LINE, MIMIC } from "../../../../constants/literals";
+import { ELEMENT_TYPE_LINE, MIMIC } from "../../../../../constants/literals";
 import {
   BaseElementOutput,
   IMimicElement,
   IPoint,
-} from "../../../../models/Editor";
-import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
+} from "../../../../../models/Editor";
+import useGetBoxByMultiPoints from "../../../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;

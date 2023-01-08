@@ -8,7 +8,7 @@ import {
   moveElementPoints,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
-import useGetBoxByMultiPoints from "../../../Mimic/Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../../../Hooks/useGetBoxByMultiPoints";
 import Point from "../Primitives/Point";
 
 interface StateProps {}

@@ -1,6 +1,6 @@
-import { IMimicElement, IPoint } from "../../../../models/Editor";
-import { getAreaPointsByHWP } from "../../../../store/reducers/logic/utils/getAreaPointsByHWP";
-import rotateElementPoints from "../../../../store/reducers/logic/utils/rotateElementPoints";
+import { IMimicElement, IPoint } from "../../../models/Editor";
+import { getAreaPointsByHWP } from "../../../store/reducers/logic/utils/getAreaPointsByHWP";
+import rotateElementPoints from "../../../store/reducers/logic/utils/rotateElementPoints";
 
 type FuncResult = [top: number, left: number, width: number, height: number];
 

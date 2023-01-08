@@ -45,7 +45,7 @@ import {
 } from "../selectors/editorState";
 import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
-import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
+import { ElementBase } from "../../components/Hooks/useDrawElement";
 import getLastGID from "../reducers/logic/editorElements/crud/getLastGID";
 
 // TODO ??? detach to other file

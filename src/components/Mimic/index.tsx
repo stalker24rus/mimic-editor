@@ -13,7 +13,7 @@ import {
 } from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
-import useDrawElement from "./Hooks/useDrawElement";
+import useDrawElement from "../Hooks/useDrawElement";
 import KeyListener from "./KeyListener";
 
 import ObjectSelector from "./ObjectSelector";

@@ -1,6 +1,9 @@
-import { ELEMENT_TYPE_POLYLINE, MIMIC } from "../../../../constants/literals";
-import { BaseElementOutput, IMimicElement } from "../../../../models/Editor";
-import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
+import {
+  ELEMENT_TYPE_POLYLINE,
+  MIMIC,
+} from "../../../../../constants/literals";
+import { BaseElementOutput, IMimicElement } from "../../../../../models/Editor";
+import useGetBoxByMultiPoints from "../../../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;

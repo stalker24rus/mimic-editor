@@ -1,8 +1,8 @@
-import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../constants/literals";
-import { IMimicElement } from "../../../../models/Editor";
+import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../../constants/literals";
+import { IMimicElement } from "../../../../../models/Editor";
 import useDrawElement, {
   useDrawElementWithoutBox,
-} from "../../Hooks/useDrawElement";
+} from "../../../../Hooks/useDrawElement";
 
 interface Props {
   disablePointerEvents?: boolean;

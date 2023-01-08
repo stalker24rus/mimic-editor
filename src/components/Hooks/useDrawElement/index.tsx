@@ -4,17 +4,17 @@ import {
   ELEMENT_TYPE_LINE,
   ELEMENT_TYPE_POLYGON,
   ELEMENT_TYPE_POLYLINE,
-} from "../../../../constants/literals";
-import { IMimicElement } from "../../../../models/Editor";
-import Button from "../../MimicBaseElements/Button";
-import Line from "../../MimicBaseElements/Line";
-import Polygon from "../../MimicBaseElements/Polygon";
-import Polyline from "../../MimicBaseElements/Polyline";
-import Group from "../../ServiceElements/Group";
+} from "../../../constants/literals";
+import { IMimicElement } from "../../../models/Editor";
+import Button from "../../Mimic/BaseElements/Primitives/Button";
+import Line from "../../Mimic/BaseElements/Primitives/Line";
+import Polygon from "../../Mimic/BaseElements/Primitives/Polygon";
+import Polyline from "../../Mimic/BaseElements/Primitives/Polyline";
+import Group from "../../Mimic/BaseElements/Service/Group";
 
-import MoverBox from "../../../Editor/Transformers/MoverBox";
-import MultiObjectBox from "../../../Editor/Transformers/MultiObjectBox";
-import RectangleBox from "../../../Editor/Transformers/RectangleBox";
+import MoverBox from "../../Mimic/Transformers/MoverBox";
+import MultiObjectBox from "../../Mimic/Transformers/MultiObjectBox";
+import RectangleBox from "../../Mimic/Transformers/RectangleBox";
 
 interface BaseProps {
   [key: string]: {
@@ -22,13 +22,6 @@ interface BaseProps {
     box: (props: any) => JSX.Element;
     maxPoints: number;
   };
-}
-
-interface Props {
-  component: IMimicElement;
-  onPointerMove: Function;
-  onPointerUp: Function;
-  onPointerDown: Function;
 }
 
 export const ElementBase: BaseProps = {
@@ -58,24 +51,6 @@ export const ElementBase: BaseProps = {
     maxPoints: 1,
   },
 };
-
-// export default function useDrawElement(): [Function] {
-//   function draw(component: MimicElementProps): JSX.Element {
-//     const { type } = component;
-//     const { id } = component.attributes.general;
-
-//     const Element = ElementBase[type].element;
-//     const Box = ElementBase[type].box;
-
-//     return (
-//       <Box key={id} component={component}>
-//         {(props: Props) => <Element {...props} />}
-//       </Box>
-//     );
-//   }
-
-//   return [draw];
-// }
 
 export default function useDrawElement(): [Function] {
   function draw(active: boolean, component: IMimicElement): JSX.Element {

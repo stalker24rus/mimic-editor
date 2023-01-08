@@ -7,10 +7,10 @@ import {
 } from "../../../../constants/literals";
 import { editorAddElement } from "../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import { Demo as DemoButton } from "../../../Mimic/MimicBaseElements/Button";
-import { Demo as DemoLine } from "../../../Mimic/MimicBaseElements/Line";
-import { Demo as DemoPoligon } from "../../../Mimic/MimicBaseElements/Polygon";
-import { Demo as DemoPoliline } from "../../../Mimic/MimicBaseElements/Polyline";
+import { Demo as DemoButton } from "../../../Mimic/BaseElements/Primitives/Button";
+import { Demo as DemoLine } from "../../../Mimic/BaseElements/Primitives/Line";
+import { Demo as DemoPoligon } from "../../../Mimic/BaseElements/Primitives/Polygon";
+import { Demo as DemoPoliline } from "../../../Mimic/BaseElements/Primitives/Polyline";
 import MosaicView, { MosaicProps, ViewProps } from "../../MosaicView";
 
 interface StateProps {

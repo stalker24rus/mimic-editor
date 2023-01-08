@@ -8,7 +8,7 @@ import {
 } from "../../../../store/actionCreators/editorElements";
 import { selectEditorElements } from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import { useGetBoxFromElements } from "../../Hooks/useGetBoxByMultiPoints";
+import { useGetBoxFromElements } from "../../../Hooks/useGetBoxByMultiPoints";
 
 interface StateProps {
   selected: number[];
