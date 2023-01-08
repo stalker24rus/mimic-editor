@@ -24,7 +24,7 @@ import {
   ELEMENTS_BOTTOM_ALIGN,
   GROUP_ELEMENTS,
   UNGROUP_ELEMENTS,
-} from "../../constants/actionTypes/editorElements";
+} from "../actionTypes/editorElements";
 import {
   DISABLE_SELECTION,
   // DISABLE_TOUCH,
@@ -34,8 +34,8 @@ import {
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
   SET_MODE_EDIT,
-} from "../../constants/actionTypes/editorState";
-import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
+} from "../actionTypes/editorState";
+import { REDO, UNDO } from "../actionTypes/undoRedo";
 import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
 import {
   selectCopyPasteBuffer,

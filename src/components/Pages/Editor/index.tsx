@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../../../constants/literals";
 import EditorHeader from "../../Editor/EditorHeader";
 import EditorPanel from "../../Editor/EditorPanel";
-import SimpleSplitter from "../../Editor/SimpleSplitter";
+import SimpleSplitter from "../../../ui/SimpleSplitter";
 import Mimic from "../../Mimic";
 import "./index.css";
 

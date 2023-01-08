@@ -8,7 +8,7 @@ import {
   SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
   TOGGLE_ELEMENT_SELECTION,
-} from "../../constants/actionTypes/editorState";
+} from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IPoint } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";

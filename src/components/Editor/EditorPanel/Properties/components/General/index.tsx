@@ -1,5 +1,5 @@
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
-import PropsView from "../PropsView";
+import View from "../View";
 
 function General({ freezed, data, onChange }) {
   const { id, name, tagName } = data;
@@ -15,7 +15,7 @@ function General({ freezed, data, onChange }) {
 
   return (
     <>
-      <PropsView title="Главные">
+      <View title="Главные">
         <table>
           <tr>
             <td>id: </td>
@@ -46,7 +46,7 @@ function General({ freezed, data, onChange }) {
             </tr>
           )}
         </table>
-      </PropsView>
+      </View>
     </>
   );
 }

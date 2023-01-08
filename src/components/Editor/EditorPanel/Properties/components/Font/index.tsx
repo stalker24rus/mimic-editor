@@ -1,6 +1,6 @@
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
-import InputField from "../InputField";
-import PropsView from "../PropsView";
+import InputField from "../../../../../../ui/InputField";
+import View from "../View";
 
 const FONT_FAMILY = [
   "Arial",
@@ -39,7 +39,7 @@ function Font({ freezed, data, onChange }) {
 
   return (
     <>
-      <PropsView title="Шрифт">
+      <View title="Шрифт">
         <table>
           <tr>
             <td>fontFamily:</td>
@@ -123,7 +123,7 @@ function Font({ freezed, data, onChange }) {
             </td>
           </tr>
         </table>
-      </PropsView>
+      </View>
     </>
   );
 }

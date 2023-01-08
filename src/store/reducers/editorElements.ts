@@ -25,27 +25,22 @@ import {
   ELEMENTS_BOTTOM_ALIGN,
   UNGROUP_ELEMENTS,
   GROUP_ELEMENTS,
-} from "../../constants/actionTypes/editorElements";
-import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
+} from "../actionTypes/editorElements";
+import { PASTE_ELEMENTS } from "../actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
 import { IMimicElement } from "../../models/Editor";
 import { demo1JSON } from "../../constants/demo/templateJson";
 import changeElementAttribute from "./logic/editorElements/elementModifier/changeElementAttribute";
-// import changeIndexArr from "./functions/changeIndexArray";
 import appendElementPoint from "./logic/editorElements/elementModifier/appendElementPoint";
 import changeElementAngle from "./logic/editorElements/elementModifier/changeElementAngle";
 import changeElementLastPoint from "./logic/editorElements/elementModifier/changeElementLastPoint";
 import changeElementPoint from "./logic/editorElements/elementModifier/changeElementPoint";
 import createElement from "./logic/editorElements/crud/createElement";
 import deleteElementLastPoint from "./logic/editorElements/elementModifier/deleteElementLastPoint";
-
 import moveElementPoints from "./logic/editorElements/elementModifier/moveElementPoints";
 import executeElementsRoutine from "./logic/editorElements/executeElementsRoutine";
 import removeSelectedElements from "./logic/editorElements/crud/removeSelectedElements";
 import resizeElement from "./logic/editorElements/elementModifier/resizeElement";
-// import updateElement from "./functions/editorElements/updateElement";
-// import resizeBox from "./functions/resizeBox";
-
 import pasteElements from "./logic/editorElements/crud/pasteElements";
 import getLastGID from "./logic/editorElements/crud/getLastGID";
 import groupElements from "./logic/editorElements/group/groupElements";

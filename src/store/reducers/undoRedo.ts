@@ -1,4 +1,4 @@
-import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
+import { REDO, UNDO } from "../actionTypes/undoRedo";
 import { HISTORY_MAX_LENGHT } from "../../constants/literals";
 
 export default function undoRedo(reducer: Function) {

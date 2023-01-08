@@ -1,5 +1,5 @@
 import Primitives from "./Primitives";
-import SimpleSplitter from "../SimpleSplitter";
+import SimpleSplitter from "../../../ui/SimpleSplitter";
 import Properties from "./Properties";
 import TabsPanel, { TabProps } from "../TabsPanel";
 import ElementsTree from "./ElementsTree";

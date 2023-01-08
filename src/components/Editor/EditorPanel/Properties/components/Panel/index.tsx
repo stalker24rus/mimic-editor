@@ -12,7 +12,7 @@ interface ChangeDataProps {
   value: number | string;
 }
 
-function PropsPanel({ freezed, attributes, onChange }) {
+function Panel({ freezed, attributes, onChange }) {
   const { general, appearance, font, position, properties } = attributes;
 
   const handleChange = (change: ChangeDataProps) => {
@@ -82,7 +82,7 @@ function PropsPanel({ freezed, attributes, onChange }) {
     </div>
   );
 }
-PropsPanel.defaultProps = {
+Panel.defaultProps = {
   onChange: () => {},
 };
-export default PropsPanel;
+export default Panel;

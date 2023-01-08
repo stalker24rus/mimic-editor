@@ -2,12 +2,9 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { IChangesData, IMimicElement } from "../../../../models/Editor";
 import { changeAttributes } from "../../../../store/actionCreators/editorElements";
-import {
-  selectMimic,
-  // selectMimicAttributes,
-} from "../../../../store/selectors/editorElements";
+import { selectMimic } from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import PropsPanel from "./components/PropsPanel";
+import Panel from "./components/Panel";
 
 interface IStateProps {
   selected: number[];
@@ -76,8 +73,7 @@ function Properties(props: IProps): JSX.Element {
     props.onChanges(changes);
   };
 
-  const ElementProps = element?.type ? PropsPanel : () => <></>;
-  // console.log(mimicAttributes);
+  const ElementProps = element?.type ? Panel : () => <></>;
 
   return (
     <div

@@ -11,7 +11,7 @@ import { Demo as DemoButton } from "../../../Mimic/BaseElements/Primitives/Butto
 import { Demo as DemoLine } from "../../../Mimic/BaseElements/Primitives/Line";
 import { Demo as DemoPoligon } from "../../../Mimic/BaseElements/Primitives/Polygon";
 import { Demo as DemoPoliline } from "../../../Mimic/BaseElements/Primitives/Polyline";
-import MosaicView, { MosaicProps, ViewProps } from "../../MosaicView";
+import MosaicView, { MosaicProps, ViewProps } from "../../../../ui/MosaicView";
 
 interface StateProps {
   future: [any];

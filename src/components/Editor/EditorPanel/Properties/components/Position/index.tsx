@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
-import InputField from "../InputField";
-import PropsView from "../PropsView";
+import InputField from "../../../../../../ui/InputField";
+import View from "../View";
 
 function Position({ freezed, data, onChange }) {
   const { angle, height, width, points } = data;
@@ -25,7 +25,7 @@ function Position({ freezed, data, onChange }) {
 
   return (
     <>
-      <PropsView title="Позиция">
+      <View title="Позиция">
         <table>
           {angle !== undefined && (
             <tr>
@@ -137,7 +137,7 @@ function Position({ freezed, data, onChange }) {
             </tr>
           )}
         </table>
-      </PropsView>
+      </View>
     </>
   );
 }

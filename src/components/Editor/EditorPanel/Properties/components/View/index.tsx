@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function PropsView({ title, children }) {
+export default function View({ title, children }) {
   const [expand, setExpand] = useState<boolean>(true);
 
   const handleClick = () => {

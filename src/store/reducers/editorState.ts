@@ -13,7 +13,7 @@ import {
   SET_SELECTED_ELEMENTS,
   SET_VIEW_POSITION,
   TOGGLE_ELEMENT_SELECTION,
-} from "../../constants/actionTypes/editorState";
+} from "../actionTypes/editorState";
 import {
   EDITOR_MODE_CREATE,
   EDITOR_MODE_EDIT,

@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { ChromePicker } from "react-color";
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
 import { AppearenceType } from "../../../../../../models/Editor";
-import InputField from "../InputField";
-import PropsView from "../PropsView";
+import ColorSample from "../../../../../../ui/ColorSample";
+import InputField from "../../../../../../ui/InputField";
+import View from "../View";
 
 interface Props {
   freezed: boolean;
@@ -29,21 +30,6 @@ interface ColorResult {
   hex: string;
   hsl: HSLColor;
   rgb: RGBColor;
-}
-
-function CollorSample({ fill }) {
-  return (
-    <div
-      style={{
-        margin: "2px",
-        height: "20px",
-        width: "20px",
-        borderRadius: "5px",
-        background: fill,
-        border: "solid 1px black",
-      }}
-    ></div>
-  );
 }
 
 function Appearance({ freezed, data, onChange }: Props): JSX.Element {
@@ -83,7 +69,7 @@ function Appearance({ freezed, data, onChange }: Props): JSX.Element {
 
   return (
     <>
-      <PropsView title="Появление">
+      <View title="Появление">
         {colorPanel && data[colorPanelParametr] && (
           <div
             style={{
@@ -138,7 +124,7 @@ function Appearance({ freezed, data, onChange }: Props): JSX.Element {
               <td>fill</td>
               <td>
                 <div style={{ display: "inline-flex" }}>
-                  <CollorSample fill={fill} />
+                  <ColorSample fill={fill} />
                   <button
                     name="fill"
                     onClick={handleOpenColorPanel}
@@ -156,7 +142,7 @@ function Appearance({ freezed, data, onChange }: Props): JSX.Element {
               <td>stroke</td>
               <td>
                 <div style={{ display: "inline-flex" }}>
-                  <CollorSample fill={stroke} />
+                  <ColorSample fill={stroke} />
                   <button
                     name="stroke"
                     onClick={handleOpenColorPanel}
@@ -174,7 +160,7 @@ function Appearance({ freezed, data, onChange }: Props): JSX.Element {
               <td>textColor</td>
               <td>
                 <div style={{ display: "inline-flex" }}>
-                  <CollorSample fill={textColor} />
+                  <ColorSample fill={textColor} />
                   <button
                     name="textColor"
                     onClick={handleOpenColorPanel}
@@ -244,7 +230,7 @@ function Appearance({ freezed, data, onChange }: Props): JSX.Element {
             </tr>
           )} */}
         </table>
-      </PropsView>
+      </View>
     </>
   );
 }

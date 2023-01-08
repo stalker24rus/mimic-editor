@@ -1,6 +1,6 @@
 import { isNumeric } from "../../../../../../constants/functions/isNumeric";
-import InputField from "../InputField";
-import PropsView from "../PropsView";
+import InputField from "../../../../../../ui/InputField";
+import View from "../View";
 
 function Custom({ freezed, data, onChange }) {
   const handleChange = (ev) => {
@@ -14,7 +14,7 @@ function Custom({ freezed, data, onChange }) {
 
   return (
     <>
-      <PropsView title="Доп. свойства">
+      <View title="Доп. свойства">
         {Object.keys(data).map((keyName, i) => (
           <tr key={i}>
             <td>{keyName}: </td>
@@ -30,7 +30,7 @@ function Custom({ freezed, data, onChange }) {
             </td>
           </tr>
         ))}
-      </PropsView>
+      </View>
     </>
   );
 }
