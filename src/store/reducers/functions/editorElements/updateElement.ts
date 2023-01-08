@@ -1,5 +1,5 @@
 import { merge } from "lodash";
-import { MimicElementProps, Attributes } from "../../../../models/Editor";
+import { IMimicElement, Attributes } from "../../../../models/Editor";
 
 interface Props {
   attributes: Attributes;
@@ -7,7 +7,7 @@ interface Props {
 
 const updateElement =
   ({ attributes }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const mergedElement = { ...merge({}, object, { attributes }) };
     object = { ...mergedElement };
   };

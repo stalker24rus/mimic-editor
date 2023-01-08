@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { MIMIC } from "../../../../constants/literals";
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 import {
   changeElementAngle,
   endDoingChanges,
@@ -25,7 +25,7 @@ interface DispatchProps {
 }
 
 interface OwnProps {
-  component: MimicElementProps;
+  component: IMimicElement;
   children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
@@ -58,7 +58,7 @@ function MoverBox(props: Props): JSX.Element {
   const [topLeftPoint] = points;
 
   const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const point: PointFromat = {
+    const point: IPoint = {
       x: ev.pageX,
       y: ev.pageY,
     };
@@ -66,7 +66,7 @@ function MoverBox(props: Props): JSX.Element {
   };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
-    const movement: PointFromat = {
+    const movement: IPoint = {
       y: ev.movementY,
       x: ev.movementX,
     };

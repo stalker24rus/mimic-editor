@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 import {
   endDoingChanges,
   moveElementGroup,
@@ -12,7 +12,7 @@ import { useGetBoxFromElements } from "../../Hooks/useGetBoxByMultiPoints";
 
 interface StateProps {
   selected: number[];
-  elements: MimicElementProps[];
+  elements: IMimicElement[];
 }
 
 interface DispatchProps {
@@ -63,7 +63,7 @@ function GroupMover(props: Props): JSX.Element {
   const handlePointerMove = (ev) => {
     if (isDragging) {
       const { movementX, movementY } = ev;
-      const movement: PointFromat = {
+      const movement: IPoint = {
         x: movementX,
         y: movementY,
       };

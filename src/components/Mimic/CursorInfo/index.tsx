@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { PointFromat } from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
 import { selectViewPosition } from "../../../store/selectors/editorState";
 
 interface StateProps {
-  viewPosition: PointFromat;
+  viewPosition: IPoint;
 }
 
 interface DispatchProps {}
@@ -26,7 +26,7 @@ function mapDispatchToProps() {
 function CursorInfo(props: Props): JSX.Element {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
-  const indent: PointFromat = {
+  const indent: IPoint = {
     x: 10,
     y: 10,
   };

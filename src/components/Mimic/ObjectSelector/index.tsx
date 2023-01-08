@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { MIMIC } from "../../../constants/literals";
-import { MimicElementProps, PointFromat } from "../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../models/Editor";
 import { correctPoint } from "../../../store/actionCreators/editorElements";
 import {
   selectElement,
@@ -19,10 +19,10 @@ import GroupMover from "./GroupMover";
 import SelectionRect from "./SelectionRect";
 
 interface StateProps {
-  viewPosition: PointFromat;
+  viewPosition: IPoint;
   selectionDisabled: boolean;
   selected: number[];
-  elements: MimicElementProps[];
+  elements: IMimicElement[];
 }
 
 interface DispatchProps {
@@ -54,7 +54,7 @@ function mapDispatchToProps() {
   };
 }
 
-const defaultPoints: [PointFromat, PointFromat] = [
+const defaultPoints: [IPoint, IPoint] = [
   { x: 0, y: 0 },
   { x: 0, y: 0 },
 ];

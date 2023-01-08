@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { IChangesData, MimicElementProps } from "../../../../models/Editor";
+import { IChangesData, IMimicElement } from "../../../../models/Editor";
 import { changeAttributes } from "../../../../store/actionCreators/editorElements";
 import {
   selectMimic,
@@ -11,7 +11,7 @@ import PropsPanel from "./components/PropsPanel";
 
 interface IStateProps {
   selected: number[];
-  mimic: MimicElementProps;
+  mimic: IMimicElement;
 }
 
 interface IDispatchProps {
@@ -38,12 +38,10 @@ function mapDispatchToProps() {
 function Properties(props: IProps): JSX.Element {
   const { selected, mimic } = props;
 
-  const [element, setElement] = useState<MimicElementProps | undefined>(
-    undefined
-  );
+  const [element, setElement] = useState<IMimicElement | undefined>(undefined);
 
   useEffect(() => {
-    function returnElement(id: number, object: MimicElementProps) {
+    function returnElement(id: number, object: IMimicElement) {
       if (object.attributes.general.id === id) {
         return object;
       } else {

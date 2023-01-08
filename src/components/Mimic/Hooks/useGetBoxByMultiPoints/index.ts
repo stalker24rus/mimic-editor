@@ -1,4 +1,4 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 import { getAreaPointsByHWP } from "../../../../store/reducers/functions/getAreaPointsByHWP";
 import rotateElementPoints from "../../../../store/reducers/functions/rotateElementPoints";
 
@@ -9,7 +9,7 @@ function useGetBoxByMultiPoints(): [Function] {
    * The function calculates the bounds of a rectangle by internal points
    * @param points
    */
-  function func(points: PointFromat[]): FuncResult {
+  function func(points: IPoint[]): FuncResult {
     let minX: number;
     let maxX: number;
     let minY: number;
@@ -55,7 +55,7 @@ function useGetBoxByMultiPoints(): [Function] {
 
 export function useGetBoxFromElements(): [Function] {
   //TODO it remove
-  function func(elements: MimicElementProps[]): FuncResult {
+  function func(elements: IMimicElement[]): FuncResult {
     let minX: number;
     let maxX: number;
     let minY: number;

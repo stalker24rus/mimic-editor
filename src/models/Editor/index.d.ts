@@ -4,13 +4,13 @@ export type HEX = `#${string}`;
 export type CLASS_NAMED = `${string}`;
 
 //FIXME from PointFromat to PointFormat
-export interface PointFromat {
+export interface IPoint {
   x: number;
   y: number;
 }
 
 export type LineAttributes = {
-  points: PointFromat[];
+  points: IPoint[];
   stroke: string;
   strokeWidth: number;
 };
@@ -20,7 +20,7 @@ export type Properties = {
   tag?: string;
 };
 
-type ElementType =
+export type ElementType =
   | "MAIN_FRAME"
   | "BUTTON"
   | "LINE"
@@ -28,10 +28,10 @@ type ElementType =
   | "POLYLINE"
   | "GROUP";
 
-export type MimicElementProps = {
+export type IMimicElement = {
   type: ElementType;
   attributes: Attributes;
-  children?: Array<MimicElementProps>;
+  children?: Array<IMimicElement>;
   freezed?: boolean;
   layer?: number; //TODO remove
 };
@@ -90,7 +90,7 @@ export type FontType = {
 };
 
 export type PositionType = {
-  points?: PointFromat[];
+  points?: IPoint[];
   angle?: number;
   width?: number;
   height?: number;
@@ -135,16 +135,12 @@ export type AnimationType = {
   appearence: AppearenceType;
 };
 
-// export const PlaceRoot: string = "root";
-
-// export const PlaceInner: string = "inner";
-
 export type PlaceOperation = "root" | "inner";
 
 export type StackHistoryRecord = {
   action: string;
-  prevState?: MimicElementProps | undefined;
-  nextState?: MimicElementProps;
+  prevState?: IMimicElement | undefined;
+  nextState?: IMimicElement;
   place: PlaceOperation;
 };
 
@@ -162,13 +158,13 @@ export type BaseHandlers = {
 };
 
 export interface ComponentProps extends BaseHandlers {
-  component: MimicElementProps;
+  component: IMimicElement;
   onClick?: Function;
   newElement?: boolean;
 }
 
 export interface BoxProps extends BaseHandlers {
-  component: MimicElementProps;
+  component: IMimicElement;
   isSelected: boolean;
   children: (props: ComponentProps) => JSX.Element;
 }
@@ -178,7 +174,6 @@ export interface BoxProps extends BaseHandlers {
  */
 
 export type BaseCanvasHandlers = {
-  //onCreateElement: Function;
   onSetAttributes: Function;
   onPointerDown: Function;
   onPointerMove: Function;
@@ -190,14 +185,6 @@ export type CanvasSettings = {
   height: number;
   background: string;
 };
-
-// export type EDIT = EDITOR_MODE_EDIT; //"EDIT";
-// export type CREATE = "CREATE";
-// export type OPERATION = "OPERATION";
-// export type CanvasMode =
-//   | "EDITOR_MODE_EDIT"
-//   | "EDITOR_MODE_CREATE"
-//   | "EDITOR_MODE_OPERATION";
 
 type EditorModeProps =
   | "EDITOR_MODE_EDIT"
@@ -212,7 +199,7 @@ export type MimicCanvasStorage = {
 export type ElHistory = {
   index: Number;
   actions: [any];
-  history: [MimicElementProps[]];
+  history: [IMimicElement[]];
   past: [];
   present: [];
   future: [];
@@ -220,8 +207,7 @@ export type ElHistory = {
 
 export type MimicStorage = {
   canvas: MimicCanvasStorage;
-  frame: MimicElementProps;
-  //history: ElHistory;
+  frame: IMimicElement;
 };
 
 export type CanvasMimicProps = {
@@ -231,7 +217,6 @@ export type CanvasMimicProps = {
 
 export type BaseElementOutput = {
   attributes: InitAttributes | undefined;
-  //service: Service | undefined;
 };
 
 export interface CanvasNewElement extends BaseElementOutput {

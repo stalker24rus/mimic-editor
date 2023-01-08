@@ -1,7 +1,7 @@
 import lodash from "lodash";
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 import {
   changePointPosition,
@@ -24,7 +24,7 @@ interface DispatchProps {
 }
 
 interface OwnProps {
-  component: MimicElementProps;
+  component: IMimicElement;
   children?: (props: any) => JSX.Element; //JSX.Element; //React.ReactElement;
 }
 
@@ -70,7 +70,7 @@ function MultiObjectBox(props: Props): JSX.Element {
 
     const pointNo = parseInt(target.className.split(".")[3]);
     if (pointNo >= 0) {
-      const point: PointFromat = { x: clientX, y: clientY };
+      const point: IPoint = { x: clientX, y: clientY };
       props.onChangePointPosition(id, pointNo, point);
     }
   };
@@ -87,7 +87,7 @@ function MultiObjectBox(props: Props): JSX.Element {
   const handleObjDragMove = (ev: any) => {
     if (isDragging) {
       const { movementX, movementY } = ev;
-      const movement: PointFromat = {
+      const movement: IPoint = {
         x: movementX,
         y: movementY,
       };

@@ -28,8 +28,8 @@ import {
 } from "../../constants/actionTypes/editorElements";
 import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
-import { MimicElementProps } from "../../models/Editor";
-import { demo1JSON } from "../demo/templateJson";
+import { IMimicElement } from "../../models/Editor";
+import { demo1JSON } from "../../constants/demo/templateJson";
 import {
   alignBottom,
   alignHorizon,
@@ -37,7 +37,7 @@ import {
   alignRight,
   alignTop,
   alignVertical,
-} from "./functions/alighElements";
+} from "./functions/editorElements/alighElements";
 import changeAttribute from "./functions/editorElements/changeAttributes";
 // import changeIndexArr from "./functions/changeIndexArray";
 import appendElementPoint from "./functions/editorElements/appendElementPoint";
@@ -49,7 +49,7 @@ import deleteElementLastPoint from "./functions/editorElements/deleteElementLast
 import moveElementsOnBottom from "./functions/editorElements/moveElementsOnBottom";
 import moveElementsOnTop from "./functions/editorElements/moveElementsOnTop";
 import moveElementPoints from "./functions/editorElements/moveElementPoints";
-import mutateElement from "./functions/editorElements/mutateElement";
+import executeElementsRoutine from "./functions/editorElements/executeElementsRoutine";
 import removeSelectedElements from "./functions/editorElements/removeSelectedElements";
 import resizeElement from "./functions/editorElements/resizeElement";
 // import updateElement from "./functions/editorElements/updateElement";
@@ -61,7 +61,7 @@ import getLastGID from "./functions/editorElements/getLastGID";
 import groupElements from "./functions/editorElements/groupElements";
 import unGroupElements from "./functions/editorElements/unGroupElements";
 
-const defaultState: MimicElementProps = {
+const defaultState: IMimicElement = {
   type: ELEMENT_TYPE_FRAME,
   layer: 0,
   attributes: {
@@ -84,17 +84,15 @@ const defaultState: MimicElementProps = {
   children: JSON.parse(demo1JSON),
 };
 
-export default (state = defaultState, action: any): MimicElementProps => {
+export default (state = defaultState, action: any): IMimicElement => {
   switch (action.type) {
     case CREATE_ELEMENT: {
       const { parentId, id, newElement, point } = action.payload;
       const { type, attributes } = newElement;
       const pointsAmount = ElementBase[type].maxPoints;
-
       const root = lodash.cloneDeep(state);
-      // const lastId: number = getLastGID(root.attributes.general.id, root) + 1;
       const func = createElement({ id, type, attributes, point, pointsAmount });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
 
       return { ...root };
     }
@@ -105,7 +103,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       if (selected.length > 0) {
         const root = lodash.cloneDeep(state);
         const func = removeSelectedElements({ selected });
-        mutateElement(parentId || 0, root, func);
+        executeElementsRoutine(parentId || 0, root, func);
         return { ...root };
       } else {
         return state;
@@ -116,7 +114,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = appendElementPoint({ point });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -124,7 +122,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = deleteElementLastPoint();
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -132,7 +130,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, pointNo, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementPoint({ pointNo, point });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -140,7 +138,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, movement } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementPoints({ movement });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -148,7 +146,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { selected, movement } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementPoints({ movement });
-      mutateElement(selected, root, func);
+      executeElementsRoutine(selected, root, func);
       return { ...root };
     }
 
@@ -156,7 +154,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementLastPoint({ point });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -164,7 +162,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementAngle({ point });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -172,7 +170,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, pointName: targetName, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = resizeElement({ targetName, point });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -185,7 +183,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnTop({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -193,7 +191,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnBottom({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -201,7 +199,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnForward({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -209,7 +207,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnBack({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -217,7 +215,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { id, propFamily, name, value } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeAttribute({ propFamily, name, value });
-      mutateElement(id, root, func);
+      executeElementsRoutine(id, root, func);
       return { ...root };
     }
 
@@ -225,7 +223,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignLeft({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -233,7 +231,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignHorizon({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -241,7 +239,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignRight({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -249,7 +247,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignTop({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -257,7 +255,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignVertical({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -265,7 +263,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignBottom({ selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -274,7 +272,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const root = lodash.cloneDeep(state);
       const lastId: number = getLastGID(root.attributes.general.id, root) + 1;
       const func = pasteElements({ elements, id: lastId });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -283,7 +281,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const root = lodash.cloneDeep(state);
       const id = getLastGID(root.attributes.general.id, root) + 1;
       const func = groupElements({ id, selected });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -291,7 +289,7 @@ export default (state = defaultState, action: any): MimicElementProps => {
       const { parentId, id } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = unGroupElements({ id });
-      mutateElement(parentId || 0, root, func);
+      executeElementsRoutine(parentId || 0, root, func);
       return { ...root };
     }
 

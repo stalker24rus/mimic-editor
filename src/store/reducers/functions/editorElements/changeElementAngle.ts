@@ -1,12 +1,12 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 interface Props {
-  point: PointFromat;
+  point: IPoint;
 }
 
 const changeElementAngle =
   ({ point }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const topLeft = object?.attributes.position.points[0];
     const width = object?.attributes.position.width;
     const height = object?.attributes.position.height;

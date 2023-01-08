@@ -22,12 +22,13 @@ import {
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
   ELEMENT_TYPE_FRAME,
+  ELEMENT_TYPE_GROUP,
 } from "../../constants/literals";
 import {
   CanvasNewElement,
   EditorModeProps,
-  MimicElementProps,
-  PointFromat,
+  IMimicElement,
+  IPoint,
 } from "../../models/Editor";
 import checkIsPointInArea from "./functions/checkIsPointInArea";
 import { getAreaPointsByHWP } from "./functions/getAreaPointsByHWP";
@@ -35,21 +36,36 @@ import rotateElementPoints from "./functions/rotateElementPoints";
 
 type DrawType = number | undefined;
 
-interface Props {
+interface IProps {
   mode: EditorModeProps;
   newElement: CanvasNewElement | {};
   drawId: DrawType;
   lastTakenId: number;
-  viewPosition: PointFromat;
-  // currentMimic: MimicElementProps;
+  viewPosition: IPoint;
   selected: number[];
   selectionDisabled: boolean;
-  selectorRect: [PointFromat, PointFromat]; // FIXME
-  copyPasteBuffer: MimicElementProps[];
-  // isMimicTouch: boolean;
+  selectorRect: [IPoint, IPoint]; // FIXME
+  copyPasteBuffer: IMimicElement[];
+  operations?: IOperations;
 }
 
-const defaultState = (): Props => {
+export interface IOperations {
+  canGroup: boolean; // selected > 1
+  canUnGroup: boolean; // if selected === 1 and selection type === GROUP
+  canUndo: boolean; //disabled={!props.past.length}
+  canRedo: boolean; //disabled={!props.future.length}
+  canMoveOnTop: boolean; //disabled={!(props.selected.length >= 1)}
+  canMoveOnForward: boolean; //disabled={props.selected.length !== 1}
+  canMoveOnBottom: boolean; //disabled={!(props.selected.length >= 1)}
+  canMoveOnBack: boolean; //disabled={props.selected.length !== 1}
+  canCopy: boolean; //disabled={props.selected.length === 0}
+  canPaste: boolean; //disabled={props.copyPasteBuffer.length === 0}
+  canEscape: boolean; //disabled={props.selected.length === 0}
+  canSelectAll: boolean; // true
+  canDelete: boolean; //disabled={props.selected.length === 0}
+}
+
+const defaultState = (): IProps => {
   return {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined },
@@ -63,11 +79,25 @@ const defaultState = (): Props => {
       { x: 0, y: 0 },
     ],
     copyPasteBuffer: [],
-    // isMimicTouch: true,
+    operations: {
+      canGroup: false,
+      canUnGroup: false,
+      canUndo: false,
+      canRedo: false,
+      canMoveOnTop: true,
+      canMoveOnForward: false,
+      canMoveOnBottom: true,
+      canMoveOnBack: false,
+      canCopy: true,
+      canPaste: false,
+      canEscape: true,
+      canSelectAll: true,
+      canDelete: false,
+    },
   };
 };
 
-export default (state = defaultState(), action: any): Props => {
+export default (state = defaultState(), action: any): IProps => {
   switch (action.type) {
     case SET_MODE_EDIT: {
       return {
@@ -139,15 +169,6 @@ export default (state = defaultState(), action: any): Props => {
       }
     }
 
-    // case SET_CURRENT_MIMIC: {
-    //   const { mimic } = action.payload;
-    //   if (mimic) {
-    //     return { ...state, currentMimic: mimic };
-    //   } else {
-    //     throw "Invalid playload format.";
-    //   }
-    // }
-
     case SET_VIEW_POSITION: {
       const { point } = action.payload;
       if (point) {
@@ -158,8 +179,31 @@ export default (state = defaultState(), action: any): Props => {
     }
 
     case SET_SELECTED_ELEMENTS: {
-      const { elements } = action.payload;
-      return { ...state, selected: elements };
+      const { selected, elements } = action.payload;
+      let isSelectedGroup = false;
+
+      for (let i = 0; i < elements.length; i++) {
+        const element: IMimicElement = elements[i];
+        if (
+          element.attributes.general.id === selected[0] &&
+          element.type === ELEMENT_TYPE_GROUP
+        ) {
+          isSelectedGroup = true;
+        }
+      }
+
+      const operations = {
+        ...state.operations,
+        canGroup: selected.length > 1,
+        canUnGroup: isSelectedGroup,
+        canMoveOnTop: selected.length > 0,
+        canMoveOnForward: selected.length === 1,
+        canMoveOnBottom: selected.length > 0,
+        canMoveOnBack: selected.length === 1,
+        canCopy: selected.length > 0,
+        canDelete: selected.length > 0,
+      };
+      return { ...state, selected, operations };
     }
 
     case DISABLE_SELECTION: {
@@ -174,16 +218,17 @@ export default (state = defaultState(), action: any): Props => {
       const { area, elements } = action.payload;
 
       const selected = [];
+      let isSelectedGroup = false;
 
       for (let i = 0; i < elements.length; i++) {
-        const element: MimicElementProps = elements[i];
+        const element: IMimicElement = elements[i];
         const { width, height, angle, points } = element.attributes.position;
 
         let tempPoints = [...points];
 
         let innerPoints = 0;
 
-        if (width && height && angle !== undefined && points.length === 1) {
+        if (width && height !== undefined && points.length === 1) {
           const center = {
             x: tempPoints[0].x + width / 2,
             y: tempPoints[0].y + height / 2,
@@ -191,7 +236,7 @@ export default (state = defaultState(), action: any): Props => {
           tempPoints = rotateElementPoints(
             center,
             getAreaPointsByHWP(width, height, tempPoints[0]),
-            angle
+            angle | 0
           );
         }
 
@@ -205,10 +250,25 @@ export default (state = defaultState(), action: any): Props => {
 
         if (innerPoints === tempPoints.length) {
           selected.push(element.attributes.general.id);
+          isSelectedGroup = element.type === ELEMENT_TYPE_GROUP;
         }
       }
 
-      return { ...state, selected: [...selected] };
+      isSelectedGroup = isSelectedGroup && selected.length === 1;
+
+      const operations = {
+        ...state.operations,
+        canGroup: elements.length > 1,
+        canUnGroup: isSelectedGroup,
+        canMoveOnTop: elements.length > 0,
+        canMoveOnForward: elements.length === 1,
+        canMoveOnBottom: elements.length > 0,
+        canMoveOnBack: elements.length === 1,
+        canCopy: elements.length > 0,
+        canDelete: elements.length > 0,
+      };
+
+      return { ...state, selected: [...selected], operations };
     }
 
     case TOGGLE_ELEMENT_SELECTION: {
@@ -228,24 +288,19 @@ export default (state = defaultState(), action: any): Props => {
       const copiedArr = [];
 
       for (let i = 0; i < elements.length; i++) {
-        const element: MimicElementProps = elements[i];
+        const element: IMimicElement = elements[i];
         if (selected.includes(element.attributes.general.id)) {
           copiedArr.push(lodash.cloneDeep(element));
         }
       }
 
-      return { ...state, copyPasteBuffer: copiedArr };
+      const operations = {
+        ...state.operations,
+        canPaste: copiedArr.length > 0,
+      };
+
+      return { ...state, copyPasteBuffer: copiedArr, operations };
     }
-
-    //*********************************************** */
-    // case DISABLE_TOUCH: {
-    //   return { ...state, isMimicTouch: false };
-    // }
-
-    // case ENABLE_TOUCH: {
-    //   return { ...state, isMimicTouch: true };
-    // }
-    //************************************************ */
 
     default:
       return state;

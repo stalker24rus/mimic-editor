@@ -1,12 +1,12 @@
 import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 import useDrawElement, {
   useDrawElementWithoutBox,
 } from "../../Hooks/useDrawElement";
 
 interface Props {
   disablePointerEvents?: boolean;
-  component: MimicElementProps;
+  component: IMimicElement;
 }
 
 export default function Group(props: Props): JSX.Element {
@@ -36,7 +36,7 @@ export default function Group(props: Props): JSX.Element {
           position: "relative",
         }}
       >
-        {component.children?.map((element: MimicElementProps) => {
+        {component.children?.map((element: IMimicElement) => {
           return DrawFabric(element);
         })}
       </div>

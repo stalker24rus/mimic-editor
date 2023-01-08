@@ -1,6 +1,6 @@
 import lodash from "lodash";
-import { MimicElementProps, PointFromat } from "../../../models/Editor";
-import rotateElementPoints from "./rotateElementPoints";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
+import rotateElementPoints from "../rotateElementPoints";
 
 type FuncResult = [top: number, left: number, width: number, height: number];
 
@@ -11,8 +11,8 @@ interface AlignProps {
 export function getAreaPointsByHWP(
   width: number,
   height: number,
-  point: PointFromat
-): PointFromat[] {
+  point: IPoint
+): IPoint[] {
   return [
     point,
     { x: point.x + width, y: point.y },
@@ -21,7 +21,7 @@ export function getAreaPointsByHWP(
   ];
 }
 
-function getBoxFromElements(elements: MimicElementProps[]): FuncResult {
+function getBoxFromElements(elements: IMimicElement[]): FuncResult {
   let minX: number;
   let maxX: number;
   let minY: number;
@@ -92,7 +92,7 @@ function getBoxFromElements(elements: MimicElementProps[]): FuncResult {
 
 export const alignLeft =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -100,7 +100,7 @@ export const alignLeft =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);
@@ -132,7 +132,7 @@ export const alignLeft =
 
 export const alignRight =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -140,7 +140,7 @@ export const alignRight =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);
@@ -184,7 +184,7 @@ export const alignRight =
 
 export const alignTop =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -192,7 +192,7 @@ export const alignTop =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);
@@ -224,7 +224,7 @@ export const alignTop =
 
 export const alignBottom =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -232,7 +232,7 @@ export const alignBottom =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);
@@ -276,7 +276,7 @@ export const alignBottom =
 
 export const alignHorizon =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -284,7 +284,7 @@ export const alignHorizon =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);
@@ -322,7 +322,7 @@ export const alignHorizon =
 
 export const alignVertical =
   ({ selected }: AlignProps) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const elements = object.children;
 
     if (selected.length > 1) {
@@ -330,7 +330,7 @@ export const alignVertical =
       const slavesId = selected.slice(1);
 
       const index = elements.findIndex(
-        (element: MimicElementProps) => element.attributes.general.id === baseId
+        (element: IMimicElement) => element.attributes.general.id === baseId
       );
 
       const baseElementRect = getBoxFromElements([elements[index]]);

@@ -10,7 +10,7 @@ import {
   TOGGLE_ELEMENT_SELECTION,
 } from "../../constants/actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
-import { ElementType, PointFromat } from "../../models/Editor";
+import { ElementType, IPoint } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
 import { selectSelectedElements } from "../selectors/editorState";
 
@@ -30,17 +30,18 @@ export const editorSetLastTakenId = (id: number) => (dispatch: Function) => {
   dispatch({ type: SET_LAST_TAKEN_ID, payload: { id } });
 };
 
-export const setViewPosition = (point: PointFromat) => (dispatch: Function) => {
+export const setViewPosition = (point: IPoint) => (dispatch: Function) => {
   dispatch({ type: SET_VIEW_POSITION, payload: { point } });
 };
 
-export const selectElement = (elements: number[]) => (dispatch: Function) => {
-  dispatch({ type: SET_SELECTED_ELEMENTS, payload: { elements } });
-};
+export const selectElement =
+  (selected: number[]) => (dispatch: Function, getState: Function) => {
+    const elements = selectEditorElements(getState());
+    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected, elements } });
+  };
 
 export const selectElements =
-  (area: [PointFromat, PointFromat]) =>
-  (dispatch: Function, getState: Function) => {
+  (area: [IPoint, IPoint]) => (dispatch: Function, getState: Function) => {
     const elements = selectEditorElements(getState());
 
     dispatch({

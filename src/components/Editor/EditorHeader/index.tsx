@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { APP_VERSION, HEADER_HEIGHT } from "../../../constants/literals";
-import { MimicElementProps } from "../../../models/Editor";
+import { IMimicElement } from "../../../models/Editor";
 import {
   deleteSelectedElements,
   groupElements,
@@ -18,16 +18,19 @@ import {
   copyElements,
   escapeElements,
 } from "../../../store/actionCreators/editorState";
+import { IOperations } from "../../../store/reducers/editorState";
 import {
   selectSelectedElements,
   selectCopyPasteBuffer,
+  selectEditorOperations,
 } from "../../../store/selectors/editorState";
 
 interface StateProps {
   future: [any];
   past: [any];
   selected: number[] | undefined;
-  copyPasteBuffer: MimicElementProps[];
+  copyPasteBuffer: IMimicElement[];
+  operations: IOperations;
 }
 
 interface DispatchProps {
@@ -57,6 +60,7 @@ function mapStateToProps(store) {
     past: store.undoredobleEditorElements.past,
     selected: selectSelectedElements(store),
     copyPasteBuffer: selectCopyPasteBuffer(store),
+    operations: selectEditorOperations(store),
   };
 }
 
@@ -374,7 +378,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handleGroupElements}
-                    disabled={!(props.selected.length > 1)}
+                    disabled={!props.operations.canGroup}
                   >
                     Группировать
                   </button>
@@ -385,7 +389,7 @@ const EditorHeader = (props: Props): JSX.Element => {
                       width: "100%",
                     }}
                     onClick={handleUnGroupElements}
-                    disabled={!(props.selected.length === 1)}
+                    disabled={!props.operations.canUnGroup}
                   >
                     Разгруппировать
                   </button>

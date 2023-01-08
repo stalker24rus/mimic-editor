@@ -1,4 +1,4 @@
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface ChangesProp {
   propFamily: string;
@@ -8,7 +8,7 @@ interface ChangesProp {
 
 const changeAttribute =
   ({ propFamily, name, value }: ChangesProp) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     object.attributes[propFamily][name] = value;
   };
 

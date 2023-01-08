@@ -1,12 +1,12 @@
 import lodash from "lodash";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   id: number;
-  elements: MimicElementProps[];
+  elements: IMimicElement[];
 }
 
-function changeId(id: number, object: MimicElementProps) {
+function changeId(id: number, object: IMimicElement) {
   object.attributes.general.id = id;
   id++;
   for (let i = 0; i < object.children.length; i++) {
@@ -17,7 +17,7 @@ function changeId(id: number, object: MimicElementProps) {
 
 const pasteElements =
   ({ elements, id }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     let lastId = id;
     let newElements = lodash.cloneDeep(elements);
 

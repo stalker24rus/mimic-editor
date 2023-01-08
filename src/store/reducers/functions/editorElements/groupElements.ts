@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import { ELEMENT_TYPE_GROUP } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 import { getAreaPointsByHWP } from "../getAreaPointsByHWP";
 import rotateElementPoints from "../rotateElementPoints";
 
@@ -11,7 +11,7 @@ interface Props {
 
 type FuncResult = { y: number; x: number; width: number; height: number };
 
-export function getBoxFromElements(elements: MimicElementProps[]): FuncResult {
+export function getBoxFromElements(elements: IMimicElement[]): FuncResult {
   let minX: number;
   let maxX: number;
   let minY: number;
@@ -79,12 +79,10 @@ export function getBoxFromElements(elements: MimicElementProps[]): FuncResult {
 
 const groupElements =
   ({ id, selected }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     // 1 get group element and clean objects
-    const rawGroup = lodash.remove(
-      object.children,
-      (element: MimicElementProps) =>
-        selected.includes(element.attributes.general.id)
+    const rawGroup = lodash.remove(object.children, (element: IMimicElement) =>
+      selected.includes(element.attributes.general.id)
     );
 
     // 2 calculate group rectangle
@@ -103,7 +101,7 @@ const groupElements =
       rawGroup[i].freezed = true;
     }
 
-    const newGroupElement: MimicElementProps = {
+    const newGroupElement: IMimicElement = {
       type: ELEMENT_TYPE_GROUP,
       attributes: {
         appearance: {

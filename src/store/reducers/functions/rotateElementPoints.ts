@@ -1,9 +1,9 @@
-import { PointFromat } from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
 import rotate from "./rotate";
 
 export default function rotateElementPoints(
-  center: PointFromat,
-  points: PointFromat[],
+  center: IPoint,
+  points: IPoint[],
   angle: number
 ) {
   let rotatedPoints = [];

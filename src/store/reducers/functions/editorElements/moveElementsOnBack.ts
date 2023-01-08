@@ -1,4 +1,4 @@
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 import changeIndexArr from "../changeIndexArray";
 
 interface Props {
@@ -7,7 +7,7 @@ interface Props {
 
 const moveElementsOnBack =
   ({ selected }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const newChildrenState = [...object.children];
     const selectedArr = [...selected];
 

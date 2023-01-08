@@ -36,11 +36,7 @@ import {
   SET_MODE_EDIT,
 } from "../../constants/actionTypes/editorState";
 import { REDO, UNDO } from "../../constants/actionTypes/undoRedo";
-import {
-  IChangesData,
-  MimicElementProps,
-  PointFromat,
-} from "../../models/Editor";
+import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
 import {
   selectCopyPasteBuffer,
   selectNewElement,
@@ -53,10 +49,7 @@ import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
 import getLastGID from "../reducers/functions/editorElements/getLastGID";
 
 // TODO ??? detach to other file
-export function correctPoint(
-  point: PointFromat,
-  correction: PointFromat
-): PointFromat {
+export function correctPoint(point: IPoint, correction: IPoint): IPoint {
   return {
     x: point.x - correction.x,
     y: point.y - correction.y,
@@ -64,7 +57,7 @@ export function correctPoint(
 }
 
 export const changeElementAngle =
-  (id: number, point: PointFromat) => (dispatch: Function) => {
+  (id: number, point: IPoint) => (dispatch: Function) => {
     dispatch({
       type: CHANGE_ELEMENT_ANGLE,
       payload: { id, point },
@@ -83,7 +76,7 @@ export const changeElementAngle =
 //   };
 
 export const resizeElement =
-  (id: number, pointName: string, point: PointFromat) =>
+  (id: number, pointName: string, point: IPoint) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
@@ -95,7 +88,7 @@ export const resizeElement =
   };
 
 export const changePointPosition =
-  (id: number, pointNo: number, point: PointFromat) =>
+  (id: number, pointNo: number, point: IPoint) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
@@ -107,7 +100,7 @@ export const changePointPosition =
   };
 
 export const moveElementPoints =
-  (id: number, movement: PointFromat) => (dispatch: Function) => {
+  (id: number, movement: IPoint) => (dispatch: Function) => {
     dispatch({
       type: MOVE_ELEMENT_POINTS,
       payload: { id, movement },
@@ -116,7 +109,7 @@ export const moveElementPoints =
   };
 
 export const moveElementGroup =
-  (movement: PointFromat) => (dispatch: Function, getState: Function) => {
+  (movement: IPoint) => (dispatch: Function, getState: Function) => {
     // selected: number[],
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -197,14 +190,14 @@ export const endDoingChanges = () => (dispatch: Function) => {
 };
 
 export const createElement =
-  (point: PointFromat) => (dispatch: Function, getState: Function) => {
+  (point: IPoint) => (dispatch: Function, getState: Function) => {
     // ADD FUNCTION FOR GET A new ID
-    const root: MimicElementProps = selectMimic(getState());
+    const root: IMimicElement = selectMimic(getState());
     const newLastTakenId = getLastGID(root.attributes.general.id, root) + 1;
 
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
-    const newElement: MimicElementProps = selectNewElement(getState());
+    const newElement: IMimicElement = selectNewElement(getState());
 
     dispatch({
       type: CREATE_ELEMENT,
@@ -246,12 +239,11 @@ export const deleteSelectedElements =
   };
 
 export const appendPointToElement =
-  (id: number, point: PointFromat) =>
-  (dispatch: Function, getState: Function) => {
+  (id: number, point: IPoint) => (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
 
-    const element: MimicElementProps = selectElement(getState(), id);
+    const element: IMimicElement = selectElement(getState(), id);
 
     if (element) {
       const pointAmount = ElementBase[element.type].maxPoints;
@@ -275,8 +267,7 @@ export const appendPointToElement =
   };
 
 export const drawingElement =
-  (id: number, point: PointFromat) =>
-  (dispatch: Function, getState: Function) => {
+  (id: number, point: IPoint) => (dispatch: Function, getState: Function) => {
     const viewPosition = selectViewPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({

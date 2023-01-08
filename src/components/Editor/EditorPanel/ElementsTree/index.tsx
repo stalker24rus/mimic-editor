@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 import { selectElement } from "../../../../store/actionCreators/editorState";
 import {
   selectEditorElements,
@@ -12,7 +12,7 @@ import "./index.css";
 interface StateProps {
   selected: number[];
   // elements: MimicElementProps[];
-  mimic: MimicElementProps;
+  mimic: IMimicElement;
 }
 
 interface DispatchProps {
@@ -80,7 +80,7 @@ function RecursiveTree({ element, selected, onSelectElement }): JSX.Element {
         {element.type} - {element.attributes.general.name}
       </div>
       {element.children.length > 0 &&
-        element.children.map((child: MimicElementProps) => (
+        element.children.map((child: IMimicElement) => (
           <div className="flex inline">
             <div className="w-8 text-right">{""}</div>
             <RecursiveTree

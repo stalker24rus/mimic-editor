@@ -1,13 +1,10 @@
 import { ELEMENT_TYPE_POLYGON, MIMIC } from "../../../../constants/literals";
-import {
-  BaseElementOutput,
-  MimicElementProps,
-} from "../../../../models/Editor";
+import { BaseElementOutput, IMimicElement } from "../../../../models/Editor";
 import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
-  component: MimicElementProps;
+  component: IMimicElement;
   onPointerMove: Function;
   onPointerUp: Function;
   onPointerDown: Function;
@@ -110,7 +107,7 @@ export const startState: BaseElementOutput = {
 };
 
 export const Demo = () => {
-  const demoState: MimicElementProps = {
+  const demoState: IMimicElement = {
     type: "POLYGON",
     attributes: {
       general: {

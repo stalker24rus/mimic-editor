@@ -1,4 +1,4 @@
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 function checkId(searcedId: number | number[], objectId: number) {
   if (Array.isArray(searcedId)) {
@@ -12,22 +12,21 @@ function checkId(searcedId: number | number[], objectId: number) {
   return false;
 }
 
-const mutateElement = (
-  searchedId: number | number[],
-  object: MimicElementProps,
-  func: Function // Mutable
+const executeElementsRoutine = (
+  targetId: number | number[],
+  object: IMimicElement,
+  routine: Function
 ) => {
-  if (checkId(searchedId, object.attributes.general.id)) {
-    // object.attributes.general.id === searchedId
-    func(object);
+  if (checkId(targetId, object.attributes.general.id)) {
+    routine(object);
     return;
   } else {
     for (let i = 0; i < object.children.length; i++) {
       const objectChild = object.children[i];
-      mutateElement(searchedId, objectChild, func);
+      executeElementsRoutine(targetId, objectChild, routine);
     }
     return;
   }
 };
 
-export default mutateElement;
+export default executeElementsRoutine;

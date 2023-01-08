@@ -5,7 +5,7 @@ import {
   ELEMENT_TYPE_POLYGON,
   ELEMENT_TYPE_POLYLINE,
 } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 import Button from "../../MimicBaseElements/Button";
 import Line from "../../MimicBaseElements/Line";
 import Polygon from "../../MimicBaseElements/Polygon";
@@ -25,7 +25,7 @@ interface BaseProps {
 }
 
 interface Props {
-  component: MimicElementProps;
+  component: IMimicElement;
   onPointerMove: Function;
   onPointerUp: Function;
   onPointerDown: Function;
@@ -78,7 +78,7 @@ export const ElementBase: BaseProps = {
 // }
 
 export default function useDrawElement(): [Function] {
-  function draw(active: boolean, component: MimicElementProps): JSX.Element {
+  function draw(active: boolean, component: IMimicElement): JSX.Element {
     const { type } = component;
     const { id } = component.attributes.general;
 
@@ -97,7 +97,7 @@ export default function useDrawElement(): [Function] {
 }
 
 export function useDrawElementWithoutBox(): [Function] {
-  function draw(component: MimicElementProps): JSX.Element {
+  function draw(component: IMimicElement): JSX.Element {
     const { type } = component;
     const { id } = component.attributes.general;
 

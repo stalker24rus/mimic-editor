@@ -1,12 +1,12 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 interface Props {
-  movement: PointFromat;
+  movement: IPoint;
 }
 
 const moveElementPoints =
   ({ movement }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const newPoints = object.attributes.position.points.map(function (element) {
       return {
         x: element.x + movement.x,

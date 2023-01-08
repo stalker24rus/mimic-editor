@@ -1,7 +1,7 @@
 import {
-  MimicElementProps,
+  IMimicElement,
   ElementType,
-  PointFromat,
+  IPoint,
   Attributes,
 } from "../../../../models/Editor";
 
@@ -9,13 +9,13 @@ interface Props {
   id: number;
   type: ElementType;
   attributes: Attributes;
-  point: PointFromat;
+  point: IPoint;
   pointsAmount: number;
 }
 
 const createElement =
   ({ id, type, attributes, point, pointsAmount }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const element = {
       type: type,
       layer: id,

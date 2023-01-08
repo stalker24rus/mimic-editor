@@ -1,4 +1,4 @@
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   selected: number[];
@@ -6,7 +6,7 @@ interface Props {
 
 const moveElementsOnBottom =
   ({ selected }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const newState = [];
     const movementArr = [];
     const selectedArr = [...selected];

@@ -1,14 +1,14 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 import resizeBox from "../resizeBox";
 
 interface Props {
   targetName: string;
-  point: PointFromat;
+  point: IPoint;
 }
 
 const resizeElement =
   ({ targetName, point }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const { points, width, height, angle } = object.attributes.position;
     const { x, y } = points[0];
 

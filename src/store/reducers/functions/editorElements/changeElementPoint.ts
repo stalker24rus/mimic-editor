@@ -1,13 +1,13 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 interface Props {
   pointNo: number;
-  point: PointFromat;
+  point: IPoint;
 }
 
 const changeElementPoint =
   ({ pointNo, point }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     object.attributes.position.points[pointNo] = { ...point };
   };
 

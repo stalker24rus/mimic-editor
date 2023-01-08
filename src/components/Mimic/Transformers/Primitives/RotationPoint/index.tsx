@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { MimicElementProps } from "../../../../../models/Editor";
+import { IMimicElement } from "../../../../../models/Editor";
 import Point from "../Point";
 
 interface Props {
-  component: MimicElementProps;
+  component: IMimicElement;
   onPointerDown: Function;
   onPointerUp: Function;
   onPointerMove: Function;

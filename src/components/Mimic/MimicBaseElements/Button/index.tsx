@@ -1,12 +1,9 @@
 import { ELEMENT_TYPE_BUTTON, MIMIC } from "../../../../constants/literals";
-import {
-  BaseElementOutput,
-  MimicElementProps,
-} from "../../../../models/Editor";
+import { BaseElementOutput, IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   disablePointerEvents?: boolean;
-  component: MimicElementProps;
+  component: IMimicElement;
 }
 
 export default function Button(props: Props): JSX.Element {
@@ -88,7 +85,7 @@ export const startState: BaseElementOutput = {
 };
 
 export const Demo = () => {
-  const demoState: MimicElementProps = {
+  const demoState: IMimicElement = {
     type: "BUTTON",
     attributes: {
       general: {

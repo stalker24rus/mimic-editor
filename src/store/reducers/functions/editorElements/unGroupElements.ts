@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import { ELEMENT_TYPE_GROUP } from "../../../../constants/literals";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   id: number;
@@ -8,17 +8,17 @@ interface Props {
 
 const unGroupElements =
   ({ id }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const [group] = lodash.remove(
       object.children,
-      (element: MimicElementProps) =>
+      (element: IMimicElement) =>
         element.attributes.general.id === id &&
         element.type === ELEMENT_TYPE_GROUP
     );
 
     console.log("group >>> ", group);
 
-    const elements: MimicElementProps[] = [];
+    const elements: IMimicElement[] = [];
 
     if (group.children.length > 0) {
       for (let i = 0; i < group.children.length; i++) {

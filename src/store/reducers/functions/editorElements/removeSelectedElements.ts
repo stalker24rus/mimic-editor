@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   selected: number[];
@@ -7,8 +7,8 @@ interface Props {
 
 const removeSelectedElements =
   ({ selected }: Props) =>
-  (object: MimicElementProps) => {
-    lodash.remove(object.children, (element: MimicElementProps) =>
+  (object: IMimicElement) => {
+    lodash.remove(object.children, (element: IMimicElement) =>
       selected.includes(element.attributes.general.id)
     );
   };

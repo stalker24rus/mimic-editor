@@ -1,9 +1,6 @@
-import { MimicElementProps } from "../../../../models/Editor";
+import { IMimicElement } from "../../../../models/Editor";
 
-export default function getLastGID(
-  id: number,
-  object: MimicElementProps
-): number {
+export default function getLastGID(id: number, object: IMimicElement): number {
   let tempId = id;
 
   if (object.attributes.general.id > tempId) {

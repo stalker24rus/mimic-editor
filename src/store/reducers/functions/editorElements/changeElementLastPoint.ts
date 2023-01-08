@@ -1,15 +1,15 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 interface Props {
-  point: PointFromat;
+  point: IPoint;
 }
 
-const selectElementPointsLength = (element: MimicElementProps) =>
+const selectElementPointsLength = (element: IMimicElement) =>
   element.attributes.position.points.length;
 
 const changeElementLastPoint =
   ({ point }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     const pointsLength = selectElementPointsLength(object);
 
     if (pointsLength > 0) {

@@ -1,12 +1,11 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../constants/literals";
-import { EditorModeProps, MimicElementProps } from "../../models/Editor";
+import { EditorModeProps, IMimicElement } from "../../models/Editor";
 import { setViewPosition } from "../../store/actionCreators/editorState";
 import {
   selectEditorMode,
   selectSelectedElements,
-  // selectIsMimicTouch,
 } from "../../store/selectors/editorState";
 import {
   selectEditorElements,
@@ -14,20 +13,17 @@ import {
 } from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
-import useDrawElement, {
-  useDrawElementWithoutBox,
-} from "./Hooks/useDrawElement";
+import useDrawElement from "./Hooks/useDrawElement";
 import KeyListener from "./KeyListener";
 
 import ObjectSelector from "./ObjectSelector";
 import PointListener from "./PointListener";
 
 interface StateProps {
-  elements: MimicElementProps[];
+  elements: IMimicElement[];
   mode: EditorModeProps;
-  mimic: MimicElementProps;
+  mimic: IMimicElement;
   selected: number[];
-  // isMimicTouch: boolean;
 }
 
 interface DispatchProps {
@@ -44,7 +40,6 @@ function mapStateToProps(store) {
     mode: selectEditorMode(store),
     mimic: selectMimic(store),
     selected: selectSelectedElements(store),
-    // isMimicTouch: selectIsMimicTouch(store),
   };
 }
 
@@ -57,7 +52,7 @@ function mapDispatchToProps() {
 const Mimic = (props: Props): JSX.Element => {
   const { mimic, elements, mode } = props;
 
-  const [DrawFabric] = useDrawElement(); //useDrawElement();
+  const [DrawFabric] = useDrawElement();
 
   function handleResize() {
     const htmlRect = document
@@ -84,7 +79,6 @@ const Mimic = (props: Props): JSX.Element => {
     handleResize();
   };
 
-  // console.log(JSON.stringify(elements));
   return (
     <div
       className="noselect"
@@ -95,14 +89,13 @@ const Mimic = (props: Props): JSX.Element => {
         touchAction: "none", //isMimicTouch ? "auto" : "none",
       }}
       onScroll={handleScroll}
-      // onPointerDown={() => console.log("MAIN POINTER DOWN")}
     >
       <KeyListener>
         <PointListener>
           <ObjectSelector>
             {elements.length > 0 && (
               <>
-                {elements?.map((element: MimicElementProps) => {
+                {elements?.map((element: IMimicElement) => {
                   const active =
                     props.selected.includes(element.attributes?.general?.id) ||
                     false;

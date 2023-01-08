@@ -1,10 +1,10 @@
-import { PointFromat } from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
 
 export function getAreaPointsByHWP(
   width: number,
   height: number,
-  point: PointFromat
-): PointFromat[] {
+  point: IPoint
+): IPoint[] {
   return [
     point,
     { x: point.x + width, y: point.y },

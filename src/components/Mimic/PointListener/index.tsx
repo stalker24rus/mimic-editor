@@ -3,8 +3,8 @@ import { EDITOR_MODE_CREATE } from "../../../constants/literals";
 import {
   Attributes,
   EditorModeProps,
-  MimicElementProps,
-  PointFromat,
+  IMimicElement,
+  IPoint,
 } from "../../../models/Editor";
 import {
   appendPointToElement,
@@ -19,8 +19,7 @@ import {
 } from "../../../store/selectors/editorElements";
 
 interface StateProps {
-  // attributes: Attributes;
-  mimic: MimicElementProps;
+  mimic: IMimicElement;
   mode: EditorModeProps;
   drawId: number;
 }
@@ -41,7 +40,6 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    // attributes: selectMimicAttributes(store), //store.editorState.currentMimic.attributes,
     mimic: selectMimic(store),
     mode: store.editorState.mode,
     drawId: store.editorState.drawId,
@@ -73,7 +71,7 @@ function PointListener(props: Props): JSX.Element {
       case 1: {
         if (mode !== EDITOR_MODE_CREATE) return;
         const { clientX, clientY } = ev;
-        const point: PointFromat = {
+        const point: IPoint = {
           x: clientX,
           y: clientY,
         };
@@ -100,7 +98,7 @@ function PointListener(props: Props): JSX.Element {
   const handlePointerMove = (ev: React.PointerEvent<HTMLDivElement>) => {
     if (!drawId) return;
     const { clientX, clientY } = ev;
-    const point: PointFromat = {
+    const point: IPoint = {
       x: clientX,
       y: clientY,
     };

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
-import { MimicElementProps } from "../../../models/Editor";
+import { IMimicElement } from "../../../models/Editor";
 import {
   deleteSelectedElements,
   moveElementGroup,
@@ -14,7 +14,7 @@ import {
 } from "../../../store/actionCreators/editorState";
 
 interface StateProps {
-  elements: MimicElementProps[];
+  elements: IMimicElement[];
 }
 
 interface DispatchProps {

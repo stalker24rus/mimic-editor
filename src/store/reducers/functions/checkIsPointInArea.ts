@@ -1,4 +1,4 @@
-import { PointFromat } from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
 //               X
 // x1, y1  _____________
 //        |             |
@@ -38,7 +38,7 @@ import { PointFromat } from "../../../models/Editor";
 //        |_____________|
 //   x1, y1
 
-export default (area: [PointFromat, PointFromat], point: PointFromat) => {
+export default (area: [IPoint, IPoint], point: IPoint) => {
   const [{ x: x1, y: y1 }, { x: x2, y: y2 }] = area;
 
   if (x1 <= x2 && y1 <= y2) {

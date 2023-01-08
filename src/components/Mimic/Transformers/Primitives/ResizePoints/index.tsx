@@ -5,12 +5,12 @@ import {
   BOX_TOP_LEFT,
   BOX_TOP_RIGHT,
 } from "../../../../../constants/literals";
-import { MimicElementProps } from "../../../../../models/Editor";
+import { IMimicElement } from "../../../../../models/Editor";
 
 import Point from "../Point";
 
 interface Props {
-  component: MimicElementProps;
+  component: IMimicElement;
   onPointerDown: Function;
   onPointerUp: Function;
   onPointerMove: Function;

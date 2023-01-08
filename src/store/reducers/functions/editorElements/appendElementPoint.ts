@@ -1,12 +1,12 @@
-import { MimicElementProps, PointFromat } from "../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../models/Editor";
 
 interface Props {
-  point: PointFromat;
+  point: IPoint;
 }
 
 const appendElementPoint =
   ({ point }: Props) =>
-  (object: MimicElementProps) => {
+  (object: IMimicElement) => {
     object.attributes.position.points.push(point);
   };
 

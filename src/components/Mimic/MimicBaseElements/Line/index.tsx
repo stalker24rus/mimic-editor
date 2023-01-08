@@ -8,14 +8,14 @@
 import { ELEMENT_TYPE_LINE, MIMIC } from "../../../../constants/literals";
 import {
   BaseElementOutput,
-  MimicElementProps,
-  PointFromat,
+  IMimicElement,
+  IPoint,
 } from "../../../../models/Editor";
 import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
-  component: MimicElementProps;
+  component: IMimicElement;
   onPointerMove: Function;
   onPointerUp: Function;
   onPointerDown: Function;
@@ -31,7 +31,7 @@ function Line(props: Props): JSX.Element {
   const [boxTop, boxLeft, boxWidth, boxHeight] = getBox(points);
 
   const { stroke, strokeWidth, opacity } = appearance;
-  const [_point1, _point2]: PointFromat[] = points;
+  const [_point1, _point2]: IPoint[] = points;
   const point1 = _point1;
   const point2 = _point2 ? _point2 : point1;
 
@@ -113,7 +113,7 @@ export const startState: BaseElementOutput = {
 };
 
 export const Demo = () => {
-  const demoState: MimicElementProps = {
+  const demoState: IMimicElement = {
     type: "LINE",
     attributes: {
       general: {
