@@ -1,11 +1,13 @@
 import { EditorModeProps, ElementType } from "../../models/Editor";
-export const APP_VERSION: string = "v.0.0.1:19";
+export const APP_VERSION: string = "v.0.0.1:20";
 export const HEADER_HEIGHT: number = 52;
 export const MIMIC: string = "MIMIC";
 export const MIMIC_FRAME_ID: string = `${MIMIC}.FRAME`;
+
 export const EDITOR_MODE_EDIT: EditorModeProps = "EDITOR_MODE_EDIT";
 export const EDITOR_MODE_CREATE: EditorModeProps = "EDITOR_MODE_CREATE";
 export const EDITOR_MODE_OPERATE: EditorModeProps = "EDITOR_MODE_OPERATION";
+
 export const ELEMENT_TYPE_FRAME: ElementType = "MAIN_FRAME";
 export const ELEMENT_TYPE_BUTTON: ElementType = "BUTTON";
 export const ELEMENT_TYPE_LINE: ElementType = "LINE";
