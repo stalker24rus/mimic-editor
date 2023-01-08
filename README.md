@@ -1,4 +1,4 @@
-# DEMO HERE >>>>> [https://iakovenko.tech/react-mimic-demo/](https://iakovenko.tech/react-mimic-demo/)
+# DEMO IS HERE >>>>> [https://iakovenko.tech/react-mimic-demo/](https://iakovenko.tech/react-mimic-demo/)
 
 # Getting Started with Create React App
 
