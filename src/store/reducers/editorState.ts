@@ -194,7 +194,7 @@ export default (state = defaultState(), action: any): IProps => {
 
       const operations = {
         ...state.operations,
-        canGroup: selected.length > 1,
+        canGroup: selected.length > 1 && !isSelectedGroup,
         canUnGroup: isSelectedGroup,
         canMoveOnTop: selected.length > 0,
         canMoveOnForward: selected.length === 1,
@@ -258,7 +258,7 @@ export default (state = defaultState(), action: any): IProps => {
 
       const operations = {
         ...state.operations,
-        canGroup: elements.length > 1,
+        canGroup: elements.length > 1 && !isSelectedGroup,
         canUnGroup: isSelectedGroup,
         canMoveOnTop: elements.length > 0,
         canMoveOnForward: elements.length === 1,
