@@ -30,36 +30,36 @@ import { PASTE_ELEMENTS } from "../../constants/actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
 import { IMimicElement } from "../../models/Editor";
 import { demo1JSON } from "../../constants/demo/templateJson";
-import {
-  alignBottom,
-  alignHorizon,
-  alignLeft,
-  alignRight,
-  alignTop,
-  alignVertical,
-} from "./functions/editorElements/alighElements";
-import changeAttribute from "./functions/editorElements/changeAttributes";
+import changeElementAttribute from "./logic/editorElements/elementModifier/changeElementAttribute";
 // import changeIndexArr from "./functions/changeIndexArray";
-import appendElementPoint from "./functions/editorElements/appendElementPoint";
-import changeElementAngle from "./functions/editorElements/changeElementAngle";
-import changeElementLastPoint from "./functions/editorElements/changeElementLastPoint";
-import changeElementPoint from "./functions/editorElements/changeElementPoint";
-import createElement from "./functions/editorElements/createElement";
-import deleteElementLastPoint from "./functions/editorElements/deleteElementLastPoint";
-import moveElementsOnBottom from "./functions/editorElements/moveElementsOnBottom";
-import moveElementsOnTop from "./functions/editorElements/moveElementsOnTop";
-import moveElementPoints from "./functions/editorElements/moveElementPoints";
-import executeElementsRoutine from "./functions/editorElements/executeElementsRoutine";
-import removeSelectedElements from "./functions/editorElements/removeSelectedElements";
-import resizeElement from "./functions/editorElements/resizeElement";
+import appendElementPoint from "./logic/editorElements/elementModifier/appendElementPoint";
+import changeElementAngle from "./logic/editorElements/elementModifier/changeElementAngle";
+import changeElementLastPoint from "./logic/editorElements/elementModifier/changeElementLastPoint";
+import changeElementPoint from "./logic/editorElements/elementModifier/changeElementPoint";
+import createElement from "./logic/editorElements/crud/createElement";
+import deleteElementLastPoint from "./logic/editorElements/elementModifier/deleteElementLastPoint";
+
+import moveElementPoints from "./logic/editorElements/elementModifier/moveElementPoints";
+import executeElementsRoutine from "./logic/editorElements/executeElementsRoutine";
+import removeSelectedElements from "./logic/editorElements/crud/removeSelectedElements";
+import resizeElement from "./logic/editorElements/elementModifier/resizeElement";
 // import updateElement from "./functions/editorElements/updateElement";
 // import resizeBox from "./functions/resizeBox";
-import moveElementsOnForward from "./functions/editorElements/moveElementsOnForward";
-import moveElementsOnBack from "./functions/editorElements/moveElementsOnBack";
-import pasteElements from "./functions/editorElements/pasteElements";
-import getLastGID from "./functions/editorElements/getLastGID";
-import groupElements from "./functions/editorElements/groupElements";
-import unGroupElements from "./functions/editorElements/unGroupElements";
+
+import pasteElements from "./logic/editorElements/crud/pasteElements";
+import getLastGID from "./logic/editorElements/crud/getLastGID";
+import groupElements from "./logic/editorElements/group/groupElements";
+import unGroupElements from "./logic/editorElements/group/unGroupElements";
+import alignLeft from "./logic/editorElements/align/alignLeft";
+import alignHorizon from "./logic/editorElements/align/alignHorizon";
+import alignRight from "./logic/editorElements/align/alignRight";
+import alignTop from "./logic/editorElements/align/alignTop";
+import alignVertical from "./logic/editorElements/align/alignVertical";
+import alignBottom from "./logic/editorElements/align/alignBottom";
+import moveElementsOnTop from "./logic/editorElements/move/moveElementsOnTop";
+import moveElementsOnBottom from "./logic/editorElements/move/moveElementsOnBottom";
+import moveElementsOnForward from "./logic/editorElements/move/moveElementsOnForward";
+import moveElementsOnBack from "./logic/editorElements/move/moveElementsOnBack";
 
 const defaultState: IMimicElement = {
   type: ELEMENT_TYPE_FRAME,
@@ -214,7 +214,7 @@ export default (state = defaultState, action: any): IMimicElement => {
     case CHANGE_ATTRIBUTES: {
       const { id, propFamily, name, value } = action.payload;
       const root = lodash.cloneDeep(state);
-      const func = changeAttribute({ propFamily, name, value });
+      const func = changeElementAttribute({ propFamily, name, value });
       executeElementsRoutine(id, root, func);
       return { ...root };
     }

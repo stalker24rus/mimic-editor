@@ -46,7 +46,7 @@ import {
 import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
 import { ElementBase } from "../../components/Mimic/Hooks/useDrawElement";
-import getLastGID from "../reducers/functions/editorElements/getLastGID";
+import getLastGID from "../reducers/logic/editorElements/crud/getLastGID";
 
 // TODO ??? detach to other file
 export function correctPoint(point: IPoint, correction: IPoint): IPoint {
