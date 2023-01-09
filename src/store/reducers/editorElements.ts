@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import { ElementBase } from "../../components/Hooks/useDrawElement";
+import { ElementBase } from "../../components/Hooks/useDraw";
 import {
   APPEND_POINT_TO_ELEMENT,
   CHANGE_ELEMENT_ANGLE,

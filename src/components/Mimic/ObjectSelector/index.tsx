@@ -16,6 +16,7 @@ import {
 } from "../../../store/selectors/editorState";
 import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
 import GroupMover from "./GroupMover";
+import ObjectsTransformer from "./ObjectsTransformer";
 import SelectionRect from "./SelectionRect";
 
 interface StateProps {
@@ -135,6 +136,7 @@ function ObjectSelector(props: Props) {
       {showRect && !props.selectionDisabled && (
         <SelectionRect top={top} left={left} width={width} height={height} />
       )}
+      <ObjectsTransformer />
       <GroupMover />
     </div>
   );

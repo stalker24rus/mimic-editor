@@ -1,8 +1,6 @@
 import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../../constants/literals";
 import { IMimicElement } from "../../../../../models/Editor";
-import useDrawElement, {
-  useDrawElementWithoutBox,
-} from "../../../../Hooks/useDrawElement";
+import { useDrawElement } from "../../../../Hooks/useDraw";
 
 interface Props {
   disablePointerEvents?: boolean;
@@ -10,13 +8,13 @@ interface Props {
 }
 
 export default function Group(props: Props): JSX.Element {
-  const { component, disablePointerEvents } = props;
-  const { attributes, type } = component;
+  const { component } = props;
+  const { attributes } = component;
   const { position, general } = attributes;
   const { points, width, height } = position;
   const { id } = general;
 
-  const [DrawFabric] = useDrawElementWithoutBox(); //useDrawElement();
+  const [DrawFabric] = useDrawElement();
 
   return (
     <div

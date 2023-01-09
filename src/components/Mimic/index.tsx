@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { connect } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../constants/literals";
 import { EditorModeProps, IMimicElement } from "../../models/Editor";
@@ -13,7 +13,7 @@ import {
 } from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
-import useDrawElement from "../Hooks/useDrawElement";
+import { useDrawElement } from "../Hooks/useDraw";
 import KeyListener from "./KeyListener";
 
 import ObjectSelector from "./ObjectSelector";
@@ -79,6 +79,16 @@ const Mimic = (props: Props): JSX.Element => {
     handleResize();
   };
 
+  const memoElements = useMemo(
+    () =>
+      elements.map((element: IMimicElement) => {
+        const active =
+          props.selected.includes(element.attributes?.general?.id) || false;
+        return DrawFabric(element);
+      }),
+    [elements]
+  );
+
   return (
     <div
       className="noselect"
@@ -93,16 +103,7 @@ const Mimic = (props: Props): JSX.Element => {
       <KeyListener>
         <PointListener>
           <ObjectSelector>
-            {elements.length > 0 && (
-              <>
-                {elements?.map((element: IMimicElement) => {
-                  const active =
-                    props.selected.includes(element.attributes?.general?.id) ||
-                    false;
-                  return DrawFabric(active, element);
-                })}
-              </>
-            )}
+            {elements.length > 0 && <>{memoElements}</>}
             {/* <EditorContextMenu /> */}
 
             {mode === EDITOR_MODE_CREATE && <CursorInfo />}

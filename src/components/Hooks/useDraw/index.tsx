@@ -52,32 +52,22 @@ export const ElementBase: BaseProps = {
   },
 };
 
-export default function useDrawElement(): [Function] {
+export function useDrawBox(): [Function] {
   function draw(active: boolean, component: IMimicElement): JSX.Element {
     const { type } = component;
     const { id } = component.attributes.general;
-
-    const Element = ElementBase[type].element;
     const Box = ElementBase[type].box;
-
-    return (
-      <>
-        <Element component={component} key={"element" + id} />
-        {active && <Box key={"box" + id} component={component}></Box>}
-      </>
-    );
+    return <>{active && <Box key={"box" + id} component={component}></Box>}</>;
   }
-
   return [draw];
 }
 
-export function useDrawElementWithoutBox(): [Function] {
+export function useDrawElement(): [Function] {
   function draw(component: IMimicElement): JSX.Element {
     const { type } = component;
     const { id } = component.attributes.general;
-
     const Element = ElementBase[type].element;
-    return <Element component={component} key={id} />;
+    return <Element component={component} key={"element" + id} />;
   }
   return [draw];
 }
