@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../../constants/literals";
 import { IMimicElement } from "../../../../../models/Editor";
 import { useDrawElement } from "../../../../Hooks/useDraw";
@@ -15,6 +16,14 @@ export default function Group(props: Props): JSX.Element {
   const { id } = general;
 
   const [DrawFabric] = useDrawElement();
+
+  const memoChildren = useMemo(
+    () =>
+      component.children?.map((element: IMimicElement) => {
+        return DrawFabric(element);
+      }),
+    [component.children]
+  );
 
   return (
     <div
@@ -34,9 +43,10 @@ export default function Group(props: Props): JSX.Element {
           position: "relative",
         }}
       >
-        {component.children?.map((element: IMimicElement) => {
+        {memoChildren}
+        {/* {component.children?.map((element: IMimicElement) => {
           return DrawFabric(element);
-        })}
+        })} */}
       </div>
       <div
         id={MIMIC + "." + ELEMENT_TYPE_GROUP + "." + id}
