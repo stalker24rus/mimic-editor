@@ -45,8 +45,9 @@ import {
 } from "../selectors/editorState";
 import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
-import { ElementBase } from "../../components/Hooks/useDraw";
+
 import getLastGID from "../reducers/logic/editorElements/crud/getLastGID";
+import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 
 // TODO ??? detach to other file
 export function correctPoint(point: IPoint, correction: IPoint): IPoint {
@@ -219,7 +220,7 @@ export const createElement =
     });
 
     // TODO THIS IS NOT GOOD
-    const pointsAmount = ElementBase[newElement.type].maxPoints;
+    const pointsAmount = TransformerBase[newElement.type].maxPoints;
     if (pointsAmount <= 1) {
       dispatch({
         type: SET_MODE_EDIT,
@@ -246,7 +247,7 @@ export const appendPointToElement =
     const element: IMimicElement = selectElement(getState(), id);
 
     if (element) {
-      const pointAmount = ElementBase[element.type].maxPoints;
+      const pointAmount = TransformerBase[element.type].maxPoints;
       const pointLength = element.attributes.position.points.length;
 
       if (pointLength < pointAmount) {

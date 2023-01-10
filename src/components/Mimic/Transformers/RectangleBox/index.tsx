@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { connect } from "react-redux";
 import { IMimicElement, IPoint } from "../../../../models/Editor";
 import {
@@ -92,6 +92,10 @@ function RectangleBox(props: Props): JSX.Element {
     props.onEndChanges();
   };
 
+  const memoComponent = useMemo(() => {
+    return component;
+  }, [component]);
+
   return (
     <div
       style={{
@@ -107,32 +111,20 @@ function RectangleBox(props: Props): JSX.Element {
       }}
     >
       <RotationPoint
-        component={component}
+        component={memoComponent}
         onDragMove={handleChangeAngle}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
       />
-      {/* 
-      <div
-        style={{
-          width,
-          height,
-          overflowX: "hidden",
-          overflowY: "hidden",
-          border: "1px solid white",
-        }}
-      >
-        {children({ component })}
-      </div> */}
 
       <MovingCell
-        component={component}
+        component={memoComponent}
         onPointerMove={handleMove}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}
       />
       <ResizePoints
-        component={component}
+        component={memoComponent}
         onPointerMove={handleResize}
         onPointerDown={handlePointerDown}
         onPointerUp={handlePointerUp}

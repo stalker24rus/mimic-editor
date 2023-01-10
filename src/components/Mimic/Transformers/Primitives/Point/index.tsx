@@ -8,7 +8,7 @@ function Point({
   onPointerDown,
   onPointerUp,
   onPointerMove,
-}) {
+}): JSX.Element {
   const baseStyle = {
     position: "absolute",
     width: 10,
@@ -31,22 +31,7 @@ function Point({
       onPointerDown={onPointerDown}
       onPointerUp={onPointerUp}
       onPointerMove={onPointerMove}
-    >
-      {/* <div
-        style={{
-          position: "absolute",
-          width: 5,
-          height: 5,
-          top: "50%",
-          left: "50%",
-          borderRadius: "50%",
-          marginRight: "-50%",
-          transform: "translate(-50%, -50%)",
-          background: "black",
-          opacity: 0.25,
-        }}
-      ></div> */}
-    </BaseDrag>
+    />
   );
 }
 

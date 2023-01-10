@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import { ElementBase } from "../../components/Hooks/useDraw";
+
 import {
   APPEND_POINT_TO_ELEMENT,
   CHANGE_ELEMENT_ANGLE,
@@ -55,6 +55,7 @@ import moveElementsOnTop from "./logic/editorElements/move/moveElementsOnTop";
 import moveElementsOnBottom from "./logic/editorElements/move/moveElementsOnBottom";
 import moveElementsOnForward from "./logic/editorElements/move/moveElementsOnForward";
 import moveElementsOnBack from "./logic/editorElements/move/moveElementsOnBack";
+import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 
 const defaultState: IMimicElement = {
   type: ELEMENT_TYPE_FRAME,
@@ -84,7 +85,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
     case CREATE_ELEMENT: {
       const { parentId, id, newElement, point } = action.payload;
       const { type, attributes } = newElement;
-      const pointsAmount = ElementBase[type].maxPoints;
+      const pointsAmount = TransformerBase[type].maxPoints;
       const root = lodash.cloneDeep(state);
       const func = createElement({ id, type, attributes, point, pointsAmount });
       executeElementsRoutine(parentId || 0, root, func);

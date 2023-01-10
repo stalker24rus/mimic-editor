@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { connect } from "react-redux";
 import { IMimicElement, IPoint } from "../../../../models/Editor";
 
@@ -96,6 +96,28 @@ function MultiObjectBox(props: Props): JSX.Element {
     props.onEndChanges();
   };
 
+  const memoPoints = useMemo(
+    () =>
+      points.map((point, index) => (
+        <Point
+          key={type + "." + id + "point." + index}
+          className={type + "." + id + ".point." + index}
+          cursorType={"pointer"}
+          position={{
+            top: point.y - top + strokeWidth,
+            left: point.x - left + strokeWidth,
+            transform: "translate(-50%, -50%)",
+            width: 15,
+            height: 15,
+          }}
+          onDragMove={handlePointDragMove}
+          onPointerDown={handlePointPointerDown}
+          onPointerUp={handlePointPointerUp}
+        />
+      )),
+    [top, left, strokeWidth, component]
+  );
+
   return (
     <div
       style={{
@@ -122,25 +144,7 @@ function MultiObjectBox(props: Props): JSX.Element {
         onPointerDown={handleObjPointerDown}
         onPointerUp={handleObjPointerUp}
       />
-      {points.map((point, index) => (
-        <div>
-          <Point
-            key={type + "." + id + "point." + index}
-            className={type + "." + id + ".point." + index}
-            cursorType={"pointer"}
-            position={{
-              top: point.y - top + strokeWidth,
-              left: point.x - left + strokeWidth,
-              transform: "translate(-50%, -50%)",
-              width: 15,
-              height: 15,
-            }}
-            onDragMove={handlePointDragMove}
-            onPointerDown={handlePointPointerDown}
-            onPointerUp={handlePointPointerUp}
-          />
-        </div>
-      ))}{" "}
+      {memoPoints}
     </div>
   );
 }

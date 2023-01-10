@@ -3,7 +3,6 @@ export type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 export type HEX = `#${string}`;
 export type CLASS_NAMED = `${string}`;
 
-//FIXME from PointFromat to PointFormat
 export interface IPoint {
   x: number;
   y: number;

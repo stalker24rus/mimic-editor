@@ -44,9 +44,6 @@ export default function Group(props: Props): JSX.Element {
         }}
       >
         {memoChildren}
-        {/* {component.children?.map((element: IMimicElement) => {
-          return DrawFabric(element);
-        })} */}
       </div>
       <div
         id={MIMIC + "." + ELEMENT_TYPE_GROUP + "." + id}

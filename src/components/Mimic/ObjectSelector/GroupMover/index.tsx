@@ -85,6 +85,8 @@ function GroupMover(props: Props): JSX.Element {
             left: left - BORDER,
             width: width + BORDER * 2,
             height: height + BORDER * 2,
+            // pointerEvents: "auto",
+            // userSelect: "auto",
             position: "absolute",
             border: "1px dotted white",
             cursor: "move",
