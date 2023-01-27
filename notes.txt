@@ -1,0 +1,60 @@
+НОВАЯ СТРУКТУРА ВЛОЖЕННОСТИ КОМПОНЕНТОВ
+
+
+
+/editor
+<MimicEditor>                                   // Компонент редактора    
+  <Spliter>                                     // Разделитель компонентов
+
+    <Canvas>                                    // Холст
+
+      <KeyEventListener>                        // Компонент отслеживания событий клавиатуры
+        <MouseEventListener>                    // Компонент отслеживания событий мыши
+
+          <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
+
+            <Object1 />
+            <Object2 />
+            ...
+            <ObjectN />
+
+          </ Visualizer>
+                    
+          <ShapeChanger>                         // Модификатор формы компонентов
+            <ObjectShape1 />
+            <ObjectShape2 />
+            ...
+            <ObjectShapeN />
+            <GroupView />
+          </ ShapeChanger>
+
+          <SelectLayer>                        // Компонента отображения выбора компонентов 
+          </ SelectLayer> 
+          
+          <ContextMenuLayer />                   // Компонент отображения контекстного меню
+          <RulerLayer />                         // Компонент отображения линейки
+          <CursorLayer />                        // Компонент отображения курсора 
+
+        </ MouseEventListener>
+      </ KeyEventListener>
+
+    </ Canvas>
+
+    <Toolbar>
+        ...
+    </Toolbar>  
+
+  </ Spliter>
+</MimicEditor>
+
+
+
+
+
+
+
+
+/mimic/mimic-name
+<MimicViewer>                                  // Компонент визуализатора  
+  ...
+</ MimicViewer>
