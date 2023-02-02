@@ -26,9 +26,9 @@ import {
   IMimicElement,
   IPoint,
 } from "../../models/Editor";
-import checkIsPointInArea from "./logic/utils/checkIsPointInArea";
-import { getAreaPointsByHWP } from "./logic/utils/getAreaPointsByHWP";
-import rotateElementPoints from "./logic/utils/rotateElementPoints";
+import checkIsPointInArea from "../../utils/editor/checkIsPointInArea";
+import { getAreaPointsByHWP } from "../../utils/editor/getAreaPointsByHWP";
+import rotateElementPoints from "../../utils/editor/rotateElementPoints";
 
 type DrawType = number | undefined;
 

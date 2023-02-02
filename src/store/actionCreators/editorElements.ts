@@ -46,7 +46,7 @@ import {
 import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
 
-import getLastGID from "../reducers/logic/editorElements/crud/getLastGID";
+import getLastGID from "../../utils/editor/Elements/crud/getLastGID";
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 
 // TODO ??? detach to other file
