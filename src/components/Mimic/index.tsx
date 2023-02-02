@@ -100,16 +100,15 @@ const Mimic = (props: Props): JSX.Element => {
       }}
       onScroll={handleScroll}
     >
-      <KeyListener>
-        <PointListener>
-          <ObjectSelector>
-            {elements.length > 0 && <>{memoElements}</>}
-            {/* <EditorContextMenu /> */}
+      <KeyListener />
+      <PointListener>
+        <ObjectSelector>
+          {elements.length > 0 && <>{memoElements}</>}
+          {/* <EditorContextMenu /> */}
 
-            {mode === EDITOR_MODE_CREATE && <CursorInfo />}
-          </ObjectSelector>
-        </PointListener>
-      </KeyListener>
+          {mode === EDITOR_MODE_CREATE && <CursorInfo />}
+        </ObjectSelector>
+      </PointListener>
     </div>
   );
 };

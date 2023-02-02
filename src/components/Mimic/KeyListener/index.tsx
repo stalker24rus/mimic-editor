@@ -27,9 +27,7 @@ interface DispatchProps {
   onMoveElementGroup: Function;
 }
 
-interface OwnProps {
-  children: JSX.Element | JSX.Element[];
-}
+interface OwnProps {}
 
 type Props = StateProps & DispatchProps & OwnProps;
 
@@ -122,7 +120,7 @@ function KeyListener(props: Props): JSX.Element {
     };
   });
 
-  return <>{props.children}</>;
+  return <></>;
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(

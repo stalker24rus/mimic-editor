@@ -1,57 +1,72 @@
 НОВАЯ СТРУКТУРА ВЛОЖЕННОСТИ КОМПОНЕНТОВ
 
 
+url: /editor
 
-/editor
-<MimicEditor>                                   // Компонент редактора    
-  <Spliter>                                     // Разделитель компонентов
+<Editor>                                        // Компонент редактора   
+  <KeyEventListener />                          // Компонент отслеживания событий клавиатуры
+  <MouseEventListener >                        // Компонент отслеживания событий мыши
+    <ViewSplitter>                                // Разделитель компонентов
+      <Canvas>                                    // Холст
+        <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
+          <Object1 />
+          <Object2 />
+          ...
+          <ObjectN />
+        </ Visualizer>
+                  
+        <ShapeChanger>                         // Модификатор формы компонентов
+          <ObjectShape1 />
+          <ObjectShape2 />
+          ...
+          <ObjectShapeN />
+          <GroupMover />
+        </ ShapeChanger>
 
-    <Canvas>                                    // Холст
+        <SelectBox />                         // Компонента отображения выбора компонентов            ! add to store select settings
+        
+        <ContextMenu />                       // Компонент отображения контекстного меню              ! add to store contextMenu settings
+        <Ruler />                             // Компонент отображения линейки                        ! add to store line ruler settings
+        <Cursor />                            // Компонент отображения курсора                        ! add to store cursor settings
 
-      <KeyEventListener>                        // Компонент отслеживания событий клавиатуры
-        <MouseEventListener>                    // Компонент отслеживания событий мыши
+      </ Canvas>
 
-          <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
+      <Toolbar>
+          ...
+      </Toolbar>  
 
-            <Object1 />
-            <Object2 />
-            ...
-            <ObjectN />
+    </ ViewSplitter>
+  </ MouseEventListener>
+</Editor>
 
-          </ Visualizer>
-                    
-          <ShapeChanger>                         // Модификатор формы компонентов
-            <ObjectShape1 />
-            <ObjectShape2 />
-            ...
-            <ObjectShapeN />
-            <GroupView />
-          </ ShapeChanger>
-
-          <SelectLayer>                        // Компонента отображения выбора компонентов 
-          </ SelectLayer> 
-          
-          <ContextMenuLayer />                   // Компонент отображения контекстного меню
-          <RulerLayer />                         // Компонент отображения линейки
-          <CursorLayer />                        // Компонент отображения курсора 
-
-        </ MouseEventListener>
-      </ KeyEventListener>
-
-    </ Canvas>
-
-    <Toolbar>
-        ...
-    </Toolbar>  
-
-  </ Spliter>
-</MimicEditor>
-
-
-
-
-
-
+store
+  |---> selectBox
+  |         |
+  |         |---> stroke
+  |         |---> strokeWidth
+  |         ...
+  |
+  |---> contextMenu
+  |         |
+  |         |---> top
+  |         |---> left
+  |         |---> height
+  |         |---> width
+  |         |---> content
+  |                   |
+  |                   |---> id
+  |                   |---> text
+  |                   |---> handler
+  |
+  |---> ruler 
+  |         | ---> type: inch | cm ...
+  |         | ...
+  |         | ---> pointsX: [...]             // каждый раз пересчет???
+  |         | ---> pointsY: [...]
+  |
+  |---> editedMimic (through undoRedo)
+  |         |
+  |        ...
 
 
 /mimic/mimic-name
