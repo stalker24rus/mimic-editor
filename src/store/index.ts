@@ -18,7 +18,7 @@ const configureStore = (reducers = {}, preLoadedState = {}, midlewares = []) =>
     rootReducer, // combineReducers({ ...rootReducers, ...reducers }),
     preLoadedState,
     compose(
-      applyMiddleware(...midlewares, thunk) //reduxLogger
+      applyMiddleware(...midlewares, thunk, reduxLogger) //reduxLogger
       // window.__REDUX_DEVTOOLS_EXTENSION__ &&
       //   window.__REDUX_DEVTOOLS_EXTENSION__()
     )

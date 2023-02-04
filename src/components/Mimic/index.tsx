@@ -3,10 +3,7 @@ import { useSelector } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../constants/literals";
 import { IMimicElement } from "../../models/Editor";
 import { setViewPosition } from "../../store/actionCreators/editorState";
-import {
-  selectEditorMode,
-  selectSelectedElements,
-} from "../../store/selectors/editorState";
+import { selectEditorMode } from "../../store/selectors/editorState";
 import {
   selectEditorElements,
   selectMimic,
@@ -14,22 +11,21 @@ import {
 
 import CursorInfo from "./CursorInfo";
 import { useDrawElement } from "../Hooks/useDraw";
-import KeyListener from "./KeyListener";
+import KeyEventListener from "../Editor/views/KeyEventListener";
 
 import ObjectSelector from "./ObjectSelector";
-import PointListener from "./PointListener";
+import PointEventListener from "../Editor/views/PointEventListener";
 import { useTypedDispatch } from "../../store";
 
 const Mimic = (): JSX.Element => {
   const mimic = useSelector(selectMimic);
   const elements = useSelector(selectEditorElements);
   const mode = useSelector(selectEditorMode);
-  // const selected = useSelector(selectSelectedElements);
   const dispatch = useTypedDispatch();
 
   const [Element] = useDrawElement();
 
-  function handleResize() {
+  const handleResize = useCallback(() => {
     const htmlRect = document
       .getElementById(mimic.type)
       ?.getBoundingClientRect();
@@ -39,7 +35,7 @@ const Mimic = (): JSX.Element => {
 
       dispatch(setViewPosition({ x, y }));
     }
-  }
+  }, [dispatch, mimic.type]);
 
   useEffect(() => {
     window.addEventListener("resize", handleResize);
@@ -47,7 +43,7 @@ const Mimic = (): JSX.Element => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [window.innerWidth, window.innerHeight]);
+  }, [handleResize]);
 
   const handleScroll = useCallback(
     (ev) => {
@@ -57,12 +53,12 @@ const Mimic = (): JSX.Element => {
     [handleResize]
   );
 
-  const memoElements = useMemo(
+  const Visualizer = useMemo(
     () =>
       elements.map((element: IMimicElement, index: number) => {
         return <Element key={index} element={element} />;
       }),
-    [elements]
+    [elements, Element]
   );
 
   return (
@@ -76,15 +72,15 @@ const Mimic = (): JSX.Element => {
       }}
       onScroll={handleScroll}
     >
-      <KeyListener />
-      <PointListener>
+      <KeyEventListener />
+      <PointEventListener>
         <ObjectSelector>
-          {elements.length > 0 && <>{memoElements}</>}
+          {elements.length > 0 && <>{Visualizer}</>}
           {/* <EditorContextMenu /> */}
 
           {mode === EDITOR_MODE_CREATE && <CursorInfo />}
         </ObjectSelector>
-      </PointListener>
+      </PointEventListener>
     </div>
   );
 };

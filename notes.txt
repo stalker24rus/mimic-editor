@@ -5,7 +5,7 @@ url: /editor
 
 <Editor>                                        // Компонент редактора   
   <KeyEventListener />                          // Компонент отслеживания событий клавиатуры
-  <MouseEventListener >                        // Компонент отслеживания событий мыши
+  <PointEventListener >                        // Компонент отслеживания событий мыши
     <ViewSplitter>                                // Разделитель компонентов
       <Canvas>                                    // Холст
         <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
@@ -20,10 +20,12 @@ url: /editor
           <ObjectShape2 />
           ...
           <ObjectShapeN />
-          <GroupMover />
+          
         </ ShapeChanger>
+        
+        <GroupMover />
 
-        <SelectBox />                         // Компонента отображения выбора компонентов            ! add to store select settings
+        <SelectionRect />                         // Компонента отображения выбора компонентов            ! add to store select settings
         
         <ContextMenu />                       // Компонент отображения контекстного меню              ! add to store contextMenu settings
         <Ruler />                             // Компонент отображения линейки                        ! add to store line ruler settings
@@ -36,7 +38,7 @@ url: /editor
       </Toolbar>  
 
     </ ViewSplitter>
-  </ MouseEventListener>
+  </ PointEventListener>
 </Editor>
 
 store

@@ -1,0 +1,8 @@
+.SelectionRect {
+  background: #1e90ff;
+  position: absolute;
+  opacity: 0.3;
+  border: 2px dashed white;
+  user-select: none;
+  pointer-events: none;
+}

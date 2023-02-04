@@ -1,3 +1,7 @@
+// import { useBem } from "@steroidsjs/core/hooks";
+
+// import "./SelectionRect.scss";
+
 interface Props {
   top: number;
   left: number;
@@ -5,11 +9,13 @@ interface Props {
   height: number;
 }
 
-function SelectionRect(props: Props): JSX.Element {
+export default function SelectionRect(props: Props): JSX.Element {
+  // const bem = useBem("SelectionRect");
   const { top, left, width, height } = props;
 
   return (
     <div
+      // className={bem.block()}
       style={{
         top,
         left,
@@ -27,5 +33,3 @@ function SelectionRect(props: Props): JSX.Element {
     </div>
   );
 }
-
-export default SelectionRect;

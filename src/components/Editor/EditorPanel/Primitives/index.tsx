@@ -12,6 +12,7 @@ import { Demo as DemoLine } from "../../../Mimic/BaseElements/Primitives/Line";
 import { Demo as DemoPoligon } from "../../../Mimic/BaseElements/Primitives/Polygon";
 import { Demo as DemoPoliline } from "../../../Mimic/BaseElements/Primitives/Polyline";
 import MosaicView, { MosaicProps, ViewProps } from "../../../../ui/MosaicView";
+import { useCallback, useMemo } from "react";
 
 interface StateProps {
   future: [any];
@@ -51,35 +52,41 @@ const Primitives = (props: Props): JSX.Element => {
       name: "Кнопка",
       img: "",
       demo: <DemoButton />,
-      onClick: () => {
-        onAddElement(ELEMENT_TYPE_BUTTON);
-      },
+      onClick: useCallback(
+        () => onAddElement(ELEMENT_TYPE_BUTTON),
+        [onAddElement]
+      ),
     },
     {
       name: "Линия",
       img: "",
       demo: <DemoLine />,
-      onClick: () => {
-        onAddElement(ELEMENT_TYPE_LINE);
-      },
+      onClick: useCallback(
+        () => onAddElement(ELEMENT_TYPE_LINE),
+        [onAddElement]
+      ),
     },
     {
       name: "Поли-линия",
       img: "",
       demo: <DemoPoliline />,
-      onClick: () => {
-        onAddElement(ELEMENT_TYPE_POLYLINE);
-      },
+      onClick: useCallback(
+        () => onAddElement(ELEMENT_TYPE_POLYLINE),
+        [onAddElement]
+      ),
     },
     {
       name: "Полигон",
       img: "",
       demo: <DemoPoligon />,
-      onClick: () => {
-        onAddElement(ELEMENT_TYPE_POLYGON);
-      },
+      onClick: useCallback(
+        () => onAddElement(ELEMENT_TYPE_POLYGON),
+        [onAddElement]
+      ),
     },
   ];
+
+  const memoElements = useMemo(() => elements, elements);
 
   return (
     <div
@@ -89,7 +96,7 @@ const Primitives = (props: Props): JSX.Element => {
         overflow: "scroll",
       }}
     >
-      <MosaicView elements={elements} />
+      <MosaicView elements={memoElements} />
     </div>
   );
 };

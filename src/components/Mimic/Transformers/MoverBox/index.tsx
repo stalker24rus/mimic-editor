@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import { IMimicElement, IPoint } from "../../../../models/Editor";
+import { useTypedDispatch } from "../../../../store";
 import {
   endDoingChanges,
   moveElementPoints,
@@ -8,34 +8,13 @@ import {
 } from "../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 
-interface StateProps {}
-
-interface DispatchProps {
-  onMove: Function;
-  onStartChanges: Function;
-  onEndChanges: Function;
-}
-
-interface OwnProps {
+interface Props {
   component: IMimicElement;
 }
 
-type Props = StateProps & DispatchProps & OwnProps;
+export default function MoverBox(props: Props): JSX.Element {
+  const dispatch = useTypedDispatch();
 
-function mapStateToProps(store) {
-  return {};
-}
-
-function mapDispatchToProps() {
-  return {
-    onMove: moveElementPoints, // moveElement,
-
-    onStartChanges: startDoingChanges,
-    onEndChanges: endDoingChanges,
-  };
-}
-
-function MoverBox(props: Props): JSX.Element {
   const { component } = props;
   const { attributes } = component;
   const { general, position } = attributes;
@@ -49,15 +28,15 @@ function MoverBox(props: Props): JSX.Element {
       y: ev.movementY,
       x: ev.movementX,
     };
-    props.onMove(id, movement);
+    dispatch(moveElementPoints(id, movement));
   };
 
   const handlePointerDown = () => {
-    props.onStartChanges();
+    dispatch(startDoingChanges());
   };
 
   const handlePointerUp = () => {
-    props.onEndChanges();
+    dispatch(endDoingChanges());
   };
 
   return (
@@ -83,8 +62,3 @@ function MoverBox(props: Props): JSX.Element {
     </div>
   );
 }
-
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(MoverBox);

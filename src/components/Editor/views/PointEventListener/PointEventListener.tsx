@@ -1,21 +1,21 @@
 import { useSelector } from "react-redux";
-import { EDITOR_MODE_CREATE } from "../../../constants/literals";
-import { IPoint } from "../../../models/Editor";
-import { useTypedDispatch } from "../../../store";
+import { EDITOR_MODE_CREATE } from "../../../../constants/literals";
+import { IPoint } from "../../../../models/Editor";
+import { useTypedDispatch } from "../../../../store";
 import {
   appendPointToElement,
   createElement,
   drawingElement,
   endDrawingElement,
-} from "../../../store/actionCreators/editorElements";
-import { selectMimic } from "../../../store/selectors/editorElements";
-import { selectEditorMode } from "../../../store/selectors/editorState";
+} from "../../../../store/actionCreators/editorElements";
+import { selectMimic } from "../../../../store/selectors/editorElements";
+import { selectEditorMode } from "../../../../store/selectors/editorState";
 
 interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-function PointListener(props: Props): JSX.Element {
+export default function PointEventListener(props: Props): JSX.Element {
   const { children } = props;
 
   const mimic = useSelector(selectMimic);
@@ -89,5 +89,3 @@ function PointListener(props: Props): JSX.Element {
     </div>
   );
 }
-
-export default PointListener;

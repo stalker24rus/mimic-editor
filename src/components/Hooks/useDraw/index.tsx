@@ -11,11 +11,11 @@ export interface BaseProps {
 }
 
 export function useDrawBox(): [Function] {
-  function draw(active: boolean, component: IMimicElement): JSX.Element {
-    const { type } = component;
-    const { id } = component.attributes.general;
+  function draw({ key, active, element }): JSX.Element {
+    const { type } = element;
+    const { id } = element.attributes.general;
     const Box = TransformerBase[type].box;
-    return <>{active && <Box key={"box" + id} component={component}></Box>}</>;
+    return active ? <Box key={key + id} component={element}></Box> : <></>;
   }
   return [draw];
 }

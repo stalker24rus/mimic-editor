@@ -9,16 +9,15 @@ import {
   selectElements,
   toggleElementSelection,
 } from "../../../store/actionCreators/editorState";
-import { selectEditorElements } from "../../../store/selectors/editorElements";
+
 import {
-  selectSelectedElements,
   selectSelectionDisabled,
   selectViewPosition,
 } from "../../../store/selectors/editorState";
 import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
-import GroupMover from "./GroupMover";
-import ObjectsTransformer from "./ObjectsTransformer";
-import SelectionRect from "./SelectionRect";
+import GroupMover from "../../Editor/views/GroupMover";
+import SelectionRect from "../../Editor/views/SelectionRect";
+import ShapeChanger from "../../Editor/views/ShapeChanger";
 
 interface Props {
   children?: React.ReactNode;
@@ -32,8 +31,8 @@ const defaultPoints: [IPoint, IPoint] = [
 function ObjectSelector({ children }: Props) {
   const viewPosition = useSelector(selectViewPosition);
   const selectionDisabled = useSelector(selectSelectionDisabled);
-  const elements = useSelector(selectEditorElements);
-  const selected = useSelector(selectSelectedElements);
+  // const elements = useSelector(selectEditorElements);
+  // const selected = useSelector(selectSelectedElements);
   const dispatch = useTypedDispatch();
 
   const [showRect, setShowRect] = useState(false);
@@ -104,7 +103,7 @@ function ObjectSelector({ children }: Props) {
       {showRect && !selectionDisabled && (
         <SelectionRect top={top} left={left} width={width} height={height} />
       )}
-      <ObjectsTransformer />
+      <ShapeChanger />
       <GroupMover />
     </div>
   );

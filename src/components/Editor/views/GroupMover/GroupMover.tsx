@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { connect } from "react-redux";
-import { IMimicElement, IPoint } from "../../../../models/Editor";
+import { useSelector } from "react-redux";
+import { IPoint } from "../../../../models/Editor";
+import { useTypedDispatch } from "../../../../store";
 import {
   endDoingChanges,
   moveElementGroup,
@@ -10,45 +11,19 @@ import { selectEditorElements } from "../../../../store/selectors/editorElements
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import { useGetBoxFromElements } from "../../../Hooks/useGetBoxByMultiPoints";
 
-interface StateProps {
-  selected: number[];
-  elements: IMimicElement[];
-}
-
-interface DispatchProps {
-  onGroupMove: Function;
-  onStartChanges: Function;
-  onEndChanges: Function;
-}
-
-interface OwnProps {}
-
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {
-    elements: selectEditorElements(store),
-    selected: selectSelectedElements(store),
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onGroupMove: moveElementGroup,
-    onStartChanges: startDoingChanges,
-    onEndChanges: endDoingChanges,
-  };
-}
-
 const BORDER: number = 10;
 
-function GroupMover(props: Props): JSX.Element {
+export default function GroupMover(): JSX.Element {
+  const elements = useSelector(selectEditorElements);
+  const selected = useSelector(selectSelectedElements);
+  const dispatch = useTypedDispatch();
+
   const [isDragging, setIsDragging] = useState(false);
 
   const [getBoxFromElements] = useGetBoxFromElements();
 
-  const selectedElements = props.elements.filter((element) => {
-    return props.selected.indexOf(element.attributes.general.id) !== -1;
+  const selectedElements = elements.filter((element) => {
+    return selected.indexOf(element.attributes.general.id) !== -1;
   });
 
   const [top, left, width, height] = getBoxFromElements(selectedElements);
@@ -57,7 +32,7 @@ function GroupMover(props: Props): JSX.Element {
     const { target, pointerId } = ev;
     target.setPointerCapture(pointerId);
     setIsDragging(true);
-    props.onStartChanges();
+    dispatch(startDoingChanges());
   };
 
   const handlePointerMove = (ev) => {
@@ -67,13 +42,13 @@ function GroupMover(props: Props): JSX.Element {
         x: movementX,
         y: movementY,
       };
-      props.onGroupMove(movement); // props.onGroupMove(props.selected, movement);
+      dispatch(moveElementGroup(movement));
     }
   };
 
   const handlePointerUp = () => {
     setIsDragging(false);
-    props.onEndChanges();
+    dispatch(endDoingChanges());
   };
 
   return (
@@ -85,8 +60,6 @@ function GroupMover(props: Props): JSX.Element {
             left: left - BORDER,
             width: width + BORDER * 2,
             height: height + BORDER * 2,
-            // pointerEvents: "auto",
-            // userSelect: "auto",
             position: "absolute",
             border: "1px dotted white",
             cursor: "move",
@@ -111,8 +84,3 @@ function GroupMover(props: Props): JSX.Element {
     </>
   );
 }
-
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(GroupMover);
