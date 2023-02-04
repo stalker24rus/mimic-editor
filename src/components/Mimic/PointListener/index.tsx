@@ -1,68 +1,32 @@
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../../constants/literals";
-import {
-  Attributes,
-  EditorModeProps,
-  IMimicElement,
-  IPoint,
-} from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
+import { useTypedDispatch } from "../../../store";
 import {
   appendPointToElement,
   createElement,
   drawingElement,
   endDrawingElement,
 } from "../../../store/actionCreators/editorElements";
-import { setViewPosition } from "../../../store/actionCreators/editorState";
-import {
-  selectMimic,
-  selectMimicAttributes,
-} from "../../../store/selectors/editorElements";
+import { selectMimic } from "../../../store/selectors/editorElements";
+import { selectEditorMode } from "../../../store/selectors/editorState";
 
-interface StateProps {
-  mimic: IMimicElement;
-  mode: EditorModeProps;
-  drawId: number;
-}
-
-interface DispatchProps {
-  onCreateElement: Function;
-  onAppendPointToElement: Function;
-  onEndDrawingElement: Function;
-  onDrawingElement: Function;
-  onSetViewPosition: Function;
-}
-
-interface OwnProps {
+interface Props {
   children: JSX.Element | JSX.Element[];
 }
 
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {
-    mimic: selectMimic(store),
-    mode: store.editorState.mode,
-    drawId: store.editorState.drawId,
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onCreateElement: createElement,
-    onAppendPointToElement: appendPointToElement,
-    onEndDrawingElement: endDrawingElement,
-    onDrawingElement: drawingElement,
-    onSetViewPosition: setViewPosition,
-  };
-}
-
 function PointListener(props: Props): JSX.Element {
-  const { mode, drawId, mimic, children } = props;
+  const { children } = props;
+
+  const mimic = useSelector(selectMimic);
+  const mode = useSelector(selectEditorMode);
+  const drawId = useSelector((store: any) => store.editorState.drawId);
+  const dispatch = useTypedDispatch();
+
   const { attributes, type: mimicFrameType } = mimic;
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
-  const { name } = general;
 
   const handleClick = (ev: React.PointerEvent<HTMLDivElement>) => {
     ev.preventDefault();
@@ -77,16 +41,16 @@ function PointListener(props: Props): JSX.Element {
         };
 
         if (!drawId) {
-          props.onCreateElement(point);
+          dispatch(createElement(point));
         } else {
-          props.onAppendPointToElement(drawId, point);
+          dispatch(appendPointToElement(drawId, point));
         }
         break;
       }
 
       case 2: {
         if (!drawId || mode !== EDITOR_MODE_CREATE) return;
-        props.onEndDrawingElement(drawId);
+        dispatch(endDrawingElement(drawId));
         break;
       }
       default: {
@@ -102,7 +66,7 @@ function PointListener(props: Props): JSX.Element {
       x: clientX,
       y: clientY,
     };
-    props.onDrawingElement(drawId, point);
+    dispatch(drawingElement(drawId, point));
   };
 
   const handlePointerUp = () => {};
@@ -126,7 +90,4 @@ function PointListener(props: Props): JSX.Element {
   );
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(PointListener);
+export default PointListener;

@@ -15,12 +15,12 @@ export default function Group(props: Props): JSX.Element {
   const { points, width, height } = position;
   const { id } = general;
 
-  const [DrawFabric] = useDrawElement();
+  const [Element] = useDrawElement();
 
   const memoChildren = useMemo(
     () =>
-      component.children?.map((element: IMimicElement) => {
-        return DrawFabric(element);
+      component.children?.map((element: IMimicElement, index: number) => {
+        return <Element key={index} element={element} />;
       }),
     [component.children]
   );

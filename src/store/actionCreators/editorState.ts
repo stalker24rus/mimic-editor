@@ -30,9 +30,8 @@ export const editorSetLastTakenId = (id: number) => (dispatch: Function) => {
   dispatch({ type: SET_LAST_TAKEN_ID, payload: { id } });
 };
 
-export const setViewPosition = (point: IPoint) => (dispatch: Function) => {
+export const setViewPosition = (point: IPoint) => (dispatch: Function) =>
   dispatch({ type: SET_VIEW_POSITION, payload: { point } });
-};
 
 export const selectElement =
   (selected: number[]) => (dispatch: Function, getState: Function) => {

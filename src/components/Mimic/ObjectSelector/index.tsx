@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { MIMIC } from "../../../constants/literals";
-import { IMimicElement, IPoint } from "../../../models/Editor";
+import { IPoint } from "../../../models/Editor";
+import { useTypedDispatch } from "../../../store";
 import { correctPoint } from "../../../store/actionCreators/editorElements";
 import {
   selectElement,
@@ -19,40 +20,8 @@ import GroupMover from "./GroupMover";
 import ObjectsTransformer from "./ObjectsTransformer";
 import SelectionRect from "./SelectionRect";
 
-interface StateProps {
-  viewPosition: IPoint;
-  selectionDisabled: boolean;
-  selected: number[];
-  elements: IMimicElement[];
-}
-
-interface DispatchProps {
-  onSelectElement: Function;
-  onSelectElements: Function;
-  onToggleSelect: Function;
-}
-
-interface OwnProps {
+interface Props {
   children?: React.ReactNode;
-}
-
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {
-    viewPosition: selectViewPosition(store),
-    selectionDisabled: selectSelectionDisabled(store),
-    elements: selectEditorElements(store),
-    selected: selectSelectedElements(store),
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onSelectElement: selectElement,
-    onSelectElements: selectElements,
-    onToggleSelect: toggleElementSelection,
-  };
 }
 
 const defaultPoints: [IPoint, IPoint] = [
@@ -60,10 +29,15 @@ const defaultPoints: [IPoint, IPoint] = [
   { x: 0, y: 0 },
 ];
 
-function ObjectSelector(props: Props) {
+function ObjectSelector({ children }: Props) {
+  const viewPosition = useSelector(selectViewPosition);
+  const selectionDisabled = useSelector(selectSelectionDisabled);
+  const elements = useSelector(selectEditorElements);
+  const selected = useSelector(selectSelectedElements);
+  const dispatch = useTypedDispatch();
+
   const [showRect, setShowRect] = useState(false);
   const [selectorRect, setSelectorRect] = useState(defaultPoints);
-
   const [getBox] = useGetBoxByMultiPoints();
   const [top, left, width, height] = getBox(selectorRect);
 
@@ -71,24 +45,18 @@ function ObjectSelector(props: Props) {
     const { target, pointerId, clientX, clientY } = ev;
     target.setPointerCapture(pointerId);
 
-    const startPoint = correctPoint(
-      { x: clientX, y: clientY },
-      props.viewPosition
-    );
+    const startPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
     setSelectorRect([startPoint, startPoint]);
     setShowRect(true);
   };
 
   const handlePointerMove = (ev: any) => {
     ev.preventDefault();
-    if (!showRect || props.selectionDisabled) return;
+    if (!showRect || selectionDisabled) return;
     const { clientX, clientY } = ev;
-    const endPoint = correctPoint(
-      { x: clientX, y: clientY },
-      props.viewPosition
-    );
+    const endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
     setSelectorRect([selectorRect[0], endPoint]);
-    props.onSelectElements([selectorRect[0], endPoint]);
+    dispatch(selectElements([selectorRect[0], endPoint]));
   };
 
   const handlePointerUp = (ev) => {
@@ -104,7 +72,7 @@ function ObjectSelector(props: Props) {
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          props.onToggleSelect(parseInt(id));
+          dispatch(toggleElementSelection(parseInt(id)));
           break;
         }
       }
@@ -112,7 +80,7 @@ function ObjectSelector(props: Props) {
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          props.onSelectElement([parseInt(id)]);
+          dispatch(selectElement([parseInt(id)]));
           break;
         }
       }
@@ -131,9 +99,9 @@ function ObjectSelector(props: Props) {
       onPointerMove={handlePointerMove}
       onPointerUp={handlePointerUp}
     >
-      {props.children}
+      {children}
 
-      {showRect && !props.selectionDisabled && (
+      {showRect && !selectionDisabled && (
         <SelectionRect top={top} left={left} width={width} height={height} />
       )}
       <ObjectsTransformer />
@@ -142,7 +110,4 @@ function ObjectSelector(props: Props) {
   );
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(ObjectSelector);
+export default ObjectSelector;

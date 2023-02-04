@@ -21,11 +21,11 @@ export function useDrawBox(): [Function] {
 }
 
 export function useDrawElement(): [Function] {
-  function draw(component: IMimicElement): JSX.Element {
-    const { type } = component;
-    const { id } = component.attributes.general;
+  function draw({ key, element }): JSX.Element {
+    const { type } = element;
+    const { id } = element.attributes.general;
     const Element = TransformerBase[type].element;
-    return <Element component={component} key={"element" + id} />;
+    return <Element component={element} key={key + id} />;
   }
   return [draw];
 }

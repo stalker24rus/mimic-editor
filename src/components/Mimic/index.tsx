@@ -1,7 +1,7 @@
-import { useEffect, useMemo } from "react";
-import { connect } from "react-redux";
+import { useCallback, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../constants/literals";
-import { EditorModeProps, IMimicElement } from "../../models/Editor";
+import { IMimicElement } from "../../models/Editor";
 import { setViewPosition } from "../../store/actionCreators/editorState";
 import {
   selectEditorMode,
@@ -18,41 +18,16 @@ import KeyListener from "./KeyListener";
 
 import ObjectSelector from "./ObjectSelector";
 import PointListener from "./PointListener";
+import { useTypedDispatch } from "../../store";
 
-interface StateProps {
-  elements: IMimicElement[];
-  mode: EditorModeProps;
-  mimic: IMimicElement;
-  selected: number[];
-}
+const Mimic = (): JSX.Element => {
+  const mimic = useSelector(selectMimic);
+  const elements = useSelector(selectEditorElements);
+  const mode = useSelector(selectEditorMode);
+  // const selected = useSelector(selectSelectedElements);
+  const dispatch = useTypedDispatch();
 
-interface DispatchProps {
-  onSetViewPosition: Function;
-}
-
-interface OwnProps {}
-
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {
-    elements: selectEditorElements(store),
-    mode: selectEditorMode(store),
-    mimic: selectMimic(store),
-    selected: selectSelectedElements(store),
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onSetViewPosition: setViewPosition,
-  };
-}
-
-const Mimic = (props: Props): JSX.Element => {
-  const { mimic, elements, mode } = props;
-
-  const [DrawFabric] = useDrawElement();
+  const [Element] = useDrawElement();
 
   function handleResize() {
     const htmlRect = document
@@ -62,7 +37,7 @@ const Mimic = (props: Props): JSX.Element => {
     if (htmlRect) {
       const { x, y } = htmlRect;
 
-      props.onSetViewPosition({ x, y });
+      dispatch(setViewPosition({ x, y }));
     }
   }
 
@@ -72,19 +47,20 @@ const Mimic = (props: Props): JSX.Element => {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  });
+  }, [window.innerWidth, window.innerHeight]);
 
-  const handleScroll = (ev) => {
-    ev.preventDefault();
-    handleResize();
-  };
+  const handleScroll = useCallback(
+    (ev) => {
+      ev.preventDefault();
+      handleResize();
+    },
+    [handleResize]
+  );
 
   const memoElements = useMemo(
     () =>
-      elements.map((element: IMimicElement) => {
-        const active =
-          props.selected.includes(element.attributes?.general?.id) || false;
-        return DrawFabric(element);
+      elements.map((element: IMimicElement, index: number) => {
+        return <Element key={index} element={element} />;
       }),
     [elements]
   );
@@ -113,7 +89,4 @@ const Mimic = (props: Props): JSX.Element => {
   );
 };
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(Mimic);
+export default Mimic;
