@@ -9,12 +9,13 @@ import {
   selectMimic,
 } from "../../store/selectors/editorElements";
 
-import CursorInfo from "../Editor/views/CursorInfo";
+import CursorInfo from "../../routes/MimicEditor/views/CursorInfo";
 import { useDrawElement } from "../../hooks/useDraw";
-import KeyEventListener from "../Editor/views/KeyEventListener";
+import KeyEventListener from "../../routes/MimicEditor/views/KeyEventListener";
 
-import ObjectSelector from "../Editor/views/ObjectSelector";
-import PointEventListener from "../Editor/views/PointEventListener";
+import ObjectSelector from "../../routes/MimicEditor/views/ObjectSelector";
+import PointEventListener from "../../routes/MimicEditor/views/PointEventListener";
+
 import { useTypedDispatch } from "../../store";
 
 export default function Canvas(): JSX.Element {
