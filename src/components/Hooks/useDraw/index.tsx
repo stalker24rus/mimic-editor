@@ -11,11 +11,10 @@ export interface BaseProps {
 }
 
 export function useDrawBox(): [Function] {
-  function draw({ key, active, element }): JSX.Element {
+  function draw({ element }): JSX.Element {
     const { type } = element;
-    const { id } = element.attributes.general;
     const Box = TransformerBase[type].box;
-    return active ? <Box key={key + id} component={element}></Box> : <></>;
+    return <Box component={element} />;
   }
   return [draw];
 }
@@ -23,9 +22,8 @@ export function useDrawBox(): [Function] {
 export function useDrawElement(): [Function] {
   function draw({ key, element }): JSX.Element {
     const { type } = element;
-    const { id } = element.attributes.general;
     const Element = TransformerBase[type].element;
-    return <Element component={element} key={key + id} />;
+    return <Element component={element} />;
   }
   return [draw];
 }

@@ -55,8 +55,10 @@ const Mimic = (): JSX.Element => {
 
   const Visualizer = useMemo(
     () =>
-      elements.map((element: IMimicElement, index: number) => {
-        return <Element key={index} element={element} />;
+      elements.map((element: IMimicElement) => {
+        const { type } = element;
+        const { id } = element.attributes.general;
+        return <Element key={type + id} element={element} />;
       }),
     [elements, Element]
   );

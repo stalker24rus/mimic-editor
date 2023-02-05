@@ -13,10 +13,10 @@ export default function ShapeChanger(): JSX.Element {
 
   const Shapers = useMemo(
     () =>
-      elements.map((element: IMimicElement, index: number) => {
-        const active =
+      elements.map((element: IMimicElement) => {
+        const isActive =
           selected.includes(element.attributes?.general?.id) || false;
-        return <ElementShaper key={index} element={element} active={active} />;
+        return isActive ? ElementShaper({ element }) : null;
       }),
     [elements, selected]
   );
