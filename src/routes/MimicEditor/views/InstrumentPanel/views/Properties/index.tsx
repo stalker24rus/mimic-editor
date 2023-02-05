@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { selectSelectedElements } from "../../../../../store/selectors/editorState";
-import { IChangesData, IMimicElement } from "../../../../../models/Editor";
-import { changeAttributes } from "../../../../../store/actionCreators/editorElements";
-import { selectMimic } from "../../../../../store/selectors/editorElements";
+import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
+import { IChangesData, IMimicElement } from "../../../../../../models/Editor";
+import { changeAttributes } from "../../../../../../store/actionCreators/editorElements";
+import { selectMimic } from "../../../../../../store/selectors/editorElements";
 
-import Panel from "./components/Panel";
+import Panel from "./views/Panel";
 
 interface IStateProps {
   selected: number[];

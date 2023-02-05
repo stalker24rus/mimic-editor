@@ -1,9 +1,9 @@
-import Primitives from "./Primitives";
+import Primitives from "./views/Primitives";
 import SimpleSplitter from "../../../../ui/SimpleSplitter";
-import Properties from "./Properties";
+import Properties from "./views/Properties";
 import TabsPanel, { TabProps } from "../../../../ui/TabsPanel";
-import ElementsTree from "./ElementsTree";
-import ExpressPanel from "./ExpressPanel";
+import ElementsTree from "./views/ElementsTree";
+import ExpressPanel from "./views/ExpressPanel";
 
 /**
  * The EditorPanel is a component for Editor module.
@@ -11,7 +11,7 @@ import ExpressPanel from "./ExpressPanel";
  *
  * @returns {JSX.Element}
  */
-function EditorPanel(): JSX.Element {
+export default function InstrumentPanel(): JSX.Element {
   const tabs: TabProps[] = [
     {
       name: "Примитивы",
@@ -33,5 +33,3 @@ function EditorPanel(): JSX.Element {
     </>
   );
 }
-
-export default EditorPanel;

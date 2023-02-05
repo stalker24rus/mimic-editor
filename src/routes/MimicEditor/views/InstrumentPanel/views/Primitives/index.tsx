@@ -4,17 +4,17 @@ import {
   ELEMENT_TYPE_LINE,
   ELEMENT_TYPE_POLYGON,
   ELEMENT_TYPE_POLYLINE,
-} from "../../../../../constants/literals";
-import { editorAddElement } from "../../../../../store/actionCreators/editorState";
-import { selectSelectedElements } from "../../../../../store/selectors/editorState";
-import { Demo as DemoButton } from "../../../../../ui/Mimic/Primitives/Button";
-import { Demo as DemoLine } from "../../../../../ui/Mimic/Primitives/Line";
-import { Demo as DemoPoligon } from "../../../../../ui/Mimic/Primitives/Polygon";
-import { Demo as DemoPoliline } from "../../../../../ui/Mimic/Primitives/Polyline";
+} from "../../../../../../constants/literals";
+import { editorAddElement } from "../../../../../../store/actionCreators/editorState";
+import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
+import { Demo as DemoButton } from "../../../../../../ui/Mimic/Primitives/Button";
+import { Demo as DemoLine } from "../../../../../../ui/Mimic/Primitives/Line";
+import { Demo as DemoPoligon } from "../../../../../../ui/Mimic/Primitives/Polygon";
+import { Demo as DemoPoliline } from "../../../../../../ui/Mimic/Primitives/Polyline";
 import MosaicView, {
   MosaicProps,
   ViewProps,
-} from "../../../../../ui/MosaicView";
+} from "../../../../../../ui/MosaicView";
 import { useCallback, useMemo } from "react";
 
 interface StateProps {

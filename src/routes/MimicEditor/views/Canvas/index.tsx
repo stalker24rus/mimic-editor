@@ -1,22 +1,22 @@
 import { useCallback, useEffect, useMemo } from "react";
 import { useSelector } from "react-redux";
-import { EDITOR_MODE_CREATE } from "../../constants/literals";
-import { IMimicElement } from "../../models/Editor";
-import { setViewPosition } from "../../store/actionCreators/editorState";
-import { selectEditorMode } from "../../store/selectors/editorState";
+import { EDITOR_MODE_CREATE } from "../../../../constants/literals";
+import { IMimicElement } from "../../../../models/Editor";
+import { setViewPosition } from "../../../../store/actionCreators/editorState";
+import { selectEditorMode } from "../../../../store/selectors/editorState";
 import {
   selectEditorElements,
   selectMimic,
-} from "../../store/selectors/editorElements";
+} from "../../../../store/selectors/editorElements";
 
-import CursorInfo from "../../routes/MimicEditor/views/CursorInfo";
-import { useDrawElement } from "../../hooks/useDraw";
-import KeyEventListener from "../../routes/MimicEditor/views/KeyEventListener";
+import CursorInfo from "../CursorInfo";
+import { useDrawElement } from "../../../../hooks/useDraw";
+import KeyEventListener from "../KeyEventListener";
 
-import ObjectSelector from "../../routes/MimicEditor/views/ObjectSelector";
-import PointEventListener from "../../routes/MimicEditor/views/PointEventListener";
+import ObjectSelector from "../ObjectSelector";
+import PointEventListener from "../PointEventListener";
 
-import { useTypedDispatch } from "../../store";
+import { useTypedDispatch } from "../../../../store";
 
 export default function Canvas(): JSX.Element {
   const mimic = useSelector(selectMimic);

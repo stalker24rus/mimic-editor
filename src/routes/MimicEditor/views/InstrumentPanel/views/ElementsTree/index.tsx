@@ -1,11 +1,11 @@
 import { connect } from "react-redux";
-import { IMimicElement } from "../../../../../models/Editor";
-import { selectElement } from "../../../../../store/actionCreators/editorState";
+import { IMimicElement } from "../../../../../../models/Editor";
+import { selectElement } from "../../../../../../store/actionCreators/editorState";
 import {
   selectEditorElements,
   selectMimic,
-} from "../../../../../store/selectors/editorElements";
-import { selectSelectedElements } from "../../../../../store/selectors/editorState";
+} from "../../../../../../store/selectors/editorElements";
+import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 
 import "./index.css";
 

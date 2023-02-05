@@ -10,22 +10,22 @@ import {
   setElementsRightAlign,
   setElementsTopAlign,
   setElementsVerticalAlign,
-} from "../../../../../store/actionCreators/editorElements";
+} from "../../../../../../store/actionCreators/editorElements";
 import {
   selectEditorElementsFuture,
   selectEditorElementsPast,
-} from "../../../../../store/selectors/editorElements";
-import { selectSelectedElements } from "../../../../../store/selectors/editorState";
-import BackLevel from "../../../../../ui/Icons/svg/BackLevel";
-import BottomAlign from "../../../../../ui/Icons/svg/BottomAlign";
-import BottomLevel from "../../../../../ui/Icons/svg/BottomLevel";
-import ForwardLevel from "../../../../../ui/Icons/svg/ForwardLevel";
-import HorizonAlign from "../../../../../ui/Icons/svg/HorizonAlign";
-import LeftAlign from "../../../../../ui/Icons/svg/LeftAlign";
-import RightAlign from "../../../../../ui/Icons/svg/RightAlign";
-import TopAlign from "../../../../../ui/Icons/svg/TopAlign";
-import TopLevel from "../../../../../ui/Icons/svg/TopLevel";
-import VerticalAlign from "../../../../../ui/Icons/svg/VerticalAlign";
+} from "../../../../../../store/selectors/editorElements";
+import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
+import BackLevel from "../../../../../../ui/Icons/svg/BackLevel";
+import BottomAlign from "../../../../../../ui/Icons/svg/BottomAlign";
+import BottomLevel from "../../../../../../ui/Icons/svg/BottomLevel";
+import ForwardLevel from "../../../../../../ui/Icons/svg/ForwardLevel";
+import HorizonAlign from "../../../../../../ui/Icons/svg/HorizonAlign";
+import LeftAlign from "../../../../../../ui/Icons/svg/LeftAlign";
+import RightAlign from "../../../../../../ui/Icons/svg/RightAlign";
+import TopAlign from "../../../../../../ui/Icons/svg/TopAlign";
+import TopLevel from "../../../../../../ui/Icons/svg/TopLevel";
+import VerticalAlign from "../../../../../../ui/Icons/svg/VerticalAlign";
 
 interface StateProps {
   future: [any];

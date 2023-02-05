@@ -1,6 +1,6 @@
 import React, { createRef, useEffect, useState } from "react";
 
-function EditorContextMenu(props) {
+function ContextMenu(props) {
   const { children } = props;
   const divRef = createRef<HTMLDivElement>();
 
@@ -97,4 +97,4 @@ function EditorContextMenu(props) {
   );
 }
 
-export default EditorContextMenu;
+export default ContextMenu;

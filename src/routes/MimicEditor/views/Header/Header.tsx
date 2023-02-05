@@ -81,7 +81,7 @@ function mapDispatchToProps() {
   };
 }
 
-const EditorHeader = (props: Props): JSX.Element => {
+const Header = (props: Props): JSX.Element => {
   const handleUndo = () => {
     props.onUndo();
   };
@@ -406,4 +406,4 @@ const EditorHeader = (props: Props): JSX.Element => {
 export default connect<StateProps, DispatchProps, OwnProps>(
   mapStateToProps,
   mapDispatchToProps()
-)(EditorHeader);
+)(Header);

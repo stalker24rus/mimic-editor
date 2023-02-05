@@ -1,6 +1,6 @@
 import lodash from "lodash";
-import { isNumeric } from "../../../../../../../constants/functions/isNumeric";
-import InputField from "../../../../../../../ui/InputField";
+import { isNumeric } from "../../../../../../../../constants/functions/isNumeric";
+import InputField from "../../../../../../../../ui/InputField";
 import View from "../View";
 
 function Position({ freezed, data, onChange }) {

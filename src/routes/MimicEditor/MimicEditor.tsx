@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { HEADER_HEIGHT } from "../../constants/literals";
-import EditorHeader from "./views/EditorHeader";
-import EditorPanel from "./views/EditorPanel";
+import Header from "./views/Header";
+import InstrumentPanel from "./views/InstrumentPanel";
 import SimpleSplitter from "../../ui/SimpleSplitter";
-import Canvas from "../../components/Canvas";
+import Canvas from "./views/Canvas";
 import "./MimicEditor.css";
 
 /**
@@ -39,12 +39,12 @@ export default function MimicEditor(): JSX.Element {
         overflow: "hidden",
       }}
     >
-      <EditorHeader />
+      <Header />
 
       <div style={{ height: height - HEADER_HEIGHT }}>
         <SimpleSplitter orientation="vertical">
           <Canvas />
-          <EditorPanel />
+          <InstrumentPanel />
         </SimpleSplitter>
       </div>
     </div>
