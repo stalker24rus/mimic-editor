@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { connect } from "react-redux";
-import { APP_VERSION, HEADER_HEIGHT } from "../../../constants/literals";
-import { IMimicElement } from "../../../models/Editor";
+import { APP_VERSION, HEADER_HEIGHT } from "../../../../constants/literals";
+import { IMimicElement } from "../../../../models/Editor";
 import {
   deleteSelectedElements,
   groupElements,
@@ -13,17 +13,17 @@ import {
   redo,
   undo,
   unGroupElements,
-} from "../../../store/actionCreators/editorElements";
+} from "../../../../store/actionCreators/editorElements";
 import {
   copyElements,
   escapeElements,
-} from "../../../store/actionCreators/editorState";
-import { IOperations } from "../../../store/reducers/editorState";
+} from "../../../../store/actionCreators/editorState";
+import { IOperations } from "../../../../store/reducers/editorState";
 import {
   selectSelectedElements,
   selectCopyPasteBuffer,
   selectEditorOperations,
-} from "../../../store/selectors/editorState";
+} from "../../../../store/selectors/editorState";
 
 interface StateProps {
   future: [any];

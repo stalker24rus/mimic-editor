@@ -1,4 +1,4 @@
-import { isNumeric } from "../../../../../../constants/functions/isNumeric";
+import { isNumeric } from "../../../../../../../constants/functions/isNumeric";
 import View from "../View";
 
 function General({ freezed, data, onChange }) {

@@ -1,5 +1,5 @@
-import { isNumeric } from "../../../../../../constants/functions/isNumeric";
-import InputField from "../../../../../../ui/InputField";
+import { isNumeric } from "../../../../../../../constants/functions/isNumeric";
+import InputField from "../../../../../../../ui/InputField";
 import View from "../View";
 
 function Custom({ freezed, data, onChange }) {

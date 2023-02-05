@@ -1,7 +1,7 @@
 import Primitives from "./Primitives";
-import SimpleSplitter from "../../../ui/SimpleSplitter";
+import SimpleSplitter from "../../../../ui/SimpleSplitter";
 import Properties from "./Properties";
-import TabsPanel, { TabProps } from "../../../ui/TabsPanel";
+import TabsPanel, { TabProps } from "../../../../ui/TabsPanel";
 import ElementsTree from "./ElementsTree";
 import ExpressPanel from "./ExpressPanel";
 
