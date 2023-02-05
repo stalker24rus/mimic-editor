@@ -1,6 +1,6 @@
-import { IMimicElement } from "../../../models/Editor";
+import { IMimicElement } from "../../models/Editor";
 
-import { TransformerBase } from "../../../constants/mimicBaseElements/TransformerBase";
+import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 
 export interface BaseProps {
   [key: string]: {

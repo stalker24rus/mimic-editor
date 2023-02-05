@@ -3,7 +3,7 @@ import {
   MIMIC,
 } from "../../../../../constants/literals";
 import { BaseElementOutput, IMimicElement } from "../../../../../models/Editor";
-import useGetBoxByMultiPoints from "../../../../Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../../../../../hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;

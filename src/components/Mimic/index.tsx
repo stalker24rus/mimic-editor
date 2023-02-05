@@ -10,7 +10,7 @@ import {
 } from "../../store/selectors/editorElements";
 
 import CursorInfo from "./CursorInfo";
-import { useDrawElement } from "../Hooks/useDraw";
+import { useDrawElement } from "../../hooks/useDraw";
 import KeyEventListener from "../Editor/views/KeyEventListener";
 
 import ObjectSelector from "./ObjectSelector";

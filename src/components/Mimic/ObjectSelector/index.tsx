@@ -14,7 +14,7 @@ import {
   selectSelectionDisabled,
   selectViewPosition,
 } from "../../../store/selectors/editorState";
-import useGetBoxByMultiPoints from "../../Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../../../hooks/useGetBoxByMultiPoints";
 import GroupMover from "../../Editor/views/GroupMover";
 import SelectionRect from "../../Editor/views/SelectionRect";
 import ShapeChanger from "../../Editor/views/ShapeChanger";

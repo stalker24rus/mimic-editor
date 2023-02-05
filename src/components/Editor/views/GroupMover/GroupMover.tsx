@@ -9,7 +9,7 @@ import {
 } from "../../../../store/actionCreators/editorElements";
 import { selectEditorElements } from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import { useGetBoxFromElements } from "../../../Hooks/useGetBoxByMultiPoints";
+import { useGetBoxFromElements } from "../../../../hooks/useGetBoxByMultiPoints";
 
 const BORDER: number = 10;
 

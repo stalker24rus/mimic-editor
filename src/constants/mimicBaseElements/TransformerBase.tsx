@@ -13,7 +13,7 @@ import Group from "../../components/Mimic/BaseElements/Service/Group";
 import MoverBox from "../../components/Mimic/Transformers/MoverBox";
 import MultiObjectBox from "../../components/Mimic/Transformers/MultiObjectBox";
 import RectangleBox from "../../components/Mimic/Transformers/RectangleBox";
-import { BaseProps } from "../../components/Hooks/useDraw/index";
+import { BaseProps } from "../../hooks/useDraw/index";
 
 export const TransformerBase: BaseProps = {
   [ELEMENT_TYPE_BUTTON]: {

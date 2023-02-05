@@ -3,7 +3,7 @@ import { connect, useSelector } from "react-redux";
 import { IMimicElement } from "../../../../models/Editor";
 import { selectEditorElements } from "../../../../store/selectors/editorElements";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import { useDrawBox } from "../../../Hooks/useDraw";
+import { useDrawBox } from "../../../../hooks/useDraw";
 
 export default function ShapeChanger(): JSX.Element {
   const [ElementShaper] = useDrawBox();

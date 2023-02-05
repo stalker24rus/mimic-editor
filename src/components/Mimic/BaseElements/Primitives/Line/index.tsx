@@ -11,7 +11,7 @@ import {
   IMimicElement,
   IPoint,
 } from "../../../../../models/Editor";
-import useGetBoxByMultiPoints from "../../../../Hooks/useGetBoxByMultiPoints";
+import useGetBoxByMultiPoints from "../../../../../hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
