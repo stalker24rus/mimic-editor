@@ -1,10 +1,10 @@
-import Editor from "./routes/MimicEditor";
+import MimicEditor from "./routes/MimicEditor";
 import "./Application.css";
 
 function App() {
   return (
     <div className="App">
-      <Editor />
+      <MimicEditor />
     </div>
   );
 }

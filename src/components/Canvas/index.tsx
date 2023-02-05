@@ -17,7 +17,7 @@ import ObjectSelector from "../Editor/views/ObjectSelector";
 import PointEventListener from "../Editor/views/PointEventListener";
 import { useTypedDispatch } from "../../store";
 
-const Mimic = (): JSX.Element => {
+export default function Canvas(): JSX.Element {
   const mimic = useSelector(selectMimic);
   const elements = useSelector(selectEditorElements);
   const mode = useSelector(selectEditorMode);
@@ -85,6 +85,4 @@ const Mimic = (): JSX.Element => {
       </PointEventListener>
     </div>
   );
-};
-
-export default Mimic;
+}
