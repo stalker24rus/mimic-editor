@@ -1,5 +1,5 @@
-import { ELEMENT_TYPE_BUTTON, MIMIC } from "../../../../../constants/literals";
-import { BaseElementOutput, IMimicElement } from "../../../../../models/Editor";
+import { ELEMENT_TYPE_BUTTON, MIMIC } from "../../../../constants/literals";
+import { BaseElementOutput, IMimicElement } from "../../../../models/Editor";
 
 interface Props {
   disablePointerEvents?: boolean;

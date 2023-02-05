@@ -7,10 +7,10 @@ import {
 } from "../../../../constants/literals";
 import { editorAddElement } from "../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
-import { Demo as DemoButton } from "../../../Mimic/BaseElements/Primitives/Button";
-import { Demo as DemoLine } from "../../../Mimic/BaseElements/Primitives/Line";
-import { Demo as DemoPoligon } from "../../../Mimic/BaseElements/Primitives/Polygon";
-import { Demo as DemoPoliline } from "../../../Mimic/BaseElements/Primitives/Polyline";
+import { Demo as DemoButton } from "../../../../ui/mimic/Primitives/Button";
+import { Demo as DemoLine } from "../../../../ui/mimic/Primitives/Line";
+import { Demo as DemoPoligon } from "../../../../ui/mimic/Primitives/Polygon";
+import { Demo as DemoPoliline } from "../../../../ui/mimic/Primitives/Polyline";
 import MosaicView, { MosaicProps, ViewProps } from "../../../../ui/MosaicView";
 import { useCallback, useMemo } from "react";
 

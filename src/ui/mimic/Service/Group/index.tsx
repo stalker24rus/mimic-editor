@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../../constants/literals";
-import { IMimicElement } from "../../../../../models/Editor";
-import { useDrawElement } from "../../../../../hooks/useDraw";
+import { ELEMENT_TYPE_GROUP, MIMIC } from "../../../../constants/literals";
+import { IMimicElement } from "../../../../models/Editor";
+import { useDrawElement } from "../../../../hooks/useDraw";
 
 interface Props {
   disablePointerEvents?: boolean;

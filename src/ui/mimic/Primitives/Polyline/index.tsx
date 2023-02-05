@@ -1,17 +1,6 @@
-/**
- * The Line component draws a line on the mimic.
- * Based on SVG.
- * @param param0
- * @returns
- */
-
-import { ELEMENT_TYPE_LINE, MIMIC } from "../../../../../constants/literals";
-import {
-  BaseElementOutput,
-  IMimicElement,
-  IPoint,
-} from "../../../../../models/Editor";
-import useGetBoxByMultiPoints from "../../../../../hooks/useGetBoxByMultiPoints";
+import { ELEMENT_TYPE_POLYLINE, MIMIC } from "../../../../constants/literals";
+import { BaseElementOutput, IMimicElement } from "../../../../models/Editor";
+import useGetBoxByMultiPoints from "../../../../hooks/useGetBoxByMultiPoints";
 
 interface Props {
   disablePointerEvents?: boolean;
@@ -21,31 +10,36 @@ interface Props {
   onPointerDown: Function;
 }
 
-function Line(props: Props): JSX.Element {
+function Polyline(props: Props): JSX.Element {
+  // INCOMING STATES
   const { attributes } = props.component;
   const { general, position, appearance } = attributes;
   const { id } = general;
   const { points } = position;
-
   const [getBox] = useGetBoxByMultiPoints();
   const [boxTop, boxLeft, boxWidth, boxHeight] = getBox(points);
 
-  const { stroke, strokeWidth, opacity } = appearance;
-  const [_point1, _point2]: IPoint[] = points;
-  const point1 = _point1;
-  const point2 = _point2 ? _point2 : point1;
+  const { fill, visability, stroke, strokeWidth, opacity } = appearance;
 
-  const handlePointerMove = (ev: React.PointerEvent<SVGLineElement>) => {
+  // HANDLERS
+
+  const handlePointerMove = (ev: React.PointerEvent<SVGPolylineElement>) => {
     props.onPointerMove(ev);
   };
 
-  const handlePointerUp = (ev: React.PointerEvent<SVGLineElement>) => {
+  const handlePointerUp = (ev: React.PointerEvent<SVGPolylineElement>) => {
     props.onPointerUp(ev);
   };
 
-  const handlePointerDown = (ev: React.PointerEvent<SVGLineElement>) => {
+  const handlePointerDown = (ev: React.PointerEvent<SVGPolylineElement>) => {
     props.onPointerDown(ev);
   };
+
+  const polinePointsFormat: string = points
+    .map(function (point) {
+      return `${point.x - boxLeft}, ${point.y - boxTop}`;
+    })
+    .join();
 
   return (
     <span
@@ -66,12 +60,10 @@ function Line(props: Props): JSX.Element {
         overflow="visible"
         pointerEvents="none"
       >
-        <line
-          id={MIMIC + "." + ELEMENT_TYPE_LINE + "." + id}
-          x1={point1.x - boxLeft}
-          y1={point1.y - boxTop}
-          x2={point2.x - boxLeft}
-          y2={point2.y - boxTop}
+        <polyline
+          id={MIMIC + "." + ELEMENT_TYPE_POLYLINE + "." + id}
+          points={polinePointsFormat}
+          fill="none"
           style={{
             stroke: stroke,
             strokeWidth: strokeWidth,
@@ -88,7 +80,7 @@ function Line(props: Props): JSX.Element {
   );
 }
 
-Line.defaultProps = {
+Polyline.defaultProps = {
   onDragMove: () => {},
   onClick: () => {},
   onPointerDown: () => {},
@@ -96,7 +88,7 @@ Line.defaultProps = {
   onPointerMove: () => {},
 };
 
-export default Line;
+export default Polyline;
 
 export const startState: BaseElementOutput = {
   attributes: {
@@ -115,11 +107,11 @@ export const startState: BaseElementOutput = {
 
 export const Demo = () => {
   const demoState: IMimicElement = {
-    type: "LINE",
+    type: "POLYLINE",
     attributes: {
       general: {
         id: 99999999,
-        name: "DemoPoligon",
+        name: "DemoPoliline",
         tagName: "",
       },
       appearance: {
@@ -136,8 +128,15 @@ export const Demo = () => {
         top: 0,
         left: 0,
         points: [
-          { x: 10, y: 10 },
-          { x: 80, y: 80 },
+          { x: 5, y: 70 },
+          { x: 65, y: 15 },
+          { x: 85, y: 70 },
+          { x: 30, y: 70 },
+          { x: 60, y: 40 },
+          { x: 70, y: 65 },
+          // { x: 80, y: 80 },
+          // { x: 80, y: 10 },
+          // { x: 45, y: 45 },
         ],
       },
 
@@ -167,7 +166,7 @@ export const Demo = () => {
         position: "relative",
       }}
     >
-      <Line disablePointerEvents={true} component={demoState} />
+      <Polyline disablePointerEvents={true} component={demoState} />
     </div>
   );
 };
