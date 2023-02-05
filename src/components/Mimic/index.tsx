@@ -9,11 +9,11 @@ import {
   selectMimic,
 } from "../../store/selectors/editorElements";
 
-import CursorInfo from "./CursorInfo";
+import CursorInfo from "../Editor/views/CursorInfo";
 import { useDrawElement } from "../../hooks/useDraw";
 import KeyEventListener from "../Editor/views/KeyEventListener";
 
-import ObjectSelector from "./ObjectSelector";
+import ObjectSelector from "../Editor/views/ObjectSelector";
 import PointEventListener from "../Editor/views/PointEventListener";
 import { useTypedDispatch } from "../../store";
 

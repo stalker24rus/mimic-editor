@@ -1,5 +1,5 @@
-import Editor from "./Pages/Editor";
-import "./App.css";
+import Editor from "./routes/MimicEditor";
+import "./Application.css";
 
 function App() {
   return (

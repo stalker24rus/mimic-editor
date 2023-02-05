@@ -1,11 +1,11 @@
 import React from "react";
-import { IMimicElement, IPoint } from "../../../../models/Editor";
-import { useTypedDispatch } from "../../../../store";
+import { IMimicElement, IPoint } from "../../../../../models/Editor";
+import { useTypedDispatch } from "../../../../../store";
 import {
   endDoingChanges,
   moveElementPoints,
   startDoingChanges,
-} from "../../../../store/actionCreators/editorElements";
+} from "../../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 
 interface Props {

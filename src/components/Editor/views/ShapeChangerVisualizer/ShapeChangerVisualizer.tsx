@@ -5,7 +5,7 @@ import { selectEditorElements } from "../../../../store/selectors/editorElements
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import { useDrawBox } from "../../../../hooks/useDraw";
 
-export default function ShapeChanger(): JSX.Element {
+export default function ShapeChangerVisualizer(): JSX.Element {
   const [ElementShaper] = useDrawBox();
 
   const elements = useSelector(selectEditorElements);

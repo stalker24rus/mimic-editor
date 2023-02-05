@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { HEADER_HEIGHT } from "../../../constants/literals";
-import EditorHeader from "../../Editor/EditorHeader";
-import EditorPanel from "../../Editor/EditorPanel";
-import SimpleSplitter from "../../../ui/SimpleSplitter";
-import Mimic from "../../Mimic";
+import { HEADER_HEIGHT } from "../../constants/literals";
+import EditorHeader from "../../components/Editor/EditorHeader";
+import EditorPanel from "../../components/Editor/EditorPanel";
+import SimpleSplitter from "../../ui/SimpleSplitter";
+import Mimic from "../../components/Mimic";
 import "./index.css";
 
 /**

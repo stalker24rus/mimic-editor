@@ -1,23 +1,23 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { MIMIC } from "../../../constants/literals";
-import { IPoint } from "../../../models/Editor";
-import { useTypedDispatch } from "../../../store";
-import { correctPoint } from "../../../store/actionCreators/editorElements";
+import { MIMIC } from "../../../../constants/literals";
+import { IPoint } from "../../../../models/Editor";
+import { useTypedDispatch } from "../../../../store";
+import { correctPoint } from "../../../../store/actionCreators/editorElements";
 import {
   selectElement,
   selectElements,
   toggleElementSelection,
-} from "../../../store/actionCreators/editorState";
+} from "../../../../store/actionCreators/editorState";
 
 import {
   selectSelectionDisabled,
   selectViewPosition,
-} from "../../../store/selectors/editorState";
-import useGetBoxByMultiPoints from "../../../hooks/useGetBoxByMultiPoints";
-import GroupMover from "../../Editor/views/GroupMover";
-import SelectionRect from "../../Editor/views/SelectionRect";
-import ShapeChanger from "../../Editor/views/ShapeChanger";
+} from "../../../../store/selectors/editorState";
+import useGetBoxByMultiPoints from "../../../../hooks/useGetBoxByMultiPoints";
+import GroupMover from "../GroupMover";
+import SelectionRect from "../SelectionRect";
+import ShapeChangerVisualizer from "../ShapeChangerVisualizer";
 
 interface Props {
   children?: React.ReactNode;
@@ -103,7 +103,7 @@ function ObjectSelector({ children }: Props) {
       {showRect && !selectionDisabled && (
         <SelectionRect top={top} left={left} width={width} height={height} />
       )}
-      <ShapeChanger />
+      <ShapeChangerVisualizer />
       <GroupMover />
     </div>
   );

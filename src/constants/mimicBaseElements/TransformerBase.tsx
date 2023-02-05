@@ -5,14 +5,14 @@ import {
   ELEMENT_TYPE_POLYGON,
   ELEMENT_TYPE_POLYLINE,
 } from "../literals";
-import Button from "../../ui/mimic/Primitives/Button";
-import Line from "../../ui/mimic/Primitives/Line";
-import Polygon from "../../ui/mimic/Primitives/Polygon";
-import Polyline from "../../ui/mimic/Primitives/Polyline";
-import Group from "../../ui/mimic/Service/Group";
-import MoverBox from "../../components/Mimic/Transformers/MoverBox";
-import MultiObjectBox from "../../components/Mimic/Transformers/MultiObjectBox";
-import RectangleBox from "../../components/Mimic/Transformers/RectangleBox";
+import Button from "../../ui/Mimic/Primitives/Button";
+import Line from "../../ui/Mimic/Primitives/Line";
+import Polygon from "../../ui/Mimic/Primitives/Polygon";
+import Polyline from "../../ui/Mimic/Primitives/Polyline";
+import Group from "../../ui/Mimic/Service/Group";
+import MoverBox from "../../components/Editor/views/ShapeChangers/MoverBox";
+import MultiObjectBox from "../../components/Editor/views/ShapeChangers/MultiObjectBox";
+import RectangleBox from "../../components/Editor/views/ShapeChangers/RectangleBox";
 import { BaseProps } from "../../hooks/useDraw/index";
 
 export const TransformerBase: BaseProps = {
