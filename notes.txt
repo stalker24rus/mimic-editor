@@ -6,7 +6,27 @@ url: /editor
 <Editor>                                        // Компонент редактора   
   <KeyEventListener />                          // Компонент отслеживания событий клавиатуры
   <Header />
+
+    <Canvas>                                    // Холст
+        <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
+          <Object1 />
+          <Object2 />
+          ...
+          <ObjectN />
+        </ Visualizer>
+        
+        <PointEventListener >                        // Компонент отслеживания событий мыши
+          <SelectionRect />
+          <ShapeChangerLayer />
+          <GroupMover />
+          
+        </ PointEventListener> 
+
+    </Canvas>  
+
+
   <PointEventListener >                        // Компонент отслеживания событий мыши
+  
     <ViewSplitter>                                // Разделитель компонентов
       <Canvas>                                    // Холст
         <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы

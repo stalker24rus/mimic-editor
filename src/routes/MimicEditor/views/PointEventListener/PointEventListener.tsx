@@ -62,7 +62,6 @@ export default function PointEventListener(props: Props): JSX.Element {
       onClick={handleClick}
     >
       {children}
-      {mode === EDITOR_MODE_CREATE && <CursorInfo />}
     </div>
   );
 }

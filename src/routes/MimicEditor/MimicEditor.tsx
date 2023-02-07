@@ -11,6 +11,7 @@ import PointEventListener from "./views/PointEventListener";
 import SelectionRect from "./views/SelectionRect";
 import ShapeChangerLayer from "./views/ShapeChangerLayer";
 import GroupMover from "./views/GroupMover";
+import CursorInfo from "./views/CursorInfo";
 
 /**
  * There is a mnemonic editor.
@@ -54,6 +55,7 @@ export default function MimicEditor(): JSX.Element {
               <SelectionRect />
               <ShapeChangerLayer />
               <GroupMover />
+              <CursorInfo />
             </PointEventListener>
           </Canvas>
           <InstrumentPanel />
