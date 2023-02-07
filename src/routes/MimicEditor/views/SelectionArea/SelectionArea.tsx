@@ -8,7 +8,7 @@ import {
 
 // import "./SelectionRect.scss";
 
-export default function SelectionRect(): JSX.Element {
+export default function SelectionArea(): JSX.Element {
   // const bem = useBem("SelectionRect");
   const selectionDisabled = useSelector(selectSelectionDisabled);
   const { visible, position } = useSelector(selectSelectionArea);

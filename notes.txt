@@ -16,10 +16,10 @@ url: /editor
         </ Visualizer>
         
         <PointEventListener >                        // Компонент отслеживания событий мыши
-          <SelectionRect />
+          <SelectionArea />
           <ShapeChangerLayer />
           <GroupMover />
-          
+          <CursorInfo />
         </ PointEventListener> 
 
     </Canvas>  
@@ -46,7 +46,7 @@ url: /editor
         
         <GroupMover />
 
-        <SelectionRect />                         // Компонента отображения выбора компонентов            ! add to store select settings
+        <SelectionArea />                         // Компонента отображения выбора компонентов            ! add to store select settings
         
         <ContextMenu />                       // Компонент отображения контекстного меню              ! add to store contextMenu settings
         <Ruler />                             // Компонент отображения линейки                        ! add to store line ruler settings

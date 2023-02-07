@@ -8,7 +8,7 @@ import "./MimicEditor.css";
 import KeyEventListener from "./views/KeyEventListener";
 import Canvas from "./views/Canvas";
 import PointEventListener from "./views/PointEventListener";
-import SelectionRect from "./views/SelectionRect";
+import SelectionArea from "./views/SelectionArea";
 import ShapeChangerLayer from "./views/ShapeChangerLayer";
 import GroupMover from "./views/GroupMover";
 import CursorInfo from "./views/CursorInfo";
@@ -35,7 +35,7 @@ export default function MimicEditor(): JSX.Element {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [window.innerWidth, window.innerHeight]);
 
   return (
     <div
@@ -52,7 +52,7 @@ export default function MimicEditor(): JSX.Element {
         <SimpleSplitter orientation="vertical">
           <Canvas>
             <PointEventListener>
-              <SelectionRect />
+              <SelectionArea />
               <ShapeChangerLayer />
               <GroupMover />
               <CursorInfo />

@@ -1,7 +1,6 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { EDITOR_MODE_CREATE } from "../../../../constants/literals";
-import { IMimicElement } from "../../../../models/Editor";
 import { setViewPosition } from "../../../../store/actionCreators/editorState";
 import { selectEditorMode } from "../../../../store/selectors/editorState";
 import {
@@ -9,9 +8,8 @@ import {
   selectMimic,
 } from "../../../../store/selectors/editorElements";
 
-import { useDrawElement } from "../../../../hooks/useDraw";
-
 import { useTypedDispatch } from "../../../../store";
+import Visualizer from "./views/Visualizer";
 
 interface Props {
   children?: JSX.Element[] | JSX.Element;
@@ -19,7 +17,6 @@ interface Props {
 
 export default function Canvas({ children }: Props): JSX.Element {
   const mimic = useSelector(selectMimic);
-  const elements = useSelector(selectEditorElements);
   const mode = useSelector(selectEditorMode);
   const dispatch = useTypedDispatch();
 
@@ -27,8 +24,6 @@ export default function Canvas({ children }: Props): JSX.Element {
   const { position, appearance, general } = attributes;
   const { width, height } = position;
   const { fill } = appearance;
-
-  const [Element] = useDrawElement();
 
   const handleResize = useCallback(() => {
     const htmlRect = document
@@ -58,15 +53,7 @@ export default function Canvas({ children }: Props): JSX.Element {
     [handleResize]
   );
 
-  const Visualizer = useMemo(
-    () =>
-      elements.map((element: IMimicElement) => {
-        const { type } = element;
-        const { id } = element.attributes.general;
-        return <Element key={type + id} element={element} />;
-      }),
-    [elements, Element]
-  );
+  const elements = useSelector(selectEditorElements);
 
   return (
     <div
@@ -88,7 +75,7 @@ export default function Canvas({ children }: Props): JSX.Element {
           cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
         }}
       >
-        {elements.length > 0 && <>{Visualizer}</>}
+        <Visualizer elements={elements} />
         {children}
       </div>
     </div>

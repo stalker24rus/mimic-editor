@@ -1,5 +1,3 @@
-import { IMimicElement } from "../../models/Editor";
-
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 
 export interface BaseProps {
@@ -20,7 +18,7 @@ export function useDrawBox(): [Function] {
 }
 
 export function useDrawElement(): [Function] {
-  function draw({ key, element }): JSX.Element {
+  function draw({ element }): JSX.Element {
     const { type } = element;
     const Element = TransformerBase[type].element;
     return <Element component={element} />;
