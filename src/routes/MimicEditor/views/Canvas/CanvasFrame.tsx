@@ -9,20 +9,24 @@ import {
   selectMimic,
 } from "../../../../store/selectors/editorElements";
 
-import CursorInfo from "../CursorInfo";
 import { useDrawElement } from "../../../../hooks/useDraw";
-import KeyEventListener from "../KeyEventListener";
-
-import ObjectSelector from "../ObjectSelector";
-import PointEventListener from "../PointEventListener";
 
 import { useTypedDispatch } from "../../../../store";
 
-export default function Canvas(): JSX.Element {
+interface Props {
+  children?: JSX.Element[] | JSX.Element;
+}
+
+export default function Canvas({ children }: Props): JSX.Element {
   const mimic = useSelector(selectMimic);
   const elements = useSelector(selectEditorElements);
   const mode = useSelector(selectEditorMode);
   const dispatch = useTypedDispatch();
+
+  const { attributes } = mimic;
+  const { position, appearance, general } = attributes;
+  const { width, height } = position;
+  const { fill } = appearance;
 
   const [Element] = useDrawElement();
 
@@ -71,19 +75,22 @@ export default function Canvas(): JSX.Element {
         width: "100%",
         height: "100%",
         overflow: "scroll",
-        touchAction: "none", //isMimicTouch ? "auto" : "none",
+        touchAction: "none",
       }}
       onScroll={handleScroll}
     >
-      <KeyEventListener />
-      <PointEventListener>
-        <ObjectSelector>
-          {elements.length > 0 && <>{Visualizer}</>}
-          {/* <EditorContextMenu /> */}
-
-          {mode === EDITOR_MODE_CREATE && <CursorInfo />}
-        </ObjectSelector>
-      </PointEventListener>
+      <div
+        style={{
+          position: "relative",
+          width: width,
+          height: height,
+          background: fill,
+          cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
+        }}
+      >
+        {elements.length > 0 && <>{Visualizer}</>}
+        {children}
+      </div>
     </div>
   );
 }

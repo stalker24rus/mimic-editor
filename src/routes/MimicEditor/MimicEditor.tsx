@@ -3,8 +3,14 @@ import { HEADER_HEIGHT } from "../../constants/literals";
 import Header from "./views/Header";
 import InstrumentPanel from "./views/InstrumentPanel";
 import SimpleSplitter from "../../ui/SimpleSplitter";
-import Canvas from "./views/Canvas";
+
 import "./MimicEditor.css";
+import KeyEventListener from "./views/KeyEventListener";
+import Canvas from "./views/Canvas";
+import PointEventListener from "./views/PointEventListener";
+import SelectionRect from "./views/SelectionRect";
+import ShapeChangerLayer from "./views/ShapeChangerLayer";
+import GroupMover from "./views/GroupMover";
 
 /**
  * There is a mnemonic editor.
@@ -39,11 +45,17 @@ export default function MimicEditor(): JSX.Element {
         overflow: "hidden",
       }}
     >
+      <KeyEventListener />
       <Header />
-
       <div style={{ height: height - HEADER_HEIGHT }}>
         <SimpleSplitter orientation="vertical">
-          <Canvas />
+          <Canvas>
+            <PointEventListener>
+              <SelectionRect />
+              <ShapeChangerLayer />
+              <GroupMover />
+            </PointEventListener>
+          </Canvas>
           <InstrumentPanel />
         </SimpleSplitter>
       </div>

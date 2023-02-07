@@ -5,6 +5,7 @@ url: /editor
 
 <Editor>                                        // Компонент редактора   
   <KeyEventListener />                          // Компонент отслеживания событий клавиатуры
+  <Header />
   <PointEventListener >                        // Компонент отслеживания событий мыши
     <ViewSplitter>                                // Разделитель компонентов
       <Canvas>                                    // Холст

@@ -11,6 +11,8 @@ import {
   SET_MODE_EDIT,
   SET_MODE_OPERATE,
   SET_SELECTED_ELEMENTS,
+  SET_SELECTION_AREA,
+  SET_SELECTION_AREA_VISIBLE,
   SET_VIEW_POSITION,
   TOGGLE_ELEMENT_SELECTION,
 } from "../actionTypes/editorState";
@@ -34,13 +36,40 @@ type DrawType = number | undefined;
 
 interface IProps {
   mode: EditorModeProps;
+  /**
+   * cursor:{
+   *    position: {
+   *      real: {
+   *        x: number;
+   *        y: number;
+   *      },
+   *      canvas: {
+   *        x: number;
+   *        y: number;
+   *      }
+   *    }
+   *    isPointerClick: booolean;
+   *    isPointerDown: booolean;
+   *    isPointerMove: booolean;
+   *    isPointerUp: booolean;
+   * }
+   */
   newElement: CanvasNewElement | {};
   drawId: DrawType;
   lastTakenId: number;
   viewPosition: IPoint;
   selected: number[];
   selectionDisabled: boolean;
-  selectorRect: [IPoint, IPoint]; // FIXME
+  selectionArea: {
+    visible: boolean;
+    selector: { begin: IPoint; end: IPoint };
+    position: {
+      top: number;
+      left: number;
+      width: number;
+      height: number;
+    };
+  }; // FIXME
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
 }
@@ -70,10 +99,19 @@ const defaultState = (): IProps => {
     viewPosition: { x: 0, y: 0 },
     selected: [],
     selectionDisabled: false,
-    selectorRect: [
-      { x: 0, y: 0 },
-      { x: 0, y: 0 },
-    ],
+    selectionArea: {
+      visible: false,
+      selector: {
+        begin: { x: 0, y: 0 },
+        end: { x: 0, y: 0 },
+      },
+      position: {
+        top: 0,
+        left: 0,
+        width: 0,
+        height: 0,
+      },
+    },
     copyPasteBuffer: [],
     operations: {
       canGroup: false,
@@ -156,6 +194,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       }
     }
 
+    //TODO РУДЕМЕНТ ПРОАНАЛИЗИРОВАТЬ И УДАЛИТЬ
     case SET_LAST_TAKEN_ID: {
       const { id } = action.payload;
       if (id) {
@@ -200,6 +239,24 @@ const editorState = (state = defaultState(), action: any): IProps => {
         canDelete: selected.length > 0,
       };
       return { ...state, selected, operations };
+    }
+
+    case SET_SELECTION_AREA: {
+      const { selector, position } = action.payload;
+
+      return {
+        ...state,
+        selectionArea: { ...state.selectionArea, selector, position },
+      };
+    }
+
+    case SET_SELECTION_AREA_VISIBLE: {
+      const { visible } = action.payload;
+
+      return {
+        ...state,
+        selectionArea: { ...state.selectionArea, visible },
+      };
     }
 
     case DISABLE_SELECTION: {

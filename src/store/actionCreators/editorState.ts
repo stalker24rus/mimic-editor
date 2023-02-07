@@ -1,3 +1,4 @@
+import useGetBoxByMultiPoints from "../../hooks/useGetBoxByMultiPoints";
 import {
   COPY_ELEMENTS,
   HANDLE_ESCAPE,
@@ -6,13 +7,20 @@ import {
   SET_LAST_TAKEN_ID,
   SET_MODE_CREATE,
   SET_SELECTED_ELEMENTS,
+  SET_SELECTION_AREA,
+  SET_SELECTION_AREA_VISIBLE,
   SET_VIEW_POSITION,
   TOGGLE_ELEMENT_SELECTION,
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IPoint } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
-import { selectSelectedElements } from "../selectors/editorState";
+import {
+  selectSelectedElements,
+  selectSelectionArea,
+  selectViewPosition,
+} from "../selectors/editorState";
+import { correctPoint } from "./editorElements";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
@@ -40,23 +48,19 @@ export const selectElement =
   };
 
 export const selectElements =
-  (area: [IPoint, IPoint]) => (dispatch: Function, getState: Function) => {
+  (clientX: number, clientY: number) =>
+  (dispatch: Function, getState: Function) => {
+    const viewPosition = selectViewPosition(getState());
     const elements = selectEditorElements(getState());
+    const { selector } = selectSelectionArea(getState());
+
+    const endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
 
     dispatch({
       type: SELECT_ELEMENTS,
-      payload: { area, elements },
+      payload: { area: [selector.begin, endPoint], elements },
     });
   };
-
-// export const addElementToSelectionList =
-//   (id: number) => (dispatch: Function) => {
-//     dispatch({ type: ADD_ELEMENT_TO_SELECTION_LIST, payload: { id } });
-//   };
-
-// export const delFromSelectionList = (id: number) => (dispatch: Function) => {
-//   dispatch({ type: DEL_ELEMENT_FROM_SELECTION_LIST, payload: { id } });
-// };
 
 export const toggleElementSelection = (id: number) => (dispatch: Function) => {
   dispatch({ type: TOGGLE_ELEMENT_SELECTION, payload: { id } });
@@ -77,3 +81,45 @@ export const copyElements = () => (dispatch: Function, getState: Function) => {
     },
   });
 };
+
+export const setSelectionArea =
+  (clientX: number, clientY: number, reset = false) =>
+  (dispatch: Function, getState: Function) => {
+    const viewPosition = selectViewPosition(getState());
+    const { selector } = selectSelectionArea(getState());
+    const [getBox] = useGetBoxByMultiPoints(); // FIXME
+
+    let startPoint: IPoint = { x: 0, y: 0 };
+    let endPoint: IPoint = { x: 0, y: 0 };
+
+    if (reset) {
+      startPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
+      endPoint = { ...startPoint };
+    } else {
+      startPoint = selector.begin;
+      endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
+    }
+
+    const [top, left, width, height] = getBox([startPoint, endPoint]);
+
+    dispatch({
+      type: SET_SELECTION_AREA,
+      payload: {
+        selector: {
+          begin: startPoint,
+          end: endPoint,
+        },
+        position: {
+          top: top | 0,
+          left: left | 0,
+          width: width | 0,
+          height: height | 0,
+        },
+      },
+    });
+  };
+
+export const setSelectionAreaVisible =
+  (visible: boolean) => (dispatch: Function) => {
+    dispatch({ type: SET_SELECTION_AREA_VISIBLE, payload: { visible } });
+  };
