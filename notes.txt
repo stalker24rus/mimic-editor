@@ -3,64 +3,46 @@
 
 url: /editor
 
-<Editor>                                        // Компонент редактора   
-  <KeyEventListener />                          // Компонент отслеживания событий клавиатуры
+<Editor>
+  <KeyEventListener />
   <Header />
 
-    <Canvas>                                    // Холст
-        <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
-          <Object1 />
-          <Object2 />
-          ...
-          <ObjectN />
-        </ Visualizer>
-        
-        <PointEventListener >                        // Компонент отслеживания событий мыши
-          <SelectionArea />
-          <ShapeChangerLayer />
-          <GroupMover />
-          <CursorInfo />
-        </ PointEventListener> 
-
-    </Canvas>  
-
-
-  <PointEventListener >                        // Компонент отслеживания событий мыши
-  
-    <ViewSplitter>                                // Разделитель компонентов
-      <Canvas>                                    // Холст
-        <Visualizer>                          // Компонент отрисовки компонентов мнемосхемы
-          <Object1 />
-          <Object2 />
-          ...
-          <ObjectN />
-        </ Visualizer>
-                  
-        <ShapeChanger>                         // Модификатор формы компонентов
-          <ObjectShape1 />
-          <ObjectShape2 />
-          ...
-          <ObjectShapeN />
-          
-        </ ShapeChanger>
-        
-        <GroupMover />
-
-        <SelectionArea />                         // Компонента отображения выбора компонентов            ! add to store select settings
-        
-        <ContextMenu />                       // Компонент отображения контекстного меню              ! add to store contextMenu settings
-        <Ruler />                             // Компонент отображения линейки                        ! add to store line ruler settings
-        <Cursor />                            // Компонент отображения курсора                        ! add to store cursor settings
-
-      </ Canvas>
-
-      <Toolbar>
-          ...
-      </Toolbar>  
-
-    </ ViewSplitter>
-  </ PointEventListener>
+    <SimpleSplitter>
+      <Canvas>
+          <Visualizer>                     
+            <Object1 />
+            <Object2 />
+            ...
+            <ObjectN />
+          </ Visualizer>
+          <PointEventListener >
+            <SelectionArea />
+            <ShapeTransformer />
+            <GroupMover />
+            <CursorInfo />
+          </ PointEventListener> 
+      </Canvas>  
+      <InstrumentPanel />
+    </SimpleSplitter>
+    
 </Editor>
+
+
+url: /mimic/mimic-name
+<MimicViewer>
+  <KeyEventListener />
+  <Header />
+  <Canvas>
+    <Visualizer>                     
+      <Object1 />
+      <Object2 />
+      ...
+      <ObjectN />
+    </ Visualizer>
+  </Canvas>  
+</ MimicViewer>
+
+
 
 store
   |---> selectBox
@@ -90,9 +72,3 @@ store
   |---> editedMimic (through undoRedo)
   |         |
   |        ...
-
-
-/mimic/mimic-name
-<MimicViewer>                                  // Компонент визуализатора  
-  ...
-</ MimicViewer>
