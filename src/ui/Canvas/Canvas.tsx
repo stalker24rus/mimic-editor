@@ -1,4 +1,4 @@
-import { IMimicElement } from "../../../../models/Editor";
+import { IMimicElement } from "../../models/Editor";
 
 interface Props {
   mainElement: IMimicElement;

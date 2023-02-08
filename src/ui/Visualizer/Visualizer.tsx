@@ -1,6 +1,6 @@
 import { useMemo } from "react";
-import { IMimicElement } from "../../../../models/Editor";
-import { useDrawElement } from "../../../../hooks/useDraw";
+import { IMimicElement } from "../../models/Editor";
+import { useDrawElement } from "../../hooks/useDraw";
 
 export default function Visualizer({ elements }): JSX.Element {
   const [Element] = useDrawElement();

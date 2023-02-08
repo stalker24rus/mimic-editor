@@ -6,7 +6,7 @@ import SimpleSplitter from "../../ui/SimpleSplitter";
 
 import "./MimicEditor.css";
 import KeyEventListener from "./views/KeyEventListener";
-import Canvas from "./views/Canvas";
+import Canvas from "../../ui/Canvas";
 import PointEventListener from "./views/PointEventListener";
 import SelectionArea from "./views/SelectionArea";
 import ShapeTransformer from "./views/ShapeTransformer";
@@ -20,7 +20,7 @@ import {
 import { useSelector } from "react-redux";
 import { useTypedDispatch } from "../../store";
 import { setViewPosition } from "../../store/actionCreators/editorState";
-import Visualizer from "./views/Visualizer";
+import Visualizer from "../../ui/Visualizer";
 
 /**
  * There is a mnemonic editor.
