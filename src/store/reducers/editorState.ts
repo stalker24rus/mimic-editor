@@ -21,6 +21,7 @@ import {
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
   ELEMENT_TYPE_GROUP,
+  HEADER_HEIGHT,
 } from "../../constants/literals";
 import {
   CanvasNewElement,
@@ -96,7 +97,7 @@ const defaultState = (): IProps => {
     newElement: { type: undefined, attributes: undefined }, // TODO объединить
     drawId: undefined, // TODO объединить
     lastTakenId: 99,
-    viewPosition: { x: 0, y: 0 }, // TODO Canvas position
+    viewPosition: { x: 0, y: HEADER_HEIGHT }, // TODO Canvas position
     selected: [],
     selectionDisabled: false,
     selectionArea: {

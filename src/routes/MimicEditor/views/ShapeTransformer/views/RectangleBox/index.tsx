@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { connect } from "react-redux";
-import { IMimicElement, IPoint } from "../../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../../../models/Editor";
 import {
   changeElementAngle,
   endDoingChanges,
@@ -8,7 +8,7 @@ import {
   moveElementPoints,
   resizeElement,
   startDoingChanges,
-} from "../../../../../store/actionCreators/editorElements";
+} from "../../../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
 import ResizePoints from "../Primitives/ResizePoints";
 import RotationPoint from "../Primitives/RotationPoint";

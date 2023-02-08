@@ -1,59 +1,21 @@
-import { useCallback, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { EDITOR_MODE_CREATE } from "../../../../constants/literals";
-import { setViewPosition } from "../../../../store/actionCreators/editorState";
-import { selectEditorMode } from "../../../../store/selectors/editorState";
-import {
-  selectEditorElements,
-  selectMimic,
-} from "../../../../store/selectors/editorElements";
-
-import { useTypedDispatch } from "../../../../store";
-import Visualizer from "./views/Visualizer";
+import { IMimicElement } from "../../../../models/Editor";
 
 interface Props {
+  mainElement: IMimicElement;
+  cursor: string;
+  onScroll: Function;
   children?: JSX.Element[] | JSX.Element;
 }
 
-export default function Canvas({ children }: Props): JSX.Element {
-  const mimic = useSelector(selectMimic);
-  const mode = useSelector(selectEditorMode);
-  const dispatch = useTypedDispatch();
+export default function Canvas({
+  mainElement,
+  cursor,
+  onScroll,
+  children,
+}: Props): JSX.Element {
+  const { type, attributes } = mainElement;
 
-  const { attributes } = mimic;
-  const { position, appearance, general } = attributes;
-  const { width, height } = position;
-  const { fill } = appearance;
-
-  const handleResize = useCallback(() => {
-    const htmlRect = document
-      .getElementById(mimic.type)
-      ?.getBoundingClientRect();
-
-    if (htmlRect) {
-      const { x, y } = htmlRect;
-
-      dispatch(setViewPosition({ x, y }));
-    }
-  }, [dispatch, mimic.type]);
-
-  useEffect(() => {
-    window.addEventListener("resize", handleResize);
-    handleResize();
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, [handleResize]);
-
-  const handleScroll = useCallback(
-    (ev) => {
-      ev.preventDefault();
-      handleResize();
-    },
-    [handleResize]
-  );
-
-  const elements = useSelector(selectEditorElements);
+  const handleScroll = (ev) => onScroll(ev);
 
   return (
     <div
@@ -67,15 +29,15 @@ export default function Canvas({ children }: Props): JSX.Element {
       onScroll={handleScroll}
     >
       <div
+        id={type}
         style={{
           position: "relative",
-          width: width,
-          height: height,
-          background: fill,
-          cursor: mode === EDITOR_MODE_CREATE ? "crosshair" : "auto",
+          width: attributes?.position?.width | 0,
+          height: attributes?.position?.height | 0,
+          background: attributes?.appearance?.fill,
+          cursor,
         }}
       >
-        <Visualizer elements={elements} />
         {children}
       </div>
     </div>

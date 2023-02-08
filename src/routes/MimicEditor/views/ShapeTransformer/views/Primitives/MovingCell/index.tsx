@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { IMimicElement } from "../../../../../../models/Editor";
+import { IMimicElement } from "../../../../../../../models/Editor";
 
 interface Props {
   component: IMimicElement;

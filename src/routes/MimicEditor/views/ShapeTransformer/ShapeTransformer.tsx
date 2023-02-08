@@ -1,15 +1,10 @@
 import { useMemo } from "react";
 import { connect, useSelector } from "react-redux";
 import { IMimicElement } from "../../../../models/Editor";
-import { selectEditorElements } from "../../../../store/selectors/editorElements";
-import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import { useDrawBox } from "../../../../hooks/useDraw";
 
-export default function ShapeChangerLayer(): JSX.Element {
+export default function ShapeTransformer({ elements, selected }): JSX.Element {
   const [ElementShaper] = useDrawBox();
-
-  const elements = useSelector(selectEditorElements);
-  const selected = useSelector(selectSelectedElements);
 
   const Shapers = useMemo(
     () =>

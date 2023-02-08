@@ -1,14 +1,14 @@
 import { useMemo, useState } from "react";
 import { connect } from "react-redux";
-import { IMimicElement, IPoint } from "../../../../../models/Editor";
+import { IMimicElement, IPoint } from "../../../../../../models/Editor";
 
 import {
   changePointPosition,
   endDoingChanges,
   moveElementPoints,
   startDoingChanges,
-} from "../../../../../store/actionCreators/editorElements";
-import useGetBoxByMultiPoints from "../../../../../hooks/useGetBoxByMultiPoints";
+} from "../../../../../../store/actionCreators/editorElements";
+import useGetBoxByMultiPoints from "../../../../../../hooks/useGetBoxByMultiPoints";
 import Point from "../Primitives/Point";
 
 interface StateProps {}

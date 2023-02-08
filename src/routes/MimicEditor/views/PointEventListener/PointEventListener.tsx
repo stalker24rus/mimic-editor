@@ -48,7 +48,6 @@ export default function PointEventListener(props: Props): JSX.Element {
 
   return (
     <div
-      id={mimicFrameType}
       style={{
         position: "absolute",
         width: width,

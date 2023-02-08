@@ -4,8 +4,8 @@ import {
   BOX_BOTTOM_RIGHT,
   BOX_TOP_LEFT,
   BOX_TOP_RIGHT,
-} from "../../../../../../constants/literals";
-import { IMimicElement } from "../../../../../../models/Editor";
+} from "../../../../../../../constants/literals";
+import { IMimicElement } from "../../../../../../../models/Editor";
 
 import Point from "../Point";
 

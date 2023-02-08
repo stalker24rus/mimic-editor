@@ -10,9 +10,9 @@ import Line from "../../ui/Mimic/Primitives/Line";
 import Polygon from "../../ui/Mimic/Primitives/Polygon";
 import Polyline from "../../ui/Mimic/Primitives/Polyline";
 import Group from "../../ui/Mimic/Service/Group";
-import MoverBox from "../../routes/MimicEditor/views/ShapeChangers/MoverBox";
-import MultiObjectBox from "../../routes/MimicEditor/views/ShapeChangers/MultiObjectBox";
-import RectangleBox from "../../routes/MimicEditor/views/ShapeChangers/RectangleBox";
+import MoverBox from "../../routes/MimicEditor/views/ShapeTransformer/views/MoverBox";
+import MultiObjectBox from "../../routes/MimicEditor/views/ShapeTransformer/views/MultiObjectBox";
+import RectangleBox from "../../routes/MimicEditor/views/ShapeTransformer/views/RectangleBox";
 import { BaseProps } from "../../hooks/useDraw/index";
 
 export const TransformerBase: BaseProps = {
