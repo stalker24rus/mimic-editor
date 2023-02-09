@@ -3,13 +3,13 @@ import {
   COPY_ELEMENTS,
   DISABLE_SELECTION,
   ENABLE_SELECTION,
-  HANDLE_ESCAPE,
+  REMOVE_SELECTION,
   SELECT_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
-  SET_MODE_CREATE,
-  SET_MODE_EDIT,
-  SET_MODE_OPERATE,
+  SET_CREATION_MODE,
+  SET_EDIT_MODE,
+  SET_OPERATION_MODE,
   SET_SELECTED_ELEMENTS,
   SET_SELECTION_AREA,
   SET_SELECTION_AREA_VISIBLE,
@@ -49,10 +49,6 @@ interface IProps {
    *        y: number;
    *      }
    *    }
-   *    isPointerClick: booolean;
-   *    isPointerDown: booolean;
-   *    isPointerMove: booolean;
-   *    isPointerUp: booolean;
    * }
    */
   newElement: CanvasNewElement | {};
@@ -134,7 +130,7 @@ const defaultState = (): IProps => {
 
 const editorState = (state = defaultState(), action: any): IProps => {
   switch (action.type) {
-    case SET_MODE_EDIT: {
+    case SET_EDIT_MODE: {
       return {
         ...state,
         mode: EDITOR_MODE_EDIT,
@@ -143,7 +139,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       };
     }
 
-    case SET_MODE_CREATE: {
+    case SET_CREATION_MODE: {
       const { element } = action?.payload;
 
       if (element) {
@@ -157,7 +153,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       }
     }
 
-    case HANDLE_ESCAPE: {
+    case REMOVE_SELECTION: {
       if (state.mode === EDITOR_MODE_CREATE) {
         return {
           ...state,
@@ -177,7 +173,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       return state;
     }
 
-    case SET_MODE_OPERATE: {
+    case SET_OPERATION_MODE: {
       return {
         ...state,
         mode: EDITOR_MODE_OPERATE,

@@ -1,11 +1,11 @@
 import useGetBoxByMultiPoints from "../../hooks/useGetBoxByMultiPoints";
 import {
   COPY_ELEMENTS,
-  HANDLE_ESCAPE,
+  REMOVE_SELECTION,
   SELECT_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
-  SET_MODE_CREATE,
+  SET_CREATION_MODE,
   SET_SELECTED_ELEMENTS,
   SET_SELECTION_AREA,
   SET_SELECTION_AREA_VISIBLE,
@@ -27,7 +27,7 @@ export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
     type,
     ...elementsDefaultStates[type],
   };
-  dispatch({ type: SET_MODE_CREATE, payload: { element } });
+  dispatch({ type: SET_CREATION_MODE, payload: { element } });
 };
 
 export const editorSetDrawId = (id: number) => (dispatch: Function) => {
@@ -66,8 +66,8 @@ export const toggleElementSelection = (id: number) => (dispatch: Function) => {
   dispatch({ type: TOGGLE_ELEMENT_SELECTION, payload: { id } });
 };
 
-export const escapeElements = () => (dispatch: Function) => {
-  dispatch({ type: HANDLE_ESCAPE });
+export const removeSelection = () => (dispatch: Function) => {
+  dispatch({ type: REMOVE_SELECTION });
 };
 
 export const copyElements = () => (dispatch: Function, getState: Function) => {

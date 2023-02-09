@@ -9,7 +9,7 @@ import {
 } from "../../../../store/actionCreators/editorElements";
 import {
   copyElements,
-  escapeElements,
+  removeSelection,
 } from "../../../../store/actionCreators/editorState";
 
 export default function KeyEventListener(): JSX.Element {
@@ -55,7 +55,7 @@ export default function KeyEventListener(): JSX.Element {
       }
 
       if (ev.key === "Escape" || ev.code === "Escape") {
-        dispatch(escapeElements());
+        dispatch(removeSelection());
       }
 
       if (ev.key === "ArrowLeft") {

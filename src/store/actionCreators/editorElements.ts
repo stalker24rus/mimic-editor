@@ -33,7 +33,7 @@ import {
   PASTE_ELEMENTS,
   SET_DRAWING_ID,
   SET_LAST_TAKEN_ID,
-  SET_MODE_EDIT,
+  SET_EDIT_MODE,
 } from "../actionTypes/editorState";
 import { REDO, UNDO } from "../actionTypes/undoRedo";
 import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
@@ -223,7 +223,7 @@ export const createElement =
     const pointsAmount = TransformerBase[newElement.type].maxPoints;
     if (pointsAmount <= 1) {
       dispatch({
-        type: SET_MODE_EDIT,
+        type: SET_EDIT_MODE,
       });
     }
   };
@@ -257,12 +257,12 @@ export const appendPointToElement =
         });
       } else {
         dispatch({
-          type: SET_MODE_EDIT,
+          type: SET_EDIT_MODE,
         });
       }
     } else {
       dispatch({
-        type: SET_MODE_EDIT,
+        type: SET_EDIT_MODE,
       });
     }
   };
@@ -286,7 +286,7 @@ export const endDrawingElement = (id: number) => (dispatch: Function) => {
   });
 
   dispatch({
-    type: SET_MODE_EDIT,
+    type: SET_EDIT_MODE,
   });
 };
 
