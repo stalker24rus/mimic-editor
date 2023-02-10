@@ -1,7 +1,7 @@
 import { ReduxState } from "../index";
 
-export const selectViewPosition = (state: ReduxState) =>
-  state.editorState.viewPosition;
+export const selectCanvasRectPosition = (state: ReduxState) =>
+  state.editorState.canvasRectPosition;
 
 export const selectSelectionDisabled = (state: ReduxState) =>
   state.editorState.selectionDisabled;
@@ -12,9 +12,6 @@ export const selectSelectorRect = (state: any) =>
 
 // FIXME проверить тип editorState
 export const selectNewElement = (state: any) => state.editorState.newElement;
-
-export const selectLastTakenId = (state: ReduxState) =>
-  state.editorState.lastTakenId;
 
 export const selectSelectedElements = (state: ReduxState) =>
   state.editorState.selected;

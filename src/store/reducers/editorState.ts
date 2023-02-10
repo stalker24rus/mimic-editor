@@ -1,20 +1,20 @@
 import lodash from "lodash";
 import {
-  COPY_ELEMENTS,
-  DISABLE_SELECTION,
-  ENABLE_SELECTION,
-  REMOVE_SELECTION,
+  COPY_SELECTED_ELEMENTS_TO_BUFFER,
+  DISABLE_SELECT_OPERATIONS,
+  ENABLE_SELECT_OPERATIONS,
+  ABORT_SELECTION,
   SELECT_ELEMENTS,
-  SET_DRAWING_ID,
-  SET_LAST_TAKEN_ID,
+  SET_CREATED_ELEMENT_ID,
+  // SET_LAST_TAKEN_ID,
   SET_CREATION_MODE,
   SET_EDIT_MODE,
   SET_OPERATION_MODE,
   SET_SELECTED_ELEMENTS,
   SET_SELECTION_AREA,
   SET_SELECTION_AREA_VISIBLE,
-  SET_VIEW_POSITION,
-  TOGGLE_ELEMENT_SELECTION,
+  SET_CANVAS_RECT_POSITION,
+  ADD_ELEMENT_TO_SELECTION,
 } from "../actionTypes/editorState";
 import {
   EDITOR_MODE_CREATE,
@@ -53,8 +53,7 @@ interface IProps {
    */
   newElement: CanvasNewElement | {};
   drawId: DrawType;
-  lastTakenId: number;
-  viewPosition: IPoint;
+  canvasRectPosition: IPoint;
   selected: number[];
   selectionDisabled: boolean;
   selectionArea: {
@@ -92,8 +91,7 @@ const defaultState = (): IProps => {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined }, // TODO объединить
     drawId: undefined, // TODO объединить
-    lastTakenId: 99,
-    viewPosition: { x: 0, y: HEADER_HEIGHT }, // TODO Canvas position
+    canvasRectPosition: { x: 0, y: HEADER_HEIGHT }, // TODO Canvas position
     selected: [],
     selectionDisabled: false,
     selectionArea: {
@@ -153,7 +151,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       }
     }
 
-    case REMOVE_SELECTION: {
+    case ABORT_SELECTION: {
       if (state.mode === EDITOR_MODE_CREATE) {
         return {
           ...state,
@@ -182,7 +180,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       };
     }
 
-    case SET_DRAWING_ID: {
+    case SET_CREATED_ELEMENT_ID: {
       const { id } = action?.payload;
       if (id) {
         return { ...state, drawId: id };
@@ -191,20 +189,10 @@ const editorState = (state = defaultState(), action: any): IProps => {
       }
     }
 
-    //TODO РУДЕМЕНТ ПРОАНАЛИЗИРОВАТЬ И УДАЛИТЬ
-    case SET_LAST_TAKEN_ID: {
-      const { id } = action.payload;
-      if (id) {
-        return { ...state, lastTakenId: id };
-      } else {
-        return state;
-      }
-    }
-
-    case SET_VIEW_POSITION: {
+    case SET_CANVAS_RECT_POSITION: {
       const { point } = action.payload;
       if (point) {
-        return { ...state, viewPosition: point };
+        return { ...state, canvasRectPosition: point };
       } else {
         return state;
       }
@@ -256,11 +244,11 @@ const editorState = (state = defaultState(), action: any): IProps => {
       };
     }
 
-    case DISABLE_SELECTION: {
+    case DISABLE_SELECT_OPERATIONS: {
       return { ...state, selectionDisabled: true };
     }
 
-    case ENABLE_SELECTION: {
+    case ENABLE_SELECT_OPERATIONS: {
       return { ...state, selectionDisabled: false };
     }
 
@@ -321,7 +309,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       return { ...state, selected: [...selected], operations };
     }
 
-    case TOGGLE_ELEMENT_SELECTION: {
+    case ADD_ELEMENT_TO_SELECTION: {
       const { id } = action.payload;
 
       if (state.selected.includes(id)) {
@@ -332,7 +320,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
       }
     }
 
-    case COPY_ELEMENTS: {
+    case COPY_SELECTED_ELEMENTS_TO_BUFFER: {
       const { elements, selected } = action.payload;
 
       const copiedArr = [];

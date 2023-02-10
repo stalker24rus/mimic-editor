@@ -3,13 +3,13 @@ import { useTypedDispatch } from "../../../../store";
 import {
   deleteSelectedElements,
   moveElementGroup,
-  pasteElements,
+  pasteElementsFromBuffer,
   redo,
   undo,
 } from "../../../../store/actionCreators/editorElements";
 import {
-  copyElements,
-  removeSelection,
+  copySelectedElementsToBuffer,
+  abortSelection,
 } from "../../../../store/actionCreators/editorState";
 
 export default function KeyEventListener(): JSX.Element {
@@ -40,14 +40,14 @@ export default function KeyEventListener(): JSX.Element {
         (ev.metaKey || ev.ctrlKey) &&
         (ev.key === "C" || ev.key === "c" || ev.code === "KeyC")
       ) {
-        dispatch(copyElements());
+        dispatch(copySelectedElementsToBuffer());
       }
 
       if (
         (ev.metaKey || ev.ctrlKey) &&
         (ev.key === "V" || ev.key === "v" || ev.code === "KeyV")
       ) {
-        dispatch(pasteElements());
+        dispatch(pasteElementsFromBuffer());
       }
 
       if (ev.key === "Delete" || ev.code === "Delete") {
@@ -55,7 +55,7 @@ export default function KeyEventListener(): JSX.Element {
       }
 
       if (ev.key === "Escape" || ev.code === "Escape") {
-        dispatch(removeSelection());
+        dispatch(abortSelection());
       }
 
       if (ev.key === "ArrowLeft") {

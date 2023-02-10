@@ -4,12 +4,12 @@ import { EDITOR_MODE_CREATE } from "../../../../constants/literals";
 import { IPoint } from "../../../../models/Editor";
 import {
   selectEditorMode,
-  selectViewPosition,
+  selectCanvasRectPosition,
 } from "../../../../store/selectors/editorState";
 
 export default function CursorInfo(): JSX.Element {
   const mode = useSelector(selectEditorMode);
-  const viewPosition = useSelector(selectViewPosition);
+  const viewPosition = useSelector(selectCanvasRectPosition);
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
 

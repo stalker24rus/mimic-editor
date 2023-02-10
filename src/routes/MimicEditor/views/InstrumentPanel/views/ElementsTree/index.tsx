@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { IMimicElement } from "../../../../../../models/Editor";
-import { selectElement } from "../../../../../../store/actionCreators/editorState";
+import { setSelectedElements } from "../../../../../../store/actionCreators/editorState";
 import {
   selectEditorElements,
   selectMimic,
@@ -33,7 +33,7 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onSelectElement: selectElement,
+    onSelectElement: setSelectedElements,
   };
 }
 

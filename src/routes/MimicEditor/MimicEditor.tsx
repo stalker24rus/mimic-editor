@@ -19,7 +19,7 @@ import {
 } from "../../store/selectors/editorState";
 import { useSelector } from "react-redux";
 import { useTypedDispatch } from "../../store";
-import { setViewPosition } from "../../store/actionCreators/editorState";
+import { setCanvasRectPosition } from "../../store/actionCreators/editorState";
 import Visualizer from "../../ui/Visualizer";
 
 /**
@@ -50,7 +50,7 @@ export default function MimicEditor(): JSX.Element {
     if (htmlRect) {
       const { x, y } = htmlRect;
 
-      dispatch(setViewPosition({ x, y }));
+      dispatch(setCanvasRectPosition({ x, y }));
     }
   }
 

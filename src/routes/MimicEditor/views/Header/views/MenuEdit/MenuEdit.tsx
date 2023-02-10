@@ -5,11 +5,11 @@ import {
   deleteSelectedElements,
   undo,
   redo,
-  pasteElements,
+  pasteElementsFromBuffer,
 } from "../../../../../../store/actionCreators/editorElements";
 import {
-  copyElements,
-  removeSelection,
+  copySelectedElementsToBuffer,
+  abortSelection,
 } from "../../../../../../store/actionCreators/editorState";
 import {
   selectCopyPasteBuffer,
@@ -38,7 +38,7 @@ export default function MenuEdit() {
       },
       {
         text: "Снять выделение",
-        handler: () => dispatch(removeSelection()),
+        handler: () => dispatch(abortSelection()),
         isDisabled: selected.length === 0,
         separator: "bottom",
       },
@@ -55,12 +55,12 @@ export default function MenuEdit() {
       },
       {
         text: "Копировать",
-        handler: () => dispatch(copyElements()),
+        handler: () => dispatch(copySelectedElementsToBuffer()),
         isDisabled: selected.length === 0,
       },
       {
         text: "Вставить",
-        handler: () => dispatch(pasteElements()),
+        handler: () => dispatch(pasteElementsFromBuffer()),
         isDisabled: copyPasteBuffer.length === 0,
       },
     ],

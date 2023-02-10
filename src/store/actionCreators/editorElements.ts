@@ -26,13 +26,13 @@ import {
   UNGROUP_ELEMENTS,
 } from "../actionTypes/editorElements";
 import {
-  DISABLE_SELECTION,
+  DISABLE_SELECT_OPERATIONS,
   // DISABLE_TOUCH,
-  ENABLE_SELECTION,
+  ENABLE_SELECT_OPERATIONS,
   // ENABLE_TOUCH,
-  PASTE_ELEMENTS,
-  SET_DRAWING_ID,
-  SET_LAST_TAKEN_ID,
+  PASTE_ELEMENTS_FROM_BUFFER,
+  SET_CREATED_ELEMENT_ID,
+  // SET_LAST_TAKEN_ID,
   SET_EDIT_MODE,
 } from "../actionTypes/editorState";
 import { REDO, UNDO } from "../actionTypes/undoRedo";
@@ -41,7 +41,7 @@ import {
   selectCopyPasteBuffer,
   selectNewElement,
   selectSelectedElements,
-  selectViewPosition,
+  selectCanvasRectPosition,
 } from "../selectors/editorState";
 import { selectMimic } from "../selectors/editorElements";
 import { selectElement } from "../selectors/editorElements";
@@ -79,7 +79,7 @@ export const changeElementAngle =
 export const resizeElement =
   (id: number, pointName: string, point: IPoint) =>
   (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
+    const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
       type: RESIZE_ELEMENT,
@@ -91,7 +91,7 @@ export const resizeElement =
 export const changePointPosition =
   (id: number, pointNo: number, point: IPoint) =>
   (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
+    const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
       type: CHANGE_POINT_POSITION,
@@ -173,21 +173,15 @@ export const startDoingChanges = () => (dispatch: Function) => {
     passHistrory: false,
   });
   dispatch({
-    type: DISABLE_SELECTION,
+    type: DISABLE_SELECT_OPERATIONS,
   });
-  // dispatch({
-  //   type: DISABLE_TOUCH,
-  // });
 };
 
 export const endDoingChanges = () => (dispatch: Function) => {
   dispatch({
-    type: ENABLE_SELECTION,
+    type: ENABLE_SELECT_OPERATIONS,
     passHistrory: false,
   });
-  // dispatch({
-  //   type: ENABLE_TOUCH,
-  // });
 };
 
 export const createElement =
@@ -196,7 +190,7 @@ export const createElement =
     const root: IMimicElement = selectMimic(getState());
     const newLastTakenId = getLastGID(root.attributes.general.id, root) + 1;
 
-    const viewPosition = selectViewPosition(getState());
+    const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     const newElement: IMimicElement = selectNewElement(getState());
 
@@ -206,14 +200,7 @@ export const createElement =
     });
 
     dispatch({
-      type: SET_LAST_TAKEN_ID,
-      payload: {
-        id: newLastTakenId,
-      },
-    });
-
-    dispatch({
-      type: SET_DRAWING_ID,
+      type: SET_CREATED_ELEMENT_ID,
       payload: {
         id: newLastTakenId,
       },
@@ -241,7 +228,7 @@ export const deleteSelectedElements =
 
 export const appendPointToElement =
   (id: number, point: IPoint) => (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
+    const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
 
     const element: IMimicElement = selectElement(getState(), id);
@@ -269,7 +256,7 @@ export const appendPointToElement =
 
 export const drawingElement =
   (id: number, point: IPoint) => (dispatch: Function, getState: Function) => {
-    const viewPosition = selectViewPosition(getState());
+    const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
       type: REDRAW_LAST_POINT,
@@ -310,13 +297,14 @@ export const changeAttributes =
     });
   };
 
-export const pasteElements = () => (dispatch: Function, getState: Function) => {
-  const elements = selectCopyPasteBuffer(getState());
-  dispatch({
-    type: PASTE_ELEMENTS,
-    payload: { elements },
-  });
-};
+export const pasteElementsFromBuffer =
+  () => (dispatch: Function, getState: Function) => {
+    const elements = selectCopyPasteBuffer(getState());
+    dispatch({
+      type: PASTE_ELEMENTS_FROM_BUFFER,
+      payload: { elements },
+    });
+  };
 
 export const setElementsLeftAlign =
   () => (dispatch: Function, getState: Function) => {

@@ -12,11 +12,11 @@ import {
   endDrawingElement,
 } from "./editorElements";
 import {
-  selectElement,
+  setSelectedElements,
   selectElements,
   setSelectionArea,
   setSelectionAreaVisible,
-  toggleElementSelection,
+  addElementToSelection,
 } from "./editorState";
 
 import { selectSelectionArea } from "../selectors/editorState";
@@ -37,7 +37,7 @@ export const onCanvasPointerClick =
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          dispatch(toggleElementSelection(parseInt(id)));
+          dispatch(addElementToSelection(parseInt(id)));
           break;
         }
       }
@@ -45,7 +45,7 @@ export const onCanvasPointerClick =
       for (let i = 0; i < elements.length; i++) {
         const [parent, type, id] = elements[i].id.split(".");
         if (parent === MIMIC) {
-          dispatch(selectElement([parseInt(id)]));
+          dispatch(setSelectedElements([parseInt(id)]));
           break;
         }
       }

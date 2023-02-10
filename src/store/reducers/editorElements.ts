@@ -26,7 +26,7 @@ import {
   UNGROUP_ELEMENTS,
   GROUP_ELEMENTS,
 } from "../actionTypes/editorElements";
-import { PASTE_ELEMENTS } from "../actionTypes/editorState";
+import { PASTE_ELEMENTS_FROM_BUFFER } from "../actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
 import { IMimicElement } from "../../models/Editor";
 import { demo1JSON } from "../../constants/demo/templateJson";
@@ -263,7 +263,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case PASTE_ELEMENTS: {
+    case PASTE_ELEMENTS_FROM_BUFFER: {
       const { parentId, elements } = action.payload;
       const root = lodash.cloneDeep(state);
       const lastId: number = getLastGID(root.attributes.general.id, root) + 1;
