@@ -4,7 +4,7 @@ export const selectCanvasRectPosition = (state: ReduxState) =>
   state.editorState.canvasRectPosition;
 
 export const selectSelectionDisabled = (state: ReduxState) =>
-  state.editorState.selectionDisabled;
+  !state.editorState.operations.canSelectElements;
 
 // FIXME проверить тип editorState.selectSelectorRect
 export const selectSelectorRect = (state: any) =>
@@ -24,8 +24,8 @@ export const selectEditorMode = (state: ReduxState) => state.editorState.mode;
 export const selectEditorOperations = (state: ReduxState) =>
   state.editorState.operations;
 
-export const selectEditorDrawId = (state: ReduxState) =>
-  state.editorState.drawId;
+export const selectCreatedElementId = (state: ReduxState) =>
+  state.editorState.createdElementId;
 
 export const selectSelectionArea = (state: ReduxState) =>
   state.editorState.selectionArea;

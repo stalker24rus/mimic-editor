@@ -8,6 +8,7 @@ import {
   SET_SELECTION_AREA_VISIBLE,
   SET_CANVAS_RECT_POSITION,
   ADD_ELEMENT_TO_SELECTION,
+  UPDATE_AVAILABLE_OPERATIONS,
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IMimicElement, IPoint } from "../../models/Editor";
@@ -16,11 +17,13 @@ import {
   selectSelectedElements,
   selectSelectionArea,
   selectCanvasRectPosition,
+  selectEditorOperations,
 } from "../selectors/editorState";
 import { correctPoint } from "./editorElements";
 import { getAreaPointsByHWP } from "../../utils/editor/getAreaPointsByHWP";
 import rotateElementPoints from "../../utils/editor/rotateElementPoints";
 import checkIsPointInArea from "../../utils/editor/checkIsPointInArea";
+import { ELEMENT_TYPE_GROUP } from "../../constants/literals";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
@@ -34,9 +37,8 @@ export const setCanvasRectPosition = (point: IPoint) => (dispatch: Function) =>
   dispatch({ type: SET_CANVAS_RECT_POSITION, payload: { point } });
 
 export const setSelectedElements =
-  (selected: number[]) => (dispatch: Function, getState: Function) => {
-    const elements = selectEditorElements(getState());
-    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected, elements } });
+  (selected: number[]) => (dispatch: Function) => {
+    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected } });
 
     // TODO add check isSelectedGroup and dispatch operations;
   };
@@ -87,7 +89,39 @@ export const selectElementsFromSelectionAria =
       }
     }
 
-    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected, elements } });
+    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected } });
+    dispatch(updateAvailableOperations());
+  };
+
+export const updateAvailableOperations =
+  () => (dispatch: Function, getState: Function) => {
+    const elements = selectEditorElements(getState());
+    const selected = selectSelectedElements(getState());
+    const operationsState = selectEditorOperations(getState());
+    let isSelectedGroup = false;
+
+    for (let i = 0; i < elements.length; i++) {
+      const element: IMimicElement = elements[i];
+      if (
+        element.attributes.general.id === selected[0] &&
+        element.type === ELEMENT_TYPE_GROUP
+      ) {
+        isSelectedGroup = true;
+      }
+    }
+
+    const operations = {
+      ...operationsState,
+      canGroup: selected.length > 1 && !isSelectedGroup,
+      canUnGroup: isSelectedGroup,
+      canMoveOnTop: selected.length > 0,
+      canMoveOnForward: selected.length === 1,
+      canMoveOnBottom: selected.length > 0,
+      canMoveOnBack: selected.length === 1,
+      canCopy: selected.length > 0,
+      canDelete: selected.length > 0,
+    };
+    dispatch({ type: UPDATE_AVAILABLE_OPERATIONS, payload: { operations } });
   };
 
 export const addElementToSelection = (id: number) => (dispatch: Function) => {

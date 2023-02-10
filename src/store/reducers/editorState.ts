@@ -13,12 +13,12 @@ import {
   SET_SELECTION_AREA_VISIBLE,
   SET_CANVAS_RECT_POSITION,
   ADD_ELEMENT_TO_SELECTION,
+  UPDATE_AVAILABLE_OPERATIONS,
 } from "../actionTypes/editorState";
 import {
   EDITOR_MODE_CREATE,
   EDITOR_MODE_EDIT,
   EDITOR_MODE_OPERATE,
-  ELEMENT_TYPE_GROUP,
   HEADER_HEIGHT,
 } from "../../constants/literals";
 import {
@@ -31,7 +31,6 @@ import {
 type DrawType = number | undefined;
 
 interface IProps {
-  mode: EditorModeProps;
   /**
    * cursor:{
    *    position: {
@@ -46,11 +45,11 @@ interface IProps {
    *    }
    * }
    */
+  mode: EditorModeProps;
   newElement: CanvasNewElement | {};
-  drawId: DrawType;
+  createdElementId: DrawType;
   canvasRectPosition: IPoint;
   selected: number[];
-  selectionDisabled: boolean;
   selectionArea: {
     visible: boolean;
     selector: { begin: IPoint; end: IPoint };
@@ -60,7 +59,7 @@ interface IProps {
       width: number;
       height: number;
     };
-  }; // FIXME
+  };
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
 }
@@ -78,6 +77,7 @@ export interface IOperations {
   canPaste: boolean; //disabled={props.copyPasteBuffer.length === 0}
   canEscape: boolean; //disabled={props.selected.length === 0}
   canSelectAll: boolean; // true
+  canSelectElements: boolean;
   canDelete: boolean; //disabled={props.selected.length === 0}
 }
 
@@ -85,10 +85,9 @@ const defaultState = (): IProps => {
   return {
     mode: EDITOR_MODE_EDIT,
     newElement: { type: undefined, attributes: undefined }, // TODO объединить
-    drawId: undefined, // TODO объединить
+    createdElementId: undefined, // TODO объединить
     canvasRectPosition: { x: 0, y: HEADER_HEIGHT }, // TODO Canvas position
     selected: [],
-    selectionDisabled: false,
     selectionArea: {
       visible: false,
       selector: {
@@ -116,6 +115,7 @@ const defaultState = (): IProps => {
       canPaste: false,
       canEscape: true,
       canSelectAll: true,
+      canSelectElements: true,
       canDelete: false,
     },
   };
@@ -128,7 +128,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
         ...state,
         mode: EDITOR_MODE_EDIT,
         newElement: {},
-        drawId: undefined,
+        createdElementId: undefined,
       };
     }
 
@@ -152,7 +152,7 @@ const editorState = (state = defaultState(), action: any): IProps => {
           ...state,
           mode: EDITOR_MODE_EDIT,
           newElement: {},
-          drawId: undefined,
+          createdElementId: undefined,
         };
       }
 
@@ -171,14 +171,14 @@ const editorState = (state = defaultState(), action: any): IProps => {
         ...state,
         mode: EDITOR_MODE_OPERATE,
         newElement: {},
-        drawId: undefined,
+        createdElementId: undefined,
       };
     }
 
     case SET_CREATED_ELEMENT_ID: {
       const { id } = action?.payload;
       if (id) {
-        return { ...state, drawId: id };
+        return { ...state, createdElementId: id };
       } else {
         return state;
       }
@@ -194,31 +194,8 @@ const editorState = (state = defaultState(), action: any): IProps => {
     }
 
     case SET_SELECTED_ELEMENTS: {
-      const { selected, elements } = action.payload;
-      let isSelectedGroup = false;
-
-      for (let i = 0; i < elements.length; i++) {
-        const element: IMimicElement = elements[i];
-        if (
-          element.attributes.general.id === selected[0] &&
-          element.type === ELEMENT_TYPE_GROUP
-        ) {
-          isSelectedGroup = true;
-        }
-      }
-
-      const operations = {
-        ...state.operations,
-        canGroup: selected.length > 1 && !isSelectedGroup,
-        canUnGroup: isSelectedGroup,
-        canMoveOnTop: selected.length > 0,
-        canMoveOnForward: selected.length === 1,
-        canMoveOnBottom: selected.length > 0,
-        canMoveOnBack: selected.length === 1,
-        canCopy: selected.length > 0,
-        canDelete: selected.length > 0,
-      };
-      return { ...state, selected, operations };
+      const { selected } = action.payload;
+      return { ...state, selected };
     }
 
     case SET_SELECTION_AREA: {
@@ -239,12 +216,26 @@ const editorState = (state = defaultState(), action: any): IProps => {
       };
     }
 
+    case UPDATE_AVAILABLE_OPERATIONS: {
+      const { operations } = action.payload;
+      return {
+        ...state,
+        operations,
+      };
+    }
+
     case DISABLE_SELECT_OPERATIONS: {
-      return { ...state, selectionDisabled: true };
+      return {
+        ...state,
+        operations: { ...state.operations, canSelectElements: false },
+      };
     }
 
     case ENABLE_SELECT_OPERATIONS: {
-      return { ...state, selectionDisabled: false };
+      return {
+        ...state,
+        operations: { ...state.operations, canSelectElements: true },
+      };
     }
 
     case ADD_ELEMENT_TO_SELECTION: {

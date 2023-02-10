@@ -1,7 +1,7 @@
 import { EDITOR_MODE_CREATE, MIMIC } from "../../constants/literals";
 import { IPoint } from "../../models/Editor";
 import {
-  selectEditorDrawId,
+  selectCreatedElementId,
   selectEditorMode,
   selectSelectionDisabled,
 } from "../selectors/editorState";
@@ -25,7 +25,7 @@ export const onCanvasPointerClick =
   (ev: React.PointerEvent<HTMLDivElement>) =>
   (dispatch: Function, getState: Function) => {
     const mode = selectEditorMode(getState());
-    const drawId = selectEditorDrawId(getState());
+    const createdElementId = selectCreatedElementId(getState());
 
     // TODO Optimization and refactoring
 
@@ -62,17 +62,17 @@ export const onCanvasPointerClick =
           y: clientY,
         };
 
-        if (!drawId) {
+        if (!createdElementId) {
           dispatch(createElement(point));
         } else {
-          dispatch(appendPointToElement(drawId, point));
+          dispatch(appendPointToElement(createdElementId, point));
         }
         break;
       }
 
       case 2: {
-        if (!drawId || mode !== EDITOR_MODE_CREATE) return;
-        dispatch(endDrawingElement(drawId));
+        if (!createdElementId || mode !== EDITOR_MODE_CREATE) return;
+        dispatch(endDrawingElement(createdElementId));
         break;
       }
       default: {
@@ -92,15 +92,15 @@ export const onCanvasPointerDown =
 export const onCanvasPointerMove =
   (ev: React.PointerEvent<HTMLDivElement>) =>
   (dispatch: Function, getState: Function) => {
-    const drawId = selectEditorDrawId(getState());
+    const createdElementId = selectCreatedElementId(getState());
 
-    if (drawId) {
+    if (createdElementId) {
       const { clientX, clientY } = ev;
       const point: IPoint = {
         x: clientX,
         y: clientY,
       };
-      dispatch(drawingElement(drawId, point));
+      dispatch(drawingElement(createdElementId, point));
       return;
     }
 
