@@ -13,7 +13,7 @@ import {
 } from "./editorElements";
 import {
   setSelectedElements,
-  selectElements,
+  selectElementsFromSelectionAria,
   setSelectionArea,
   setSelectionAreaVisible,
   addElementToSelection,
@@ -109,7 +109,7 @@ export const onCanvasPointerMove =
 
     if (visible && !selectionDisabled) {
       const { clientX, clientY } = ev;
-      dispatch(selectElements(clientX, clientY));
+      dispatch(selectElementsFromSelectionAria(clientX, clientY));
       dispatch(setSelectionArea(clientX, clientY));
       return;
     }

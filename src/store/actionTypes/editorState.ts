@@ -8,7 +8,6 @@ export const SET_EDIT_MODE = `${module}/SET_EDIT_MODE`;
 export const SET_OPERATION_MODE = `${module}/SET_OPERATION_MODE`;
 
 export const ADD_ELEMENT_TO_SELECTION = `${module}/ADD_ELEMENT_TO_SELECTION`;
-export const SELECT_ELEMENTS = `${module}/SELECT_ELEMENTS`;
 export const SET_SELECTED_ELEMENTS = `${module}/SET_SELECTED_ELEMENTS`;
 export const ABORT_SELECTION = `${module}/ABORT_SELECTION`;
 export const DISABLE_SELECT_OPERATIONS = `${module}/DISABLE_SELECT_OPERATIONS`;

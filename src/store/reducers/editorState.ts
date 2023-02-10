@@ -4,9 +4,7 @@ import {
   DISABLE_SELECT_OPERATIONS,
   ENABLE_SELECT_OPERATIONS,
   ABORT_SELECTION,
-  SELECT_ELEMENTS,
   SET_CREATED_ELEMENT_ID,
-  // SET_LAST_TAKEN_ID,
   SET_CREATION_MODE,
   SET_EDIT_MODE,
   SET_OPERATION_MODE,
@@ -29,9 +27,6 @@ import {
   IMimicElement,
   IPoint,
 } from "../../models/Editor";
-import checkIsPointInArea from "../../utils/editor/checkIsPointInArea";
-import { getAreaPointsByHWP } from "../../utils/editor/getAreaPointsByHWP";
-import rotateElementPoints from "../../utils/editor/rotateElementPoints";
 
 type DrawType = number | undefined;
 
@@ -250,63 +245,6 @@ const editorState = (state = defaultState(), action: any): IProps => {
 
     case ENABLE_SELECT_OPERATIONS: {
       return { ...state, selectionDisabled: false };
-    }
-
-    case SELECT_ELEMENTS: {
-      const { area, elements } = action.payload;
-
-      const selected = [];
-      let isSelectedGroup = false;
-
-      for (let i = 0; i < elements.length; i++) {
-        const element: IMimicElement = elements[i];
-        const { width, height, angle, points } = element.attributes.position;
-
-        let tempPoints = [...points];
-
-        let innerPoints = 0;
-
-        if (width && height !== undefined && points.length === 1) {
-          const center = {
-            x: tempPoints[0].x + width / 2,
-            y: tempPoints[0].y + height / 2,
-          };
-          tempPoints = rotateElementPoints(
-            center,
-            getAreaPointsByHWP(width, height, tempPoints[0]),
-            angle | 0
-          );
-        }
-
-        for (let j = 0; j < tempPoints.length; j++) {
-          const point = tempPoints[j];
-
-          if (checkIsPointInArea(area, point)) {
-            innerPoints++;
-          }
-        }
-
-        if (innerPoints === tempPoints.length) {
-          selected.push(element.attributes.general.id);
-          isSelectedGroup = element.type === ELEMENT_TYPE_GROUP;
-        }
-      }
-
-      isSelectedGroup = isSelectedGroup && selected.length === 1;
-
-      const operations = {
-        ...state.operations,
-        canGroup: elements.length > 1 && !isSelectedGroup,
-        canUnGroup: isSelectedGroup,
-        canMoveOnTop: elements.length > 0,
-        canMoveOnForward: elements.length === 1,
-        canMoveOnBottom: elements.length > 0,
-        canMoveOnBack: elements.length === 1,
-        canCopy: elements.length > 0,
-        canDelete: elements.length > 0,
-      };
-
-      return { ...state, selected: [...selected], operations };
     }
 
     case ADD_ELEMENT_TO_SELECTION: {

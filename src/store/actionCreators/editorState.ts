@@ -2,9 +2,6 @@ import useGetBoxByMultiPoints from "../../hooks/useGetBoxByMultiPoints";
 import {
   COPY_SELECTED_ELEMENTS_TO_BUFFER,
   ABORT_SELECTION,
-  SELECT_ELEMENTS,
-  // SET_CREATED_ELEMENT_ID,
-  // SET_LAST_TAKEN_ID,
   SET_CREATION_MODE,
   SET_SELECTED_ELEMENTS,
   SET_SELECTION_AREA,
@@ -13,7 +10,7 @@ import {
   ADD_ELEMENT_TO_SELECTION,
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
-import { ElementType, IPoint } from "../../models/Editor";
+import { ElementType, IMimicElement, IPoint } from "../../models/Editor";
 import { selectEditorElements } from "../selectors/editorElements";
 import {
   selectSelectedElements,
@@ -21,6 +18,9 @@ import {
   selectCanvasRectPosition,
 } from "../selectors/editorState";
 import { correctPoint } from "./editorElements";
+import { getAreaPointsByHWP } from "../../utils/editor/getAreaPointsByHWP";
+import rotateElementPoints from "../../utils/editor/rotateElementPoints";
+import checkIsPointInArea from "../../utils/editor/checkIsPointInArea";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
@@ -37,9 +37,11 @@ export const setSelectedElements =
   (selected: number[]) => (dispatch: Function, getState: Function) => {
     const elements = selectEditorElements(getState());
     dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected, elements } });
+
+    // TODO add check isSelectedGroup and dispatch operations;
   };
 
-export const selectElements =
+export const selectElementsFromSelectionAria =
   (clientX: number, clientY: number) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectCanvasRectPosition(getState());
@@ -48,10 +50,44 @@ export const selectElements =
 
     const endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
 
-    dispatch({
-      type: SELECT_ELEMENTS,
-      payload: { area: [selector.begin, endPoint], elements },
-    });
+    const selected = [];
+    const area: [IPoint, IPoint] = [selector.begin, endPoint];
+
+    // TODO MOVE LOGIC TO UTILS
+    for (let i = 0; i < elements.length; i++) {
+      const element: IMimicElement = elements[i];
+      const { width, height, angle, points } = element.attributes.position;
+
+      let tempPoints = [...points];
+
+      let innerPoints = 0;
+
+      if (width && height !== undefined && points.length === 1) {
+        const center = {
+          x: tempPoints[0].x + width / 2,
+          y: tempPoints[0].y + height / 2,
+        };
+        tempPoints = rotateElementPoints(
+          center,
+          getAreaPointsByHWP(width, height, tempPoints[0]),
+          angle | 0
+        );
+      }
+
+      for (let j = 0; j < tempPoints.length; j++) {
+        const point = tempPoints[j];
+
+        if (checkIsPointInArea(area, point)) {
+          innerPoints++;
+        }
+      }
+
+      if (innerPoints === tempPoints.length) {
+        selected.push(element.attributes.general.id);
+      }
+    }
+
+    dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected, elements } });
   };
 
 export const addElementToSelection = (id: number) => (dispatch: Function) => {
