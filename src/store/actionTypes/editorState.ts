@@ -1,4 +1,4 @@
-const module: string = "MIMIC_EDITOR";
+const module = "MIMIC_EDITOR";
 
 export const SET_CANVAS_RECT_POSITION = `${module}/SET_CANVAS_RECT_POSITION`;
 export const SET_CREATED_ELEMENT_ID = `${module}/SET_CREATED_ELEMENT_ID`;
