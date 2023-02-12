@@ -3,7 +3,6 @@ import {
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
   DELETE_LAST_POINT_OF_ELEMENT,
-  // MOVE_ELEMENT,
   REDRAW_LAST_POINT,
   RESIZE_ELEMENT,
   HISTORY_POINT_FOR_CHANGES,
@@ -65,16 +64,6 @@ export const changeElementAngle =
       passHistrory: true,
     });
   };
-
-// export const moveElement =
-//   (id: number, point: PointFromat) =>
-//   (dispatch: Function, getState: Function) => {
-//     dispatch({
-//       type: MOVE_ELEMENT,
-//       payload: { id, point },
-//       passHistrory: true,
-//     });
-//   };
 
 export const resizeElement =
   (id: number, pointName: string, point: IPoint) =>

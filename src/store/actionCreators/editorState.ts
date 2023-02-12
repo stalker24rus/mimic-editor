@@ -20,10 +20,8 @@ import {
   selectEditorOperations,
 } from "../selectors/editorState";
 import { correctPoint } from "./editorElements";
-import { getAreaPointsByHWP } from "../../utils/editor/getAreaPointsByHWP";
-import rotateElementPoints from "../../utils/editor/rotateElementPoints";
-import checkIsPointInArea from "../../utils/editor/checkIsPointInArea";
 import { ELEMENT_TYPE_GROUP } from "../../constants/literals";
+import getSelectedElementsFromArea from "../../utils/EditorState/getSelectedElementsFromArea";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
@@ -44,50 +42,15 @@ export const setSelectedElements =
   };
 
 export const selectElementsFromSelectionAria =
-  (clientX: number, clientY: number) =>
-  (dispatch: Function, getState: Function) => {
+  (x: number, y: number) => (dispatch: Function, getState: Function) => {
     const viewPosition = selectCanvasRectPosition(getState());
     const elements = selectEditorElements(getState());
     const { selector } = selectSelectionArea(getState());
 
-    const endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
-
-    const selected = [];
+    const endPoint = correctPoint({ x, y }, viewPosition);
     const area: [IPoint, IPoint] = [selector.begin, endPoint];
 
-    // TODO MOVE LOGIC TO UTILS
-    for (let i = 0; i < elements.length; i++) {
-      const element: IMimicElement = elements[i];
-      const { width, height, angle, points } = element.attributes.position;
-
-      let tempPoints = [...points];
-
-      let innerPoints = 0;
-
-      if (width && height !== undefined && points.length === 1) {
-        const center = {
-          x: tempPoints[0].x + width / 2,
-          y: tempPoints[0].y + height / 2,
-        };
-        tempPoints = rotateElementPoints(
-          center,
-          getAreaPointsByHWP(width, height, tempPoints[0]),
-          angle | 0
-        );
-      }
-
-      for (let j = 0; j < tempPoints.length; j++) {
-        const point = tempPoints[j];
-
-        if (checkIsPointInArea(area, point)) {
-          innerPoints++;
-        }
-      }
-
-      if (innerPoints === tempPoints.length) {
-        selected.push(element.attributes.general.id);
-      }
-    }
+    const selected = getSelectedElementsFromArea(elements, area);
 
     dispatch({ type: SET_SELECTED_ELEMENTS, payload: { selected } });
     dispatch(updateAvailableOperations());
@@ -146,7 +109,7 @@ export const copySelectedElementsToBuffer =
   };
 
 export const setSelectionArea =
-  (clientX: number, clientY: number, reset = false) =>
+  (x: number, y: number, reset = false) =>
   (dispatch: Function, getState: Function) => {
     const viewPosition = selectCanvasRectPosition(getState());
     const { selector } = selectSelectionArea(getState());
@@ -156,11 +119,11 @@ export const setSelectionArea =
     let endPoint: IPoint = { x: 0, y: 0 };
 
     if (reset) {
-      startPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
+      startPoint = correctPoint({ x, y }, viewPosition);
       endPoint = { ...startPoint };
     } else {
       startPoint = selector.begin;
-      endPoint = correctPoint({ x: clientX, y: clientY }, viewPosition);
+      endPoint = correctPoint({ x, y }, viewPosition);
     }
 
     const [top, left, width, height] = getBox([startPoint, endPoint]);

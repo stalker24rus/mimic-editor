@@ -43,6 +43,11 @@ export default function undoRedo(reducer: Function) {
       default:
         const newPresent = reducer(present, action);
 
+        // console.log(reducer);
+        // console.log(present);
+        // console.log(action);
+        // console.log(newPresent);
+
         if (present === newPresent) {
           return state;
         }
