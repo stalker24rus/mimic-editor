@@ -1,34 +1,38 @@
-const module: string = "EDITOR_ELEMENTS";
-export const CREATE_ELEMENT: string = `${module}/CREATE_ELEMENT`;
+const module = "EDITOR_ELEMENTS";
 
-export const DELETE_SELECTED_ELEMENTS: string = `${module}/DELETE_SELECTED_ELEMENTS`;
+// C(-R)UD
+export const CREATE_ELEMENT = `${module}/CREATE_ELEMENT`;
+export const DELETE_SELECTED_ELEMENTS = `${module}/DELETE_SELECTED_ELEMENTS`;
 
-export const APPEND_POINT_TO_ELEMENT: string = `${module}/APPEND_POINT_TO_ELEMENT`;
-export const DELETE_LAST_POINT_OF_ELEMENT: string = `${module}/DELETE_LAST_POINT_OF_ELEMENT`;
-export const REDRAW_LAST_POINT: string = `${module}/REDRAW_LAST_POINT`;
+export const APPEND_ELEMENT_POINT = `${module}/APPEND_ELEMENT_POINT`;
+export const DELETE_ELEMENT_LAST_POINT = `${module}/DELETE_ELEMENT_LAST_POINT`;
 
-export const CHANGE_ELEMENT_ANGLE: string = `${module}/CHANGE_ELEMENT_ANGLE`;
-export const RESIZE_ELEMENT: string = `${module}/RESIZE_ELEMENT`;
-export const CHANGE_POINT_POSITION: string = `${module}/CHANGE_POINT_POSITION`;
-export const MOVE_ELEMENT_POINTS: string = `${module}/MOVE_ELEMENT_POINTS`;
-export const MOVE_ELEMENT_GROUP: string = `${module}/MOVE_ELEMENT_GROUP`;
+export const CHANGE_ELEMENT_LAST_POINT = `${module}/CHANGE_ELEMENT_LAST_POINT`;
+export const CHANGE_ELEMENT_ANGLE = `${module}/CHANGE_ELEMENT_ANGLE`;
+export const CHANGE_ELEMENT_SIZE = `${module}/CHANGE_ELEMENT_SIZE`;
+export const CHANGE_ELEMENT_POINT = `${module}/CHANGE_ELEMENT_POINT`;
+export const CHANGE_ELEMENT_ATTRIBUTES = `${module}/CHANGE_ELEMENT_ATTRIBUTES`;
 
-export const MOVE_ELEMENTS_ON_TOP_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_TOP_LEVEL`;
-export const MOVE_ELEMENTS_ON_BOTTOM_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_BOTTOM_LEVEL`;
+export const MOVE_ELEMENT_POINTS = `${module}/MOVE_ELEMENT_POINTS`;
+export const MOVE_ELEMENTS_GROUP = `${module}/MOVE_ELEMENTS_GROUP`;
 
-export const MOVE_ELEMENTS_ON_FORWARD_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_FORWARD_LEVEL`;
-export const MOVE_ELEMENTS_ON_BACK_LEVEL: string = `${module}/MOVE_ELEMENTS_ON_BACK_LEVEL`;
+// LAYER OPERATIONS
+export const MOVE_ELEMENTS_ON_TOP_LEVEL = `${module}/MOVE_ELEMENTS_ON_TOP_LEVEL`;
+export const MOVE_ELEMENTS_ON_BOTTOM_LEVEL = `${module}/MOVE_ELEMENTS_ON_BOTTOM_LEVEL`;
+export const MOVE_ELEMENTS_ON_FORWARD_LEVEL = `${module}/MOVE_ELEMENTS_ON_FORWARD_LEVEL`;
+export const MOVE_ELEMENTS_ON_BACK_LEVEL = `${module}/MOVE_ELEMENTS_ON_BACK_LEVEL`;
 
-export const HISTORY_POINT_FOR_CHANGES: string = `${module}/HISTORY_POINT_FOR_CHANGES`;
+// GROUP POSITION CHANGERS
+export const ALIGN_ELEMENTS_LEFT = `${module}/ALIGN_ELEMENTS_LEFT`;
+export const ALIGN_ELEMENTS_HORIZON = `${module}/ALIGN_ELEMENTS_HORIZON`;
+export const ALIGN_ELEMENTS_RIGHT = `${module}/ALIGN_ELEMENTS_RIGHT`;
+export const ALIGN_ELEMENTS_TOP = `${module}/ALIGN_ELEMENTS_TOP`;
+export const ALIGN_ELEMENTS_VERTICAL = `${module}/ALIGN_ELEMENTS_VERTICAL`;
+export const ALIGN_ELEMENTS_BOTTOM = `${module}/ALIGN_ELEMENTS_BOTTOM`;
 
-export const CHANGE_ATTRIBUTES: string = `${module}/CHANGE_ATTRIBUTES`;
+// GROUP FUNCTION
+export const GROUP_ELEMENTS = `${module}/GROUP_ELEMENTS`;
+export const UNGROUP_ELEMENTS = `${module}/UNGROUP_ELEMENTS`;
 
-export const ELEMENTS_LEFT_ALIGN: string = `${module}/ELEMENTS_LEFT_ALIGN`;
-export const ELEMENTS_HORIZON_ALIGN: string = `${module}/ELEMENTS_HORIZON_ALIGN`;
-export const ELEMENTS_RIGHT_ALIGN: string = `${module}/ELEMENTS_RIGHT_ALIGN`;
-export const ELEMENTS_TOP_ALIGN: string = `${module}/ELEMENTS_TOP_ALIGN`;
-export const ELEMENTS_VERTICAL_ALIGN: string = `${module}/ELEMENTS_VERTICAL_ALIGN`;
-export const ELEMENTS_BOTTOM_ALIGN: string = `${module}/ELEMENTS_BOTTOM_ALIGN`;
-
-export const GROUP_ELEMENTS: string = `${module}/GROUP_ELEMENTS`;
-export const UNGROUP_ELEMENTS: string = `${module}/UNGROUP_ELEMENTS`;
+// HISTORY
+export const CREATE_HISTORY_CHANGE_POINT = `${module}/CREATE_HISTORY_CHANGE_POINT`;

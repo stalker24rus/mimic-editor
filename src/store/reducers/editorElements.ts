@@ -1,28 +1,28 @@
 import lodash from "lodash";
 
 import {
-  APPEND_POINT_TO_ELEMENT,
+  APPEND_ELEMENT_POINT,
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
   DELETE_SELECTED_ELEMENTS,
-  DELETE_LAST_POINT_OF_ELEMENT,
-  REDRAW_LAST_POINT,
-  RESIZE_ELEMENT,
-  HISTORY_POINT_FOR_CHANGES,
-  CHANGE_POINT_POSITION,
+  DELETE_ELEMENT_LAST_POINT,
+  CHANGE_ELEMENT_LAST_POINT,
+  CHANGE_ELEMENT_SIZE,
+  CREATE_HISTORY_CHANGE_POINT,
+  CHANGE_ELEMENT_POINT,
   MOVE_ELEMENT_POINTS,
-  MOVE_ELEMENT_GROUP,
+  MOVE_ELEMENTS_GROUP,
   MOVE_ELEMENTS_ON_TOP_LEVEL,
   MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
-  CHANGE_ATTRIBUTES,
-  ELEMENTS_LEFT_ALIGN,
-  ELEMENTS_HORIZON_ALIGN,
-  ELEMENTS_RIGHT_ALIGN,
-  ELEMENTS_TOP_ALIGN,
-  ELEMENTS_VERTICAL_ALIGN,
-  ELEMENTS_BOTTOM_ALIGN,
+  CHANGE_ELEMENT_ATTRIBUTES,
+  ALIGN_ELEMENTS_LEFT,
+  ALIGN_ELEMENTS_HORIZON,
+  ALIGN_ELEMENTS_RIGHT,
+  ALIGN_ELEMENTS_TOP,
+  ALIGN_ELEMENTS_VERTICAL,
+  ALIGN_ELEMENTS_BOTTOM,
   UNGROUP_ELEMENTS,
   GROUP_ELEMENTS,
 } from "../actionTypes/editorElements";
@@ -106,7 +106,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       }
     }
 
-    case APPEND_POINT_TO_ELEMENT: {
+    case APPEND_ELEMENT_POINT: {
       const { id, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = appendElementPoint({ point });
@@ -114,7 +114,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case DELETE_LAST_POINT_OF_ELEMENT: {
+    case DELETE_ELEMENT_LAST_POINT: {
       const { id } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = deleteElementLastPoint();
@@ -122,7 +122,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case CHANGE_POINT_POSITION: {
+    case CHANGE_ELEMENT_POINT: {
       const { id, pointNo, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementPoint({ pointNo, point });
@@ -138,7 +138,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case MOVE_ELEMENT_GROUP: {
+    case MOVE_ELEMENTS_GROUP: {
       const { selected, movement } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementPoints({ movement });
@@ -146,7 +146,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case REDRAW_LAST_POINT: {
+    case CHANGE_ELEMENT_LAST_POINT: {
       const { id, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementLastPoint({ point });
@@ -162,7 +162,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case RESIZE_ELEMENT: {
+    case CHANGE_ELEMENT_SIZE: {
       const { id, pointName: targetName, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = resizeElement({ targetName, point });
@@ -170,7 +170,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case HISTORY_POINT_FOR_CHANGES: {
+    case CREATE_HISTORY_CHANGE_POINT: {
       const root = lodash.cloneDeep(state);
       return { ...root };
     }
@@ -207,7 +207,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case CHANGE_ATTRIBUTES: {
+    case CHANGE_ELEMENT_ATTRIBUTES: {
       const { id, propFamily, name, value } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementAttribute({ propFamily, name, value });
@@ -215,7 +215,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_LEFT_ALIGN: {
+    case ALIGN_ELEMENTS_LEFT: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignLeft({ selected });
@@ -223,7 +223,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_HORIZON_ALIGN: {
+    case ALIGN_ELEMENTS_HORIZON: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignHorizon({ selected });
@@ -231,7 +231,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_RIGHT_ALIGN: {
+    case ALIGN_ELEMENTS_RIGHT: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignRight({ selected });
@@ -239,7 +239,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_TOP_ALIGN: {
+    case ALIGN_ELEMENTS_TOP: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignTop({ selected });
@@ -247,7 +247,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_VERTICAL_ALIGN: {
+    case ALIGN_ELEMENTS_VERTICAL: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignVertical({ selected });
@@ -255,7 +255,7 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
       return { ...root };
     }
 
-    case ELEMENTS_BOTTOM_ALIGN: {
+    case ALIGN_ELEMENTS_BOTTOM: {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignBottom({ selected });

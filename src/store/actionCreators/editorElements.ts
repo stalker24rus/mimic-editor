@@ -1,26 +1,26 @@
 import {
-  APPEND_POINT_TO_ELEMENT,
+  APPEND_ELEMENT_POINT,
   CHANGE_ELEMENT_ANGLE,
   CREATE_ELEMENT,
-  DELETE_LAST_POINT_OF_ELEMENT,
-  REDRAW_LAST_POINT,
-  RESIZE_ELEMENT,
-  HISTORY_POINT_FOR_CHANGES,
-  CHANGE_POINT_POSITION,
+  DELETE_ELEMENT_LAST_POINT,
+  CHANGE_ELEMENT_LAST_POINT,
+  CHANGE_ELEMENT_SIZE,
+  CREATE_HISTORY_CHANGE_POINT,
+  CHANGE_ELEMENT_POINT,
   MOVE_ELEMENT_POINTS,
   DELETE_SELECTED_ELEMENTS,
-  MOVE_ELEMENT_GROUP,
+  MOVE_ELEMENTS_GROUP,
   MOVE_ELEMENTS_ON_TOP_LEVEL,
   MOVE_ELEMENTS_ON_BOTTOM_LEVEL,
   MOVE_ELEMENTS_ON_FORWARD_LEVEL,
   MOVE_ELEMENTS_ON_BACK_LEVEL,
-  CHANGE_ATTRIBUTES,
-  ELEMENTS_LEFT_ALIGN,
-  ELEMENTS_HORIZON_ALIGN,
-  ELEMENTS_RIGHT_ALIGN,
-  ELEMENTS_TOP_ALIGN,
-  ELEMENTS_VERTICAL_ALIGN,
-  ELEMENTS_BOTTOM_ALIGN,
+  CHANGE_ELEMENT_ATTRIBUTES,
+  ALIGN_ELEMENTS_LEFT,
+  ALIGN_ELEMENTS_HORIZON,
+  ALIGN_ELEMENTS_RIGHT,
+  ALIGN_ELEMENTS_TOP,
+  ALIGN_ELEMENTS_VERTICAL,
+  ALIGN_ELEMENTS_BOTTOM,
   GROUP_ELEMENTS,
   UNGROUP_ELEMENTS,
 } from "../actionTypes/editorElements";
@@ -34,7 +34,10 @@ import {
   // SET_LAST_TAKEN_ID,
   SET_EDIT_MODE,
 } from "../actionTypes/editorState";
-import { REDO, UNDO } from "../actionTypes/undoRedo";
+import {
+  REDO_EDITOR_HISTORY,
+  UNDO_EDITOR_HISTORY,
+} from "../actionTypes/undoRedo";
 import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
 import {
   selectCopyPasteBuffer,
@@ -71,7 +74,7 @@ export const resizeElement =
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
-      type: RESIZE_ELEMENT,
+      type: CHANGE_ELEMENT_SIZE,
       payload: { id, pointName, point: newPoint },
       passHistrory: true,
     });
@@ -83,7 +86,7 @@ export const changePointPosition =
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
-      type: CHANGE_POINT_POSITION,
+      type: CHANGE_ELEMENT_POINT,
       payload: { id, pointNo, point: newPoint },
       passHistrory: true,
     });
@@ -103,7 +106,7 @@ export const moveElementGroup =
     // selected: number[],
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: MOVE_ELEMENT_GROUP,
+      type: MOVE_ELEMENTS_GROUP,
       payload: { selected, movement },
       passHistrory: true,
     });
@@ -158,7 +161,7 @@ export const moveOnBackLevel =
 // FIXME логически отвественность операций уже лежит вне файла, обобщить
 export const startDoingChanges = () => (dispatch: Function) => {
   dispatch({
-    type: HISTORY_POINT_FOR_CHANGES,
+    type: CREATE_HISTORY_CHANGE_POINT,
     passHistrory: false,
   });
   dispatch({
@@ -228,7 +231,7 @@ export const appendPointToElement =
 
       if (pointLength < pointAmount) {
         dispatch({
-          type: APPEND_POINT_TO_ELEMENT,
+          type: APPEND_ELEMENT_POINT,
           payload: { id, point: newPoint },
         });
       } else {
@@ -248,7 +251,7 @@ export const drawingElement =
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
     dispatch({
-      type: REDRAW_LAST_POINT,
+      type: CHANGE_ELEMENT_LAST_POINT,
       payload: { id, point: newPoint },
       passHistrory: true,
     });
@@ -256,7 +259,7 @@ export const drawingElement =
 
 export const endDrawingElement = (id: number) => (dispatch: Function) => {
   dispatch({
-    type: DELETE_LAST_POINT_OF_ELEMENT,
+    type: DELETE_ELEMENT_LAST_POINT,
     payload: { id },
     passHistrory: true,
   });
@@ -268,20 +271,20 @@ export const endDrawingElement = (id: number) => (dispatch: Function) => {
 
 export const undo = () => (dispatch: Function) => {
   dispatch({
-    type: UNDO,
+    type: UNDO_EDITOR_HISTORY,
   });
 };
 
 export const redo = () => (dispatch: Function) => {
   dispatch({
-    type: REDO,
+    type: REDO_EDITOR_HISTORY,
   });
 };
 
 export const changeAttributes =
   (changes: IChangesData) => (dispatch: Function) => {
     dispatch({
-      type: CHANGE_ATTRIBUTES,
+      type: CHANGE_ELEMENT_ATTRIBUTES,
       payload: { ...changes },
     });
   };
@@ -299,7 +302,7 @@ export const setElementsLeftAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_LEFT_ALIGN,
+      type: ALIGN_ELEMENTS_LEFT,
       payload: { selected },
     });
   };
@@ -308,7 +311,7 @@ export const setElementsHorizonAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_HORIZON_ALIGN,
+      type: ALIGN_ELEMENTS_HORIZON,
       payload: { selected },
     });
   };
@@ -317,7 +320,7 @@ export const setElementsRightAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_RIGHT_ALIGN,
+      type: ALIGN_ELEMENTS_RIGHT,
       payload: { selected },
     });
   };
@@ -326,7 +329,7 @@ export const setElementsTopAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_TOP_ALIGN,
+      type: ALIGN_ELEMENTS_TOP,
       payload: { selected },
     });
   };
@@ -335,7 +338,7 @@ export const setElementsVerticalAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_VERTICAL_ALIGN,
+      type: ALIGN_ELEMENTS_VERTICAL,
       payload: { selected },
     });
   };
@@ -344,7 +347,7 @@ export const setElementsBottomAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
-      type: ELEMENTS_BOTTOM_ALIGN,
+      type: ALIGN_ELEMENTS_BOTTOM,
       payload: { selected },
     });
   };

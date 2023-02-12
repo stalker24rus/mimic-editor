@@ -1,4 +1,7 @@
-import { REDO, UNDO } from "../actionTypes/undoRedo";
+import {
+  REDO_EDITOR_HISTORY,
+  UNDO_EDITOR_HISTORY,
+} from "../actionTypes/undoRedo";
 import { HISTORY_MAX_LENGHT } from "../../constants/literals";
 
 export default function undoRedo(reducer: Function) {
@@ -12,7 +15,7 @@ export default function undoRedo(reducer: Function) {
     const { past, present, future } = state;
 
     switch (action.type) {
-      case UNDO: {
+      case UNDO_EDITOR_HISTORY: {
         if (past.length > 0) {
           const previous = past[past.length - 1];
           const newPast = past.slice(0, past.length - 1);
@@ -26,7 +29,7 @@ export default function undoRedo(reducer: Function) {
         }
       }
 
-      case REDO: {
+      case REDO_EDITOR_HISTORY: {
         if (future.length > 0) {
           const next = future[0];
           const newFuture = future.slice(1);
