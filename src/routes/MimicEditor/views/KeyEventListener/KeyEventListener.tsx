@@ -4,8 +4,8 @@ import {
   deleteSelectedElements,
   moveElementGroup,
   pasteElementsFromBuffer,
-  redo,
-  undo,
+  redoEditorHistory,
+  undoEditorHistory,
 } from "../../../../store/actionCreators/editorElements";
 import {
   copySelectedElementsToBuffer,
@@ -23,9 +23,9 @@ export default function KeyEventListener(): JSX.Element {
         (ev.key === "Z" || ev.key === "z" || ev.code === "KeyZ")
       ) {
         if (ev.shiftKey) {
-          dispatch(redo());
+          dispatch(redoEditorHistory());
         } else {
-          dispatch(undo());
+          dispatch(undoEditorHistory());
         }
       }
 

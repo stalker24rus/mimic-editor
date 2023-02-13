@@ -6,7 +6,7 @@ import {
   endDoingChanges,
   // moveElement,
   moveElementPoints,
-  resizeElement,
+  changeElementSize,
   startDoingChanges,
 } from "../../../../../../store/actionCreators/editorElements";
 import MovingCell from "../Primitives/MovingCell";
@@ -42,7 +42,7 @@ function mapDispatchToProps() {
   return {
     onChangeAngle: changeElementAngle,
     onMove: moveElementPoints, // moveElement,
-    onResize: resizeElement,
+    onResize: changeElementSize,
     onStartChanges: startDoingChanges,
     onEndChanges: endDoingChanges,
   };

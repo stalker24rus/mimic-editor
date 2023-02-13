@@ -4,12 +4,12 @@ import {
   moveOnBottomLevel,
   moveOnForwardLevel,
   moveOnTopLevel,
-  setElementsBottomAlign,
-  setElementsHorizonAlign,
-  setElementsLeftAlign,
-  setElementsRightAlign,
-  setElementsTopAlign,
-  setElementsVerticalAlign,
+  alignElementsBottom,
+  alignElementsHorizon,
+  alignElementsLeft,
+  alignElementsRight,
+  alignElementsTop,
+  alignElementsVerticalAlign,
 } from "../../../../../../store/actionCreators/editorElements";
 import {
   selectEditorElementsFuture,
@@ -66,12 +66,12 @@ function mapDispatchToProps() {
     onForwardLevel: moveOnForwardLevel,
     onBottomLevel: moveOnBottomLevel,
     onBackLevel: moveOnBackLevel,
-    onSetLeftAlign: setElementsLeftAlign,
-    onSetHorizonAlign: setElementsHorizonAlign,
-    onSetRightAlign: setElementsRightAlign,
-    onSetTopAlign: setElementsTopAlign,
-    onSetVerticalAlign: setElementsVerticalAlign,
-    onSetBottomAlign: setElementsBottomAlign,
+    onSetLeftAlign: alignElementsLeft,
+    onSetHorizonAlign: alignElementsHorizon,
+    onSetRightAlign: alignElementsRight,
+    onSetTopAlign: alignElementsTop,
+    onSetVerticalAlign: alignElementsVerticalAlign,
+    onSetBottomAlign: alignElementsBottom,
   };
 }
 

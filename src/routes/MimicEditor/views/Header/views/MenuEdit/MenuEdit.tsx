@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { ReduxState, useTypedDispatch } from "../../../../../../store";
 import {
   deleteSelectedElements,
-  undo,
-  redo,
+  undoEditorHistory,
+  redoEditorHistory,
   pasteElementsFromBuffer,
 } from "../../../../../../store/actionCreators/editorElements";
 import {
@@ -44,12 +44,12 @@ export default function MenuEdit() {
       },
       {
         text: <>&#8630; назад {past.length}</>,
-        handler: () => dispatch(undo()),
+        handler: () => dispatch(undoEditorHistory()),
         isDisabled: !past.length,
       },
       {
         text: <>&#8631; вперед {future.length}</>,
-        handler: () => dispatch(redo()),
+        handler: () => dispatch(redoEditorHistory()),
         isDisabled: !future.length,
         separator: "bottom",
       },

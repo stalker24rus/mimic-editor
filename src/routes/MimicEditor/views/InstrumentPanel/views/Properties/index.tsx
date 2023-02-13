@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 import { IChangesData, IMimicElement } from "../../../../../../models/Editor";
-import { changeAttributes } from "../../../../../../store/actionCreators/editorElements";
+import { changeElementAttributes } from "../../../../../../store/actionCreators/editorElements";
 import { selectMimic } from "../../../../../../store/selectors/editorElements";
 
 import Panel from "./views/Panel";
@@ -29,7 +29,7 @@ function mapStateToProps(store) {
 
 function mapDispatchToProps() {
   return {
-    onChanges: changeAttributes,
+    onChanges: changeElementAttributes,
   };
 }
 

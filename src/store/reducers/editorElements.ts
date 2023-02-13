@@ -3,7 +3,7 @@ import lodash from "lodash";
 import {
   APPEND_ELEMENT_POINT,
   CHANGE_ELEMENT_ANGLE,
-  CREATE_ELEMENT,
+  CREATE_NEW_ELEMENT,
   DELETE_SELECTED_ELEMENTS,
   DELETE_ELEMENT_LAST_POINT,
   CHANGE_ELEMENT_LAST_POINT,
@@ -82,7 +82,7 @@ const defaultState: IMimicElement = {
 
 const editorElements = (state = defaultState, action: any): IMimicElement => {
   switch (action.type) {
-    case CREATE_ELEMENT: {
+    case CREATE_NEW_ELEMENT: {
       const { parentId, id, newElement, point } = action.payload;
       const { type, attributes } = newElement;
       const pointsAmount = TransformerBase[type].maxPoints;

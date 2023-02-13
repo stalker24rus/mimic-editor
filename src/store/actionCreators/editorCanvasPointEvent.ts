@@ -8,8 +8,8 @@ import {
 import {
   appendPointToElement,
   createElement,
-  drawingElement,
-  endDrawingElement,
+  startCreatingElement,
+  endCreatingElement,
 } from "./editorElements";
 import {
   setSelectedElements,
@@ -72,7 +72,7 @@ export const onCanvasPointerClick =
 
       case 2: {
         if (!createdElementId || mode !== EDITOR_MODE_CREATE) return;
-        dispatch(endDrawingElement(createdElementId));
+        dispatch(endCreatingElement(createdElementId));
         break;
       }
       default: {
@@ -100,7 +100,7 @@ export const onCanvasPointerMove =
         x: clientX,
         y: clientY,
       };
-      dispatch(drawingElement(createdElementId, point));
+      dispatch(startCreatingElement(createdElementId, point));
       return;
     }
 

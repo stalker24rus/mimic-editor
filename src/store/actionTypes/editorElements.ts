@@ -1,7 +1,7 @@
 const module = "EDITOR_ELEMENTS";
 
 // C(-R)UD
-export const CREATE_ELEMENT = `${module}/CREATE_ELEMENT`;
+export const CREATE_NEW_ELEMENT = `${module}/CREATE_NEW_ELEMENT`;
 export const DELETE_SELECTED_ELEMENTS = `${module}/DELETE_SELECTED_ELEMENTS`;
 
 export const APPEND_ELEMENT_POINT = `${module}/APPEND_ELEMENT_POINT`;

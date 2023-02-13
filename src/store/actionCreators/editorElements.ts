@@ -1,7 +1,7 @@
 import {
   APPEND_ELEMENT_POINT,
   CHANGE_ELEMENT_ANGLE,
-  CREATE_ELEMENT,
+  CREATE_NEW_ELEMENT,
   DELETE_ELEMENT_LAST_POINT,
   CHANGE_ELEMENT_LAST_POINT,
   CHANGE_ELEMENT_SIZE,
@@ -26,12 +26,9 @@ import {
 } from "../actionTypes/editorElements";
 import {
   DISABLE_SELECT_OPERATIONS,
-  // DISABLE_TOUCH,
   ENABLE_SELECT_OPERATIONS,
-  // ENABLE_TOUCH,
   PASTE_ELEMENTS_FROM_BUFFER,
   SET_CREATED_ELEMENT_ID,
-  // SET_LAST_TAKEN_ID,
   SET_EDIT_MODE,
 } from "../actionTypes/editorState";
 import {
@@ -50,14 +47,7 @@ import { selectElement } from "../selectors/editorElements";
 
 import getLastGID from "../../utils/editor/Elements/crud/getLastGID";
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
-
-// TODO ??? detach to other file
-export function correctPoint(point: IPoint, correction: IPoint): IPoint {
-  return {
-    x: point.x - correction.x,
-    y: point.y - correction.y,
-  };
-}
+import correctPoint from "../../utils/editor/correctPoint";
 
 export const changeElementAngle =
   (id: number, point: IPoint) => (dispatch: Function) => {
@@ -68,11 +58,11 @@ export const changeElementAngle =
     });
   };
 
-export const resizeElement =
+export const changeElementSize =
   (id: number, pointName: string, point: IPoint) =>
   (dispatch: Function, getState: Function) => {
-    const viewPosition = selectCanvasRectPosition(getState());
-    const newPoint = correctPoint(point, viewPosition);
+    const canvasRect = selectCanvasRectPosition(getState());
+    const newPoint = correctPoint(point, canvasRect);
     dispatch({
       type: CHANGE_ELEMENT_SIZE,
       payload: { id, pointName, point: newPoint },
@@ -187,7 +177,7 @@ export const createElement =
     const newElement: IMimicElement = selectNewElement(getState());
 
     dispatch({
-      type: CREATE_ELEMENT,
+      type: CREATE_NEW_ELEMENT,
       payload: { id: newLastTakenId, newElement, point: newPoint },
     });
 
@@ -246,7 +236,7 @@ export const appendPointToElement =
     }
   };
 
-export const drawingElement =
+export const startCreatingElement =
   (id: number, point: IPoint) => (dispatch: Function, getState: Function) => {
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
@@ -257,7 +247,7 @@ export const drawingElement =
     });
   };
 
-export const endDrawingElement = (id: number) => (dispatch: Function) => {
+export const endCreatingElement = (id: number) => (dispatch: Function) => {
   dispatch({
     type: DELETE_ELEMENT_LAST_POINT,
     payload: { id },
@@ -269,19 +259,19 @@ export const endDrawingElement = (id: number) => (dispatch: Function) => {
   });
 };
 
-export const undo = () => (dispatch: Function) => {
+export const undoEditorHistory = () => (dispatch: Function) => {
   dispatch({
     type: UNDO_EDITOR_HISTORY,
   });
 };
 
-export const redo = () => (dispatch: Function) => {
+export const redoEditorHistory = () => (dispatch: Function) => {
   dispatch({
     type: REDO_EDITOR_HISTORY,
   });
 };
 
-export const changeAttributes =
+export const changeElementAttributes =
   (changes: IChangesData) => (dispatch: Function) => {
     dispatch({
       type: CHANGE_ELEMENT_ATTRIBUTES,
@@ -298,7 +288,7 @@ export const pasteElementsFromBuffer =
     });
   };
 
-export const setElementsLeftAlign =
+export const alignElementsLeft =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -307,7 +297,7 @@ export const setElementsLeftAlign =
     });
   };
 
-export const setElementsHorizonAlign =
+export const alignElementsHorizon =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -316,7 +306,7 @@ export const setElementsHorizonAlign =
     });
   };
 
-export const setElementsRightAlign =
+export const alignElementsRight =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -325,7 +315,7 @@ export const setElementsRightAlign =
     });
   };
 
-export const setElementsTopAlign =
+export const alignElementsTop =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -334,7 +324,7 @@ export const setElementsTopAlign =
     });
   };
 
-export const setElementsVerticalAlign =
+export const alignElementsVerticalAlign =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
@@ -343,7 +333,7 @@ export const setElementsVerticalAlign =
     });
   };
 
-export const setElementsBottomAlign =
+export const alignElementsBottom =
   () => (dispatch: Function, getState: Function) => {
     const selected = selectSelectedElements(getState());
     dispatch({
