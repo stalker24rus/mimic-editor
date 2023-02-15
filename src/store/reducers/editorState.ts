@@ -62,6 +62,7 @@ interface IProps {
   };
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
+  editableMimic: IMimicElement | {};
 }
 
 export interface IOperations {
@@ -118,6 +119,7 @@ const defaultState = (): IProps => {
       canSelectElements: true,
       canDelete: false,
     },
+    editableMimic: {},
   };
 };
 

@@ -19,9 +19,10 @@ import {
   selectCanvasRectPosition,
   selectEditorOperations,
 } from "../selectors/editorState";
-import { correctPoint } from "./editorElements";
+
 import { ELEMENT_TYPE_GROUP } from "../../constants/literals";
 import getSelectedElementsFromArea from "../../utils/EditorState/getSelectedElementsFromArea";
+import correctPoint from "../../utils/editor/correctPoint";
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {
