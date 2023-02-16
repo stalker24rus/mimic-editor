@@ -1,10 +1,10 @@
-import editorElements from "./reducers/editorElements";
+import editableMimic from "./reducers/editableMimic";
 import editorState from "./reducers/editorState";
 import simulatorState from "./reducers/simulatorState";
 import tagStore from "./reducers/tagStore";
-import undoRedo from "./reducers/undoRedo";
+import editorHistory from "./reducers/editorHistory";
 
-const undoredobleEditorElements = undoRedo(editorElements);
+const undoredobleEditorElements = editorHistory(editableMimic);
 
 export const rootReducers = {
   undoredobleEditorElements,

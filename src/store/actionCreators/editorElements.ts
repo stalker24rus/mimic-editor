@@ -43,7 +43,7 @@ import {
   selectCanvasRectPosition,
 } from "../selectors/editorState";
 import { selectMimic } from "../selectors/editorElements";
-import { selectElement } from "../selectors/editorElements";
+import { selectMimicElement } from "../selectors/editorElements";
 
 import getLastGID from "../../utils/editor/Elements/crud/getLastGID";
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
@@ -213,7 +213,7 @@ export const appendPointToElement =
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
 
-    const element: IMimicElement = selectElement(getState(), id);
+    const element: IMimicElement = selectMimicElement(getState(), id);
 
     if (element) {
       const pointAmount = TransformerBase[element.type].maxPoints;

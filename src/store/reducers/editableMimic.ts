@@ -80,7 +80,7 @@ const defaultState: IMimicElement = {
   children: JSON.parse(demo1JSON),
 };
 
-const editorElements = (state = defaultState, action: any): IMimicElement => {
+const editableMimic = (state = defaultState, action: any): IMimicElement => {
   switch (action.type) {
     case CREATE_NEW_ELEMENT: {
       const { parentId, id, newElement, point } = action.payload;
@@ -295,4 +295,4 @@ const editorElements = (state = defaultState, action: any): IMimicElement => {
   }
 };
 
-export default editorElements;
+export default editableMimic;

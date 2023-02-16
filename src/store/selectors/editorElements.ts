@@ -1,6 +1,6 @@
 import { IMimicElement } from "../../models/Editor";
 
-export const selectElement = (state: any, id: number) =>
+export const selectMimicElement = (state: any, id: number) =>
   state.undoredobleEditorElements.present.children.find(
     (element: IMimicElement) => element.attributes.general.id === id
   );

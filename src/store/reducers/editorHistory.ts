@@ -4,7 +4,7 @@ import {
 } from "../actionTypes/undoRedo";
 import { HISTORY_MAX_LENGHT } from "../../constants/literals";
 
-export default function undoRedo(reducer: Function) {
+export default function editorHistory(reducer: Function) {
   const initialState = {
     past: [],
     present: reducer(undefined, {}),
