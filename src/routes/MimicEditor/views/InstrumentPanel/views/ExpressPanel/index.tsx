@@ -14,7 +14,7 @@ import {
 import {
   selectEditorElementsFuture,
   selectEditorElementsPast,
-} from "../../../../../../store/selectors/editorElements";
+} from "../../../../../../store/selectors/editableMimic";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 import BackLevel from "../../../../../../ui/Icons/svg/BackLevel";
 import BottomAlign from "../../../../../../ui/Icons/svg/BottomAlign";
@@ -28,8 +28,8 @@ import TopLevel from "../../../../../../ui/Icons/svg/TopLevel";
 import VerticalAlign from "../../../../../../ui/Icons/svg/VerticalAlign";
 
 interface StateProps {
-  future: [any];
-  past: [any];
+  future: any[];
+  past: any[];
   selected: number[] | undefined;
 }
 

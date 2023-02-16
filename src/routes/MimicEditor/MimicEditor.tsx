@@ -12,7 +12,7 @@ import SelectionArea from "./views/SelectionArea";
 import ShapeTransformer from "./views/ShapeTransformer";
 import GroupMover from "./views/GroupMover";
 import CursorInfo from "./views/CursorInfo";
-import { selectMimic } from "../../store/selectors/editorElements";
+import { selectMimic } from "../../store/selectors/editableMimic";
 import {
   selectEditorMode,
   selectSelectedElements,

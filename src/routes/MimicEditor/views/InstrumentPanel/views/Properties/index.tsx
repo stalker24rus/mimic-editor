@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 import { IChangesData, IMimicElement } from "../../../../../../models/Editor";
 import { changeElementAttributes } from "../../../../../../store/actionCreators/editorElements";
-import { selectMimic } from "../../../../../../store/selectors/editorElements";
+import { selectMimic } from "../../../../../../store/selectors/editableMimic";
 
 import Panel from "./views/Panel";
 

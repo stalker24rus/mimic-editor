@@ -7,14 +7,14 @@ import {
   moveElementGroup,
   startDoingChanges,
 } from "../../../../store/actionCreators/editorElements";
-import { selectEditorElements } from "../../../../store/selectors/editorElements";
+import { selectMimicElements } from "../../../../store/selectors/editableMimic";
 import { selectSelectedElements } from "../../../../store/selectors/editorState";
 import { useGetBoxFromElements } from "../../../../hooks/useGetBoxByMultiPoints";
 
 const BORDER: number = 10;
 
 export default function GroupMover(): JSX.Element {
-  const elements = useSelector(selectEditorElements);
+  const elements = useSelector(selectMimicElements);
   const selected = useSelector(selectSelectedElements);
   const dispatch = useTypedDispatch();
 

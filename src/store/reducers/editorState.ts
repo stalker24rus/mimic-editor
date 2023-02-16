@@ -46,7 +46,7 @@ interface IProps {
    * }
    */
   mode: EditorModeProps;
-  newElement: CanvasNewElement | {};
+  newElement: CanvasNewElement | { [key: string]: any }; // FIXME
   createdElementId: DrawType;
   canvasRectPosition: IPoint;
   selected: number[];

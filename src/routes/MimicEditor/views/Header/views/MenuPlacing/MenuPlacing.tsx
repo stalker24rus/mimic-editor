@@ -10,7 +10,7 @@ import {
   unGroupElements,
 } from "../../../../../../store/actionCreators/editorElements";
 import {
-  selectEditorOperations,
+  selectEditorAccessibleOperations,
   selectSelectedElements,
 } from "../../../../../../store/selectors/editorState";
 import Menu from "../../../../../../ui/Menu";
@@ -19,7 +19,7 @@ import { IMenuObject } from "../../../../../../ui/Menu/Menu";
 export default function MenuPlacing() {
   const dispatch = useTypedDispatch();
   const selected = useSelector(selectSelectedElements);
-  const operations = useSelector(selectEditorOperations);
+  const operations = useSelector(selectEditorAccessibleOperations);
 
   const menuElements: IMenuObject[] = useMemo(
     () => [

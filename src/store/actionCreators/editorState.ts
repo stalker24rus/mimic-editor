@@ -12,12 +12,12 @@ import {
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IMimicElement, IPoint } from "../../models/Editor";
-import { selectEditorElements } from "../selectors/editorElements";
+import { selectMimicElements } from "../selectors/editableMimic";
 import {
   selectSelectedElements,
   selectSelectionArea,
   selectCanvasRectPosition,
-  selectEditorOperations,
+  selectEditorAccessibleOperations,
 } from "../selectors/editorState";
 
 import { ELEMENT_TYPE_GROUP } from "../../constants/literals";
@@ -45,7 +45,7 @@ export const setSelectedElements =
 export const selectElementsFromSelectionAria =
   (x: number, y: number) => (dispatch: Function, getState: Function) => {
     const viewPosition = selectCanvasRectPosition(getState());
-    const elements = selectEditorElements(getState());
+    const elements = selectMimicElements(getState());
     const { selector } = selectSelectionArea(getState());
 
     const endPoint = correctPoint({ x, y }, viewPosition);
@@ -59,9 +59,9 @@ export const selectElementsFromSelectionAria =
 
 export const updateAvailableOperations =
   () => (dispatch: Function, getState: Function) => {
-    const elements = selectEditorElements(getState());
+    const elements = selectMimicElements(getState());
     const selected = selectSelectedElements(getState());
-    const operationsState = selectEditorOperations(getState());
+    const operationsState = selectEditorAccessibleOperations(getState());
     let isSelectedGroup = false;
 
     for (let i = 0; i < elements.length; i++) {
@@ -98,7 +98,7 @@ export const abortSelection = () => (dispatch: Function) => {
 
 export const copySelectedElementsToBuffer =
   () => (dispatch: Function, getState: Function) => {
-    const elements = selectEditorElements(getState());
+    const elements = selectMimicElements(getState());
     const selected = selectSelectedElements(getState());
     dispatch({
       type: COPY_SELECTED_ELEMENTS_TO_BUFFER,

@@ -2,9 +2,9 @@ import { connect } from "react-redux";
 import { IMimicElement } from "../../../../../../models/Editor";
 import { setSelectedElements } from "../../../../../../store/actionCreators/editorState";
 import {
-  selectEditorElements,
+  selectMimicElements,
   selectMimic,
-} from "../../../../../../store/selectors/editorElements";
+} from "../../../../../../store/selectors/editableMimic";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 
 import "./index.css";

@@ -42,8 +42,8 @@ import {
   selectSelectedElements,
   selectCanvasRectPosition,
 } from "../selectors/editorState";
-import { selectMimic } from "../selectors/editorElements";
-import { selectMimicElement } from "../selectors/editorElements";
+import { selectMimic } from "../selectors/editableMimic";
+import { selectMimicElement } from "../selectors/editableMimic";
 
 import getLastGID from "../../utils/editor/Elements/crud/getLastGID";
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
@@ -174,7 +174,7 @@ export const createElement =
 
     const viewPosition = selectCanvasRectPosition(getState());
     const newPoint = correctPoint(point, viewPosition);
-    const newElement: IMimicElement = selectNewElement(getState());
+    const newElement = selectNewElement(getState());
 
     dispatch({
       type: CREATE_NEW_ELEMENT,
