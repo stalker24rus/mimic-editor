@@ -12,6 +12,10 @@ import {
   abortSelection,
 } from "../../../../../../store/actionCreators/editorState";
 import {
+  selectEditorElementsFuture,
+  selectEditorElementsPast,
+} from "../../../../../../store/selectors/editableMimic";
+import {
   selectCopyPasteBuffer,
   selectSelectedElements,
 } from "../../../../../../store/selectors/editorState";
@@ -21,12 +25,8 @@ export default function MenuEdit() {
   const dispatch = useTypedDispatch();
 
   const selected = useSelector(selectSelectedElements);
-  const future = useSelector(
-    (store: ReduxState) => store.undoredobleEditorElements.future
-  );
-  const past = useSelector(
-    (store: ReduxState) => store.undoredobleEditorElements.past
-  );
+  const future = useSelector(selectEditorElementsFuture);
+  const past = useSelector(selectEditorElementsPast);
   const copyPasteBuffer = useSelector(selectCopyPasteBuffer);
 
   const menuElements: IMenuObject[] = useMemo(

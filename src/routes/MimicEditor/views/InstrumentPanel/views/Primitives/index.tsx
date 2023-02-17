@@ -35,8 +35,8 @@ type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
   return {
-    future: store.undoredobleEditorElements.future,
-    past: store.undoredobleEditorElements.past,
+    future: store.editableMimic.future,
+    past: store.editableMimic.past,
     selected: selectSelectedElements(store),
   };
 }

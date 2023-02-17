@@ -1,22 +1,21 @@
 import { ReduxState } from "..";
 import { IMimicElement } from "../../models/Editor";
 
-export const selectMimic = (state: ReduxState) =>
-  state.undoredobleEditorElements.present;
+export const selectMimic = (state: ReduxState) => state.editableMimic.present;
 
 export const selectMimicElement = (state: ReduxState, id: number) =>
-  state.undoredobleEditorElements.present.children.find(
+  state.editableMimic.present.children.find(
     (element: IMimicElement) => element.attributes.general.id === id
   );
 
 export const selectMimicAttributes = (state: ReduxState) =>
-  state.undoredobleEditorElements.present.attributes;
+  state.editableMimic.present.attributes;
 
 export const selectMimicElements = (state: ReduxState) =>
-  state.undoredobleEditorElements.present.children;
+  state.editableMimic.present.children;
 
 export const selectEditorElementsPast = (state: ReduxState) =>
-  state.undoredobleEditorElements.past;
+  state.editableMimic.past;
 
 export const selectEditorElementsFuture = (state: ReduxState) =>
-  state.undoredobleEditorElements.future;
+  state.editableMimic.future;
