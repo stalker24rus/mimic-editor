@@ -34,7 +34,7 @@ import {
 import {
   REDO_EDITOR_HISTORY,
   UNDO_EDITOR_HISTORY,
-} from "../actionTypes/undoRedo";
+} from "../actionTypes/editorHistory";
 import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
 import {
   selectCopyPasteBuffer,

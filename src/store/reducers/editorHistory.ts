@@ -1,7 +1,7 @@
 import {
   REDO_EDITOR_HISTORY,
   UNDO_EDITOR_HISTORY,
-} from "../actionTypes/undoRedo";
+} from "../actionTypes/editorHistory";
 import { HISTORY_MAX_LENGHT } from "../../constants/literals";
 
 export default function editorHistory(reducer: Function) {
