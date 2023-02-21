@@ -1,7 +1,7 @@
-import { IMimicElement } from "../../../../models/Editor";
-import Polygon from "./Polygon";
+import { IMimicElement } from "../../../../../../../../models/Editor";
+import Polygon from "../../../../../../../../ui/Mimic/Primitives/Polygon";
 
-export default function Demo() {
+export default function DemoPolygon() {
   const demoState: IMimicElement = {
     type: "POLYGON",
     attributes: {

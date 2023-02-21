@@ -7,15 +7,16 @@ import {
 } from "../../../../../../constants/literals";
 import { editorAddElement } from "../../../../../../store/actionCreators/editorState";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
-import { Demo as DemoButton } from "../../../../../../ui/Mimic/Primitives/Button";
-import { Demo as DemoLine } from "../../../../../../ui/Mimic/Primitives/Line";
-import { Demo as DemoPoligon } from "../../../../../../ui/Mimic/Primitives/Polygon";
-import { Demo as DemoPoliline } from "../../../../../../ui/Mimic/Primitives/Polyline";
+
 import MosaicView, {
   MosaicProps,
   ViewProps,
 } from "../../../../../../ui/MosaicView";
 import { useCallback, useMemo } from "react";
+import DemoButton from "./views/DemoButton";
+import DemoLine from "./views/DemoLine";
+import DemoPolyline from "./views/DemoPoliline";
+import DemoPolygon from "./views/DemoPoligon";
 
 interface StateProps {
   future: [any];
@@ -72,7 +73,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Поли-линия",
       img: "",
-      demo: <DemoPoliline />,
+      demo: <DemoPolyline />,
       onClick: useCallback(
         () => onAddElement(ELEMENT_TYPE_POLYLINE),
         [onAddElement]
@@ -81,7 +82,7 @@ const Primitives = (props: Props): JSX.Element => {
     {
       name: "Полигон",
       img: "",
-      demo: <DemoPoligon />,
+      demo: <DemoPolygon />,
       onClick: useCallback(
         () => onAddElement(ELEMENT_TYPE_POLYGON),
         [onAddElement]

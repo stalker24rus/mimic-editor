@@ -1,39 +1,38 @@
-import { IMimicElement } from "../../../../models/Editor";
-import Polyline from "./Polyline";
+import { IMimicElement } from "../../../../../../../../models/Editor";
+import Button from "../../../../../../../../ui/Mimic/Primitives/Button";
 
-export default function Demo() {
+export default function DemoButton() {
   const demoState: IMimicElement = {
-    type: "POLYLINE",
+    type: "BUTTON",
     attributes: {
       general: {
         id: 99999999,
-        name: "DemoPoliline",
+        name: "DemoIcon",
         tagName: "",
       },
       appearance: {
+        fill: "rgba(59,130,246, 1)",
         stroke: "rgba(59,130,246, 1)",
-        strokeWidth: 5,
+        textColor: "rgba(255,255,255, 1)",
+        strokeWidth: 1,
         opacity: 1,
+        visability: true,
       },
 
-      properties: {},
+      properties: {
+        text: "button",
+      },
 
       position: {
-        width: 90,
-        height: 90,
-        top: 0,
-        left: 0,
         points: [
-          { x: 5, y: 70 },
-          { x: 65, y: 15 },
-          { x: 85, y: 70 },
-          { x: 30, y: 70 },
-          { x: 60, y: 40 },
-          { x: 70, y: 65 },
-          // { x: 80, y: 80 },
-          // { x: 80, y: 10 },
-          // { x: 45, y: 45 },
+          {
+            x: 0,
+            y: 0,
+          },
         ],
+        angle: 0,
+        width: 90,
+        height: 50,
       },
 
       font: {
@@ -56,13 +55,13 @@ export default function Demo() {
     <div
       style={{
         cursor: "pointer",
-        height: "90px",
+        height: "50px",
         width: "90px",
         pointerEvents: "none",
         position: "relative",
       }}
     >
-      <Polyline disablePointerEvents={true} component={demoState} />
+      <Button disablePointerEvents={true} component={demoState} />;
     </div>
   );
 }

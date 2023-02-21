@@ -1,13 +1,13 @@
-import { IMimicElement } from "../../../../models/Editor";
-import Line from "./Line";
+import { IMimicElement } from "../../../../../../../../models/Editor";
+import Polyline from "../../../../../../../../ui/Mimic/Primitives/Polyline";
 
-export default function Demo() {
+export default function DemoPolyline() {
   const demoState: IMimicElement = {
-    type: "LINE",
+    type: "POLYLINE",
     attributes: {
       general: {
         id: 99999999,
-        name: "DemoPoligon",
+        name: "DemoPoliline",
         tagName: "",
       },
       appearance: {
@@ -24,8 +24,15 @@ export default function Demo() {
         top: 0,
         left: 0,
         points: [
-          { x: 10, y: 10 },
-          { x: 80, y: 80 },
+          { x: 5, y: 70 },
+          { x: 65, y: 15 },
+          { x: 85, y: 70 },
+          { x: 30, y: 70 },
+          { x: 60, y: 40 },
+          { x: 70, y: 65 },
+          // { x: 80, y: 80 },
+          // { x: 80, y: 10 },
+          // { x: 45, y: 45 },
         ],
       },
 
@@ -55,7 +62,7 @@ export default function Demo() {
         position: "relative",
       }}
     >
-      <Line disablePointerEvents={true} component={demoState} />
+      <Polyline disablePointerEvents={true} component={demoState} />
     </div>
   );
 }
