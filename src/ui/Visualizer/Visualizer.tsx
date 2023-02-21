@@ -17,3 +17,4 @@ export default function Visualizer({ elements }): JSX.Element {
 
   return <div>{CanvasElements}</div>;
 }
+[];

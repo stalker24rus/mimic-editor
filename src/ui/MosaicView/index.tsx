@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 
 export interface ViewProps {
   name: string;
@@ -44,13 +44,12 @@ function View({ name, img, demo, onClick }: ViewProps): JSX.Element {
 }
 
 function MosaicView({ elements }: MosaicProps): JSX.Element {
-  return (
-    <div className="flex flex-wrap">
-      {elements.map((element, i) => (
-        <View key={i} {...element} />
-      ))}
-    </div>
+  const memoElements = useMemo(
+    () => elements.map((element, i) => <View key={i} {...element} />),
+    []
   );
+
+  return <div className="flex flex-wrap">{memoElements}</div>;
 }
 
 export default MosaicView;
