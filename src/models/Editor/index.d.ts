@@ -32,7 +32,7 @@ export type IMimicElement = {
   attributes: Attributes;
   children?: Array<IMimicElement>;
   freezed?: boolean;
-  layer?: number; //TODO remove
+  // layer?: number; //TODO remove
 };
 
 export interface InitAttributes {

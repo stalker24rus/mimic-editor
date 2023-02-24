@@ -4,7 +4,7 @@ import Font from "../Font";
 import General from "../General";
 import Position from "../Position";
 
-import "./index.css";
+import "./Panel.css";
 
 interface ChangeDataProps {
   freezed: boolean;

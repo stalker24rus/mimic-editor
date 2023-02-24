@@ -1,40 +1,17 @@
-import { useEffect, useState } from "react";
-import { connect } from "react-redux";
+import { useCallback, useEffect, useState } from "react";
+import { connect, useSelector } from "react-redux";
 import { selectSelectedElements } from "../../../../../../store/selectors/editorState";
 import { IChangesData, IMimicElement } from "../../../../../../models/Editor";
 import { changeElementAttributes } from "../../../../../../store/actionCreators/editorElements";
 import { selectMimic } from "../../../../../../store/selectors/editableMimic";
 
 import Panel from "./views/Panel";
+import { useTypedDispatch } from "../../../../../../store";
 
-interface IStateProps {
-  selected: number[];
-  mimic: IMimicElement;
-}
-
-interface IDispatchProps {
-  onChanges: Function;
-}
-
-interface IOwnProps {}
-
-type IProps = IStateProps & IDispatchProps & IOwnProps;
-
-function mapStateToProps(store) {
-  return {
-    selected: selectSelectedElements(store),
-    mimic: selectMimic(store),
-  };
-}
-
-function mapDispatchToProps() {
-  return {
-    onChanges: changeElementAttributes,
-  };
-}
-
-function Properties(props: IProps): JSX.Element {
-  const { selected, mimic } = props;
+function Properties(): JSX.Element {
+  const selected = useSelector(selectSelectedElements);
+  const mimic = useSelector(selectMimic);
+  const dispatch = useTypedDispatch();
 
   const [element, setElement] = useState<IMimicElement | undefined>(undefined);
 
@@ -70,9 +47,12 @@ function Properties(props: IProps): JSX.Element {
     }
   }, [selected, mimic.children, mimic]);
 
-  const handleChange = (changes: IChangesData) => {
-    props.onChanges(changes);
-  };
+  const handleChange = useCallback(
+    (changes: IChangesData) => {
+      dispatch(changeElementAttributes(changes));
+    },
+    [dispatch]
+  );
 
   const ElementProps = element?.type ? Panel : () => <></>;
 
@@ -105,7 +85,4 @@ function Properties(props: IProps): JSX.Element {
   );
 }
 
-export default connect<IStateProps, IDispatchProps, IOwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(Properties);
+export default Properties;

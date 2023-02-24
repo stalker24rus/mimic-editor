@@ -59,7 +59,6 @@ import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBa
 
 const defaultState: IMimicElement = {
   type: ELEMENT_TYPE_FRAME,
-  layer: 0,
   attributes: {
     general: {
       id: 0, // ALWAYS ZERO
