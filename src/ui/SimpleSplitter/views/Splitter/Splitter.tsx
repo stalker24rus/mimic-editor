@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./index.css";
+import "./Splitter.css";
 
 /**
  * The Splitter is a child component for the SimpleSplitter.

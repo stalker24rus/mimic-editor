@@ -81,18 +81,3 @@ RotationPoint.defaultProps = {
 };
 
 export default RotationPoint;
-
-// let boxCenter = {
-//   x: topLeftPoint.x + width / 2,
-//   y: topLeftPoint.y + height / 2,
-// };
-
-// let angle =
-//   Math.atan2(e.pageX - boxCenter.x, -(e.pageY - boxCenter.y)) *
-//   (180 / Math.PI);
-
-// onSetAttributes({
-//   position: {
-//     angle: angle > 179.5 || angle < -179.5 ? 180 : Math.trunc(angle),
-//   },
-// });

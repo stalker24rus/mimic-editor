@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { connect, useSelector } from "react-redux";
 import { IMimicElement } from "../../../../models/Editor";
 import { useDrawBox } from "../../../../hooks/useDraw";
 

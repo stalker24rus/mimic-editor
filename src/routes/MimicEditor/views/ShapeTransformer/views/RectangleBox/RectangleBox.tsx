@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { connect } from "react-redux";
 import { IMimicElement, IPoint } from "../../../../../../models/Editor";
+import { useTypedDispatch } from "../../../../../../store";
 import {
   changeElementAngle,
   endDoingChanges,
@@ -13,9 +14,7 @@ import MovingCell from "../Primitives/MovingCell";
 import ResizePoints from "../Primitives/ResizePoints";
 import RotationPoint from "../Primitives/RotationPoint";
 
-interface StateProps {
-  // selected: Number[];
-}
+interface StateProps {}
 
 interface DispatchProps {
   onChangeAngle: Function;
@@ -33,9 +32,7 @@ interface OwnProps {
 type Props = StateProps & DispatchProps & OwnProps;
 
 function mapStateToProps(store) {
-  return {
-    // selected: store.editorState.selected,
-  };
+  return {};
 }
 
 function mapDispatchToProps() {
@@ -48,8 +45,9 @@ function mapDispatchToProps() {
   };
 }
 
-function RectangleBox(props: Props): JSX.Element {
-  const { component, children } = props;
+function RectangleBox({ component, children }): JSX.Element {
+  const dispatch = useTypedDispatch();
+
   const { attributes } = component;
   const { general, position, appearance } = attributes;
   const { id } = general;
@@ -57,14 +55,13 @@ function RectangleBox(props: Props): JSX.Element {
   const { fill, visability } = appearance;
 
   const [topLeftPoint] = points;
-  // const isSelected = selected.includes(id);
 
   const handleChangeAngle = (ev: React.PointerEvent<HTMLDivElement>) => {
     const point: IPoint = {
       x: ev.pageX,
       y: ev.pageY,
     };
-    props.onChangeAngle(id, point);
+    dispatch(changeElementAngle(id, point));
   };
 
   const handleMove = (ev: React.PointerEvent<HTMLDivElement>) => {
@@ -72,7 +69,7 @@ function RectangleBox(props: Props): JSX.Element {
       y: ev.movementY,
       x: ev.movementX,
     };
-    props.onMove(id, movement);
+    dispatch(moveElementPoints(id, movement));
   };
 
   const handleResize = (ev: React.PointerEvent<HTMLDivElement>) => {
@@ -81,15 +78,15 @@ function RectangleBox(props: Props): JSX.Element {
       x: ev.clientX,
       y: ev.clientY,
     };
-    props.onResize(id, pointName, point);
+    dispatch(changeElementSize(id, pointName, point));
   };
 
   const handlePointerDown = () => {
-    props.onStartChanges();
+    dispatch(startDoingChanges());
   };
 
   const handlePointerUp = () => {
-    props.onEndChanges();
+    dispatch(endDoingChanges());
   };
 
   const memoComponent = useMemo(() => {
@@ -133,7 +130,4 @@ function RectangleBox(props: Props): JSX.Element {
   );
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(RectangleBox);
+export default RectangleBox;

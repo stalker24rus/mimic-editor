@@ -1,6 +1,5 @@
 import { useMemo, useState } from "react";
-import { connect } from "react-redux";
-import { IMimicElement, IPoint } from "../../../../../../models/Editor";
+import { IPoint } from "../../../../../../models/Editor";
 
 import {
   changePointPosition,
@@ -10,37 +9,10 @@ import {
 } from "../../../../../../store/actionCreators/editorElements";
 import useGetBoxByMultiPoints from "../../../../../../hooks/useGetBoxByMultiPoints";
 import Point from "../Primitives/Point";
+import { useTypedDispatch } from "../../../../../../store";
 
-interface StateProps {}
-
-interface DispatchProps {
-  onChangePointPosition: Function;
-  onMoveElementPoints: Function;
-  onStartChanges: Function;
-  onEndChanges: Function;
-}
-
-interface OwnProps {
-  component: IMimicElement;
-}
-
-type Props = StateProps & DispatchProps & OwnProps;
-
-function mapStateToProps(store) {
-  return {};
-}
-
-function mapDispatchToProps() {
-  return {
-    onChangePointPosition: changePointPosition,
-    onMoveElementPoints: moveElementPoints,
-    onStartChanges: startDoingChanges,
-    onEndChanges: endDoingChanges,
-  };
-}
-
-function MultiObjectBox(props: Props): JSX.Element {
-  const { component } = props;
+function MultiObjectBox({ component }): JSX.Element {
+  const dispatch = useTypedDispatch();
 
   const { attributes, type } = component;
   const { general, position, appearance } = attributes;
@@ -60,16 +32,16 @@ function MultiObjectBox(props: Props): JSX.Element {
     const pointNo = parseInt(target.className.split(".")[3]);
     if (pointNo >= 0) {
       const point: IPoint = { x: clientX, y: clientY };
-      props.onChangePointPosition(id, pointNo, point);
+      dispatch(changePointPosition(id, pointNo, point));
     }
   };
 
   const handlePointPointerDown = () => {
-    props.onStartChanges();
+    dispatch(startDoingChanges());
   };
 
   const handlePointPointerUp = () => {
-    props.onEndChanges();
+    dispatch(endDoingChanges());
   };
 
   // The child object handlers
@@ -80,7 +52,7 @@ function MultiObjectBox(props: Props): JSX.Element {
         x: movementX,
         y: movementY,
       };
-      props.onMoveElementPoints(id, movement);
+      dispatch(moveElementPoints(id, movement));
     }
   };
 
@@ -88,12 +60,12 @@ function MultiObjectBox(props: Props): JSX.Element {
     setIsDragging(true);
     const target = e.target;
     target.setPointerCapture(e.pointerId);
-    props.onStartChanges();
+    dispatch(startDoingChanges());
   };
 
   const handleObjPointerUp = (e: any) => {
     setIsDragging(false);
-    props.onEndChanges();
+    dispatch(endDoingChanges());
   };
 
   const memoPoints = useMemo(
@@ -149,7 +121,4 @@ function MultiObjectBox(props: Props): JSX.Element {
   );
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  mapStateToProps,
-  mapDispatchToProps()
-)(MultiObjectBox);
+export default MultiObjectBox;
