@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ChromePicker } from "react-color";
-import { isNumeric } from "../../../../../../../../constants/functions/isNumeric";
+import { isNumeric } from "../../../../../../../../utils/isNumeric";
 import { AppearenceType } from "../../../../../../../../models/Editor";
 import ColorSample from "../../../../../../../../ui/ColorSample";
 import InputField from "../../../../../../../../ui/InputField";

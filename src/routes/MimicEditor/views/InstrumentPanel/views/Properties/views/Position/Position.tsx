@@ -1,5 +1,5 @@
 import lodash from "lodash";
-import { isNumeric } from "../../../../../../../../constants/functions/isNumeric";
+import { isNumeric } from "../../../../../../../../utils/isNumeric";
 import InputField from "../../../../../../../../ui/InputField";
 import View from "../View";
 
