@@ -32,7 +32,13 @@ export type IMimicElement = {
   attributes: Attributes;
   children?: Array<IMimicElement>;
   freezed?: boolean;
-  // layer?: number; //TODO remove
+};
+
+export type IEvents = {
+  click?: string;
+  pointermove?: string;
+  pointerup?: string;
+  pointerdown?: string;
 };
 
 export interface InitAttributes {
@@ -42,6 +48,7 @@ export interface InitAttributes {
   animation?: Array<AnimationType>;
   action?: Action;
   font?: FontType;
+  events?: IEvents;
 }
 
 export interface Attributes extends InitAttributes {

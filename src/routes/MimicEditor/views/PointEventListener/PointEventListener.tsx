@@ -9,7 +9,6 @@ import {
 } from "../../../../store/actionCreators/editorCanvasPointEvent";
 import { selectMimic } from "../../../../store/selectors/editableMimic";
 import { selectEditorMode } from "../../../../store/selectors/editorState";
-import CursorInfo from "../CursorInfo";
 
 interface Props {
   children?: JSX.Element | JSX.Element[];

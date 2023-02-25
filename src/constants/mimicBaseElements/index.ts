@@ -56,6 +56,12 @@ export function getBaseParamOfButton(): BaseElementOutput {
         operation: "none",
         handler: undefined,
       },
+      events: {
+        click: "", //alert("Test handler"); console.log(event);
+        pointermove: "",
+        pointerup: "",
+        pointerdown: "",
+      },
     },
     //service: { pointsAmount: 1 },
   };

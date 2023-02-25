@@ -1,5 +1,6 @@
 import Appearance from "../Appearance";
 import Custom from "../Custom";
+import Events from "../Events";
 import Font from "../Font";
 import General from "../General";
 import Position from "../Position";
@@ -13,7 +14,8 @@ interface ChangeDataProps {
 }
 
 function Panel({ freezed, attributes, onChange }) {
-  const { general, appearance, font, position, properties } = attributes;
+  const { general, appearance, font, position, properties, events } =
+    attributes;
 
   const handleChange = (change: ChangeDataProps) => {
     onChange({ id: general.id, ...change });
@@ -76,6 +78,16 @@ function Panel({ freezed, attributes, onChange }) {
           data={properties}
           onChange={(change) =>
             handleChange({ propFamily: "properties", ...change })
+          }
+        />
+      )}
+
+      {events && (
+        <Events
+          freezed={freezed}
+          data={events}
+          onChange={(change) =>
+            handleChange({ propFamily: "events", ...change })
           }
         />
       )}
