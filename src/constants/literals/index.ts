@@ -6,7 +6,7 @@ export const MIMIC_FRAME_ID: string = `${MIMIC}.FRAME`;
 
 export const EDITOR_MODE_EDIT: EditorModeProps = "EDITOR_MODE_EDIT";
 export const EDITOR_MODE_CREATE: EditorModeProps = "EDITOR_MODE_CREATE";
-export const EDITOR_MODE_OPERATE: EditorModeProps = "EDITOR_MODE_OPERATION";
+export const EDITOR_MODE_PREVIEW: EditorModeProps = "EDITOR_MODE_PREVIEW";
 
 export const ELEMENT_TYPE_FRAME: ElementType = "MAIN_FRAME";
 export const ELEMENT_TYPE_BUTTON: ElementType = "BUTTON";

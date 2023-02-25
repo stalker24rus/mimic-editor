@@ -1,32 +1,37 @@
 import { useMemo } from "react";
 import { useSelector } from "react-redux";
+import {
+  EDITOR_MODE_CREATE,
+  EDITOR_MODE_EDIT,
+  EDITOR_MODE_PREVIEW,
+} from "../../../../../../constants/literals";
 import { useTypedDispatch } from "../../../../../../store";
 import {
-  selectEditorAccessibleOperations,
-  selectSelectedElements,
-} from "../../../../../../store/selectors/editorState";
+  setEditorModeEdit,
+  setEditorModePreview,
+} from "../../../../../../store/actionCreators/editorState";
+import { selectEditorMode } from "../../../../../../store/selectors/editorState";
 import Menu from "../../../../../../ui/Menu";
 import { IMenuObject } from "../../../../../../ui/Menu/Menu";
 
 export default function MenuMode() {
   const dispatch = useTypedDispatch();
-  const selected = useSelector(selectSelectedElements);
-  const operations = useSelector(selectEditorAccessibleOperations);
+  const mode = useSelector(selectEditorMode);
 
   const menuElements: IMenuObject[] = useMemo(
     () => [
       {
         text: "Редактор",
-        handler: () => alert("Заглушка для режима редактора"),
-        isDisabled: false,
+        handler: () => dispatch(setEditorModeEdit()),
+        isDisabled: mode === EDITOR_MODE_EDIT || mode === EDITOR_MODE_CREATE,
       },
       {
         text: "Просмотр",
-        handler: () => alert("Заглушка для режима просмотра"),
-        isDisabled: false,
+        handler: () => dispatch(setEditorModePreview()),
+        isDisabled: mode === EDITOR_MODE_PREVIEW,
       },
     ],
-    [dispatch, operations]
+    [dispatch, mode]
   );
 
   return (

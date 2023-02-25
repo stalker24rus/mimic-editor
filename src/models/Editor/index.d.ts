@@ -195,7 +195,7 @@ export type CanvasSettings = {
 type EditorModeProps =
   | "EDITOR_MODE_EDIT"
   | "EDITOR_MODE_CREATE"
-  | "EDITOR_MODE_OPERATION";
+  | "EDITOR_MODE_PREVIEW";
 
 export type MimicCanvasStorage = {
   mode: CanvasMode;

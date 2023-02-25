@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-import { EDITOR_MODE_CREATE, HEADER_HEIGHT } from "../../constants/literals";
+import {
+  EDITOR_MODE_CREATE,
+  EDITOR_MODE_PREVIEW,
+  HEADER_HEIGHT,
+} from "../../constants/literals";
 import Header from "./views/Header";
 import InstrumentPanel from "./views/InstrumentPanel";
 import SimpleSplitter from "../../ui/SimpleSplitter";
@@ -94,14 +98,19 @@ export default function MimicEditor(): JSX.Element {
             onScroll={handleScroll}
           >
             <Visualizer elements={mimic.children} />
-            <PointEventListener>
-              <SelectionArea />
-              <ShapeTransformer elements={mimic.children} selected={selected} />
-              <GroupMover />
-              <CursorInfo />
-            </PointEventListener>
+            {mode !== EDITOR_MODE_PREVIEW && (
+              <PointEventListener>
+                <SelectionArea />
+                <ShapeTransformer
+                  elements={mimic.children}
+                  selected={selected}
+                />
+                <GroupMover />
+                <CursorInfo />
+              </PointEventListener>
+            )}
           </Canvas>
-          <InstrumentPanel />
+          {mode !== EDITOR_MODE_PREVIEW && <InstrumentPanel />}
         </SimpleSplitter>
       </div>
     </div>

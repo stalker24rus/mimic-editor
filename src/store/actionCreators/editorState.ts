@@ -9,6 +9,8 @@ import {
   SET_CANVAS_RECT_POSITION,
   ADD_ELEMENT_TO_SELECTION,
   UPDATE_AVAILABLE_OPERATIONS,
+  SET_PREVIEW_MODE,
+  SET_EDIT_MODE,
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IMimicElement, IPoint } from "../../models/Editor";
@@ -23,6 +25,14 @@ import {
 import { ELEMENT_TYPE_GROUP } from "../../constants/literals";
 import getSelectedElementsFromArea from "../../utils/EditorState/getSelectedElementsFromArea";
 import correctPoint from "../../utils/editor/correctPoint";
+
+export const setEditorModeEdit = () => (dispatch: Function) => {
+  dispatch({ type: SET_EDIT_MODE });
+};
+
+export const setEditorModePreview = () => (dispatch: Function) => {
+  dispatch({ type: SET_PREVIEW_MODE });
+};
 
 export const editorAddElement = (type: ElementType) => (dispatch: Function) => {
   const element = {

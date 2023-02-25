@@ -5,7 +5,7 @@ export const SET_CREATED_ELEMENT_ID = `${module}/SET_CREATED_ELEMENT_ID`;
 
 export const SET_CREATION_MODE = `${module}/SET_CREATION_MODE`;
 export const SET_EDIT_MODE = `${module}/SET_EDIT_MODE`;
-export const SET_OPERATION_MODE = `${module}/SET_OPERATION_MODE`;
+export const SET_PREVIEW_MODE = `${module}/SET_PREVIEW_MODE`;
 
 export const ADD_ELEMENT_TO_SELECTION = `${module}/ADD_ELEMENT_TO_SELECTION`;
 export const SET_SELECTED_ELEMENTS = `${module}/SET_SELECTED_ELEMENTS`;

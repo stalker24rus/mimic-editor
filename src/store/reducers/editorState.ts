@@ -7,7 +7,7 @@ import {
   SET_CREATED_ELEMENT_ID,
   SET_CREATION_MODE,
   SET_EDIT_MODE,
-  SET_OPERATION_MODE,
+  SET_PREVIEW_MODE,
   SET_SELECTED_ELEMENTS,
   SET_SELECTION_AREA,
   SET_SELECTION_AREA_VISIBLE,
@@ -18,7 +18,7 @@ import {
 import {
   EDITOR_MODE_CREATE,
   EDITOR_MODE_EDIT,
-  EDITOR_MODE_OPERATE,
+  EDITOR_MODE_PREVIEW,
   HEADER_HEIGHT,
 } from "../../constants/literals";
 import {
@@ -166,10 +166,10 @@ const editorState = (state = defaultState(), action: any): IProps => {
       return state;
     }
 
-    case SET_OPERATION_MODE: {
+    case SET_PREVIEW_MODE: {
       return {
         ...state,
-        mode: EDITOR_MODE_OPERATE,
+        mode: EDITOR_MODE_PREVIEW,
         newElement: {},
         createdElementId: undefined,
       };
