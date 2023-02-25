@@ -3,7 +3,7 @@ import { ChromePicker } from "react-color";
 import { isNumeric } from "../../../../../../../../utils/isNumeric";
 import { AppearenceType } from "../../../../../../../../models/Editor";
 import ColorSample from "../../../../../../../../ui/ColorSample";
-import InputField from "../../../../../../../../ui/InputField";
+import InputField from "../../../../../../../../ui/Forms/InputField";
 import View from "../View";
 
 interface Props {

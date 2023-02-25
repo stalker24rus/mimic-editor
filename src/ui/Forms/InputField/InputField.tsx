@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import limitNumber from "../../utils/limitNumber";
+import limitNumber from "../../../utils/limitNumber";
 
 interface Props {
   value: number | string;

@@ -1,5 +1,5 @@
 import { isNumeric } from "../../../../../../../../utils/isNumeric";
-import InputField from "../../../../../../../../ui/InputField";
+import InputField from "../../../../../../../../ui/Forms/InputField";
 import View from "../View";
 
 function Custom({ freezed, data, onChange }) {

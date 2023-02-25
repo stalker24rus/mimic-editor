@@ -59,22 +59,23 @@ export default function KeyEventListener(): JSX.Element {
       }
 
       if (ev.key === "ArrowLeft") {
-        ev.preventDefault();
+        //TODO FIX
+        // ev.preventDefault();
         dispatch(moveElementGroup({ x: -1, y: 0 }));
       }
 
       if (ev.key === "ArrowRight") {
-        ev.preventDefault();
+        // ev.preventDefault();
         dispatch(moveElementGroup({ x: 1, y: 0 }));
       }
 
       if (ev.key === "ArrowUp") {
-        ev.preventDefault();
+        // ev.preventDefault();
         dispatch(moveElementGroup({ x: 0, y: -1 }));
       }
 
       if (ev.key === "ArrowDown") {
-        ev.preventDefault();
+        // ev.preventDefault();
         dispatch(moveElementGroup({ x: 0, y: 1 }));
       }
     };

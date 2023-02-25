@@ -1,6 +1,6 @@
 import lodash from "lodash";
 import { isNumeric } from "../../../../../../../../utils/isNumeric";
-import InputField from "../../../../../../../../ui/InputField";
+import InputField from "../../../../../../../../ui/Forms/InputField";
 import View from "../View";
 
 function Position({ freezed, data, onChange }) {

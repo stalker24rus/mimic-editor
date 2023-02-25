@@ -1,5 +1,6 @@
 import { APP_VERSION, HEADER_HEIGHT } from "../../../../constants/literals";
 import MenuEdit from "./views/MenuEdit";
+import MenuMode from "./views/MenuMode";
 import MenuPlacing from "./views/MenuPlacing";
 
 const Header = (): JSX.Element => {
@@ -13,6 +14,7 @@ const Header = (): JSX.Element => {
           <div style={{ fontSize: "18px" }}>MIMIC_EDITOR</div>
           <div style={{ fontSize: "10px" }}> {APP_VERSION}</div>
         </div>
+        <MenuMode />
         <MenuEdit />
         <MenuPlacing />
       </div>

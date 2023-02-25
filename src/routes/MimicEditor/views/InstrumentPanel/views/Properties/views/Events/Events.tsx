@@ -1,4 +1,6 @@
-import InputField from "../../../../../../../../ui/InputField";
+import InputField from "../../../../../../../../ui/Forms/InputField";
+import TextArea from "../../../../../../../../ui/Forms/TextArea";
+import TextCodeEditor from "../../../../../../../../ui/Forms/TextCodeEditor";
 import { isNumeric } from "../../../../../../../../utils/isNumeric";
 import View from "../View";
 
@@ -21,7 +23,7 @@ export default function Events({ freezed, data, onChange }) {
               {keyName}: {"   "}
             </td>
             <td>
-              <InputField
+              <TextCodeEditor
                 props={{
                   name: keyName,
                   disabled: freezed,
