@@ -91,14 +91,15 @@ export default function MimicEditor(): JSX.Element {
       <KeyEventListener />
       <Header />
       <div style={{ height: height - HEADER_HEIGHT }}>
-        <SimpleSplitter orientation="vertical">
-          <Canvas
-            mainElement={mimic}
-            cursor={mode === EDITOR_MODE_CREATE ? "crosshair" : "auto"}
-            onScroll={handleScroll}
-          >
-            <Visualizer elements={mimic.children} />
-            {mode !== EDITOR_MODE_PREVIEW && (
+        {mode !== EDITOR_MODE_PREVIEW && (
+          <SimpleSplitter orientation="vertical">
+            <Canvas
+              mainElement={mimic}
+              cursor={mode === EDITOR_MODE_CREATE ? "crosshair" : "auto"}
+              onScroll={handleScroll}
+            >
+              <Visualizer elements={mimic.children} />
+
               <PointEventListener>
                 <SelectionArea />
                 <ShapeTransformer
@@ -108,10 +109,16 @@ export default function MimicEditor(): JSX.Element {
                 <GroupMover />
                 <CursorInfo />
               </PointEventListener>
-            )}
+            </Canvas>
+            {mode !== EDITOR_MODE_PREVIEW && <InstrumentPanel />}
+          </SimpleSplitter>
+        )}
+
+        {mode === EDITOR_MODE_PREVIEW && (
+          <Canvas mainElement={mimic} cursor="auto" onScroll={handleScroll}>
+            <Visualizer elements={mimic.children} />
           </Canvas>
-          {mode !== EDITOR_MODE_PREVIEW && <InstrumentPanel />}
-        </SimpleSplitter>
+        )}
       </div>
     </div>
   );
