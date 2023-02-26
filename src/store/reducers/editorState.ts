@@ -62,6 +62,20 @@ interface IProps {
   };
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
+  // scriptEditor:{
+  //    position: {
+  //       top: number;
+  //       left: number;
+  //       width: number;
+  //       height: number;
+  //    }
+  //    opensScript: [
+  //    {element: string, event: string}
+  //    ]
+  //    apirance: {
+  //      isShown: boolean
+  //    }
+  // }
 }
 
 export interface IOperations {
