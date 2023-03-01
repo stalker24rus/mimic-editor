@@ -62,20 +62,19 @@ interface IProps {
   };
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
-  // scriptEditor:{
-  //    position: {
-  //       top: number;
-  //       left: number;
-  //       width: number;
-  //       height: number;
-  //    }
-  //    opensScript: [
-  //    {element: string, event: string}
-  //    ]
-  //    apirance: {
-  //      isShown: boolean
-  //    }
-  // }
+  scriptEditorState: {
+    position: {
+      top: number;
+      left: number;
+      width: number | string;
+      height: number | string;
+    };
+    selected: number;
+    opensScript: [{ element: string; event: string }] | [];
+    appearance: {
+      isShown: boolean;
+    };
+  };
 }
 
 export interface IOperations {
@@ -131,6 +130,19 @@ const defaultState = (): IProps => {
       canSelectAll: true,
       canSelectElements: true,
       canDelete: false,
+    },
+    scriptEditorState: {
+      position: {
+        top: 0,
+        left: 0,
+        width: "200px",
+        height: "200px",
+      },
+      selected: 0,
+      opensScript: [],
+      appearance: {
+        isShown: true,
+      },
     },
   };
 };

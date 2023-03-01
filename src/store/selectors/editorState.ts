@@ -2,6 +2,9 @@ import { ReduxState } from "../index";
 
 export const selectEditorMode = (state: ReduxState) => state.editorState.mode;
 
+export const selectScriptEditorState = (state: ReduxState) =>
+  state.editorState.scriptEditorState;
+
 export const selectCanvasRectPosition = (state: ReduxState) =>
   state.editorState.canvasRectPosition;
 

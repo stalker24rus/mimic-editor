@@ -25,6 +25,7 @@ import { useSelector } from "react-redux";
 import { useTypedDispatch } from "../../store";
 import { setCanvasRectPosition } from "../../store/actionCreators/editorState";
 import Visualizer from "../../ui/Visualizer";
+import ScriptEditor from "./views/ScriptEditor";
 
 /**
  * There is a mnemonic editor.
@@ -93,23 +94,26 @@ export default function MimicEditor(): JSX.Element {
       <div style={{ height: height - HEADER_HEIGHT }}>
         {mode !== EDITOR_MODE_PREVIEW && (
           <SimpleSplitter orientation="vertical">
-            <Canvas
-              mainElement={mimic}
-              cursor={mode === EDITOR_MODE_CREATE ? "crosshair" : "auto"}
-              onScroll={handleScroll}
-            >
-              <Visualizer elements={mimic.children} />
+            <SimpleSplitter orientation="horizontal">
+              <Canvas
+                mainElement={mimic}
+                cursor={mode === EDITOR_MODE_CREATE ? "crosshair" : "auto"}
+                onScroll={handleScroll}
+              >
+                <Visualizer elements={mimic.children} />
 
-              <PointEventListener>
-                <SelectionArea />
-                <ShapeTransformer
-                  elements={mimic.children}
-                  selected={selected}
-                />
-                <GroupMover />
-                <CursorInfo />
-              </PointEventListener>
-            </Canvas>
+                <PointEventListener>
+                  <SelectionArea />
+                  <ShapeTransformer
+                    elements={mimic.children}
+                    selected={selected}
+                  />
+                  <GroupMover />
+                  <CursorInfo />
+                </PointEventListener>
+              </Canvas>
+              <ScriptEditor />
+            </SimpleSplitter>
             {mode !== EDITOR_MODE_PREVIEW && <InstrumentPanel />}
           </SimpleSplitter>
         )}
