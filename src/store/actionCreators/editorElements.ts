@@ -48,6 +48,7 @@ import { selectMimicElement } from "../selectors/editableMimic";
 import getLastGID from "../../utils/editor/Elements/crud/getLastGID";
 import { TransformerBase } from "../../constants/mimicBaseElements/TransformerBase";
 import correctPoint from "../../utils/editor/correctPoint";
+import uuid from "react-uuid";
 
 export const changeElementAngle =
   (id: number, point: IPoint) => (dispatch: Function) => {
@@ -170,6 +171,7 @@ export const createElement =
   (point: IPoint) => (dispatch: Function, getState: Function) => {
     // ADD FUNCTION FOR GET A new ID
     const root: IMimicElement = selectMimic(getState());
+    // alert(uuid());
     const newLastTakenId = getLastGID(root.attributes.general.id, root) + 1;
 
     const viewPosition = selectCanvasRectPosition(getState());

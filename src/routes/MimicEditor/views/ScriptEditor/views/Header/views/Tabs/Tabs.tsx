@@ -16,7 +16,7 @@ export default function Tabs() {
           margin: "3px",
         }}
       >
-        Test1.onclick{" "}
+        Test1{" "}
         <button
           style={{
             background: "red",
@@ -34,7 +34,7 @@ export default function Tabs() {
           margin: "3px",
         }}
       >
-        Test2.onclick{" "}
+        Test2{" "}
         <button
           style={{
             background: "red",

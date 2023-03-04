@@ -72,3 +72,33 @@ store
   |---> editedMimic (through undoRedo)
   |         |
   |        ...
+
+
+Environtment
+  |
+  | -> EnvirontmentScripts[] // NOT CHANGEBLE - SCRIPTS FOR A TAGS interaction and etc. Like: setTag, setBit, resetBit, toggleBit
+  | -> Communictions
+  |         |-> Driver
+  |
+  | -> TagTable
+  |       |-> Communiction tag
+  |       |-> Inner TAGS
+  |
+  | -> Project
+          |-> Mimics
+          |     |->Mimic2...
+          |     |->Mimic1
+          |         |->scripts[]
+          |         |       |-> { name : string, content : string }
+          |         |
+          |         |->children[]
+          |               |->elementN
+          |               |     |-> script
+          |               |           |-> { name : string, content : string }
+          |               |->elementN+1
+          |               |->elementN+2
+          |
+          |-> GlobalScripts[]
+                    |-> { name : string, content : string }
+
+              
