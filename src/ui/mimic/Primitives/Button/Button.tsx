@@ -9,8 +9,16 @@ interface Props {
 
 export default function Button(props: Props): JSX.Element {
   const { attributes } = props.component;
-  const { general, position, appearance, properties, action, font, events } =
-    attributes;
+  const {
+    general,
+    position,
+    appearance,
+    properties,
+    action,
+    font,
+    events,
+    scripts,
+  } = attributes;
   const { id } = general;
   const { points, width, height, angle } = position;
   const { fill, visability, stroke, strokeWidth, textColor, opacity } =
@@ -21,7 +29,7 @@ export default function Button(props: Props): JSX.Element {
   const style = "rounded-md ";
 
   return (
-    <FunctionWrapper events={events}>
+    <FunctionWrapper events={events} scripts={scripts}>
       <button
         id={MIMIC + "." + ELEMENT_TYPE_BUTTON + "." + id}
         className={style}

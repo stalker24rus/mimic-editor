@@ -62,6 +62,12 @@ export function getBaseParamOfButton(): BaseElementOutput {
         pointerup: "",
         pointerdown: "",
       },
+      //FIXME remove after
+      scripts: `
+        function click(event) {
+          alert("HI " + 132);
+        }
+      `,
     },
     //service: { pointsAmount: 1 },
   };
@@ -133,3 +139,28 @@ export function getBaseParamOfPolygon(): BaseElementOutput {
     //service: { pointsAmount: 999 },
   };
 }
+
+// `
+//       class Rectangle {
+//         constructor(height, width) {
+//           this.height = height;
+//           this.width = width;
+//         }
+//       }
+
+//         function click(event) {
+//           alert("HI " + 1 + 2);
+//         }
+
+//         function pointerdown(event) {
+//           //alert(2 + 2);
+//         }
+
+//         function pointermove(event) {
+//           //alert(3 + 2);
+//         }
+
+//         function pointerup(event) {
+//           //alert(4 + 2);
+//         }
+//       `,

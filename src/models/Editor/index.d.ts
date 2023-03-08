@@ -49,6 +49,7 @@ export interface InitAttributes {
   action?: Action;
   font?: FontType;
   events?: IEvents;
+  scripts?: string;
 }
 
 export interface Attributes extends InitAttributes {

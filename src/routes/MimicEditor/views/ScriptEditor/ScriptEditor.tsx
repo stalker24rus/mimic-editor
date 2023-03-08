@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { selectScriptEditorState } from "../../../../store/selectors/editorState";
+import getFunctionCode from "../../../../utils/ast/getFunctionCode";
 import CodeView from "./views/CodeView";
 import Header from "./views/Header";
 import CloseButton from "./views/Header/views/CloseButton";
@@ -32,7 +33,7 @@ export default function ScriptEditor() {
   }
 
     function onClick(event) {
-      return 1 + 2;
+      alert(1 + 2);
     }
 
     function onPointMove(event) {
@@ -48,18 +49,19 @@ export default function ScriptEditor() {
     }  
   `;
 
-  // let acorn = require("acorn");
-  try {
-    // const res = acorn.parse(text, { ecmaVersion: 2020, sourceType: "module" });
-    // console.log(res);
-    // console.log(res.body[1].start, res.body[1].end);
-    // console.log(text.slice(res.body[1].start, res.body[1].end));
-
-    const res = getFunctionCode("onPointMove", text);
-    console.log(res);
-  } catch (error) {
-    alert(error);
-  }
+  // try {
+  //   const res = getFunctionCode("onClick", text);
+  //   const res2 = getFunctionCode("onClick", res.source);
+  //   const res3 = res2.source.slice(
+  //     res2.ast.body[0]?.body.start + 1,
+  //     res2.ast.body[0]?.body.end - 1
+  //   );
+  //   const func = new Function(`${res2.source} onClick();`);
+  //   console.log(func());
+  //   console.log(res2);
+  // } catch (error) {
+  //   alert(error);
+  // }
 
   return (
     <>
@@ -72,24 +74,4 @@ export default function ScriptEditor() {
       </Window>
     </>
   );
-}
-
-let acorn = require("acorn");
-function getFunctionCode(funcName: string, source: string) {
-  const ast = acorn.parse(source, { ecmaVersion: 2020, sourceType: "module" });
-  const functionIndex = ast.body.findIndex(
-    (node) => node.type === "FunctionDeclaration" && funcName === node.id.name
-  );
-
-  if (functionIndex > -1) {
-    return {
-      source: source.slice(
-        ast.body[functionIndex].start,
-        ast.body[functionIndex].end
-      ),
-      ast: ast.body[functionIndex],
-    };
-  } else {
-    throw `Function ${funcName} was not found.`;
-  }
 }

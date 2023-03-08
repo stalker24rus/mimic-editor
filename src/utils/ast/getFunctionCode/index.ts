@@ -15,6 +15,6 @@ export default function getFunctionCode(funcName: string, source: string) {
       ast: ast,
     };
   } else {
-    throw `Function ${funcName} was not found.`;
+    // throw `Function ${funcName} was not found.`;
   }
 }
