@@ -23,6 +23,7 @@ import {
   ALIGN_ELEMENTS_BOTTOM,
   GROUP_ELEMENTS,
   UNGROUP_ELEMENTS,
+  API_CHANGE_ELEMENT_ATTRIBUTES,
 } from "../actionTypes/editorElements";
 import {
   DISABLE_SELECT_OPERATIONS,
@@ -35,7 +36,12 @@ import {
   REDO_EDITOR_HISTORY,
   UNDO_EDITOR_HISTORY,
 } from "../actionTypes/editorHistory";
-import { IChangesData, IMimicElement, IPoint } from "../../models/Editor";
+import {
+  IAPIChangeElementAttributes,
+  IChangesData,
+  IMimicElement,
+  IPoint,
+} from "../../models/Editor";
 import {
   selectCopyPasteBuffer,
   selectNewElement,
@@ -360,3 +366,15 @@ export const unGroupElements =
       payload: { id: selected[0] },
     });
   };
+
+// ===========================================
+// =================== API ===================
+// ===========================================
+export const apiChangeElementAttributes = (
+  changes: IAPIChangeElementAttributes
+) => {
+  return {
+    type: API_CHANGE_ELEMENT_ATTRIBUTES,
+    payload: { ...changes },
+  };
+};

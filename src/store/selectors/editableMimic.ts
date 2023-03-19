@@ -8,6 +8,11 @@ export const selectMimicElement = (state: ReduxState, id: number) =>
     (element: IMimicElement) => element.attributes.general.id === id
   );
 
+export const selectMimicElementByName = (state: ReduxState, name: string) =>
+  state.editableMimic.present.children.find(
+    (element: IMimicElement) => element.attributes.general.name === name
+  );
+
 export const selectMimicAttributes = (state: ReduxState) =>
   state.editableMimic.present.attributes;
 

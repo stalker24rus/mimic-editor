@@ -5,9 +5,10 @@ export default function executeFunction(
   script: string,
   executedFunctionName: string
 ) {
-  const myInterpreter = new Interpreter(
+  const apiInterpreter = new Interpreter(
     ` ${script} ${executedFunctionName}();`,
     initEnvironmentCodeBase
   );
-  myInterpreter.run();
+  apiInterpreter.run();
+  // console.log(apiInterpreter.value);
 }

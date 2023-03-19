@@ -64,9 +64,21 @@ export function getBaseParamOfButton(): BaseElementOutput {
       },
       //FIXME remove after
       scripts: `
-        function click(event) {
-          alert("HI " + 132);
-        }
+        function click() {
+          const random = (min, max) => {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+          }
+
+          console(api);
+          console(api.getElement("BUTTON30"));
+          const r = random(0, 255);
+          const g = random(0, 255);
+          const a = random(0, 255);
+          const rgba = "rgba(" + r + "," + g + "," + a + ",1)";
+
+          api.setElementAttributes("BUTTON30", "appearance", "fill", rgba);
+          api.setElementAttributes("BUTTON30", "properties", "text", rgba);
+        };
       `,
     },
     //service: { pointsAmount: 1 },

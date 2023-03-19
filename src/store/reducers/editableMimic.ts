@@ -25,6 +25,7 @@ import {
   ALIGN_ELEMENTS_BOTTOM,
   UNGROUP_ELEMENTS,
   GROUP_ELEMENTS,
+  API_CHANGE_ELEMENT_ATTRIBUTES,
 } from "../actionTypes/editorElements";
 import { PASTE_ELEMENTS_FROM_BUFFER } from "../actionTypes/editorState";
 import { ELEMENT_TYPE_FRAME } from "../../constants/literals";
@@ -38,7 +39,9 @@ import changeElementPoint from "../../utils/editor/Elements/elementModifier/chan
 import createElement from "../../utils/editor/Elements/crud/createElement";
 import deleteElementLastPoint from "../../utils/editor/Elements/elementModifier/deleteElementLastPoint";
 import moveElementPoints from "../../utils/editor/Elements/elementModifier/moveElementPoints";
-import executeElementsRoutine from "../../utils/editor/Elements/executeElementsRoutine";
+import executeRoutineById, {
+  executeRoutineByName,
+} from "../../utils/editor/Elements/executeElementsRoutine";
 import removeSelectedElements from "../../utils/editor/Elements/crud/removeSelectedElements";
 import resizeElement from "../../utils/editor/Elements/elementModifier/resizeElement";
 import pasteElements from "../../utils/editor/Elements/crud/pasteElements";
@@ -87,7 +90,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const pointsAmount = TransformerBase[type].maxPoints;
       const root = lodash.cloneDeep(state);
       const func = createElement({ id, type, attributes, point, pointsAmount });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
 
       return { ...root };
     }
@@ -98,7 +101,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       if (selected.length > 0) {
         const root = lodash.cloneDeep(state);
         const func = removeSelectedElements({ selected });
-        executeElementsRoutine(parentId || 0, root, func);
+        executeRoutineById(parentId || 0, root, func);
         return { ...root };
       } else {
         return state;
@@ -109,7 +112,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = appendElementPoint({ point });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -117,7 +120,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = deleteElementLastPoint();
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -125,7 +128,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, pointNo, point } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementPoint({ pointNo, point });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -133,7 +136,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, movement } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementPoints({ movement });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -141,7 +144,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { selected, movement } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementPoints({ movement });
-      executeElementsRoutine(selected, root, func);
+      executeRoutineById(selected, root, func);
       return { ...root };
     }
 
@@ -149,7 +152,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementLastPoint({ point });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -157,7 +160,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementAngle({ point });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -165,7 +168,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, pointName: targetName, point } = action?.payload;
       const root = lodash.cloneDeep(state);
       const func = resizeElement({ targetName, point });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
       return { ...root };
     }
 
@@ -178,7 +181,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnTop({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -186,7 +189,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnBottom({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -194,7 +197,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnForward({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -202,7 +205,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = moveElementsOnBack({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -210,7 +213,22 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { id, propFamily, name, value } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = changeElementAttribute({ propFamily, name, value });
-      executeElementsRoutine(id, root, func);
+      executeRoutineById(id, root, func);
+      return { ...root };
+    }
+
+    // TODO RENAME API CLASS FUNCTION
+    case API_CHANGE_ELEMENT_ATTRIBUTES: {
+      const { name, propFamily, propName, value } = action.payload;
+
+      const root = lodash.cloneDeep(state);
+
+      const func = changeElementAttribute({
+        propFamily,
+        name: propName,
+        value,
+      });
+      executeRoutineByName(name, root, func);
       return { ...root };
     }
 
@@ -218,7 +236,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignLeft({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -226,7 +244,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignHorizon({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -234,7 +252,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignRight({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -242,7 +260,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignTop({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -250,7 +268,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignVertical({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -258,7 +276,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, selected } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = alignBottom({ selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -267,7 +285,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const root = lodash.cloneDeep(state);
       const lastId: number = getLastGID(root.attributes.general.id, root) + 1;
       const func = pasteElements({ elements, id: lastId });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -276,7 +294,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const root = lodash.cloneDeep(state);
       const id = getLastGID(root.attributes.general.id, root) + 1;
       const func = groupElements({ id, selected });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 
@@ -284,7 +302,7 @@ const editableMimic = (state = defaultState, action: any): IMimicElement => {
       const { parentId, id } = action.payload;
       const root = lodash.cloneDeep(state);
       const func = unGroupElements({ id });
-      executeElementsRoutine(parentId || 0, root, func);
+      executeRoutineById(parentId || 0, root, func);
       return { ...root };
     }
 

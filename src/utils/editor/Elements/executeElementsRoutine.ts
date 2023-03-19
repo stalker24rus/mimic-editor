@@ -12,7 +12,7 @@ function checkId(searcedId: number | number[], objectId: number) {
   return false;
 }
 
-const executeElementsRoutine = (
+const executeRoutineById = (
   targetId: number | number[],
   object: IMimicElement,
   routine: Function
@@ -23,10 +23,27 @@ const executeElementsRoutine = (
   } else {
     for (let i = 0; i < object.children.length; i++) {
       const objectChild = object.children[i];
-      executeElementsRoutine(targetId, objectChild, routine);
+      executeRoutineById(targetId, objectChild, routine);
     }
     return;
   }
 };
 
-export default executeElementsRoutine;
+export const executeRoutineByName = (
+  name: string,
+  object: IMimicElement,
+  routine: Function
+) => {
+  if (name === object.attributes.general.name) {
+    routine(object);
+    return;
+  } else {
+    for (let i = 0; i < object.children.length; i++) {
+      const objectChild = object.children[i];
+      executeRoutineByName(name, objectChild, routine);
+    }
+    return;
+  }
+};
+
+export default executeRoutineById;

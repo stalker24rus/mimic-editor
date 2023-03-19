@@ -236,3 +236,10 @@ interface IChangesData {
   name: string;
   value: number | string;
 }
+
+interface IAPIChangeElementAttributes {
+  name: number;
+  propFamily: string;
+  propName: string;
+  value: number | string;
+}
