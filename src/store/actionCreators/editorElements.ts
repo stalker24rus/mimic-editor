@@ -370,8 +370,8 @@ export const unGroupElements =
 
 // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 export const saveScriptFile =
-  (elementId: number | string) => (dispatch: Function) => {
-    dispatch({ type: SAVE_SCRIPT_FILE, payload: { elementId } });
+  (elementId: number | string, script: string) => (dispatch: Function) => {
+    dispatch({ type: SAVE_SCRIPT_FILE, payload: { elementId, script } });
   };
 
 // ===========================================
