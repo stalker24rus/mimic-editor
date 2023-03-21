@@ -29,6 +29,7 @@ import {
   DISABLE_SELECT_OPERATIONS,
   ENABLE_SELECT_OPERATIONS,
   PASTE_ELEMENTS_FROM_BUFFER,
+  SAVE_SCRIPT_FILE,
   SET_CREATED_ELEMENT_ID,
   SET_EDIT_MODE,
 } from "../actionTypes/editorState";
@@ -365,6 +366,12 @@ export const unGroupElements =
       type: UNGROUP_ELEMENTS,
       payload: { id: selected[0] },
     });
+  };
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+export const saveScriptFile =
+  (elementId: number | string) => (dispatch: Function) => {
+    dispatch({ type: SAVE_SCRIPT_FILE, payload: { elementId } });
   };
 
 // ===========================================

@@ -19,3 +19,7 @@ export const PASTE_ELEMENTS_FROM_BUFFER = `${module}/PASTE_ELEMENTS_FROM_BUFFER`
 
 export const SET_SELECTION_AREA = `${module}/SET_SELECTION_AREA`;
 export const SET_SELECTION_AREA_VISIBLE = `${module}/SET_SELECTION_AREA_VISIBLE`;
+
+export const OPEN_SCRIPT_FILE = `${module}/OPEN_SCRIPT_FILE`;
+export const SAVE_SCRIPT_FILE = `${module}/SAVE_SCRIPT_FILE`;
+export const CLOSE_SCRIPT_FILE = `${module}/CLOSE_SCRIPT_FILE`;

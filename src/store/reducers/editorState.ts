@@ -14,6 +14,9 @@ import {
   SET_CANVAS_RECT_POSITION,
   ADD_ELEMENT_TO_SELECTION,
   UPDATE_AVAILABLE_OPERATIONS,
+  // OPEN_SCRIPT_FILE,
+  // SAVE_SCRIPT_FILE,
+  // CLOSE_SCRIPT_FILE,
 } from "../actionTypes/editorState";
 import {
   EDITOR_MODE_CREATE,
@@ -29,6 +32,16 @@ import {
 } from "../../models/Editor";
 
 type DrawType = number | undefined;
+
+// interface IScriptFile {
+//   elementID: number;
+//   name: string;
+//   extension: string;
+//   content: string;
+//   path: string;
+//   save: Function; //   .save(code); - for save changes
+//   isSaved: boolean;
+// }
 
 interface IProps {
   /**
@@ -62,18 +75,18 @@ interface IProps {
   };
   copyPasteBuffer: IMimicElement[];
   operations?: IOperations;
-  scriptEditorState: {
+  scriptEditor: {
     position: {
       top: number;
       left: number;
       width: number | string;
       height: number | string;
     };
-    selected: number;
-    opensScript: [{ element: string; event: string }] | [];
+
     appearance: {
       isShown: boolean;
     };
+    openScripts: number[] | []; // element id
   };
 }
 
@@ -131,15 +144,14 @@ const defaultState = (): IProps => {
       canSelectElements: true,
       canDelete: false,
     },
-    scriptEditorState: {
+    scriptEditor: {
       position: {
         top: 0,
         left: 0,
         width: "200px",
         height: "200px",
       },
-      selected: 0,
-      opensScript: [],
+      openScripts: [],
       appearance: {
         isShown: true,
       },
@@ -294,6 +306,18 @@ const editorState = (state = defaultState(), action: any): IProps => {
 
       return { ...state, copyPasteBuffer: copiedArr, operations };
     }
+
+    // case OPEN_SCRIPT_FILE: {
+    //   return state;
+    // }
+
+    // case SAVE_SCRIPT_FILE: {
+    //   return state;
+    // }
+
+    // case CLOSE_SCRIPT_FILE: {
+    //   return state;
+    // }
 
     default:
       return state;

@@ -11,6 +11,9 @@ import {
   UPDATE_AVAILABLE_OPERATIONS,
   SET_PREVIEW_MODE,
   SET_EDIT_MODE,
+  OPEN_SCRIPT_FILE,
+  SAVE_SCRIPT_FILE,
+  CLOSE_SCRIPT_FILE,
 } from "../actionTypes/editorState";
 import { elementsDefaultStates } from "../../constants/mimicBaseElements";
 import { ElementType, IMimicElement, IPoint } from "../../models/Editor";
@@ -160,3 +163,18 @@ export const setSelectionAreaVisible =
   (visible: boolean) => (dispatch: Function) => {
     dispatch({ type: SET_SELECTION_AREA_VISIBLE, payload: { visible } });
   };
+
+// export const openScriptFile =
+//   (elementId: number | string) => (dispatch: Function) => {
+//     dispatch({ type: OPEN_SCRIPT_FILE, payload: { elementId } });
+//   };
+
+// export const saveScriptFile =
+//   (elementId: number | string) => (dispatch: Function) => {
+//     dispatch({ type: SAVE_SCRIPT_FILE, payload: { elementId } });
+//   };
+
+// export const closeScriptFile =
+//   (elementId: number | string) => (dispatch: Function) => {
+//     dispatch({ type: CLOSE_SCRIPT_FILE, payload: { elementId } });
+//   };
